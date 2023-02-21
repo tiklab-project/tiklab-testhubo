@@ -1,0 +1,88 @@
+#application net.tiklab.teston.config
+app:
+  name: tiklab-teston
+spring:
+  profiles:
+    active: dev
+
+PROJECT_HOME: ${user.home}/tiklab/${app.name}
+
+#web net.tiklab.teston.config
+server:
+  port: 8080
+
+#dal net.tiklab.teston.config
+jdbc:
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://172.10.1.10:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+  username: root
+  password: darth2020
+
+
+#dfs net.tiklab.teston.config
+dfs:
+  server:
+    enable: false
+    mode: server
+    port: 4010
+    datapath: ${PROJECT_HOME}/files
+  client:
+    url: 127.0.0.1:4010
+    bucket: ${app.name}
+
+#dcs net.tiklab.teston.config
+dcs:
+  server:
+    enable: false
+    mode: server
+    port: 5010
+    datapath: ${PROJECT_HOME}/caches
+  client:
+    url: 127.0.0.1:5010
+    bucket: ${app.name}
+
+#dss net.tiklab.teston.config
+dss:
+  server:
+    enable: false
+    mode: server
+    port: 6010
+    datapath: ${PROJECT_HOME}/index
+  client:
+    url: 127.0.0.1:6010
+    bucket: ${app.name}
+
+#integration net.tiklab.teston.config
+homes:
+  address: http://192.168.10.19:8080
+
+#project:
+#  address: http://127.0.0.1:8081
+
+#plugin net.tiklab.teston.config
+plugin:
+  path: ${PROJECT_HOME}/plugin
+
+#licences net.tiklab.teston.config
+licences:
+  path: ${PROJECT_HOME}/licences
+
+application: teston
+
+file:
+  path: http://file.dev.tiklab.net
+
+base:
+  url: http://192.168.10.16:3000
+
+eas:
+  embbed:
+    enable: true
+#  address: http://192.168.10.14:8080
+#  web:
+#    address: http://192.168.10.14:3001
+
+mysql:
+  database: tiklab_teston
+  embbed:
+    enable: false
