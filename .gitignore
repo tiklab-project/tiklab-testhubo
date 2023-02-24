@@ -12,6 +12,7 @@ logs/
 plugin/
 APP_NAME_IS_UNDEFINED/
 DATA_HOME_IS_UNDEFINED/
+LOG_PATH_IS_UNDEFINED/
 agent/
 temp/
 embbed/
