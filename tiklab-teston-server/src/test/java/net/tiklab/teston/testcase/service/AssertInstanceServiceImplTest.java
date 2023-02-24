@@ -1,8 +1,8 @@
 package net.tiklab.teston.testcase.service;
 
-import net.tiklab.teston.apitest.http.unittest.model.AssertInstance;
+import net.tiklab.teston.test.apiunit.http.instance.model.AssertInstance;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.apitest.http.unittest.service.AssertInstanceService;
+import net.tiklab.teston.test.apiunit.http.instance.service.AssertInstanceService;
 import net.tiklab.teston.config.TestConfig;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

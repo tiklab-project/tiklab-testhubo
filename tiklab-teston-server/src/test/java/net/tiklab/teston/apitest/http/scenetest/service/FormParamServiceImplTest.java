@@ -1,9 +1,9 @@
 package net.tiklab.teston.apitest.http.scenetest.service;
 
-import net.tiklab.teston.apitest.http.unittest.model.FormParam;
+import net.tiklab.teston.test.apiunit.http.cases.model.FormParam;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.apitest.http.unittest.service.FormParamService;
+import net.tiklab.teston.test.apiunit.http.cases.service.FormParamService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,7 +2,7 @@ package net.tiklab.teston.testplan.service;
 
 import net.tiklab.core.page.Pagination;
 
-import net.tiklab.teston.testcase.model.TestCase;
+import net.tiklab.teston.test.testcase.model.TestCase;
 import net.tiklab.teston.testplan.model.TestPlanDetail;
 import net.tiklab.teston.testplan.model.TestPlanDetailQuery;
 

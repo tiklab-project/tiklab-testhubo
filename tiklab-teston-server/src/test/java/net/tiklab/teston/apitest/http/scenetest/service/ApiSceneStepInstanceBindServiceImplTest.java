@@ -1,8 +1,9 @@
 package net.tiklab.teston.apitest.http.scenetest.service;
 
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.apitest.http.scenetest.model.ApiSceneStepInstanceBind;
+import net.tiklab.teston.test.apiscene.instance.model.ApiSceneStepInstanceBind;
 import net.tiklab.teston.config.TestConfig;
+import net.tiklab.teston.test.apiscene.instance.service.ApiSceneStepInstanceBindService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

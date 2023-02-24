@@ -3,7 +3,7 @@ package net.tiklab.teston.webtest.perftest.codegen;
 import net.tiklab.codegen.CodeGeneratorTemplate;
 import net.tiklab.codegen.config.CodeGeneratorConfig;
 import net.tiklab.codegen.config.ProjectGeneratorConfig;
-import net.tiklab.teston.webtest.perftest.entity.WebPerfStepEntity;
+import net.tiklab.teston.test.webperf.cases.entity.WebPerfStepEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

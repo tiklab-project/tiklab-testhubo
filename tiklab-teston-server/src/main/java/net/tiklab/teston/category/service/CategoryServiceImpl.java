@@ -9,9 +9,9 @@ import net.tiklab.teston.category.model.CategoryQuery;
 import net.tiklab.core.page.Pagination;
 import net.tiklab.beans.BeanMapper;
 import net.tiklab.join.JoinTemplate;
-import net.tiklab.teston.testcase.model.TestCase;
-import net.tiklab.teston.testcase.model.TestCaseQuery;
-import net.tiklab.teston.testcase.service.TestCaseService;
+import net.tiklab.teston.test.testcase.model.TestCase;
+import net.tiklab.teston.test.testcase.model.TestCaseQuery;
+import net.tiklab.teston.test.testcase.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

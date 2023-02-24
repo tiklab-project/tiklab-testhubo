@@ -1,22 +1,22 @@
 package net.tiklab.teston.testplan.service;
 
-import net.tiklab.teston.apptest.perftest.model.AppPerfCase;
-import net.tiklab.teston.apptest.perftest.model.AppPerfTestRequest;
-import net.tiklab.teston.apptest.perftest.service.AppPerfInstanceService;
-import net.tiklab.teston.apptest.perftest.service.AppPerfTestDispatchService;
-import net.tiklab.teston.apptest.scenetest.model.AppSceneInstance;
-import net.tiklab.teston.apptest.scenetest.model.AppSceneTestRequest;
-import net.tiklab.teston.apptest.scenetest.model.AppSceneTestResponse;
-import net.tiklab.teston.apptest.scenetest.model.AppTestConfig;
-import net.tiklab.teston.apptest.scenetest.service.AppSceneInstanceService;
-import net.tiklab.teston.apptest.scenetest.service.AppSceneTestDispatchService;
-import net.tiklab.teston.integration.environment.model.AppEnv;
-import net.tiklab.teston.integration.environment.service.AppEnvService;
+import net.tiklab.teston.test.appperf.cases.model.AppPerfCase;
+import net.tiklab.teston.test.appperf.execute.mode.AppPerfTestRequest;
+import net.tiklab.teston.test.appperf.instance.service.AppPerfInstanceService;
+import net.tiklab.teston.test.appperf.execute.service.AppPerfTestDispatchService;
+import net.tiklab.teston.test.appscene.instance.model.AppSceneInstance;
+import net.tiklab.teston.test.appscene.execute.model.AppSceneTestRequest;
+import net.tiklab.teston.test.appscene.execute.model.AppSceneTestResponse;
+import net.tiklab.teston.test.appscene.execute.model.AppTestConfig;
+import net.tiklab.teston.test.appscene.instance.service.AppSceneInstanceService;
+import net.tiklab.teston.test.appscene.execute.service.AppSceneTestDispatchService;
+import net.tiklab.teston.support.environment.model.AppEnv;
+import net.tiklab.teston.support.environment.service.AppEnvService;
 import net.tiklab.teston.testplan.model.TestPlanCaseInstanceBind;
 import net.tiklab.teston.testplan.model.TestPlanDetail;
 import net.tiklab.teston.testplan.model.TestPlanTestData;
-import net.tiklab.teston.apptest.perftest.model.AppPerfInstance;
-import net.tiklab.teston.apptest.perftest.model.AppPerfTestResponse;
+import net.tiklab.teston.test.appperf.instance.mode.AppPerfInstance;
+import net.tiklab.teston.test.appperf.execute.mode.AppPerfTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

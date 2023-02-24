@@ -4,7 +4,7 @@ import net.tiklab.utils.MapUtils;
 import net.tiklab.core.Result;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.apitest.http.scenetest.model.ApiSceneCase;
+import net.tiklab.teston.test.apiscene.cases.model.ApiSceneCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -3,7 +3,7 @@ package net.tiklab.teston.apptest;
 import net.tiklab.codegen.CodeGeneratorTemplate;
 import net.tiklab.codegen.config.CodeGeneratorConfig;
 import net.tiklab.codegen.config.ProjectGeneratorConfig;
-import net.tiklab.teston.apptest.perftest.entity.AppPerfCaseEntity;
+import net.tiklab.teston.test.appperf.cases.entity.AppPerfCaseEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

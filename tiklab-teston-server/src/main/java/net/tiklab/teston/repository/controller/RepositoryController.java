@@ -115,14 +115,5 @@ public class RepositoryController {
         return Result.ok(repositoryHomeTotal);
     }
 
-    @RequestMapping(path="/findRepositoryTotal",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryTotal",desc = "根据项目ID查找单个项目中概要")
-    @ApiParam(name = "id",desc = "项目ID",required = true)
-    public Result<RepositoryTotal> findWorkspaceTotal(@NotNull String id){
-        RepositoryTotal workspace = repositoryService.findRepositoryTotal(id);
-
-        return Result.ok(workspace);
-    }
-
 
 }

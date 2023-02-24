@@ -3,7 +3,7 @@ package net.tiklab.teston.apitest.http.perftest.codegen;
 import net.tiklab.codegen.CodeGeneratorTemplate;
 import net.tiklab.codegen.config.CodeGeneratorConfig;
 import net.tiklab.codegen.config.ProjectGeneratorConfig;
-import net.tiklab.teston.integration.agentconfig.entity.AgentConfigEntity;
+import net.tiklab.teston.support.agentconfig.entity.AgentConfigEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

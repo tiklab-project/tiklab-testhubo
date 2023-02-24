@@ -88,11 +88,5 @@ public interface RepositoryService {
      */
     RepositoryHomeTotal findRepositoryHomeTotal(@NotNull String userId);
 
-    /**
-     * 单个仓库的概况
-     * @param id
-     * @return
-     */
-    RepositoryTotal findRepositoryTotal(@NotNull String id);
 
 }

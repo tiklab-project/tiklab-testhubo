@@ -1,8 +1,9 @@
 package net.tiklab.teston.apptest.scenetest.service;
 
-import net.tiklab.teston.apptest.scenetest.model.AppSceneStep;
+import net.tiklab.teston.test.appscene.cases.model.AppSceneStep;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
+import net.tiklab.teston.test.appscene.cases.service.AppSceneStepService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

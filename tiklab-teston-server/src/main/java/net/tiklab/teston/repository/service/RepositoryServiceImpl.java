@@ -350,31 +350,5 @@ public class RepositoryServiceImpl implements RepositoryService {
         return repositoryHomeTotal;
     }
 
-    @Override
-    public RepositoryTotal findRepositoryTotal(String id) {
-        RepositoryTotal repositoryTotal = new RepositoryTotal();
-
-        //获取测试计划总和
-        TestPlanQuery testPlanQuery = new TestPlanQuery();
-        testPlanQuery.setRepositoryId(id);
-        List<TestPlan> testPlanList = testPlanService.findTestPlanList(testPlanQuery);
-        repositoryTotal.setPlanTotal(testPlanList.size());
-
-        //获取分组的总和
-        List<Category> categoryList = categoryService.findCategoryList(new CategoryQuery().setRepositoryId(id));
-        repositoryTotal.setCategoryTotal(categoryList.size());
-
-
-        //成员总和
-        DmUserQuery dmUserQuery = new DmUserQuery();
-        dmUserQuery.setDomainId(id);
-        List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
-        repositoryTotal.setMemberTotal(dmUserList.size());
-
-        repositoryTotal.setReviewTotal(0);
-
-        return repositoryTotal;
-    }
-
 
 }

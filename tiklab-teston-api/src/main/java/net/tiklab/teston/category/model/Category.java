@@ -8,7 +8,7 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.join.annotation.Join;
 import net.tiklab.join.annotation.JoinQuery;
 import net.tiklab.teston.repository.model.Repository;
-import net.tiklab.teston.testcase.model.TestCase;
+import net.tiklab.teston.test.testcase.model.TestCase;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;

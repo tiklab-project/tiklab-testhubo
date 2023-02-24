@@ -3,7 +3,7 @@ package net.tiklab.teston.apitest.http.scenetest.codegen;
 import net.tiklab.codegen.CodeGeneratorTemplate;
 import net.tiklab.codegen.config.CodeGeneratorConfig;
 import net.tiklab.codegen.config.ProjectGeneratorConfig;
-import net.tiklab.teston.apitest.http.unittest.entity.FormParamEntity;
+import net.tiklab.teston.test.apiunit.http.cases.entity.FormParamEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

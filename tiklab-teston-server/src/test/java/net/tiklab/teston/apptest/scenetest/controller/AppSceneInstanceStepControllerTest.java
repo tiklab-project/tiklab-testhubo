@@ -3,7 +3,7 @@ package net.tiklab.teston.apptest.scenetest.controller;
 import com.alibaba.fastjson.JSONObject;
 import net.tiklab.core.Result;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.apptest.scenetest.model.AppSceneInstanceStep;
+import net.tiklab.teston.test.appscene.instance.model.AppSceneInstanceStep;
 import net.tiklab.teston.config.TestConfig;
 import org.junit.Before;
 import org.junit.Test;

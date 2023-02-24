@@ -2,12 +2,10 @@ package net.tiklab.teston.testplan.service;
 
 import net.tiklab.beans.BeanMapper;
 import net.tiklab.join.JoinTemplate;
-import net.tiklab.teston.category.model.Category;
-import net.tiklab.teston.category.model.CategoryQuery;
 import net.tiklab.teston.category.service.CategoryService;
-import net.tiklab.teston.testcase.model.TestCase;
-import net.tiklab.teston.testcase.model.TestCaseQuery;
-import net.tiklab.teston.testcase.service.TestCaseService;
+import net.tiklab.teston.test.testcase.model.TestCase;
+import net.tiklab.teston.test.testcase.model.TestCaseQuery;
+import net.tiklab.teston.test.testcase.service.TestCaseService;
 import net.tiklab.teston.testplan.dao.TestPlanDetailDao;
 import net.tiklab.teston.testplan.entity.TestPlanDetailEntity;
 import net.tiklab.teston.testplan.model.TestPlanDetail;
@@ -15,15 +13,12 @@ import net.tiklab.teston.testplan.model.TestPlanDetailQuery;
 
 import net.tiklab.core.page.Pagination;
 import net.tiklab.core.page.PaginationBuilder;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
 * TestPlanDetailServiceImpl

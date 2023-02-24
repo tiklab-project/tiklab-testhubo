@@ -1,9 +1,10 @@
 package net.tiklab.teston.apitest.http.unittest.service;
 
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.apitest.http.unittest.model.ApiUnitInstanceBind;
+import net.tiklab.teston.test.apiunit.http.instance.model.ApiUnitInstanceBind;
 
 import net.tiklab.teston.config.TestConfig;
+import net.tiklab.teston.test.apiunit.http.instance.service.ApiUnitInstanceBindService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -3,7 +3,7 @@ package net.tiklab.teston.apitest.http.unittest.controller;
 import com.alibaba.fastjson.JSONObject;
 import net.tiklab.core.Result;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.apitest.http.unittest.model.ApiUnitInstanceBind;
+import net.tiklab.teston.test.apiunit.http.instance.model.ApiUnitInstanceBind;
 import net.tiklab.teston.config.TestConfig;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package net.tiklab.teston.testplan.controller;
 
 import net.tiklab.postin.annotation.Api;
-import net.tiklab.teston.testcase.model.TestCase;
+import net.tiklab.teston.test.testcase.model.TestCase;
 import net.tiklab.teston.testplan.model.TestPlanDetail;
 import net.tiklab.teston.testplan.model.TestPlanDetailQuery;
 import net.tiklab.teston.testplan.service.TestPlanDetailService;

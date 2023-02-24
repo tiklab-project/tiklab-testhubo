@@ -3,7 +3,7 @@ package net.tiklab.teston.apptest.perftest.controller;
 import com.alibaba.fastjson.JSONObject;
 import net.tiklab.core.Result;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.apptest.perftest.model.AppPerfCase;
+import net.tiklab.teston.test.appperf.cases.model.AppPerfCase;
 import net.tiklab.teston.config.TestConfig;
 import org.junit.Before;
 import org.junit.Test;

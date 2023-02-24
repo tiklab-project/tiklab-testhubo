@@ -1,9 +1,9 @@
 package net.tiklab.teston.apitest.http.scenetest.service;
 
-import net.tiklab.teston.apitest.http.unittest.model.AfterScript;
+import net.tiklab.teston.test.apiunit.http.cases.model.AfterScript;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.apitest.http.unittest.service.AfterScriptService;
+import net.tiklab.teston.test.apiunit.http.cases.service.AfterScriptService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
