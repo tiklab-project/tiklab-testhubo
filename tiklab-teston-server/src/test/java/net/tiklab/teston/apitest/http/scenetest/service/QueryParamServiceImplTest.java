@@ -1,9 +1,9 @@
 package net.tiklab.teston.apitest.http.scenetest.service;
 
-import net.tiklab.teston.test.apiunit.http.cases.model.QueryParam;
+import net.tiklab.teston.test.api.http.unit.cases.model.QueryParam;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.test.apiunit.http.cases.service.QueryParamService;
+import net.tiklab.teston.test.api.http.unit.cases.service.QueryParamService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

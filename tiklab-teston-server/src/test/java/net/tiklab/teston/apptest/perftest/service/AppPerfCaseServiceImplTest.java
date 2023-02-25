@@ -1,9 +1,9 @@
 package net.tiklab.teston.apptest.perftest.service;
 
-import net.tiklab.teston.test.appperf.cases.model.AppPerfCase;
+import net.tiklab.teston.test.app.perf.cases.model.AppPerfCase;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.test.appperf.cases.service.AppPerfCaseService;
+import net.tiklab.teston.test.app.perf.cases.service.AppPerfCaseService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

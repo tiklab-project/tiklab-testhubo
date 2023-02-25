@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import net.tiklab.core.Result;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.test.webscene.instance.model.WebSceneInstanceStep;
+import net.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceStep;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

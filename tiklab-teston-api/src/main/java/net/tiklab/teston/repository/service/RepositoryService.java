@@ -81,12 +81,5 @@ public interface RepositoryService {
      */
     List<Repository> findRepositoryJoinList(RepositoryQuery repositoryQuery);
 
-    /**
-     * 查找home页的概况
-     * @param userId
-     * @return
-     */
-    RepositoryHomeTotal findRepositoryHomeTotal(@NotNull String userId);
-
 
 }

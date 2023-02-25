@@ -1,9 +1,9 @@
 package net.tiklab.teston.apitest.http.scenetest.service;
 
-import net.tiklab.teston.test.apiunit.http.cases.model.JsonResponse;
+import net.tiklab.teston.test.api.http.unit.cases.model.JsonResponse;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.test.apiunit.http.cases.service.JsonResponseService;
+import net.tiklab.teston.test.api.http.unit.cases.service.JsonResponseService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

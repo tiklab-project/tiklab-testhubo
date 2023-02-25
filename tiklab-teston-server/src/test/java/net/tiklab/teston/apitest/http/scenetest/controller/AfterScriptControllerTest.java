@@ -4,7 +4,7 @@ import net.tiklab.utils.MapUtils;
 import net.tiklab.core.Result;
 import net.tiklab.postin.client.mock.JMockit;
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.test.apiunit.http.cases.model.AfterScript;
+import net.tiklab.teston.test.api.http.unit.cases.model.AfterScript;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,9 @@
 package net.tiklab.teston.webtest.scenetest.service;
 
 import net.tiklab.teston.config.TestConfig;
-import net.tiklab.teston.test.webscene.cases.model.WebSceneStep;
+import net.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.test.webscene.cases.service.WebSceneStepService;
+import net.tiklab.teston.test.web.scene.cases.service.WebSceneStepService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

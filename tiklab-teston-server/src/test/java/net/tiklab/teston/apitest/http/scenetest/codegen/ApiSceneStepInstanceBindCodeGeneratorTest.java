@@ -3,7 +3,7 @@ package net.tiklab.teston.apitest.http.scenetest.codegen;
 import net.tiklab.codegen.CodeGeneratorTemplate;
 import net.tiklab.codegen.config.CodeGeneratorConfig;
 import net.tiklab.codegen.config.ProjectGeneratorConfig;
-import net.tiklab.teston.test.apiscene.instance.entity.ApiSceneStepInstanceBindEntity;
+import net.tiklab.teston.test.api.http.scene.instance.entity.ApiSceneStepInstanceBindEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,9 +6,7 @@ import net.tiklab.postin.annotation.ApiParam;
 import net.tiklab.core.page.Pagination;
 import net.tiklab.core.Result;
 import net.tiklab.teston.repository.model.Repository;
-import net.tiklab.teston.repository.model.RepositoryHomeTotal;
 import net.tiklab.teston.repository.model.RepositoryQuery;
-import net.tiklab.teston.repository.model.RepositoryTotal;
 import net.tiklab.teston.repository.service.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,15 +102,6 @@ public class RepositoryController {
         List<Repository> repositoryJoinList = repositoryService.findRepositoryJoinList(repositoryQuery);
 
         return Result.ok(repositoryJoinList);
-    }
-
-    @RequestMapping(path = "/findRepositoryHomeTotal",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryHomeTotal",desc = "findRepositoryHomeTotal")
-    @ApiParam(name = "userId",desc = "userId",required = true)
-    public Result<RepositoryHomeTotal> findRepositoryHomeTotal(@NotNull String userId){
-        RepositoryHomeTotal repositoryHomeTotal = repositoryService.findRepositoryHomeTotal(userId);
-
-        return Result.ok(repositoryHomeTotal);
     }
 
 

@@ -1,8 +1,8 @@
 package net.tiklab.teston.testcase.service;
 
-import net.tiklab.teston.test.apiunit.http.instance.model.ResponseInstance;
+import net.tiklab.teston.test.api.http.unit.instance.model.ResponseInstance;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.test.apiunit.http.instance.service.ResponseInstanceService;
+import net.tiklab.teston.test.api.http.unit.instance.service.ResponseInstanceService;
 import net.tiklab.teston.config.TestConfig;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

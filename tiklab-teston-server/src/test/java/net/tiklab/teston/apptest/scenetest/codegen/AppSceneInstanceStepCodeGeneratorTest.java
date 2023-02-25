@@ -3,7 +3,7 @@ package net.tiklab.teston.apptest.scenetest.codegen;
 import net.tiklab.codegen.CodeGeneratorTemplate;
 import net.tiklab.codegen.config.CodeGeneratorConfig;
 import net.tiklab.codegen.config.ProjectGeneratorConfig;
-import net.tiklab.teston.test.appscene.instance.entity.AppSceneInstanceStepEntity;
+import net.tiklab.teston.test.app.scene.instance.entity.AppSceneInstanceStepEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

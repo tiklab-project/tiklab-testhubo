@@ -1,8 +1,8 @@
 package net.tiklab.teston.testcase.service;
 
-import net.tiklab.teston.test.apiscene.instance.model.ApiSceneInstance;
+import net.tiklab.teston.test.api.http.scene.instance.model.ApiSceneInstance;
 import net.tiklab.postin.client.mock.JMockit;
-import net.tiklab.teston.test.apiscene.instance.service.ApiSceneInstanceService;
+import net.tiklab.teston.test.api.http.scene.instance.service.ApiSceneInstanceService;
 import net.tiklab.teston.config.TestConfig;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

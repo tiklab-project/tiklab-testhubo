@@ -317,38 +317,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         return repositoryArrayList;
     }
 
-    @Override
-    public RepositoryHomeTotal findRepositoryHomeTotal(String userId) {
 
-
-        int all=0;
-        List<Repository> allRepository = findAllRepository();
-        if(CollectionUtils.isNotEmpty(allRepository)){
-            all = allRepository.size();
-        }
-
-        int create = 0;
-        List<Repository> repositoryList = findRepositoryList(new RepositoryQuery().setUserId(userId));
-        if(CollectionUtils.isNotEmpty(repositoryList)){
-            create = repositoryList.size();
-        }
-
-        int join = 0;
-        List<Repository> repositoryJoinList = findRepositoryJoinList(new RepositoryQuery().setUserId(userId));
-        if(CollectionUtils.isNotEmpty(repositoryJoinList)){
-            join = repositoryJoinList.size();
-        }
-
-
-        RepositoryHomeTotal repositoryHomeTotal = new RepositoryHomeTotal();
-        repositoryHomeTotal.setAllTotal(all);
-        repositoryHomeTotal.setCreateTotal(create);
-        repositoryHomeTotal.setJoinTotal(join);
-
-
-
-        return repositoryHomeTotal;
-    }
 
 
 }
