@@ -18,6 +18,10 @@
         <module>tiklab-teston-api</module>
         <module>tiklab-teston-server</module>
         <module>tiklab-teston-starter</module>
+        <module>tiklab-teston-function</module>
+        <module>tiklab-teston-web</module>
+        <module>tiklab-teston-app</module>
+        <module>tiklab-teston-apix</module>
     </modules>
 
     <properties>
