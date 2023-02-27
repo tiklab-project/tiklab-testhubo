@@ -16,6 +16,7 @@ import net.tiklab.postin.client.EnablePostInClient;
 import net.tiklab.pluginx.starter.EnablePluginServer;
 import net.tiklab.privilege.stater.EnablePrivilegeServer;
 import net.tiklab.rpc.starter.annotation.EnableRpc;
+import net.tiklab.teston.manager.EnableTestOnServer;
 import net.tiklab.tks.annotation.EnableTks;
 import net.tiklab.todotask.stater.EnableTodoTask;
 import net.tiklab.user.starter.EnableUser;

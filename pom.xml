@@ -15,13 +15,13 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>tiklab-teston-api</module>
-        <module>tiklab-teston-server</module>
         <module>tiklab-teston-starter</module>
         <module>tiklab-teston-function</module>
         <module>tiklab-teston-web</module>
         <module>tiklab-teston-app</module>
         <module>tiklab-teston-apix</module>
+        <module>tiklab-teston-manager</module>
+        <module>tiklab-teston-manager/tiklab-teston-manager-server</module>
     </modules>
 
     <properties>
