@@ -10,9 +10,9 @@ import net.tiklab.teston.manager.repository.model.RepositoryRecentQuery;
 
 import net.tiklab.beans.BeanMapper;
 import net.tiklab.join.JoinTemplate;
-import net.tiklab.teston.manager.testplan.model.TestPlan;
-import net.tiklab.teston.manager.testplan.model.TestPlanQuery;
-import net.tiklab.teston.manager.testplan.service.TestPlanService;
+import net.tiklab.teston.manager.testplan.cases.model.TestPlan;
+import net.tiklab.teston.manager.testplan.cases.model.TestPlanQuery;
+import net.tiklab.teston.manager.testplan.cases.service.TestPlanService;
 import net.tiklab.user.dmUser.model.DmUser;
 import net.tiklab.user.dmUser.model.DmUserQuery;
 import net.tiklab.user.dmUser.service.DmUserService;
