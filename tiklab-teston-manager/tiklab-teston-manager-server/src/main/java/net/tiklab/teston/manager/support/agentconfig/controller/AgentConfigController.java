@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AgentConfigController
+ * agent配置 控制器
  */
 @RestController
 @RequestMapping("/agentConfig")
-@Api(name = "AgentConfigController",desc = "AgentConfigController")
+@Api(name = "AgentConfigController",desc = "agent配置 管理")
 public class AgentConfigController {
 
     private static Logger logger = LoggerFactory.getLogger(AgentConfigController.class);
@@ -34,7 +34,7 @@ public class AgentConfigController {
     private AgentConfigService agentConfigService;
 
     @RequestMapping(path="/createAgentConfig",method = RequestMethod.POST)
-    @ApiMethod(name = "createAgentConfig",desc = "createAgentConfig")
+    @ApiMethod(name = "createAgentConfig",desc = "创建agent配置")
     @ApiParam(name = "agentConfig",desc = "agentConfig",required = true)
     public Result<String> createAgentConfig(@RequestBody @NotNull @Valid AgentConfig agentConfig){
         String id = agentConfigService.createAgentConfig(agentConfig);
@@ -43,7 +43,7 @@ public class AgentConfigController {
     }
 
     @RequestMapping(path="/updateAgentConfig",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAgentConfig",desc = "updateAgentConfig")
+    @ApiMethod(name = "updateAgentConfig",desc = "更新agent配置")
     @ApiParam(name = "agentConfig",desc = "agentConfig",required = true)
     public Result<Void> updateAgentConfig(@RequestBody @NotNull @Valid AgentConfig agentConfig){
         agentConfigService.updateAgentConfig(agentConfig);
@@ -52,7 +52,7 @@ public class AgentConfigController {
     }
 
     @RequestMapping(path="/deleteAgentConfig",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAgentConfig",desc = "deleteAgentConfig")
+    @ApiMethod(name = "deleteAgentConfig",desc = "删除agent配置")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAgentConfig(@NotNull String id){
         agentConfigService.deleteAgentConfig(id);
@@ -61,7 +61,7 @@ public class AgentConfigController {
     }
 
     @RequestMapping(path="/findAgentConfig",method = RequestMethod.POST)
-    @ApiMethod(name = "findAgentConfig",desc = "findAgentConfig")
+    @ApiMethod(name = "findAgentConfig",desc = "根据id查找agent配置")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AgentConfig> findAgentConfig(@NotNull String id){
         AgentConfig agentConfig = agentConfigService.findAgentConfig(id);
@@ -70,7 +70,7 @@ public class AgentConfigController {
     }
 
     @RequestMapping(path="/findAllAgentConfig",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAgentConfig",desc = "findAllAgentConfig")
+    @ApiMethod(name = "findAllAgentConfig",desc = "查找所有agent配置")
     public Result<List<AgentConfig>> findAllAgentConfig(){
         List<AgentConfig> agentConfigList = agentConfigService.findAllAgentConfig();
 
@@ -78,7 +78,7 @@ public class AgentConfigController {
     }
 
     @RequestMapping(path = "/findAgentConfigList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAgentConfigList",desc = "findAgentConfigList")
+    @ApiMethod(name = "findAgentConfigList",desc = "根据查询参数查询agent配置列表")
     @ApiParam(name = "agentConfigQuery",desc = "agentConfigQuery",required = true)
     public Result<List<AgentConfig>> findAgentConfigList(@RequestBody @Valid @NotNull AgentConfigQuery agentConfigQuery){
         List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(agentConfigQuery);
@@ -87,7 +87,7 @@ public class AgentConfigController {
     }
 
     @RequestMapping(path = "/findAgentConfigPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAgentConfigPage",desc = "findAgentConfigPage")
+    @ApiMethod(name = "findAgentConfigPage",desc = "根据查询参数按分页查询agent配置")
     @ApiParam(name = "agentConfigQuery",desc = "agentConfigQuery",required = true)
     public Result<Pagination<AgentConfig>> findAgentConfigPage(@RequestBody @Valid @NotNull AgentConfigQuery agentConfigQuery){
         Pagination<AgentConfig> pagination = agentConfigService.findAgentConfigPage(agentConfigQuery);

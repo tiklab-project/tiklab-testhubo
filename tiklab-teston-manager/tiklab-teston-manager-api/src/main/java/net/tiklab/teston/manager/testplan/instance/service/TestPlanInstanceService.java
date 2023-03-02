@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestPlanInstanceService
+* 测试计划实例 服务接口
 */
 @JoinProvider(model = TestPlanInstance.class)
 public interface TestPlanInstanceService {
 
     /**
-    * 创建
+    * 创建测试计划实例
     * @param testPlanInstance
     * @return
     */
     String createTestPlanInstance(@NotNull @Valid TestPlanInstance testPlanInstance);
 
     /**
-    * 更新
+    * 更新测试计划实例
     * @param testPlanInstance
     */
     void updateTestPlanInstance(@NotNull @Valid TestPlanInstance testPlanInstance);
 
     /**
-    * 删除
+    * 删除测试计划实例
     * @param id
     */
     void deleteTestPlanInstance(@NotNull String id);
@@ -44,28 +44,28 @@ public interface TestPlanInstanceService {
     List<TestPlanInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找测试计划实例
     * @param id
     * @return
     */
     TestPlanInstance findTestPlanInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有测试计划实例
     * @return
     */
     @FindAll
     List<TestPlanInstance> findAllTestPlanInstance();
 
     /**
-    * 查询列表
+    * 根据查询参数查询测试计划实例列表
     * @param testPlanInstanceQuery
     * @return
     */
     List<TestPlanInstance> findTestPlanInstanceList(TestPlanInstanceQuery testPlanInstanceQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询测试计划实例
     * @param testPlanInstanceQuery
     * @return
     */

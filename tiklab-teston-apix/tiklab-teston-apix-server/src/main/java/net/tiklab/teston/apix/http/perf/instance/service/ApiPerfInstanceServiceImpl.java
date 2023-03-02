@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* ApiPerfInstanceServiceImpl
+* 接口性能历史实例 服务
 */
 @Service
 public class ApiPerfInstanceServiceImpl implements ApiPerfInstanceService {

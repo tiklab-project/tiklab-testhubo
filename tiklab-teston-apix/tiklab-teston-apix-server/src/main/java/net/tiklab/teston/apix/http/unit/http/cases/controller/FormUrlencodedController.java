@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * FormUrlencodedController
+ * form-urlencoded 控制器
  */
 @RestController
 @RequestMapping("/formUrlencoded")
-@Api(name = "FormUrlencodedController",desc = "FormUrlencodedController")
+@Api(name = "FormUrlencodedController",desc = "form-urlencoded 参数管理")
 public class FormUrlencodedController {
 
     private static Logger logger = LoggerFactory.getLogger(FormUrlencodedController.class);
@@ -34,7 +34,7 @@ public class FormUrlencodedController {
     private FormUrlencodedService formUrlencodedService;
 
     @RequestMapping(path="/createFormUrlencoded",method = RequestMethod.POST)
-    @ApiMethod(name = "createFormUrlencoded",desc = "createFormUrlencoded")
+    @ApiMethod(name = "createFormUrlencoded",desc = "创建form-urlencoded ")
     @ApiParam(name = "formUrlencoded",desc = "formUrlencoded",required = true)
     public Result<String> createFormUrlencoded(@RequestBody @NotNull @Valid FormUrlencoded formUrlencoded){
         String id = formUrlencodedService.createFormUrlencoded(formUrlencoded);
@@ -43,7 +43,7 @@ public class FormUrlencodedController {
     }
 
     @RequestMapping(path="/updateFormUrlencoded",method = RequestMethod.POST)
-    @ApiMethod(name = "updateFormUrlencoded",desc = "updateFormUrlencoded")
+    @ApiMethod(name = "updateFormUrlencoded",desc = "更新form-urlencoded ")
     @ApiParam(name = "formUrlencoded",desc = "formUrlencoded",required = true)
     public Result<Void> updateFormUrlencoded(@RequestBody @NotNull @Valid FormUrlencoded formUrlencoded){
         formUrlencodedService.updateFormUrlencoded(formUrlencoded);
@@ -52,7 +52,7 @@ public class FormUrlencodedController {
     }
 
     @RequestMapping(path="/deleteFormUrlencoded",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteFormUrlencoded",desc = "deleteFormUrlencoded")
+    @ApiMethod(name = "deleteFormUrlencoded",desc = "删除form-urlencoded ")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteFormUrlencoded(@NotNull String id){
         formUrlencodedService.deleteFormUrlencoded(id);
@@ -61,7 +61,7 @@ public class FormUrlencodedController {
     }
 
     @RequestMapping(path="/findFormUrlencoded",method = RequestMethod.POST)
-    @ApiMethod(name = "findFormUrlencoded",desc = "findFormUrlencoded")
+    @ApiMethod(name = "findFormUrlencoded",desc = "根据id查找form-urlencoded")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<FormUrlencoded> findFormUrlencoded(@NotNull String id){
         FormUrlencoded formUrlencoded = formUrlencodedService.findFormUrlencoded(id);
@@ -70,7 +70,7 @@ public class FormUrlencodedController {
     }
 
     @RequestMapping(path="/findAllFormUrlencoded",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllFormUrlencoded",desc = "findAllFormUrlencoded")
+    @ApiMethod(name = "findAllFormUrlencoded",desc = "查找所有form-urlencoded")
     public Result<List<FormUrlencoded>> findAllFormUrlencoded(){
         List<FormUrlencoded> formUrlencodedList = formUrlencodedService.findAllFormUrlencoded();
 
@@ -78,7 +78,7 @@ public class FormUrlencodedController {
     }
 
     @RequestMapping(path = "/findFormUrlencodedList",method = RequestMethod.POST)
-    @ApiMethod(name = "findFormUrlencodedList",desc = "findFormUrlencodedList")
+    @ApiMethod(name = "findFormUrlencodedList",desc = "查询form-urlencoded 列表")
     @ApiParam(name = "formUrlencodedQuery",desc = "formUrlencodedQuery",required = true)
     public Result<List<FormUrlencoded>> findFormUrlencodedList(@RequestBody @Valid @NotNull FormUrlencodedQuery formUrlencodedQuery){
         List<FormUrlencoded> formUrlencodedList = formUrlencodedService.findFormUrlencodedList(formUrlencodedQuery);
@@ -87,7 +87,7 @@ public class FormUrlencodedController {
     }
 
     @RequestMapping(path = "/findFormUrlencodedPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findFormUrlencodedPage",desc = "findFormUrlencodedPage")
+    @ApiMethod(name = "findFormUrlencodedPage",desc = "按分页查询form-urlencoded ")
     @ApiParam(name = "formUrlencodedQuery",desc = "formUrlencodedQuery",required = true)
     public Result<Pagination<FormUrlencoded>> findFormUrlencodedPage(@RequestBody @Valid @NotNull FormUrlencodedQuery formUrlencodedQuery){
         Pagination<FormUrlencoded> pagination = formUrlencodedService.findFormUrlencodedPage(formUrlencodedQuery);

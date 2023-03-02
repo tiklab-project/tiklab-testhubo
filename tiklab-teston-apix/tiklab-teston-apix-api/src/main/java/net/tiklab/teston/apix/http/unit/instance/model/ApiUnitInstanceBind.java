@@ -13,6 +13,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
 
+/**
+ * 接口单元实例中间表 模型
+ */
 @ApiModel
 @Join
 @Mapper(targetAlias = "ApiUnitInstanceBindEntity")
@@ -24,7 +27,7 @@ public class ApiUnitInstanceBind extends BaseModel {
     @ApiProperty(name="apiUnitId",desc="apiUnitId")
     private String apiUnitId;
 
-    @ApiProperty(name="apiUnitInstanceId",desc="apiUnitInstanceId")
+    @ApiProperty(name="apiUnitInstanceId",desc="所属接口单元历史实例")
     @Mappings({
             @Mapping(source = "apiUnitInstance.id",target = "apiUnitInstanceId")
     })

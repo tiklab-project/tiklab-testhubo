@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * QueryParamController
+ * query 控制器
  */
 @RestController
 @RequestMapping("/queryParam")
@@ -34,7 +34,7 @@ public class QueryParamController {
     private QueryParamService queryParamService;
 
     @RequestMapping(path="/createQueryParam",method = RequestMethod.POST)
-    @ApiMethod(name = "createQueryParam",desc = "createQueryParam")
+    @ApiMethod(name = "createQueryParam",desc = "创建query")
     @ApiParam(name = "queryParam",desc = "queryParam",required = true)
     public Result<String> createQueryParam(@RequestBody @NotNull @Valid QueryParam queryParam){
         String id = queryParamService.createQueryParam(queryParam);
@@ -43,7 +43,7 @@ public class QueryParamController {
     }
 
     @RequestMapping(path="/updateQueryParam",method = RequestMethod.POST)
-    @ApiMethod(name = "updateQueryParam",desc = "updateQueryParam")
+    @ApiMethod(name = "updateQueryParam",desc = "更新query")
     @ApiParam(name = "queryParam",desc = "queryParam",required = true)
     public Result<Void> updateQueryParam(@RequestBody @NotNull @Valid QueryParam queryParam){
         queryParamService.updateQueryParam(queryParam);
@@ -52,7 +52,7 @@ public class QueryParamController {
     }
 
     @RequestMapping(path="/deleteQueryParam",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteQueryParam",desc = "deleteQueryParam")
+    @ApiMethod(name = "deleteQueryParam",desc = "删除query")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteQueryParam(@NotNull String id){
         queryParamService.deleteQueryParam(id);
@@ -61,7 +61,7 @@ public class QueryParamController {
     }
 
     @RequestMapping(path="/findQueryParam",method = RequestMethod.POST)
-    @ApiMethod(name = "findQueryParam",desc = "findQueryParam")
+    @ApiMethod(name = "findQueryParam",desc = "根据id查找query")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<QueryParam> findQueryParam(@NotNull String id){
         QueryParam queryParam = queryParamService.findQueryParam(id);
@@ -70,7 +70,7 @@ public class QueryParamController {
     }
 
     @RequestMapping(path="/findAllQueryParam",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllQueryParam",desc = "findAllQueryParam")
+    @ApiMethod(name = "findAllQueryParam",desc = "查找所有query")
     public Result<List<QueryParam>> findAllQueryParam(){
         List<QueryParam> queryParamList = queryParamService.findAllQueryParam();
 
@@ -78,7 +78,7 @@ public class QueryParamController {
     }
 
     @RequestMapping(path = "/findQueryParamList",method = RequestMethod.POST)
-    @ApiMethod(name = "findQueryParamList",desc = "findQueryParamList")
+    @ApiMethod(name = "findQueryParamList",desc = "根据查询参数查询query列表")
     @ApiParam(name = "queryParamQuery",desc = "queryParamQuery",required = true)
     public Result<List<QueryParam>> findQueryParamList(@RequestBody @Valid @NotNull QueryParamQuery queryParamQuery){
         List<QueryParam> queryParamList = queryParamService.findQueryParamList(queryParamQuery);
@@ -87,7 +87,7 @@ public class QueryParamController {
     }
 
     @RequestMapping(path = "/findQueryParamPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findQueryParamPage",desc = "findQueryParamPage")
+    @ApiMethod(name = "findQueryParamPage",desc = "根据查询参数按分页查询query")
     @ApiParam(name = "queryParamQuery",desc = "queryParamQuery",required = true)
     public Result<Pagination<QueryParam>> findQueryParamPage(@RequestBody @Valid @NotNull QueryParamQuery queryParamQuery){
         Pagination<QueryParam> pagination = queryParamService.findQueryParamPage(queryParamQuery);

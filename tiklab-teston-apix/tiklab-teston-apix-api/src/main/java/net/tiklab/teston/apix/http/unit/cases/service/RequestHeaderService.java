@@ -11,25 +11,25 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* RequestHeaderService
+* 请求头 服务接口
 */
 public interface RequestHeaderService {
 
     /**
-    * 创建
+    * 创建请求头
     * @param requestHeader
     * @return
     */
     String createRequestHeader(@NotNull @Valid RequestHeader requestHeader);
 
     /**
-    * 更新
+    * 更新请求头
     * @param requestHeader
     */
     void updateRequestHeader(@NotNull @Valid RequestHeader requestHeader);
 
     /**
-    * 删除
+    * 删除请求头
     * @param id
     */
     void deleteRequestHeader(@NotNull String id);
@@ -39,33 +39,32 @@ public interface RequestHeaderService {
     List<RequestHeader> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找请求头
     * @param id
     * @return
     */
     RequestHeader findRequestHeader(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有请求头
     * @return
     */
     List<RequestHeader> findAllRequestHeader();
 
     /**
-    * 查询列表
+    * 根据参数查询请求头列表
     * @param requestHeaderQuery
     * @return
     */
     List<RequestHeader> findRequestHeaderList(RequestHeaderQuery requestHeaderQuery);
 
     /**
-    * 按分页查询
+    * 根据参数按分页查询请求头
     * @param requestHeaderQuery
     * @return
     */
     Pagination<RequestHeader> findRequestHeaderPage(RequestHeaderQuery requestHeaderQuery);
 
-    //========
     /**
      *请求头拼接
      * @param step 用例步骤

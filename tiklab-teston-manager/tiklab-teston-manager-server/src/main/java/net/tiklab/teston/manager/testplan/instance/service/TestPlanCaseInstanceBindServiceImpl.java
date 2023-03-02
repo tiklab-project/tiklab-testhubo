@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
-* TestPlanCaseInstanceBindServiceImpl
+* 测试计划下用例的实例中间层 服务
 */
 @Service
 public class TestPlanCaseInstanceBindServiceImpl implements TestPlanCaseInstanceBindService {

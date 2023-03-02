@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AfterScriptService
+* 后置脚本 服务接口
 */
 public interface AfterScriptService {
 
     /**
-    * 创建
+    * 创建后置脚本
     * @param afterScript
     * @return
     */
     String createAfterScript(@NotNull @Valid AfterScript afterScript);
 
     /**
-    * 更新
+    * 更新后置脚本
     * @param afterScript
     */
     void updateAfterScript(@NotNull @Valid AfterScript afterScript);
 
     /**
-    * 删除
+    * 删除后置脚本
     * @param id
     */
     void deleteAfterScript(@NotNull String id);
@@ -37,27 +37,27 @@ public interface AfterScriptService {
     List<AfterScript> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找后置脚本
     * @param id
     * @return
     */
     AfterScript findAfterScript(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有后置脚本
     * @return
     */
     List<AfterScript> findAllAfterScript();
 
     /**
-    * 查询列表
+    * 通过查询参数查询后置脚本列表
     * @param afterScriptQuery
     * @return
     */
     List<AfterScript> findAfterScriptList(AfterScriptQuery afterScriptQuery);
 
     /**
-    * 按分页查询
+    * 通过查询参数按分页查询后置脚本
     * @param afterScriptQuery
     * @return
     */

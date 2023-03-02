@@ -8,6 +8,9 @@ import net.tiklab.teston.apix.http.scene.execute.model.ApiSceneTestRequest;
 
 import java.util.List;
 
+/**
+ *接口性能测试请求参数 模型
+ */
 @ApiModel
 public class ApiPerfTestRequest extends BaseModel {
 

@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestPlanCaseInstanceBindService
+* 测试计划下用例的实例中间层 服务接口
 */
 public interface TestPlanCaseInstanceBindService {
 
     /**
-    * 创建
+    * 创建用例的实例中间层
     * @param testPlanCaseInstanceBind
     * @return
     */
     String createTestPlanCaseInstanceBind(@NotNull @Valid TestPlanCaseInstanceBind testPlanCaseInstanceBind);
 
     /**
-    * 更新
+    * 更新用例的实例中间层
     * @param testPlanCaseInstanceBind
     */
     void updateTestPlanCaseInstanceBind(@NotNull @Valid TestPlanCaseInstanceBind testPlanCaseInstanceBind);
 
     /**
-    * 删除
+    * 删除用例的实例中间层
     * @param id
     */
     void deleteTestPlanCaseInstanceBind(@NotNull String id);
@@ -37,27 +37,27 @@ public interface TestPlanCaseInstanceBindService {
     List<TestPlanCaseInstanceBind> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找用例的实例中间层
     * @param id
     * @return
     */
     TestPlanCaseInstanceBind findTestPlanCaseInstanceBind(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有用例的实例中间层
     * @return
     */
     List<TestPlanCaseInstanceBind> findAllTestPlanCaseInstanceBind();
 
     /**
-    * 查询列表
+    * 根据查询参数查询用例的实例中间层列表
     * @param testPlanCaseInstanceBindQuery
     * @return
     */
     List<TestPlanCaseInstanceBind> findTestPlanCaseInstanceBindList(TestPlanCaseInstanceBindQuery testPlanCaseInstanceBindQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询用例的实例中间层
     * @param testPlanCaseInstanceBindQuery
     * @return
     */

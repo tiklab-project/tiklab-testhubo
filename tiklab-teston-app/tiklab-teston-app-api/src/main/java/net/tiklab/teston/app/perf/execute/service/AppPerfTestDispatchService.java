@@ -5,7 +5,7 @@ import net.tiklab.teston.app.perf.execute.mode.AppPerfTestRequest;
 import net.tiklab.teston.app.perf.execute.mode.AppPerfTestResponse;
 
 /**
- * app性能测试调度服务
+ * app性能测试调度 服务接口
  */
 public interface AppPerfTestDispatchService {
 

@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
+/**
+ * 测试计划 实体
+ */
 @Entity @Table(name="teston_test_plan")
 public class TestPlanEntity implements Serializable {
 
@@ -18,33 +21,43 @@ public class TestPlanEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    //测试计划名称
     @Column(name = "name",length = 32)
     private String name;
 
+    // 开始时间
     @Column(name = "start_time")
     private Date startTime;
 
+    // 结束时间
     @Column(name = "end_time")
     private Date endTime;
 
+    // 状态
     @Column(name = "state")
     private Integer state;
 
+    // 负责人
     @Column(name = "principals",length = 32)
     private String principals;
 
+    // 所属仓库
     @Column(name = "repository_id",length = 32)
     private String repositoryId;
 
+    // 描述
     @Column(name = "description",length = 64)
     private String desc;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 更新时间
     @Column(name = "update_time")
     private Timestamp updateTime;
 
+    // 排序
     @Column(name = "sort")
     private Integer sort;
 

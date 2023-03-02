@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* PreScriptServiceImpl
+* 前置脚本 服务
 */
 @Service
 public class PreScriptServiceImpl implements PreScriptService {

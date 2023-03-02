@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.apix.http.unit.instance.model.ApiUnitInstance;
 
+/**
+ * 接口场景下步骤的实例公共表 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiSceneStepInstanceBindEntity")
 @Join
@@ -19,10 +22,10 @@ public class ApiSceneStepInstanceBind extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="apiSceneInstanceId",desc="apiSceneInstanceId")
+    @ApiProperty(name="apiSceneInstanceId",desc="接口场景历史id")
     private String apiSceneInstanceId;
 
-    @ApiProperty(name="apiUnitInstance",desc="apiUnitInstance")
+    @ApiProperty(name="apiUnitInstance",desc="接口单元历史id")
     @Mappings({
             @Mapping(source = "apiUnitInstance.id",target = "apiUnitInstanceId")
     })

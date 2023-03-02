@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AgentConfigService
+* agent配置 服务接口
 */
 public interface AgentConfigService {
 
     /**
-    * 创建
+    * 创建agent配置
     * @param agentConfig
     * @return
     */
     String createAgentConfig(@NotNull @Valid AgentConfig agentConfig);
 
     /**
-    * 更新
+    * 更新agent配置
     * @param agentConfig
     */
     void updateAgentConfig(@NotNull @Valid AgentConfig agentConfig);
 
     /**
-    * 删除
+    * 删除agent配置
     * @param id
     */
     void deleteAgentConfig(@NotNull String id);
@@ -37,27 +37,27 @@ public interface AgentConfigService {
     List<AgentConfig> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找agent配置
     * @param id
     * @return
     */
     AgentConfig findAgentConfig(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有agent配置
     * @return
     */
     List<AgentConfig> findAllAgentConfig();
 
     /**
-    * 查询列表
+    * 根据查询参数查询agent配置列表
     * @param agentConfigQuery
     * @return
     */
     List<AgentConfig> findAgentConfigList(AgentConfigQuery agentConfigQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询agent配置
     * @param agentConfigQuery
     * @return
     */

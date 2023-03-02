@@ -9,12 +9,12 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AssertInstanceService
+* 断言实例 服务接口
 */
 public interface AssertInstanceService {
 
     /**
-    * 创建
+    * 创建断言实例
     * @param assertInstance
     * @return
     */
@@ -27,7 +27,7 @@ public interface AssertInstanceService {
     void updateAssertInstance(@NotNull @Valid AssertInstance assertInstance);
 
     /**
-    * 删除
+    * 删除断言实例
     * @param id
     */
     void deleteAssertInstance(@NotNull String id);
@@ -37,27 +37,27 @@ public interface AssertInstanceService {
     List<AssertInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找断言实例
     * @param id
     * @return
     */
     AssertInstance findAssertInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有断言实例
     * @return
     */
     List<AssertInstance> findAllAssertInstance();
 
     /**
-    * 查询列表
+    * 根据查询参数查询断言实例列表
     * @param assertInstanceQuery
     * @return
     */
     List<AssertInstance> findAssertInstanceList(AssertInstanceQuery assertInstanceQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询断言实例
     * @param assertInstanceQuery
     * @return
     */

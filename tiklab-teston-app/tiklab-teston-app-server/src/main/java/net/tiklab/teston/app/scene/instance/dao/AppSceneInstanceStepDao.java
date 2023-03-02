@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AppSceneInstanceStepDao
+ * app场景步骤实例 数据访问
  */
 @Repository
 public class AppSceneInstanceStepDao{
@@ -26,7 +26,7 @@ public class AppSceneInstanceStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建app场景步骤实例
      * @param appSceneInstanceStepEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AppSceneInstanceStepDao{
     }
 
     /**
-     * 更新
+     * 更新app场景步骤实例
      * @param appSceneInstanceStepEntity
      */
     public void updateAppSceneInstanceStep(AppSceneInstanceStepEntity appSceneInstanceStepEntity){
@@ -43,7 +43,7 @@ public class AppSceneInstanceStepDao{
     }
 
     /**
-     * 删除
+     * 删除app场景步骤实例
      * @param id
      */
     public void deleteAppSceneInstanceStep(String id){
@@ -55,7 +55,7 @@ public class AppSceneInstanceStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找app场景步骤实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AppSceneInstanceStepDao{
     }
 
     /**
-    * findAllAppSceneInstanceStep
+    * 根据查询参数查找所有app场景步骤实例
     * @return
     */
     public List<AppSceneInstanceStepEntity> findAllAppSceneInstanceStep() {
@@ -75,6 +75,11 @@ public class AppSceneInstanceStepDao{
         return jpaTemplate.findList(AppSceneInstanceStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询app场景步骤实例列表
+     * @param appSceneInstanceStepQuery
+     * @return
+     */
     public List<AppSceneInstanceStepEntity> findAppSceneInstanceStepList(AppSceneInstanceStepQuery appSceneInstanceStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppSceneInstanceStepEntity.class)
                 .eq("appSceneInstanceId", appSceneInstanceStepQuery.getAppSceneInstanceId())
@@ -83,6 +88,11 @@ public class AppSceneInstanceStepDao{
         return jpaTemplate.findList(queryCondition,AppSceneInstanceStepEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询app场景步骤实例
+     * @param appSceneInstanceStepQuery
+     * @return
+     */
     public Pagination<AppSceneInstanceStepEntity> findAppSceneInstanceStepPage(AppSceneInstanceStepQuery appSceneInstanceStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppSceneInstanceStepEntity.class)
                 .eq("appSceneInstanceId", appSceneInstanceStepQuery.getAppSceneInstanceId())

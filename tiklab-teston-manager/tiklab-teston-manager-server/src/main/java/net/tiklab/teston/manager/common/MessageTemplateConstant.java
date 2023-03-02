@@ -1,5 +1,8 @@
 package net.tiklab.teston.manager.common;
 
+/**
+ * 消息配置
+ */
 public class MessageTemplateConstant {
 
     //消息模板ID

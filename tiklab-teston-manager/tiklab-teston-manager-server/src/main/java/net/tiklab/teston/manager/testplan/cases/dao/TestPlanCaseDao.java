@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * TestPlanCaseDao
+ * 测试计划绑定的用例 服务接口
  */
 @Repository
 public class TestPlanCaseDao {
@@ -26,7 +26,7 @@ public class TestPlanCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建绑定的用例
      * @param testPlanCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class TestPlanCaseDao {
     }
 
     /**
-     * 更新
+     * 更新绑定的用例
      * @param testPlanCaseEntity
      */
     public void updateTestPlanCase(TestPlanCaseEntity testPlanCaseEntity){
@@ -43,7 +43,7 @@ public class TestPlanCaseDao {
     }
 
     /**
-     * 删除
+     * 删除绑定的用例
      * @param id
      */
     public void deleteTestPlanCase(String id){
@@ -55,7 +55,7 @@ public class TestPlanCaseDao {
     }
 
     /**
-     * 查找
+     * 根据id查找绑定的用例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class TestPlanCaseDao {
     }
 
     /**
-    * findAllTestPlanCase
+    * 查找所有绑定的用例
     * @return
     */
     public List<TestPlanCaseEntity> findAllTestPlanCase() {
@@ -75,6 +75,11 @@ public class TestPlanCaseDao {
         return jpaTemplate.findList(TestPlanCaseEntity.class,idList);
     }
 
+    /**
+     * 查询绑定的用例 列表
+     * @param testPlanCaseQuery
+     * @return
+     */
     public List<TestPlanCaseEntity> findTestPlanCaseList(TestPlanCaseQuery testPlanCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanCaseEntity.class)
                 .eq("testPlanId", testPlanCaseQuery.getTestPlanId())
@@ -83,6 +88,11 @@ public class TestPlanCaseDao {
         return jpaTemplate.findList(queryCondition, TestPlanCaseEntity.class);
     }
 
+    /**
+     * 按分页查询绑定的用例
+     * @param testPlanCaseQuery
+     * @return
+     */
     public Pagination<TestPlanCaseEntity> findTestPlanCasePage(TestPlanCaseQuery testPlanCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanCaseEntity.class)
                 .eq("testPlanId", testPlanCaseQuery.getTestPlanId())

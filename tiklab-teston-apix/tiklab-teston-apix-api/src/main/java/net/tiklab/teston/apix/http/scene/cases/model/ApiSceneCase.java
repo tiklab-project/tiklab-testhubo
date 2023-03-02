@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * 接口场景 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiSceneCaseEntity")
 @Join

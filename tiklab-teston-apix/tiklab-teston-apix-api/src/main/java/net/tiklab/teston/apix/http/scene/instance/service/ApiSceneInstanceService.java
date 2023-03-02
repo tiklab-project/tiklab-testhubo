@@ -14,13 +14,13 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestInstanceService
+* 接口场景历史实例 服务接口
 */
 @JoinProvider(model = ApiSceneInstance.class)
 public interface ApiSceneInstanceService {
 
     /**
-    * 创建
+    * 创建接口场景历史实例
     * @param scenInstance
     * @return
     */
@@ -33,7 +33,7 @@ public interface ApiSceneInstanceService {
     void updateApiSceneInstance(@NotNull @Valid ApiSceneInstance scenInstance);
 
     /**
-    * 删除
+    * 删除接口场景历史实例
     * @param id
     */
     void deleteApiSceneInstance(@NotNull String id);
@@ -45,28 +45,28 @@ public interface ApiSceneInstanceService {
     List<ApiSceneInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 通过id查找接口场景历史实例
     * @param id
     * @return
     */
     ApiSceneInstance findApiSceneInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口场景历史实例
     * @return
     */
     @FindAll
     List<ApiSceneInstance> findAllApiSceneInstance();
 
     /**
-    * 查询列表
+    * 根据查询参数查询接口场景历史实例列表
     * @param scenInstanceQuery
     * @return
     */
     List<ApiSceneInstance> findApiSceneInstanceList(ApiSceneInstanceQuery scenInstanceQuery);
 
     /**
-    * 按分页查询
+    * 根据查询按分页查询接口场景历史实例
     * @param scenInstanceQuery
     * @return
     */

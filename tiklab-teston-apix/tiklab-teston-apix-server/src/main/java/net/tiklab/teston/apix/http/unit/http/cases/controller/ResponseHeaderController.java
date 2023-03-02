@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ResponseHeaderController
+ * 响应头 控制器
  */
 @RestController
 @RequestMapping("/responseHeader")
@@ -34,7 +34,7 @@ public class ResponseHeaderController {
     private ResponseHeaderService responseHeaderService;
 
     @RequestMapping(path="/createResponseHeader",method = RequestMethod.POST)
-    @ApiMethod(name = "createResponseHeader",desc = "createResponseHeader")
+    @ApiMethod(name = "createResponseHeader",desc = "创建响应头")
     @ApiParam(name = "responseHeader",desc = "responseHeader",required = true)
     public Result<String> createResponseHeader(@RequestBody @NotNull @Valid ResponseHeader responseHeader){
         String id = responseHeaderService.createResponseHeader(responseHeader);
@@ -43,7 +43,7 @@ public class ResponseHeaderController {
     }
 
     @RequestMapping(path="/updateResponseHeader",method = RequestMethod.POST)
-    @ApiMethod(name = "updateResponseHeader",desc = "updateResponseHeader")
+    @ApiMethod(name = "updateResponseHeader",desc = "更新响应头")
     @ApiParam(name = "responseHeader",desc = "responseHeader",required = true)
     public Result<Void> updateResponseHeader(@RequestBody @NotNull @Valid ResponseHeader responseHeader){
         responseHeaderService.updateResponseHeader(responseHeader);
@@ -52,7 +52,7 @@ public class ResponseHeaderController {
     }
 
     @RequestMapping(path="/deleteResponseHeader",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteResponseHeader",desc = "deleteResponseHeader")
+    @ApiMethod(name = "deleteResponseHeader",desc = "删除响应头")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteResponseHeader(@NotNull String id){
         responseHeaderService.deleteResponseHeader(id);
@@ -61,7 +61,7 @@ public class ResponseHeaderController {
     }
 
     @RequestMapping(path="/findResponseHeader",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseHeader",desc = "findResponseHeader")
+    @ApiMethod(name = "findResponseHeader",desc = "查找响应头")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ResponseHeader> findResponseHeader(@NotNull String id){
         ResponseHeader responseHeader = responseHeaderService.findResponseHeader(id);
@@ -70,7 +70,7 @@ public class ResponseHeaderController {
     }
 
     @RequestMapping(path="/findAllResponseHeader",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllResponseHeader",desc = "findAllResponseHeader")
+    @ApiMethod(name = "findAllResponseHeader",desc = "查找所有响应头")
     public Result<List<ResponseHeader>> findAllResponseHeader(){
         List<ResponseHeader> responseHeaderList = responseHeaderService.findAllResponseHeader();
 
@@ -78,7 +78,7 @@ public class ResponseHeaderController {
     }
 
     @RequestMapping(path = "/findResponseHeaderList",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseHeaderList",desc = "findResponseHeaderList")
+    @ApiMethod(name = "findResponseHeaderList",desc = "根据查询参数查询响应头列表")
     @ApiParam(name = "responseHeaderQuery",desc = "responseHeaderQuery",required = true)
     public Result<List<ResponseHeader>> findResponseHeaderList(@RequestBody @Valid @NotNull ResponseHeaderQuery responseHeaderQuery){
         List<ResponseHeader> responseHeaderList = responseHeaderService.findResponseHeaderList(responseHeaderQuery);
@@ -87,7 +87,7 @@ public class ResponseHeaderController {
     }
 
     @RequestMapping(path = "/findResponseHeaderPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseHeaderPage",desc = "findResponseHeaderPage")
+    @ApiMethod(name = "findResponseHeaderPage",desc = "根据查询参数按分页查询响应头")
     @ApiParam(name = "responseHeaderQuery",desc = "responseHeaderQuery",required = true)
     public Result<Pagination<ResponseHeader>> findResponseHeaderPage(@RequestBody @Valid @NotNull ResponseHeaderQuery responseHeaderQuery){
         Pagination<ResponseHeader> pagination = responseHeaderService.findResponseHeaderPage(responseHeaderQuery);

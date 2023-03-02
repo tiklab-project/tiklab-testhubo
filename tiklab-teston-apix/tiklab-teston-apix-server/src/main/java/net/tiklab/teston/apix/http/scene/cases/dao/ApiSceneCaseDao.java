@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiSceneCaseDao
+ * 接口场景 数据访问
  */
 @Repository
 public class ApiSceneCaseDao {
@@ -28,7 +28,7 @@ public class ApiSceneCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口场景
      * @param apiSceneCaseEntity
      * @return
      */
@@ -37,7 +37,7 @@ public class ApiSceneCaseDao {
     }
 
     /**
-     * 更新
+     * 更新接口场景
      * @param apiSceneCaseEntity
      */
     public void updateApiSceneCase(ApiSceneCaseEntity apiSceneCaseEntity){
@@ -45,7 +45,7 @@ public class ApiSceneCaseDao {
     }
 
     /**
-     * 删除
+     * 删除接口场景
      * @param id
      */
     public void deleteApiSceneCase(String id){
@@ -57,7 +57,7 @@ public class ApiSceneCaseDao {
     }
 
     /**
-     * 查找
+     * 根据id查找接口场景
      * @param id
      * @return
      */
@@ -66,7 +66,7 @@ public class ApiSceneCaseDao {
     }
 
     /**
-    * findAllApiSceneCase
+    * 查找所有接口场景
     * @return
     */
     public List<ApiSceneCaseEntity> findAllApiSceneCase() {
@@ -77,6 +77,11 @@ public class ApiSceneCaseDao {
         return jpaTemplate.findList(ApiSceneCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询接口场景列表
+     * @param apiSceneCaseQuery
+     * @return
+     */
     public List<ApiSceneCaseEntity> findApiSceneCaseList(ApiSceneCaseQuery apiSceneCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneCaseEntity.class)
                 .eq("testCaseId",apiSceneCaseQuery.getTestCaseId())
@@ -85,6 +90,11 @@ public class ApiSceneCaseDao {
         return jpaTemplate.findList(queryCondition, ApiSceneCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询接口场景列表
+     * @param apiSceneCaseQuery
+     * @return
+     */
     public Pagination<ApiSceneCaseEntity> findApiSceneCasePage(ApiSceneCaseQuery apiSceneCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneCaseEntity.class)
                 .eq("testCaseId",apiSceneCaseQuery.getTestCaseId())
@@ -94,9 +104,5 @@ public class ApiSceneCaseDao {
         return jpaTemplate.findPage(queryCondition, ApiSceneCaseEntity.class);
     }
 
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jpaTemplate.getJdbcTemplate();
-    }
 
 }

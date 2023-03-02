@@ -10,7 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
-
+/**
+ * app性能测试用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppPerfCaseEntity")
 @Join
@@ -19,16 +21,16 @@ public class AppPerfCase extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="threadCount",desc="threadCount")
+    @ApiProperty(name="threadCount",desc="线程数")
     private Integer threadCount;
 
-    @ApiProperty(name="executeCount",desc="executeCount")
+    @ApiProperty(name="executeCount",desc="执行次数")
     private Integer executeCount;
 
-    @ApiProperty(name="executeType",desc="executeType")
+    @ApiProperty(name="executeType",desc="执行类型")
     private Integer executeType;
 
-    @ApiProperty(name="testCase",desc="用例",eg="@selectOne")
+    @ApiProperty(name="testCase",desc="用例")
     @Mappings({
             @Mapping(source = "testCase.id",target = "testCaseId")
     })

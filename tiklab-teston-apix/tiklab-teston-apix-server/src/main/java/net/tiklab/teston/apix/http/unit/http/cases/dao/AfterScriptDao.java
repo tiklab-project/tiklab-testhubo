@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AfterScriptDao
+ * 后置脚本 数据访问
  */
 @Repository
 public class AfterScriptDao{

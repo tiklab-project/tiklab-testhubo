@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AssertInstanceController
+ * 断言实例 控制器
  */
 @RestController
 @RequestMapping("/assertInstance")
@@ -34,7 +34,7 @@ public class AssertInstanceController {
     private AssertInstanceService assertInstanceService;
 
     @RequestMapping(path="/createAssertInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "createAssertInstance",desc = "createAssertInstance")
+    @ApiMethod(name = "createAssertInstance",desc = "创建断言实例")
     @ApiParam(name = "assertInstance",desc = "assertInstance",required = true)
     public Result<String> createAssertInstance(@RequestBody @NotNull @Valid AssertInstance assertInstance){
         String id = assertInstanceService.createAssertInstance(assertInstance);
@@ -52,7 +52,7 @@ public class AssertInstanceController {
     }
 
     @RequestMapping(path="/deleteAssertInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAssertInstance",desc = "deleteAssertInstance")
+    @ApiMethod(name = "deleteAssertInstance",desc = "删除断言实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAssertInstance(@NotNull String id){
         assertInstanceService.deleteAssertInstance(id);
@@ -61,7 +61,7 @@ public class AssertInstanceController {
     }
 
     @RequestMapping(path="/findAssertInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAssertInstance",desc = "findAssertInstance")
+    @ApiMethod(name = "findAssertInstance",desc = "根据id查找断言实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AssertInstance> findAssertInstance(@NotNull String id){
         AssertInstance assertInstance = assertInstanceService.findAssertInstance(id);
@@ -70,7 +70,7 @@ public class AssertInstanceController {
     }
 
     @RequestMapping(path="/findAllAssertInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAssertInstance",desc = "findAllAssertInstance")
+    @ApiMethod(name = "findAllAssertInstance",desc = "查找所有断言实例")
     public Result<List<AssertInstance>> findAllAssertInstance(){
         List<AssertInstance> assertInstanceList = assertInstanceService.findAllAssertInstance();
 
@@ -78,7 +78,7 @@ public class AssertInstanceController {
     }
 
     @RequestMapping(path = "/findAssertInstanceList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAssertInstanceList",desc = "findAssertInstanceList")
+    @ApiMethod(name = "findAssertInstanceList",desc = "根据查询参数查询断言实例列表")
     @ApiParam(name = "assertInstanceQuery",desc = "assertInstanceQuery",required = true)
     public Result<List<AssertInstance>> findAssertInstanceList(@RequestBody @Valid @NotNull AssertInstanceQuery assertInstanceQuery){
         List<AssertInstance> assertInstanceList = assertInstanceService.findAssertInstanceList(assertInstanceQuery);
@@ -87,7 +87,7 @@ public class AssertInstanceController {
     }
 
     @RequestMapping(path = "/findAssertInstancePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAssertInstancePage",desc = "findAssertInstancePage")
+    @ApiMethod(name = "findAssertInstancePage",desc = "根据查询参数按分页查询断言实例")
     @ApiParam(name = "assertInstanceQuery",desc = "assertInstanceQuery",required = true)
     public Result<Pagination<AssertInstance>> findAssertInstancePage(@RequestBody @Valid @NotNull AssertInstanceQuery assertInstanceQuery){
         Pagination<AssertInstance> pagination = assertInstanceService.findAssertInstancePage(assertInstanceQuery);

@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.GeneratorValue;
 import net.tiklab.dal.jpa.annotation.Id;
 import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.Entity;
 
+/**
+ *app、web中操作类型 实体
+ */
 @Entity @Table(name = "teston_action_type")
 public class ActionTypeEntity {
     //编码
@@ -20,7 +23,6 @@ public class ActionTypeEntity {
     //类型  web http
     @Column(name = "type",length = 32)
     private String type;
-
 
     //描述
     @Column(name = "description",length = 32)

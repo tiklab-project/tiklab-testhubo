@@ -8,6 +8,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
 
+/**
+ * 功能用例下步骤 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "FuncUnitStepEntity")
 public class FuncUnitStep extends BaseModel {
@@ -15,23 +18,23 @@ public class FuncUnitStep extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="funcUnitId",desc="funcUnitId")
+    @ApiProperty(name="funcUnitId",desc="所属功能用例")
     private String funcUnitId;
 
-    @ApiProperty(name="described",desc="desc")
+    @ApiProperty(name="described",desc="功能描述")
     private String described;
 
-    @ApiProperty(name="expect",desc="expect")
+    @ApiProperty(name="expect",desc="期望")
     private String expect;
 
-    @ApiProperty(name="actual",desc="actual")
+    @ApiProperty(name="actual",desc="实际结果")
     private String actual;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="updateTime",desc="updateTime")
+    @ApiProperty(name="updateTime",desc="更新时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp updateTime;
 

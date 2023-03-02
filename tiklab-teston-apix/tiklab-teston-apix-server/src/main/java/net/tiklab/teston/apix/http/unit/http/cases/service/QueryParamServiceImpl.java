@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* QueryParamServiceImpl
+* query 服务
 */
 @Service
 public class QueryParamServiceImpl implements QueryParamService {
@@ -110,6 +110,7 @@ public class QueryParamServiceImpl implements QueryParamService {
      *请求param参数
      * @param
      */
+    @Override
     public String jointParam(ApiUnitCase apiUnitCase){
         String param = "";
         QueryParamQuery queryParamQuery = new QueryParamQuery();

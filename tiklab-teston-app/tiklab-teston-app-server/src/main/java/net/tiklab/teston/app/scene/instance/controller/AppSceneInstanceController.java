@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AppSceneInstanceController
+ * app场景实例 控制器
  */
 @RestController
 @RequestMapping("/appSceneInstance")
@@ -34,7 +34,7 @@ public class AppSceneInstanceController {
     private AppSceneInstanceService appSceneInstanceService;
 
     @RequestMapping(path="/createAppSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "createAppSceneInstance",desc = "createAppSceneInstance")
+    @ApiMethod(name = "createAppSceneInstance",desc = "创建app场景测试历史实例")
     @ApiParam(name = "testInstance",desc = "testInstance",required = true)
     public Result<String> createAppSceneInstance(@RequestBody @NotNull @Valid AppSceneInstance testInstance){
         String id = appSceneInstanceService.createAppSceneInstance(testInstance);
@@ -43,7 +43,7 @@ public class AppSceneInstanceController {
     }
 
     @RequestMapping(path="/updateAppSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAppSceneInstance",desc = "updateAppSceneInstance")
+    @ApiMethod(name = "updateAppSceneInstance",desc = "更新app场景测试历史实例")
     @ApiParam(name = "testInstance",desc = "testInstance",required = true)
     public Result<Void> updateAppSceneInstance(@RequestBody @NotNull @Valid AppSceneInstance testInstance){
         appSceneInstanceService.updateAppSceneInstance(testInstance);
@@ -52,7 +52,7 @@ public class AppSceneInstanceController {
     }
 
     @RequestMapping(path="/deleteAppSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAppSceneInstance",desc = "deleteAppSceneInstance")
+    @ApiMethod(name = "deleteAppSceneInstance",desc = "删除app场景测试历史实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAppSceneInstance(@NotNull String id){
         appSceneInstanceService.deleteAppSceneInstance(id);
@@ -61,7 +61,7 @@ public class AppSceneInstanceController {
     }
 
     @RequestMapping(path="/findAppSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneInstance",desc = "findAppSceneInstance")
+    @ApiMethod(name = "findAppSceneInstance",desc = "根据id查找app场景测试历史实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AppSceneInstance> findAppSceneInstance(@NotNull String id){
         AppSceneInstance testInstance = appSceneInstanceService.findAppSceneInstance(id);
@@ -70,7 +70,7 @@ public class AppSceneInstanceController {
     }
 
     @RequestMapping(path="/findAllAppSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAppSceneInstance",desc = "findAllAppSceneInstance")
+    @ApiMethod(name = "findAllAppSceneInstance",desc = "查找所有app场景测试历史实例")
     public Result<List<AppSceneInstance>> findAllAppSceneInstance(){
         List<AppSceneInstance> allAppSceneInstance = appSceneInstanceService.findAllAppSceneInstance();
 
@@ -78,7 +78,7 @@ public class AppSceneInstanceController {
     }
 
     @RequestMapping(path = "/findAppSceneInstanceList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneInstanceList",desc = "findAppSceneInstanceList")
+    @ApiMethod(name = "findAppSceneInstanceList",desc = "根据查询参数查询app场景测试历史实例列表")
     @ApiParam(name = "testInstanceQuery",desc = "testInstanceQuery",required = true)
     public Result<List<AppSceneInstance>> findAppSceneInstanceList(@RequestBody @Valid @NotNull AppSceneInstanceQuery testInstanceQuery){
         List<AppSceneInstance> testInstanceList = appSceneInstanceService.findAppSceneInstanceList(testInstanceQuery);
@@ -87,7 +87,7 @@ public class AppSceneInstanceController {
     }
 
     @RequestMapping(path = "/findAppSceneInstancePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneInstancePage",desc = "findAppSceneInstancePage")
+    @ApiMethod(name = "findAppSceneInstancePage",desc = "根据查询参数按分页查询app场景测试历史实例")
     @ApiParam(name = "testInstanceQuery",desc = "testInstanceQuery",required = true)
     public Result<Pagination<AppSceneInstance>> findAppSceneInstancePage(@RequestBody @Valid @NotNull AppSceneInstanceQuery testInstanceQuery){
         Pagination<AppSceneInstance> pagination = appSceneInstanceService.findAppSceneInstancePage(testInstanceQuery);

@@ -14,7 +14,7 @@ import net.tiklab.teston.apix.http.perf.instance.model.ApiPerfInstanceQuery;
 import net.tiklab.teston.apix.http.perf.instance.service.ApiPerfInstanceService;
 import net.tiklab.teston.apix.http.scene.cases.model.ApiSceneCase;
 import net.tiklab.teston.apix.http.scene.execute.model.ApiSceneTestRequest;
-import net.tiklab.teston.apix.http.scene.execute.service.ApiSceneTestDispatchService;
+import net.tiklab.teston.apix.http.scene.execute.service.ApiSceneExecuteDispatchService;
 import net.tiklab.teston.apix.http.scene.instance.model.ApiSceneInstance;
 import net.tiklab.teston.apix.http.unit.execute.model.ApiUnitTestRequest;
 import net.tiklab.teston.apix.utils.RpcClientApixUtil;
@@ -33,10 +33,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * api性能测试执行调度 服务
+ */
 @Service
-public class ApiPerfTestDispatchServiceImpl implements ApiPerfTestDispatchService {
+public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatchService {
 
-    public static final Logger logger = LoggerFactory.getLogger(ApiPerfTestDispatchServiceImpl.class);
+    public static final Logger logger = LoggerFactory.getLogger(ApiPerfExecuteDispatchServiceImpl.class);
 
     @Autowired
     ApiPerfCaseService apiPerfCaseService;
@@ -48,7 +51,7 @@ public class ApiPerfTestDispatchServiceImpl implements ApiPerfTestDispatchServic
     ApiPerfInstanceService apiPerfInstanceService;
 
     @Autowired
-    ApiSceneTestDispatchService apiSceneTestDispatchService;
+    ApiSceneExecuteDispatchService apiSceneExecuteDispatchService;
 
     @Autowired
     AgentConfigService agentConfigService;
@@ -216,7 +219,7 @@ public class ApiPerfTestDispatchServiceImpl implements ApiPerfTestDispatchServic
                 apiSceneTestRequest.setApiSceneCase(apiSceneCase);
                 apiSceneTestRequest.setApiEnv(apiPerfTestRequest.getApiEnv());
 
-                List<ApiUnitTestRequest> apiUnitTestRequestList = apiSceneTestDispatchService.processApiSceneTestData(apiSceneTestRequest);
+                List<ApiUnitTestRequest> apiUnitTestRequestList = apiSceneExecuteDispatchService.processApiSceneTestData(apiSceneTestRequest);
                 apiSceneTestRequest.setApiUnitTestRequestList(apiUnitTestRequestList);
 
 

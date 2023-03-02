@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * WebPerfCaseServiceImpl
+ * web性能用例 服务
  */
 @Service
 public class WebPerfCaseServiceImpl implements WebPerfCaseService {

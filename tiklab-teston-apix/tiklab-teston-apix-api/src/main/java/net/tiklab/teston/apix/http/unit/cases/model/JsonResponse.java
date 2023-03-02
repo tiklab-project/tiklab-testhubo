@@ -51,7 +51,7 @@ public class JsonResponse extends BaseModel{
     @ApiProperty(name="desc",desc="参数说明")
     private String desc;
 
-    @ApiProperty(name="value",desc="value")
+    @ApiProperty(name="value",desc="示例值")
     private String value;
 
     @ApiProperty(name="sort",desc="排序")

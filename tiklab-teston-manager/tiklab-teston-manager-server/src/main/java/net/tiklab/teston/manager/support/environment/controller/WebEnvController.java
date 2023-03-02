@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebEnvController
+ * Web环境控制器
  */
 @RestController
 @RequestMapping("/webEnv")
-@Api(name = "WebEnvController",desc = "WebEnvController")
+@Api(name = "WebEnvController",desc = "Web环境管理")
 public class WebEnvController {
 
     private static Logger logger = LoggerFactory.getLogger(WebEnvController.class);
@@ -34,7 +34,7 @@ public class WebEnvController {
     private WebEnvService webEnvService;
 
     @RequestMapping(path="/createWebEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "createWebEnv",desc = "createWebEnv")
+    @ApiMethod(name = "createWebEnv",desc = "创建Web环境")
     @ApiParam(name = "webEnv",desc = "webEnv",required = true)
     public Result<String> createWebEnv(@RequestBody @NotNull @Valid WebEnv webEnv){
         String id = webEnvService.createWebEnv(webEnv);
@@ -43,7 +43,7 @@ public class WebEnvController {
     }
 
     @RequestMapping(path="/updateWebEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "updateWebEnv",desc = "updateWebEnv")
+    @ApiMethod(name = "updateWebEnv",desc = "更新Web环境")
     @ApiParam(name = "webEnv",desc = "webEnv",required = true)
     public Result<Void> updateWebEnv(@RequestBody @NotNull @Valid WebEnv webEnv){
         webEnvService.updateWebEnv(webEnv);
@@ -52,7 +52,7 @@ public class WebEnvController {
     }
 
     @RequestMapping(path="/deleteWebEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteWebEnv",desc = "deleteWebEnv")
+    @ApiMethod(name = "deleteWebEnv",desc = "删除Web环境")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteWebEnv(@NotNull String id){
         webEnvService.deleteWebEnv(id);
@@ -61,7 +61,7 @@ public class WebEnvController {
     }
 
     @RequestMapping(path="/findWebEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebEnv",desc = "findWebEnv")
+    @ApiMethod(name = "findWebEnv",desc = "根据id查找Web环境")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<WebEnv> findWebEnv(@NotNull String id){
         WebEnv webEnv = webEnvService.findWebEnv(id);
@@ -70,7 +70,7 @@ public class WebEnvController {
     }
 
     @RequestMapping(path="/findAllWebEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllWebEnv",desc = "findAllWebEnv")
+    @ApiMethod(name = "findAllWebEnv",desc = "查找所有Web环境")
     public Result<List<WebEnv>> findAllWebEnv(){
         List<WebEnv> webEnvList = webEnvService.findAllWebEnv();
 
@@ -78,7 +78,7 @@ public class WebEnvController {
     }
 
     @RequestMapping(path = "/findWebEnvList",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebEnvList",desc = "findWebEnvList")
+    @ApiMethod(name = "findWebEnvList",desc = "根据查询参数查询Web环境列表")
     @ApiParam(name = "webEnvQuery",desc = "webEnvQuery",required = true)
     public Result<List<WebEnv>> findWebEnvList(@RequestBody @Valid @NotNull WebEnvQuery webEnvQuery){
         List<WebEnv> webEnvList = webEnvService.findWebEnvList(webEnvQuery);
@@ -87,7 +87,7 @@ public class WebEnvController {
     }
 
     @RequestMapping(path = "/findWebEnvPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebEnvPage",desc = "findWebEnvPage")
+    @ApiMethod(name = "findWebEnvPage",desc = "根据查询参数按分页查询Web环境")
     @ApiParam(name = "webEnvQuery",desc = "webEnvQuery",required = true)
     public Result<Pagination<WebEnv>> findWebEnvPage(@RequestBody @Valid @NotNull WebEnvQuery webEnvQuery){
         Pagination<WebEnv> pagination = webEnvService.findWebEnvPage(webEnvQuery);

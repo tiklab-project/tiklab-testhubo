@@ -4,6 +4,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
+/**
+ * 空间概况 模型
+ */
 @ApiModel
 public class RepositoryTotal extends BaseModel {
 

@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AppSceneStepController
+ * app场景下步骤 控制器
  */
 @RestController
 @RequestMapping("/appSceneStep")
-@Api(name = "AppSceneStepController",desc = "AppSceneStepController")
+@Api(name = "AppSceneStepController",desc = "app场景下步骤管理")
 public class AppSceneStepController {
 
     private static Logger logger = LoggerFactory.getLogger(AppSceneStepController.class);
@@ -33,18 +33,9 @@ public class AppSceneStepController {
     @Autowired
     private AppSceneStepService appSceneStepService;
 
-    @RequestMapping(path="/bindAppUnit",method = RequestMethod.POST)
-    @ApiMethod(name = "bindAppUnit",desc = "bindAppUnit")
-    @ApiParam(name = "appSceneStep",desc = "appSceneStep",required = true)
-    public Result<String> bindAppUnit(@RequestBody @NotNull @Valid List<AppSceneStep> appSceneStepList){
-        appSceneStepService.bindAppUnit(appSceneStepList);
-
-        return Result.ok();
-    }
-
 
     @RequestMapping(path="/createAppSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "createAppSceneStep",desc = "createAppSceneStep")
+    @ApiMethod(name = "createAppSceneStep",desc = "创建场景步骤")
     @ApiParam(name = "appSceneStep",desc = "appSceneStep",required = true)
     public Result<String> createAppSceneStep(@RequestBody @NotNull @Valid AppSceneStep appSceneStep){
         String id = appSceneStepService.createAppSceneStep(appSceneStep);
@@ -53,7 +44,7 @@ public class AppSceneStepController {
     }
 
     @RequestMapping(path="/updateAppSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAppSceneStep",desc = "updateAppSceneStep")
+    @ApiMethod(name = "updateAppSceneStep",desc = "更新场景步骤")
     @ApiParam(name = "appSceneStep",desc = "appSceneStep",required = true)
     public Result<Void> updateAppSceneStep(@RequestBody @NotNull @Valid AppSceneStep appSceneStep){
         appSceneStepService.updateAppSceneStep(appSceneStep);
@@ -62,7 +53,7 @@ public class AppSceneStepController {
     }
 
     @RequestMapping(path="/deleteAppSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAppSceneStep",desc = "deleteAppSceneStep")
+    @ApiMethod(name = "deleteAppSceneStep",desc = "删除场景步骤")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAppSceneStep(@NotNull String id){
         appSceneStepService.deleteAppSceneStep(id);
@@ -71,7 +62,7 @@ public class AppSceneStepController {
     }
 
     @RequestMapping(path="/findAppSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneStep",desc = "findAppSceneStep")
+    @ApiMethod(name = "findAppSceneStep",desc = "根据id查找场景步骤")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AppSceneStep> findAppSceneStep(@NotNull String id){
         AppSceneStep appSceneStep = appSceneStepService.findAppSceneStep(id);
@@ -80,7 +71,7 @@ public class AppSceneStepController {
     }
 
     @RequestMapping(path="/findAllAppSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAppSceneStep",desc = "findAllAppSceneStep")
+    @ApiMethod(name = "findAllAppSceneStep",desc = "查找所有场景步骤")
     public Result<List<AppSceneStep>> findAllAppSceneStep(){
         List<AppSceneStep> appSceneStepList = appSceneStepService.findAllAppSceneStep();
 
@@ -88,7 +79,7 @@ public class AppSceneStepController {
     }
 
     @RequestMapping(path = "/findAppSceneStepList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneStepList",desc = "findAppSceneStepList")
+    @ApiMethod(name = "findAppSceneStepList",desc = "根据查询参数查询场景步骤列表")
     @ApiParam(name = "appSceneStepQuery",desc = "appSceneStepQuery",required = true)
     public Result<List<AppSceneStep>> findAppSceneStepList(@RequestBody @Valid @NotNull AppSceneStepQuery appSceneStepQuery){
         List<AppSceneStep> appSceneStepList = appSceneStepService.findAppSceneStepList(appSceneStepQuery);
@@ -97,7 +88,7 @@ public class AppSceneStepController {
     }
 
     @RequestMapping(path = "/findAppSceneStepPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneStepPage",desc = "findAppSceneStepPage")
+    @ApiMethod(name = "findAppSceneStepPage",desc = "根据查询参数按分页查询场景步骤")
     @ApiParam(name = "appSceneStepQuery",desc = "appSceneStepQuery",required = true)
     public Result<Pagination<AppSceneStep>> findAppSceneStepPage(@RequestBody @Valid @NotNull AppSceneStepQuery appSceneStepQuery){
         Pagination<AppSceneStep> pagination = appSceneStepService.findAppSceneStepPage(appSceneStepQuery);

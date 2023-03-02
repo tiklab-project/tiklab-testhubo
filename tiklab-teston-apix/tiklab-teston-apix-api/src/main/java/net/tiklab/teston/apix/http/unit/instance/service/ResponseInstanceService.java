@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ResponseInstanceService
+* 响应数据实例 服务接口
 */
 public interface ResponseInstanceService {
 
     /**
-    * 创建
+    * 创建响应数据实例
     * @param responseInstance
     * @return
     */
     String createResponseInstance(@NotNull @Valid ResponseInstance responseInstance);
 
     /**
-    * 更新
+    * 更新响应数据实例
     * @param responseInstance
     */
     void updateResponseInstance(@NotNull @Valid ResponseInstance responseInstance);
 
     /**
-    * 删除
+    * 删除响应数据实例
     * @param id
     */
     void deleteResponseInstance(@NotNull String id);
@@ -37,27 +37,27 @@ public interface ResponseInstanceService {
     List<ResponseInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找响应数据实例
     * @param id
     * @return
     */
     ResponseInstance findResponseInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有响应数据实例
     * @return
     */
     List<ResponseInstance> findAllResponseInstance();
 
     /**
-    * 查询列表
+    * 根据查询参数查询响应数据实例列表
     * @param responseInstanceQuery
     * @return
     */
     List<ResponseInstance> findResponseInstanceList(ResponseInstanceQuery responseInstanceQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询响应数据实例
     * @param responseInstanceQuery
     * @return
     */

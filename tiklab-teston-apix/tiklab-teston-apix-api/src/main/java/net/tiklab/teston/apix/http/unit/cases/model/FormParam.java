@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * form-data 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "FormParamEntity")
 @Join
@@ -36,13 +39,13 @@ public class FormParam extends BaseModel{
     private String dataType;
 
     @NotNull
-    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",eg="@int16",required = true)
+    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",required = true)
     private Integer required=0;
 
     @ApiProperty(name="desc",desc="描述")
     private String desc;
 
-    @ApiProperty(name="value",desc="value")
+    @ApiProperty(name="value",desc="值")
     private String value;
 
     @ApiProperty(name="sort",desc="排序")

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * JsonParamController
+ * 响应中 json 控制器
  */
 @RestController
 @RequestMapping("/jsonParam")
@@ -34,7 +34,7 @@ public class JsonParamController {
     private JsonParamService jsonParamService;
 
     @RequestMapping(path="/createJsonParam",method = RequestMethod.POST)
-    @ApiMethod(name = "createJsonParam",desc = "createJsonParam")
+    @ApiMethod(name = "createJsonParam",desc = "创建json")
     @ApiParam(name = "jsonParam",desc = "jsonParam",required = true)
     public Result<String> createJsonParam(@RequestBody @NotNull @Valid JsonParam jsonParam){
         String id = jsonParamService.createJsonParam(jsonParam);
@@ -43,7 +43,7 @@ public class JsonParamController {
     }
 
     @RequestMapping(path="/updateJsonParam",method = RequestMethod.POST)
-    @ApiMethod(name = "updateJsonParam",desc = "updateJsonParam")
+    @ApiMethod(name = "updateJsonParam",desc = "更新json")
     @ApiParam(name = "jsonParam",desc = "jsonParam",required = true)
     public Result<Void> updateJsonParam(@RequestBody @NotNull @Valid JsonParam jsonParam){
         jsonParamService.updateJsonParam(jsonParam);
@@ -52,7 +52,7 @@ public class JsonParamController {
     }
 
     @RequestMapping(path="/deleteJsonParam",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteJsonParam",desc = "deleteJsonParam")
+    @ApiMethod(name = "deleteJsonParam",desc = "删除json")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteJsonParam(@NotNull String id){
         jsonParamService.deleteJsonParam(id);
@@ -61,7 +61,7 @@ public class JsonParamController {
     }
 
     @RequestMapping(path="/findJsonParam",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonParam",desc = "findJsonParam")
+    @ApiMethod(name = "findJsonParam",desc = "根据id查找json")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<JsonParam> findJsonParam(@NotNull String id){
         JsonParam jsonParam = jsonParamService.findJsonParam(id);
@@ -70,7 +70,7 @@ public class JsonParamController {
     }
 
     @RequestMapping(path="/findAllJsonParam",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllJsonParam",desc = "findAllJsonParam")
+    @ApiMethod(name = "findAllJsonParam",desc = "查找所有json")
     public Result<List<JsonParam>> findAllJsonParam(){
         List<JsonParam> jsonParamList = jsonParamService.findAllJsonParam();
 
@@ -86,7 +86,7 @@ public class JsonParamController {
         return Result.ok(jsonParamList);
     }
     @RequestMapping(path = "/findJsonParamListTree",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonParamListTree",desc = "根据查询对象查找json请求参数列表树")
+    @ApiMethod(name = "findJsonParamListTree",desc = "根据查询参数查询json列表")
     @ApiParam(name = "jsonParamQuery",desc = "查询对象",required = true)
     public Result<List<JsonParam>> findJsonParamListTree(@RequestBody @Valid @NotNull JsonParamQuery jsonParamQuery){
         List<JsonParam> jsonParamList = jsonParamService.findJsonParamListTree(jsonParamQuery);
@@ -95,7 +95,7 @@ public class JsonParamController {
     }
 
     @RequestMapping(path = "/findJsonParamPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonParamPage",desc = "findJsonParamPage")
+    @ApiMethod(name = "findJsonParamPage",desc = "根据查询参数按分页查询json")
     @ApiParam(name = "jsonParamQuery",desc = "jsonParamQuery",required = true)
     public Result<Pagination<JsonParam>> findJsonParamPage(@RequestBody @Valid @NotNull JsonParamQuery jsonParamQuery){
         Pagination<JsonParam> pagination = jsonParamService.findJsonParamPage(jsonParamQuery);

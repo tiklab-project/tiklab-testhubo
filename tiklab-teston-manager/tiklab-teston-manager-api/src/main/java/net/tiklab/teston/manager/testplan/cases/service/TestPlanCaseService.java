@@ -11,25 +11,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestPlanCaseService
+* 测试计划绑定的用例 服务接口
 */
 public interface TestPlanCaseService {
 
     /**
-    * 创建
+    * 创建绑定的用例
     * @param testPlanCase
     * @return
     */
     String createTestPlanCase(@NotNull @Valid TestPlanCase testPlanCase);
 
     /**
-    * 更新
+    * 更新绑定的用例
     * @param testPlanCase
     */
     void updateTestPlanCase(@NotNull @Valid TestPlanCase testPlanCase);
 
     /**
-    * 删除
+    * 删除绑定的用例
     * @param id
     */
     void deleteTestPlanCase(@NotNull String id);
@@ -39,27 +39,27 @@ public interface TestPlanCaseService {
     List<TestPlanCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找绑定的用例
     * @param id
     * @return
     */
     TestPlanCase findTestPlanCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有绑定的用例
     * @return
     */
     List<TestPlanCase> findAllTestPlanCase();
 
     /**
-    * 查询列表
+    * 查询绑定的用例 列表
     * @param testPlanCaseQuery
     * @return
     */
     List<TestPlanCase> findTestPlanCaseList(TestPlanCaseQuery testPlanCaseQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询绑定的用例
     * @param testPlanCaseQuery
     * @return
     */

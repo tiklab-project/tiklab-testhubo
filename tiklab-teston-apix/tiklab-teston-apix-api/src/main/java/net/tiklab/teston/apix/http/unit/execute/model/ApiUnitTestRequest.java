@@ -6,6 +6,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.apix.http.unit.cases.model.ApiUnitCase;
 import net.tiklab.teston.apix.http.unit.cases.model.ApiUnitCaseExt;
 
+/**
+ * 接口单元测试执行数据构造 模型
+ */
 @ApiModel
 public class ApiUnitTestRequest extends BaseModel {
 

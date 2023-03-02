@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebSceneCaseDao
+ * web场景用例 数据访问
  */
 @Repository
 public class WebSceneCaseDao {
@@ -27,7 +27,7 @@ public class WebSceneCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web场景用例
      * @param webSceneCaseEntity
      * @return
      */
@@ -36,7 +36,7 @@ public class WebSceneCaseDao {
     }
 
     /**
-     * 更新
+     * 更新web场景用例
      * @param webSceneCaseEntity
      */
     public void updateWebSceneCase(WebSceneCaseEntity webSceneCaseEntity){
@@ -44,7 +44,7 @@ public class WebSceneCaseDao {
     }
 
     /**
-     * 删除
+     * 删除web场景用例
      * @param id
      */
     public void deleteWebSceneCase(String id){
@@ -56,7 +56,7 @@ public class WebSceneCaseDao {
     }
 
     /**
-     * 查找
+     * 根据id查找web场景用例
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class WebSceneCaseDao {
     }
 
     /**
-    * findAllWebSceneCase
+    * 查找所有web场景用例
     * @return
     */
     public List<WebSceneCaseEntity> findAllWebSceneCase() {
@@ -76,6 +76,11 @@ public class WebSceneCaseDao {
         return jpaTemplate.findList(WebSceneCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web场景用例列表
+     * @param webSceneCaseQuery
+     * @return
+     */
     public List<WebSceneCaseEntity> findWebSceneCaseList(WebSceneCaseQuery webSceneCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneCaseEntity.class)
                 .eq("testCaseId",webSceneCaseQuery.getTestCaseId())
@@ -84,6 +89,11 @@ public class WebSceneCaseDao {
         return jpaTemplate.findList(queryCondition, WebSceneCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web场景用例
+     * @param webSceneCaseQuery
+     * @return
+     */
     public Pagination<WebSceneCaseEntity> findWebSceneCasePage(WebSceneCaseQuery webSceneCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneCaseEntity.class)
                 .eq("testCaseId",webSceneCaseQuery.getTestCaseId())
@@ -93,10 +103,6 @@ public class WebSceneCaseDao {
 
         return jpaTemplate.findPage(queryCondition, WebSceneCaseEntity.class);
     }
-    
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jpaTemplate.getJdbcTemplate();
-    }
 
 }

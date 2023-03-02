@@ -5,7 +5,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.beans.annotation.Mapper;
 import net.tiklab.core.BaseModel;
 
-
+/**
+ * web环境 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebEnvEntity")
 public class WebEnv extends BaseModel {
@@ -16,7 +18,7 @@ public class WebEnv extends BaseModel {
     @ApiProperty(name = "repositoryId",desc= "仓库id")
     private String repositoryId;
 
-    @ApiProperty(name="name",desc="name")
+    @ApiProperty(name="name",desc="名称")
     private java.lang.String name;
 
     @ApiProperty(name="webDriver",desc="如: chrome, firefox")

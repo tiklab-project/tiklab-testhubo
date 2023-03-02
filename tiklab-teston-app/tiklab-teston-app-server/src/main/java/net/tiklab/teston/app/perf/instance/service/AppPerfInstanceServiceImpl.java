@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* AppPerfInstanceServiceImpl
+* app性能实例 服务
 */
 @Service
 public class AppPerfInstanceServiceImpl implements AppPerfInstanceService {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * TestPlanDao
+ * 测试计划 数据访问
  */
 @Repository
 public class TestPlanDao{
@@ -26,7 +26,7 @@ public class TestPlanDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建测试计划
      * @param testPlanEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class TestPlanDao{
     }
 
     /**
-     * 更新
+     * 更新测试计划
      * @param testPlanEntity
      */
     public void updateTestPlan(TestPlanEntity testPlanEntity){
@@ -43,7 +43,7 @@ public class TestPlanDao{
     }
 
     /**
-     * 删除
+     * 删除测试计划
      * @param id
      */
     public void deleteTestPlan(String id){
@@ -55,7 +55,7 @@ public class TestPlanDao{
     }
 
     /**
-     * 查找
+     * 根据id查找测试计划
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class TestPlanDao{
     }
 
     /**
-    * findAllTestPlan
+    * 查找所有测试计划
     * @return
     */
     public List<TestPlanEntity> findAllTestPlan() {
@@ -75,6 +75,11 @@ public class TestPlanDao{
         return jpaTemplate.findList(TestPlanEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询测试计划列表
+     * @param testPlanQuery
+     * @return
+     */
     public List<TestPlanEntity> findTestPlanList(TestPlanQuery testPlanQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanEntity.class)
                 .eq("repositoryId", testPlanQuery.getRepositoryId())
@@ -84,6 +89,11 @@ public class TestPlanDao{
         return jpaTemplate.findList(queryCondition, TestPlanEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询测试计划
+     * @param testPlanQuery
+     * @return
+     */
     public Pagination<TestPlanEntity> findTestPlanPage(TestPlanQuery testPlanQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanEntity.class)
                 .eq("repositoryId", testPlanQuery.getRepositoryId())

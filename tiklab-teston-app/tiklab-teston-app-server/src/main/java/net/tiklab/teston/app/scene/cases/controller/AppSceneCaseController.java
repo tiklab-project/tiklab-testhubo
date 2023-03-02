@@ -24,11 +24,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AppSceneCaseController
+ * app场景用例 控制器
  */
 @RestController
 @RequestMapping("/appSceneCase")
-@Api(name = "AppSceneCaseController",desc = "AppSceneCaseController")
+@Api(name = "AppSceneCaseController",desc = "app场景用例管理")
 public class AppSceneCaseController {
 
     private static Logger logger = LoggerFactory.getLogger(AppSceneCaseController.class);
@@ -37,7 +37,7 @@ public class AppSceneCaseController {
     private AppSceneCaseService appSceneCaseService;
 
     @RequestMapping(path="/createAppSceneCase",method = RequestMethod.POST)
-    @ApiMethod(name = "createAppSceneCase",desc = "createAppSceneCase")
+    @ApiMethod(name = "createAppSceneCase",desc = "创建app场景用例")
     @ApiParam(name = "appSceneCase",desc = "appSceneCase",required = true)
     public Result<String> createAppSceneCase(@RequestBody @NotNull @Valid AppSceneCase appSceneCase){
         String id = appSceneCaseService.createAppSceneCase(appSceneCase);
@@ -46,7 +46,7 @@ public class AppSceneCaseController {
     }
 
     @RequestMapping(path="/updateAppSceneCase",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAppSceneCase",desc = "updateAppSceneCase")
+    @ApiMethod(name = "updateAppSceneCase",desc = "更新app场景用例")
     @ApiParam(name = "appSceneCase",desc = "appSceneCase",required = true)
     public Result<Void> updateAppSceneCase(@RequestBody @NotNull @Valid AppSceneCase appSceneCase){
         appSceneCaseService.updateAppSceneCase(appSceneCase);
@@ -55,7 +55,7 @@ public class AppSceneCaseController {
     }
 
     @RequestMapping(path="/deleteAppSceneCase",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAppSceneCase",desc = "deleteAppSceneCase")
+    @ApiMethod(name = "deleteAppSceneCase",desc = "删除app场景用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAppSceneCase(@NotNull String id){
         appSceneCaseService.deleteAppSceneCase(id);
@@ -64,7 +64,7 @@ public class AppSceneCaseController {
     }
 
     @RequestMapping(path="/findAppSceneCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneCase",desc = "findAppSceneCase")
+    @ApiMethod(name = "findAppSceneCase",desc = "根据id查找app场景用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AppSceneCase> findAppSceneCase(@NotNull String id){
         AppSceneCase appSceneCase = appSceneCaseService.findAppSceneCase(id);
@@ -73,7 +73,7 @@ public class AppSceneCaseController {
     }
 
     @RequestMapping(path="/findAllAppSceneCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAppSceneCase",desc = "findAllAppSceneCase")
+    @ApiMethod(name = "findAllAppSceneCase",desc = "查找所有app场景用例")
     public Result<List<AppSceneCase>> findAllAppSceneCase(){
         List<AppSceneCase> appSceneCaseList = appSceneCaseService.findAllAppSceneCase();
 
@@ -81,7 +81,7 @@ public class AppSceneCaseController {
     }
 
     @RequestMapping(path = "/findAppSceneCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneCaseList",desc = "findAppSceneCaseList")
+    @ApiMethod(name = "findAppSceneCaseList",desc = "根据查询参数查询app场景用例列表")
     @ApiParam(name = "appSceneCaseQuery",desc = "appSceneCaseQuery",required = true)
     public Result<List<AppSceneCase>> findAppSceneCaseList(@RequestBody @Valid @NotNull AppSceneCaseQuery appSceneCaseQuery){
         List<AppSceneCase> appSceneCaseList = appSceneCaseService.findAppSceneCaseList(appSceneCaseQuery);
@@ -90,7 +90,7 @@ public class AppSceneCaseController {
     }
 
     @RequestMapping(path = "/findAppSceneCasePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppSceneCasePage",desc = "findAppSceneCasePage")
+    @ApiMethod(name = "findAppSceneCasePage",desc = "根据查询参数按分页查询app场景用例")
     @ApiParam(name = "appSceneCaseQuery",desc = "appSceneCaseQuery",required = true)
     public Result<Pagination<AppSceneCase>> findAppSceneCasePage(@RequestBody @Valid @NotNull AppSceneCaseQuery appSceneCaseQuery){
         Pagination<AppSceneCase> pagination = appSceneCaseService.findAppSceneCasePage(appSceneCaseQuery);

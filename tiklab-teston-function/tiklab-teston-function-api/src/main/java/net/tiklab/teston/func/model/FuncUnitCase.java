@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * 功能用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "FuncUnitCaseEntity")
 @Join

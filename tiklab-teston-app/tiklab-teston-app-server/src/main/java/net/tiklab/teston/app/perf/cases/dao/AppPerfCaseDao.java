@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AppPerfCaseDao
+ * app性能测试用例 数据访问
  */
 @Repository
 public class AppPerfCaseDao{
@@ -26,7 +26,7 @@ public class AppPerfCaseDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建app性能测试用例
      * @param appPerfCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AppPerfCaseDao{
     }
 
     /**
-     * 更新
+     * 更新app性能测试用例
      * @param appPerfCaseEntity
      */
     public void updateAppPerfCase(AppPerfCaseEntity appPerfCaseEntity){
@@ -43,7 +43,7 @@ public class AppPerfCaseDao{
     }
 
     /**
-     * 删除
+     * 删除app性能测试用例
      * @param id
      */
     public void deleteAppPerfCase(String id){
@@ -55,7 +55,7 @@ public class AppPerfCaseDao{
     }
 
     /**
-     * 查找
+     * 根据id查找app性能测试用例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AppPerfCaseDao{
     }
 
     /**
-    * findAllAppPerfCase
+    * 查找所有app性能测试用例
     * @return
     */
     public List<AppPerfCaseEntity> findAllAppPerfCase() {
@@ -75,6 +75,11 @@ public class AppPerfCaseDao{
         return jpaTemplate.findList(AppPerfCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询查询app性能测试用例列表
+     * @param appPerfCaseQuery
+     * @return
+     */
     public List<AppPerfCaseEntity> findAppPerfCaseList(AppPerfCaseQuery appPerfCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppPerfCaseEntity.class)
                 .eq("testCaseId", appPerfCaseQuery.getTestCaseId())
@@ -83,6 +88,11 @@ public class AppPerfCaseDao{
         return jpaTemplate.findList(queryCondition,AppPerfCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数查询按分页查询app性能测试用例
+     * @param appPerfCaseQuery
+     * @return
+     */
     public Pagination<AppPerfCaseEntity> findAppPerfCasePage(AppPerfCaseQuery appPerfCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppPerfCaseEntity.class)
                 .eq("testCaseId", appPerfCaseQuery.getTestCaseId())

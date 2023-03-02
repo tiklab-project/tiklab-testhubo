@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * WebPerfTestDispatchController
+ * web性能测试调度 控制器
  */
 @RestController
 @RequestMapping("/webPerfTestDispatch")

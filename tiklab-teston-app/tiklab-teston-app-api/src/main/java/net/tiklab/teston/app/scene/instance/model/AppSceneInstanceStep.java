@@ -5,7 +5,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
-
+/**
+ * app场景步骤实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppSceneInstanceStepEntity")
 public class AppSceneInstanceStep extends BaseModel {
@@ -13,7 +15,7 @@ public class AppSceneInstanceStep extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="appSceneInstanceId",desc="appSceneInstanceId")
+    @ApiProperty(name="appSceneInstanceId",desc="app场景实例id")
     private String appSceneInstanceId;
 
     @ApiProperty(name="location",desc="location")
@@ -31,7 +33,7 @@ public class AppSceneInstanceStep extends BaseModel {
     @ApiProperty(name="parameter",desc="parameter")
     private String parameter;
 
-    @ApiProperty(name="result",desc="result")
+    @ApiProperty(name="result",desc="结果")
     private Integer result;
 
     public String getId() {

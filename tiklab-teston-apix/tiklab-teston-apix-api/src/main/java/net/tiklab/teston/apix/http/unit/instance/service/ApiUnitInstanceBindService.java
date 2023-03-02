@@ -13,13 +13,13 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiUnitInstanceBindService
+* 接口单元公共实例 服务模型
 */
 @JoinProvider(model = ApiUnitInstanceBind.class)
 public interface ApiUnitInstanceBindService {
 
     /**
-    * 创建
+    * 创建接口单元公共实例
     * @param apiUnitInstanceBind
     * @return
     */
@@ -32,7 +32,7 @@ public interface ApiUnitInstanceBindService {
     void updateApiUnitInstanceBind(@NotNull @Valid ApiUnitInstanceBind apiUnitInstanceBind);
 
     /**
-    * 删除
+    * 删除接口单元公共实例
     * @param id
     */
     void deleteApiUnitInstanceBind(@NotNull String id);
@@ -44,7 +44,7 @@ public interface ApiUnitInstanceBindService {
     List<ApiUnitInstanceBind> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找接口单元公共实例
     * @param id
     * @return
     */
@@ -52,21 +52,21 @@ public interface ApiUnitInstanceBindService {
     ApiUnitInstanceBind findApiUnitInstanceBind(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口单元公共实例
     * @return
     */
     @FindAll
     List<ApiUnitInstanceBind> findAllApiUnitInstanceBind();
 
     /**
-    * 查询列表
+    * 查询接口单元公共实例列表
     * @param apiUnitInstanceBindQuery
     * @return
     */
     List<ApiUnitInstanceBind> findApiUnitInstanceBindList(ApiUnitInstanceBindQuery apiUnitInstanceBindQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询接口单元公共实例
     * @param apiUnitInstanceBindQuery
     * @return
     */

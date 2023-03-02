@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiUnitCaseController
+ * 接口单元用例 控制器
  */
 @RestController
 @RequestMapping("/apiUnitCase")
@@ -35,7 +35,7 @@ public class ApiUnitCaseController {
     private ApiUnitCaseService apiUnitCaseService;
 
     @RequestMapping(path="/createApiUnitCase",method = RequestMethod.POST)
-    @ApiMethod(name = "createApiUnitCase",desc = "createApiUnitCase")
+    @ApiMethod(name = "createApiUnitCase",desc = "创建接口单元用例")
     @ApiParam(name = "path",desc = "path",required = true)
     public Result<String> createApiUnitCase(@RequestBody @NotNull @Valid ApiUnitCase apiUnitCase){
         String id = apiUnitCaseService.createApiUnitCase(apiUnitCase);
@@ -44,7 +44,7 @@ public class ApiUnitCaseController {
     }
 
     @RequestMapping(path="/updateApiUnitCase",method = RequestMethod.POST)
-    @ApiMethod(name = "updateApiUnitCase",desc = "updateApiUnitCase")
+    @ApiMethod(name = "updateApiUnitCase",desc = "更新接口单元")
     @ApiParam(name = "apiUnitCase",desc = "apiUnitCase",required = true)
     public Result<Void> updateApiUnitCase(@RequestBody @NotNull @Valid ApiUnitCase apiUnitCase){
         apiUnitCaseService.updateApiUnitCase(apiUnitCase);
@@ -53,7 +53,7 @@ public class ApiUnitCaseController {
     }
 
     @RequestMapping(path="/deleteApiUnitCase",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteApiUnitCase",desc = "deleteApiUnitCase")
+    @ApiMethod(name = "deleteApiUnitCase",desc = "删除接口单元")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteApiUnitCase(@NotNull String id){
         apiUnitCaseService.deleteApiUnitCase(id);
@@ -62,7 +62,7 @@ public class ApiUnitCaseController {
     }
 
     @RequestMapping(path="/findApiUnitCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitCase",desc = "findApiUnitCase")
+    @ApiMethod(name = "findApiUnitCase",desc = "通过id查找接口单元")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiUnitCase> findApiUnitCase(@NotNull String id){
         ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(id);
@@ -71,7 +71,7 @@ public class ApiUnitCaseController {
     }
 
     @RequestMapping(path="/findAllApiUnitCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllApiUnitCase",desc = "findAllApiUnitCase")
+    @ApiMethod(name = "findAllApiUnitCase",desc = "查找所有接口单元")
     public Result<List<ApiUnitCase>> findAllApiUnitCase(){
         List<ApiUnitCase> apiUnitCaseList = apiUnitCaseService.findAllApiUnitCase();
 
@@ -79,7 +79,7 @@ public class ApiUnitCaseController {
     }
 
     @RequestMapping(path = "/findApiUnitCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitCaseList",desc = "findApiUnitCaseList")
+    @ApiMethod(name = "findApiUnitCaseList",desc = "根据查询参数查询接口单元列表")
     @ApiParam(name = "apiUnitCaseQuery",desc = "apiUnitCaseQuery",required = true)
     public Result<List<ApiUnitCase>> findApiUnitCaseList(@RequestBody @Valid @NotNull ApiUnitCaseQuery apiUnitCaseQuery ){
         List<ApiUnitCase> apiUnitCaseList = apiUnitCaseService.findApiUnitCaseList(apiUnitCaseQuery);
@@ -89,7 +89,7 @@ public class ApiUnitCaseController {
 
 
     @RequestMapping(path = "/findApiUnitCasePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitCasePage",desc = "findApiUnitCasePage")
+    @ApiMethod(name = "findApiUnitCasePage",desc = "根据查询参数按分页查询接口单元")
     @ApiParam(name = "apiUnitCaseQuery",desc = "apiUnitCaseQuery",required = true)
     public Result<Pagination<ApiUnitCase>> findApiUnitCasePage(@RequestBody @Valid @NotNull ApiUnitCaseQuery apiUnitCaseQuery){
         Pagination<ApiUnitCase> pagination = apiUnitCaseService.findApiUnitCasePage(apiUnitCaseQuery);
@@ -98,7 +98,7 @@ public class ApiUnitCaseController {
     }
 
     @RequestMapping(path = "/findApiUnitCaseListByTestCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitCaseListByTestCase",desc = "findApiUnitCaseListByTestCase")
+    @ApiMethod(name = "findApiUnitCaseListByTestCase",desc = "通过testCaseQuery查询接口单元")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
     public Result<List<ApiUnitCase>> findApiUnitCaseListByTestCase(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery ){
         List<ApiUnitCase> apiUnitCaseList = apiUnitCaseService.findApiUnitCaseListByTestCase(testCaseQuery);

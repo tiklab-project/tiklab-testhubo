@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 
 import java.io.Serializable;
 
+/**
+ * app场景用例 实体
+ */
 @Entity @Table(name="teston_app_scene")
 public class AppSceneCaseEntity implements Serializable {
 
@@ -13,6 +16,7 @@ public class AppSceneCaseEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属测试用例
     @Column(name = "testcase_id",length = 32)
     private String testCaseId;
 

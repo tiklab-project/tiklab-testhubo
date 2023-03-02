@@ -9,7 +9,7 @@ import net.tiklab.teston.web.scene.instance.model.WebSceneInstance;
 import java.util.List;
 
 /**
- * 这个只用性能测试的返回结果的结构封装
+ * 用于性能测试的返回结果的结构封装 模型
  */
 @ApiModel
 public class WebPerfTestResponse extends BaseModel {

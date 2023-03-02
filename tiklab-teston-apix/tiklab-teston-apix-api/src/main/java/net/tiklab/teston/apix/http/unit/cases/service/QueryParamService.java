@@ -10,25 +10,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* QueryParamService
+* query 服务接口
 */
 public interface QueryParamService {
 
     /**
-    * 创建
+    * 创建query
     * @param queryParam
     * @return
     */
     String createQueryParam(@NotNull @Valid QueryParam queryParam);
 
     /**
-    * 更新
+    * 更新query
     * @param queryParam
     */
     void updateQueryParam(@NotNull @Valid QueryParam queryParam);
 
     /**
-    * 删除
+    * 删除query
     * @param id
     */
     void deleteQueryParam(@NotNull String id);
@@ -38,33 +38,37 @@ public interface QueryParamService {
     List<QueryParam> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找query
     * @param id
     * @return
     */
     QueryParam findQueryParam(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有query
     * @return
     */
     List<QueryParam> findAllQueryParam();
 
     /**
-    * 查询列表
+    * 根据查询参数查询query列表
     * @param queryParamQuery
     * @return
     */
     List<QueryParam> findQueryParamList(QueryParamQuery queryParamQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询query
     * @param queryParamQuery
     * @return
     */
     Pagination<QueryParam> findQueryParamPage(QueryParamQuery queryParamQuery);
 
-    //==========
+    /**
+     * 构造query参数
+     * @param step
+     * @return
+     */
     String jointParam(ApiUnitCase step);
 
 }

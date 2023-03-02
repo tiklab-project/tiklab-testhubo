@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebPerfInstanceController
+ * web性能测试实例 控制器
  */
 @RestController
 @RequestMapping("/webPerfInstance")

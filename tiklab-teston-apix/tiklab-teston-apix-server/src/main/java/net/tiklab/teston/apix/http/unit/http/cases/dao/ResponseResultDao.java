@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ResponseResultDao
+ * 响应结果 数据访问
  */
 @Repository
 public class ResponseResultDao{
@@ -26,7 +26,7 @@ public class ResponseResultDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建响应结果
      * @param responseResultEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ResponseResultDao{
     }
 
     /**
-     * 更新
+     * 更新响应结果
      * @param responseResultEntity
      */
     public void updateResponseResult(ResponseResultEntity responseResultEntity){
@@ -43,7 +43,7 @@ public class ResponseResultDao{
     }
 
     /**
-     * 删除
+     * 删除响应结果
      * @param id
      */
     public void deleteResponseResult(String id){
@@ -55,7 +55,7 @@ public class ResponseResultDao{
     }
 
     /**
-     * 查找
+     * 查找响应结果
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ResponseResultDao{
     }
 
     /**
-    * findAllResponseResult
+    * 查找所有响应结果
     * @return
     */
     public List<ResponseResultEntity> findAllResponseResult() {
@@ -75,6 +75,11 @@ public class ResponseResultDao{
         return jpaTemplate.findList(ResponseResultEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询响应结果列表
+     * @param responseResultQuery
+     * @return
+     */
     public List<ResponseResultEntity> findResponseResultList(ResponseResultQuery responseResultQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ResponseResultEntity.class)
                 .eq("apiUnitId", responseResultQuery.getApiUnitId())
@@ -82,6 +87,11 @@ public class ResponseResultDao{
         return jpaTemplate.findList(queryCondition, ResponseResultEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询响应结果
+     * @param responseResultQuery
+     * @return
+     */
     public Pagination<ResponseResultEntity> findResponseResultPage(ResponseResultQuery responseResultQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ResponseResultEntity.class)
                 .eq("apiUnitId", responseResultQuery.getApiUnitId())

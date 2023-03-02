@@ -8,6 +8,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 断言 实体
+ */
 @Entity @Table(name="teston_api_assert")
 public class AssertCaseEntity implements Serializable {
 
@@ -16,24 +19,31 @@ public class AssertCaseEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属接口
     @Column(name = "api_unit_id",length = 32,notNull = true)
     private String apiUnitId;
 
+    // 来源,1:状态码;2:请求头;3:请求体
     @Column(name = "source")
     private Integer source;
 
+    // 属性名称
     @Column(name = "property_name",length = 64)
     private String propertyName;
 
+    // 数据类型
     @Column(name = "data_type",length = 32)
     private String dataType;
 
+    // 比较符
     @Column(name = "comparator",length = 32)
     private String comparator;
 
+    // 值
     @Column(name = "value",length = 128)
     private String value;
 
+    // 排序
     @Column(name = "sort",length = 4)
     private Integer sort;
 

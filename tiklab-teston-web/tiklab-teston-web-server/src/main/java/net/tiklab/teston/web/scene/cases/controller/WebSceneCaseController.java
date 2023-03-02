@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebSceneCaseController
+ * web场景用例 控制器
  */
 @RestController
 @RequestMapping("/webSceneCase")

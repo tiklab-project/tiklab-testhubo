@@ -4,7 +4,7 @@ import net.tiklab.teston.web.perf.execute.model.WebPerfTestResponse;
 import net.tiklab.teston.web.perf.execute.model.WebPerfTestRequest;
 
 /**
- * web性能测试调度服务
+ * web性能测试调度 服务接口
  */
 public interface WebPerfTestDispatchService {
 

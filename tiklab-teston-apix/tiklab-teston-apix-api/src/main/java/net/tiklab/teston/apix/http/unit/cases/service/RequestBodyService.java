@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* RequestBodyService
+* 请求体 服务接口
 */
 public interface RequestBodyService {
 
     /**
-    * 创建
+    * 创建请求体
     * @param requestBody
     * @return
     */
     String createRequestBody(@NotNull @Valid RequestBody requestBody);
 
     /**
-    * 更新
+    * 更新请求体
     * @param requestBody
     */
     void updateRequestBody(@NotNull @Valid RequestBody requestBody);
 
     /**
-    * 删除
+    * 删除请求体
     * @param id
     */
     void deleteRequestBody(@NotNull String id);
@@ -37,27 +37,27 @@ public interface RequestBodyService {
     List<RequestBody> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找请求体
     * @param id
     * @return
     */
     RequestBody findRequestBody(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有请求体
     * @return
     */
     List<RequestBody> findAllRequestBody();
 
     /**
-    * 查询列表
+    * 根据查询参数查询请求体列表
     * @param requestBodyQuery
     * @return
     */
     List<RequestBody> findRequestBodyList(RequestBodyQuery requestBodyQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询请求体
     * @param requestBodyQuery
     * @return
     */

@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* AppSceneStepServiceImpl
+* app场景下步骤 服务
 */
 @Service
 public class AppSceneStepServiceImpl implements AppSceneStepService {
@@ -108,12 +108,4 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
         return PaginationBuilder.build(pagination,appSceneStepList);
     }
 
-    @Override
-    public void bindAppUnit(List<AppSceneStep> appSceneStepList) {
-        if(CollectionUtils.isNotEmpty(appSceneStepList)){
-            for(AppSceneStep appSceneStep : appSceneStepList){
-                createAppSceneStep(appSceneStep);
-            }
-        }
-    }
 }

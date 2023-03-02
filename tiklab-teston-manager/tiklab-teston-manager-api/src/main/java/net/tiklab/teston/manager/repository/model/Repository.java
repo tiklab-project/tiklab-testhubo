@@ -12,6 +12,9 @@ import net.tiklab.user.user.model.User;
 
 import java.util.List;
 
+/**
+ *仓库模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RepositoryEntity")
 @Join
@@ -20,13 +23,13 @@ public class Repository extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="name",desc="name",required = true)
+    @ApiProperty(name="name",desc="名称",required = true)
     private java.lang.String name;
 
-    @ApiProperty(name="desc",desc="desc")
+    @ApiProperty(name="desc",desc="描述")
     private java.lang.String desc;
 
-    @ApiProperty(name="user",desc="所属用户",eg="@selectOne")
+    @ApiProperty(name="user",desc="所属用户")
     @Mappings({
             @Mapping(source = "user.id",target = "userId")
     })
@@ -39,9 +42,13 @@ public class Repository extends BaseModel{
     @ApiProperty(name="iconUrl",desc="图标地址")
     private String iconUrl;
 
+    @ApiProperty(name="isFollow",desc="是否关注")
     private Integer isFollow;
-    private List<String> memberList;
+
+    @ApiProperty(name="planNum",desc="计划总数")
     private Integer planNum;
+
+    @ApiProperty(name="memberNum",desc="成员数")
     private Integer memberNum;
 
     public java.lang.String getId() {
@@ -99,13 +106,6 @@ public class Repository extends BaseModel{
         this.isFollow = isFollow;
     }
 
-    public List<String> getMemberList() {
-        return memberList;
-    }
-
-    public void setMemberList(List<String> memberList) {
-        this.memberList = memberList;
-    }
 
     public Integer getPlanNum() {
         return planNum;

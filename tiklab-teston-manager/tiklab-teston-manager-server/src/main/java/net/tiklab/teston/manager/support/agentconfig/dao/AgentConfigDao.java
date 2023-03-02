@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AgentConfigDao
+ * agent配置 数据访问
  */
 @Repository
 public class AgentConfigDao{
@@ -26,7 +26,7 @@ public class AgentConfigDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建agent配置
      * @param agentConfigEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AgentConfigDao{
     }
 
     /**
-     * 更新
+     * 更新agent配置
      * @param agentConfigEntity
      */
     public void updateAgentConfig(AgentConfigEntity agentConfigEntity){
@@ -43,7 +43,7 @@ public class AgentConfigDao{
     }
 
     /**
-     * 删除
+     * 删除agent配置
      * @param id
      */
     public void deleteAgentConfig(String id){
@@ -55,7 +55,7 @@ public class AgentConfigDao{
     }
 
     /**
-     * 查找
+     * 根据id查找agent配置
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AgentConfigDao{
     }
 
     /**
-    * findAllAgentConfig
+    * 查找所有agent配置
     * @return
     */
     public List<AgentConfigEntity> findAllAgentConfig() {
@@ -75,6 +75,11 @@ public class AgentConfigDao{
         return jpaTemplate.findList(AgentConfigEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询agent配置列表
+     * @param agentConfigQuery
+     * @return
+     */
     public List<AgentConfigEntity> findAgentConfigList(AgentConfigQuery agentConfigQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AgentConfigEntity.class)
                 .eq("repositoryId", agentConfigQuery.getRepositoryId())
@@ -83,6 +88,11 @@ public class AgentConfigDao{
         return jpaTemplate.findList(queryCondition,AgentConfigEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询agent配置
+     * @param agentConfigQuery
+     * @return
+     */
     public Pagination<AgentConfigEntity> findAgentConfigPage(AgentConfigQuery agentConfigQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AgentConfigEntity.class)
                 .eq("repositoryId", agentConfigQuery.getRepositoryId())

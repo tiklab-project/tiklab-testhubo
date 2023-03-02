@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RepositoryFollowDao
+ * 仓库关注 数据访问
  */
 @Repository
 public class RepositoryFollowDao{
@@ -26,7 +26,7 @@ public class RepositoryFollowDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建仓库关注
      * @param repositoryFollowEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class RepositoryFollowDao{
     }
 
     /**
-     * 更新
+     * 更新仓库关注
      * @param repositoryFollowEntity
      */
     public void updateRepositoryFollow(RepositoryFollowEntity repositoryFollowEntity){
@@ -43,7 +43,7 @@ public class RepositoryFollowDao{
     }
 
     /**
-     * 删除
+     * 删除仓库关注
      * @param id
      */
     public void deleteRepositoryFollow(String id){
@@ -55,7 +55,7 @@ public class RepositoryFollowDao{
     }
 
     /**
-     * 查找
+     * 根据id查找仓库关注
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class RepositoryFollowDao{
     }
 
     /**
-    * findAllRepositoryFollow
+    * 查找所有仓库关注
     * @return
     */
     public List<RepositoryFollowEntity> findAllRepositoryFollow() {
@@ -75,6 +75,11 @@ public class RepositoryFollowDao{
         return jpaTemplate.findList(RepositoryFollowEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询仓库关注列表
+     * @param repositoryFollowQuery
+     * @return
+     */
     public List<RepositoryFollowEntity> findRepositoryFollowList(RepositoryFollowQuery repositoryFollowQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryFollowEntity.class)
                 .eq("userId", repositoryFollowQuery.getUserId())
@@ -83,6 +88,11 @@ public class RepositoryFollowDao{
         return jpaTemplate.findList(queryCondition,RepositoryFollowEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询仓库关注
+     * @param repositoryFollowQuery
+     * @return
+     */
     public Pagination<RepositoryFollowEntity> findRepositoryFollowPage(RepositoryFollowQuery repositoryFollowQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryFollowEntity.class)
                 .eq("userId", repositoryFollowQuery.getUserId())

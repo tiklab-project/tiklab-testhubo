@@ -7,6 +7,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 接口性能 实体
+ */
 @Entity @Table(name="teston_api_perfcase")
 public class ApiPerfCaseEntity implements Serializable {
     @Id
@@ -14,15 +17,19 @@ public class ApiPerfCaseEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属用例
     @Column(name = "testcase_id",length = 32)
     private String testCaseId;
 
+    // 线程数
     @Column(name = "thread_count")
     private Integer threadCount;
 
+    // 执行类型
     @Column(name = "execute_type")
     private Integer executeType;
 
+    // 执行次数
     @Column(name = "execute_count")
     private Integer executeCount;
 

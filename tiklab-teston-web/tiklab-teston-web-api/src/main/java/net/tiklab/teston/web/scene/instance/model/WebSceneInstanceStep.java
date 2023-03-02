@@ -5,7 +5,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
-
+/**
+ * web场景下步骤 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebSceneInstanceStepEntity")
 public class WebSceneInstanceStep extends BaseModel {
@@ -13,25 +15,25 @@ public class WebSceneInstanceStep extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="webSceneInstanceId",desc="webSceneInstanceId")
+    @ApiProperty(name="webSceneInstanceId",desc="所属场景实例")
     private String webSceneInstanceId;
 
-    @ApiProperty(name="location",desc="location")
+    @ApiProperty(name="location",desc="定位器")
     private String location;
 
-    @ApiProperty(name="locationValue",desc="locationValue")
+    @ApiProperty(name="locationValue",desc="定位值")
     private String locationValue;
 
-    @ApiProperty(name="actionType",desc="actionType")
+    @ApiProperty(name="actionType",desc="方法")
     private String actionType;
 
-    @ApiProperty(name="stepAction",desc="stepAction")
+    @ApiProperty(name="stepAction",desc="步骤动作")
     private String stepAction;
 
-    @ApiProperty(name="parameter",desc="parameter")
+    @ApiProperty(name="parameter",desc="参数")
     private String parameter;
 
-    @ApiProperty(name="result",desc="result")
+    @ApiProperty(name="result",desc="结果")
     private Integer result;
 
     @ApiProperty(name="duration",desc="耗时")

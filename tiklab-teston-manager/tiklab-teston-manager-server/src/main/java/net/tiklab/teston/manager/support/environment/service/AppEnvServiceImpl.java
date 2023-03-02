@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
-* AppEnvServiceImpl
+* app环境 服务
 */
 @Service
 public class AppEnvServiceImpl implements AppEnvService {

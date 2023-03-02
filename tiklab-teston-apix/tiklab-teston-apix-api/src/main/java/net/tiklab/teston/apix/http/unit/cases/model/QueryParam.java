@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * query参数 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "QueryParamEntity")
 @Join

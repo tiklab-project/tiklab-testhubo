@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * TestPlanCaseInstanceBindDao
+ * 测试计划下用例的实例中间层 数据访问
  */
 @Repository
 public class TestPlanCaseInstanceBindDao{
@@ -26,7 +26,7 @@ public class TestPlanCaseInstanceBindDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建用例的实例中间层
      * @param testPlanCaseInstanceBindEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class TestPlanCaseInstanceBindDao{
     }
 
     /**
-     * 更新
+     * 更新用例的实例中间层
      * @param testPlanCaseInstanceBindEntity
      */
     public void updateTestPlanCaseInstanceBind(TestPlanCaseInstanceBindEntity testPlanCaseInstanceBindEntity){
@@ -43,7 +43,7 @@ public class TestPlanCaseInstanceBindDao{
     }
 
     /**
-     * 删除
+     * 删除用例的实例中间层
      * @param id
      */
     public void deleteTestPlanCaseInstanceBind(String id){
@@ -55,7 +55,7 @@ public class TestPlanCaseInstanceBindDao{
     }
 
     /**
-     * 查找
+     * 查找用例的实例中间层
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class TestPlanCaseInstanceBindDao{
     }
 
     /**
-    * findAllTestPlanCaseInstanceBind
+    * 查找所有用例的实例中间层
     * @return
     */
     public List<TestPlanCaseInstanceBindEntity> findAllTestPlanCaseInstanceBind() {
@@ -75,6 +75,11 @@ public class TestPlanCaseInstanceBindDao{
         return jpaTemplate.findList(TestPlanCaseInstanceBindEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询用例的实例中间层列表
+     * @param testPlanCaseInstanceBindQuery
+     * @return
+     */
     public List<TestPlanCaseInstanceBindEntity> findTestPlanCaseInstanceBindList(TestPlanCaseInstanceBindQuery testPlanCaseInstanceBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanCaseInstanceBindEntity.class)
                 .eq("caseInstanceId", testPlanCaseInstanceBindQuery.getCaseInstanceId())
@@ -84,6 +89,11 @@ public class TestPlanCaseInstanceBindDao{
         return jpaTemplate.findList(queryCondition,TestPlanCaseInstanceBindEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询用例的实例中间层
+     * @param testPlanCaseInstanceBindQuery
+     * @return
+     */
     public Pagination<TestPlanCaseInstanceBindEntity> findTestPlanCaseInstanceBindPage(TestPlanCaseInstanceBindQuery testPlanCaseInstanceBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanCaseInstanceBindEntity.class)
                 .eq("caseInstanceId", testPlanCaseInstanceBindQuery.getCaseInstanceId())

@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * RepositoryController
+ * 仓库 控制器
  */
 @RestController
 @RequestMapping("/repository")
-@Api(name = "RepositoryController",desc = "RepositoryController")
+@Api(name = "RepositoryController",desc = "仓库管理")
 public class RepositoryController {
 
     private static Logger logger = LoggerFactory.getLogger(RepositoryController.class);
@@ -34,7 +34,7 @@ public class RepositoryController {
     private RepositoryService repositoryService;
 
     @RequestMapping(path="/createRepository",method = RequestMethod.POST)
-    @ApiMethod(name = "createRepository",desc = "createRepository")
+    @ApiMethod(name = "createRepository",desc = "创建仓库")
     @ApiParam(name = "repository",desc = "repository",required = true)
     public Result<String> createRepository(@RequestBody @NotNull @Valid Repository repository){
         String id = repositoryService.createRepository(repository);
@@ -43,7 +43,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path="/updateRepository",method = RequestMethod.POST)
-    @ApiMethod(name = "updateRepository",desc = "updateRepository")
+    @ApiMethod(name = "updateRepository",desc = "更新仓库")
     @ApiParam(name = "repository",desc = "repository",required = true)
     public Result<Void> updateRepository(@RequestBody @NotNull @Valid Repository repository){
         repositoryService.updateRepository(repository);
@@ -52,7 +52,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path="/deleteRepository",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteRepository",desc = "deleteRepository")
+    @ApiMethod(name = "deleteRepository",desc = "删除仓库")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteRepository(@NotNull String id){
         repositoryService.deleteRepository(id);
@@ -61,7 +61,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path="/findRepository",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepository",desc = "findRepository")
+    @ApiMethod(name = "findRepository",desc = "根据id查找仓库")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Repository> findRepository(@NotNull String id){
         Repository repository = repositoryService.findRepository(id);
@@ -70,7 +70,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path="/findAllRepository",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllRepository",desc = "findAllRepository")
+    @ApiMethod(name = "findAllRepository",desc = "查找所有仓库")
     public Result<List<Repository>> findAllRepository(){
         List<Repository> repositoryList = repositoryService.findAllRepository();
 
@@ -78,7 +78,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path = "/findRepositoryList",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryList",desc = "findRepositoryList")
+    @ApiMethod(name = "findRepositoryList",desc = "根据查询参数查询仓库列表")
     @ApiParam(name = "repositoryQuery",desc = "repositoryQuery",required = true)
     public Result<List<Repository>> findRepositoryList(@RequestBody @Valid @NotNull RepositoryQuery repositoryQuery){
         List<Repository> repositoryList = repositoryService.findRepositoryList(repositoryQuery);
@@ -87,7 +87,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path = "/findRepositoryPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryPage",desc = "findRepositoryPage")
+    @ApiMethod(name = "findRepositoryPage",desc = "根据查询参数按分页查询仓库")
     @ApiParam(name = "repositoryQuery",desc = "repositoryQuery",required = true)
     public Result<Pagination<Repository>> findRepositoryPage(@RequestBody @Valid @NotNull RepositoryQuery repositoryQuery){
         Pagination<Repository> pagination = repositoryService.findRepositoryPage(repositoryQuery);
@@ -96,7 +96,7 @@ public class RepositoryController {
     }
 
     @RequestMapping(path = "/findRepositoryJoinList",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryJoinList",desc = "findRepositoryJoinList")
+    @ApiMethod(name = "findRepositoryJoinList",desc = "查询我加入的仓库列表")
     @ApiParam(name = "repositoryQuery",desc = "repositoryQuery",required = true)
     public Result<List<Repository>> findRepositoryJoinList(@RequestBody @Valid @NotNull RepositoryQuery repositoryQuery){
         List<Repository> repositoryJoinList = repositoryService.findRepositoryJoinList(repositoryQuery);

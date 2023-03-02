@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 
 /**
- * RepositoryOverviewController
+ * 仓库概况 控制器
  */
 @RestController
 @RequestMapping("/repository")
-@Api(name = "RepositoryOverviewController",desc = "RepositoryOverviewController")
+@Api(name = "RepositoryOverviewController",desc = "仓库概况管理")
 public class RepositoryOverviewController {
 
     private static Logger logger = LoggerFactory.getLogger(RepositoryOverviewController.class);

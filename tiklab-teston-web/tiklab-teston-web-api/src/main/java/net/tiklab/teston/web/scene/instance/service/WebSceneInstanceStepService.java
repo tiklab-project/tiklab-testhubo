@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* WebSceneInstanceStepService
+* web场景下步骤实例 服务接口
 */
 @JoinProvider(model = WebSceneInstanceStep.class)
 public interface WebSceneInstanceStepService {
 
     /**
-    * 创建
+    * 创建web场景下步骤实例
     * @param webSceneInstanceStep
     * @return
     */
     String createWebSceneInstanceStep(@NotNull @Valid WebSceneInstanceStep webSceneInstanceStep);
 
     /**
-    * 更新
+    * 更新web场景下步骤实例
     * @param webSceneInstanceStep
     */
     void updateWebSceneInstanceStep(@NotNull @Valid WebSceneInstanceStep webSceneInstanceStep);
 
     /**
-    * 删除
+    * 删除web场景下步骤实例
     * @param id
     */
     void deleteWebSceneInstanceStep(@NotNull String id);
@@ -45,28 +45,28 @@ public interface WebSceneInstanceStepService {
     List<WebSceneInstanceStep> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找web场景下步骤实例
     * @param id
     * @return
     */
     WebSceneInstanceStep findWebSceneInstanceStep(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有web场景下步骤实例
     * @return
     */
     @FindAll
     List<WebSceneInstanceStep> findAllWebSceneInstanceStep();
 
     /**
-    * 查询列表
+    * 根据查询参数查询web场景下步骤实例列表
     * @param webSceneInstanceStepQuery
     * @return
     */
     List<WebSceneInstanceStep> findWebSceneInstanceStepList(WebSceneInstanceStepQuery webSceneInstanceStepQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询web场景下步骤实例
     * @param webSceneInstanceStepQuery
     * @return
     */

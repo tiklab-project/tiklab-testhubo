@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ActionTypeServiceImpl
+* app、web中操作类型 服务
 */
 @Service
 public class ActionTypeServiceImpl implements ActionTypeService {

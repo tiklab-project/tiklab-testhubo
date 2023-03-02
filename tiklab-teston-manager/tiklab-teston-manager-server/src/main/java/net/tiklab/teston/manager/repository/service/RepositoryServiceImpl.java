@@ -38,7 +38,7 @@ import static net.tiklab.teston.manager.common.MessageTemplateConstant.LOG_TYPE_
 import static net.tiklab.teston.manager.common.MessageTemplateConstant.LOG_TYPE_UPDATE_ID;
 
 /**
-* RepositoryServiceImpl
+* 仓库 服务
 */
 @Service
 public class RepositoryServiceImpl implements RepositoryService {

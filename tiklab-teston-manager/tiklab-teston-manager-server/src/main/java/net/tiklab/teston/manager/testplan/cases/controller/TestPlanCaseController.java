@@ -22,11 +22,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * TestPlanCaseController
+ * 测试计划绑定的用例 控制器
  */
 @RestController
 @RequestMapping("/testPlanCase")
-@Api(name = "TestPlanCaseController",desc = "测试计划详情表(测试计划关联用例表)")
+@Api(name = "TestPlanCaseController",desc = "测试计划绑定的用例(测试计划关联用例表)")
 public class TestPlanCaseController {
 
     private static Logger logger = LoggerFactory.getLogger(TestPlanCaseController.class);
@@ -35,7 +35,7 @@ public class TestPlanCaseController {
     private TestPlanCaseService testPlanCaseService;
 
     @RequestMapping(path="/createTestPlanCase",method = RequestMethod.POST)
-    @ApiMethod(name = "createTestPlanCase",desc = "创建测试计划详情表")
+    @ApiMethod(name = "createTestPlanCase",desc = "创建测试计划绑定的用例")
     @ApiParam(name = "testPlanDetail",desc = "testPlanDetail",required = true)
     public Result<String> createTestPlanCase(@RequestBody @NotNull @Valid TestPlanCase testPlanCase){
         String id = testPlanCaseService.createTestPlanCase(testPlanCase);
@@ -44,7 +44,7 @@ public class TestPlanCaseController {
     }
 
     @RequestMapping(path="/updateTestPlanCase",method = RequestMethod.POST)
-    @ApiMethod(name = "updateTestPlanCase",desc = "修改测试计划详情")
+    @ApiMethod(name = "updateTestPlanCase",desc = "修改测试计划绑定的用例")
     @ApiParam(name = "testPlanDetail",desc = "testPlanDetail",required = true)
     public Result<Void> updateTestPlanCase(@RequestBody @NotNull @Valid TestPlanCase testPlanCase){
         testPlanCaseService.updateTestPlanCase(testPlanCase);
@@ -53,7 +53,7 @@ public class TestPlanCaseController {
     }
 
     @RequestMapping(path="/deleteTestPlanCase",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteTestPlanCase",desc = "删除测试计划详情")
+    @ApiMethod(name = "deleteTestPlanCase",desc = "删除测试计划绑定的用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteTestPlanCase(@NotNull String id){
         testPlanCaseService.deleteTestPlanCase(id);
@@ -98,7 +98,7 @@ public class TestPlanCaseController {
 
 
     @RequestMapping(path = "/findTesCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findTesCase",desc = "测试计划详情添加用例弹窗列表")
+    @ApiMethod(name = "findTesCase",desc = "测试计划绑定的用例添加用例弹窗列表")
     @ApiParam(name = "testPlanDetailQuery",desc = "testPlanDetailQuery",required = true)
     public Result<Pagination<TestCase>> findTesCaseList(@RequestBody @Valid @NotNull TestPlanCase testPlanCase){
         Pagination<TestCase> pagination = testPlanCaseService.findTesCaseList(testPlanCase);

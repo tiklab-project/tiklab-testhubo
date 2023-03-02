@@ -9,7 +9,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
 
-
+/**
+ * app场景下步骤 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppSceneStepEntity")
 @Join
@@ -43,7 +45,7 @@ public class AppSceneStep extends BaseModel {
     @ApiProperty(name="expectedResult",desc="预期值")
     private String expectedResult;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 

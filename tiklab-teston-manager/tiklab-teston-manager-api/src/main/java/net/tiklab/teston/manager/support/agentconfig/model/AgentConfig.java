@@ -6,6 +6,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
+/**
+ * agent配置 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AgentConfigEntity")
 public class AgentConfig extends BaseModel {
@@ -13,22 +16,23 @@ public class AgentConfig extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="repositoryId",desc="repositoryId")
+    @ApiProperty(name="repositoryId",desc="所属仓库")
     private java.lang.String repositoryId;
 
-    @ApiProperty(name="name",desc="name")
+
+    @ApiProperty(name="name",desc="名称")
     private java.lang.String name;
 
-    @ApiProperty(name="url",desc="url")
+    @ApiProperty(name="url",desc="地址")
     private java.lang.String url;
 
-    @ApiProperty(name="status",desc="status")
+    @ApiProperty(name="status",desc="状态")
     private java.lang.Integer status;
 
     @ApiProperty(name="number",desc="number")
     private java.lang.Integer number;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private java.sql.Timestamp createTime;
 

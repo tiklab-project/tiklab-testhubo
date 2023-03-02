@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* ApiSceneStepServiceImpl
+* 接口场景下绑定的步骤 服务
 */
 @Service
 public class ApiSceneStepServiceImpl implements ApiSceneStepService {

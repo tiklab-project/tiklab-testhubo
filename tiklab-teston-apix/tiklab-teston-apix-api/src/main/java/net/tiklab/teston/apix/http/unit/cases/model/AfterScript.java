@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 后置脚本 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AfterScriptEntity")
 @Join

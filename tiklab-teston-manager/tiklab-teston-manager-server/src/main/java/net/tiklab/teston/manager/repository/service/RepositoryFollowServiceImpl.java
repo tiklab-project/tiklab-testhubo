@@ -22,7 +22,7 @@ import java.util.Objects;
 
 
 /**
-* RepositoryFollowServiceImpl
+* 仓库关注 服务
 */
 @Service
 public class RepositoryFollowServiceImpl implements RepositoryFollowService {

@@ -7,6 +7,9 @@ import net.tiklab.teston.app.scene.cases.model.AppSceneStep;
 
 import java.util.List;
 
+/**
+ * app场景测试数据封装 模型
+ */
 @ApiModel
 public class AppSceneTestRequest extends BaseModel {
 

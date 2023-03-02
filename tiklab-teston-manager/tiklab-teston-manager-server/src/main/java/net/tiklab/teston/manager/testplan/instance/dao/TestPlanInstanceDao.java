@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * TestPlanInstanceDao
+ * 测试计划实例 数据访问
  */
 @Repository
 public class TestPlanInstanceDao{
@@ -27,7 +27,7 @@ public class TestPlanInstanceDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建测试计划实例
      * @param testPlanInstanceEntity
      * @return
      */
@@ -36,7 +36,7 @@ public class TestPlanInstanceDao{
     }
 
     /**
-     * 更新
+     * 更新测试计划实例
      * @param testPlanInstanceEntity
      */
     public void updateTestPlanInstance(TestPlanInstanceEntity testPlanInstanceEntity){
@@ -44,7 +44,7 @@ public class TestPlanInstanceDao{
     }
 
     /**
-     * 删除
+     * 删除测试计划实例
      * @param id
      */
     public void deleteTestPlanInstance(String id){
@@ -56,7 +56,7 @@ public class TestPlanInstanceDao{
     }
 
     /**
-     * 查找
+     * 根据id查找测试计划实例
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class TestPlanInstanceDao{
     }
 
     /**
-    * findAllTestPlanInstance
+    * 查找所有测试计划实例
     * @return
     */
     public List<TestPlanInstanceEntity> findAllTestPlanInstance() {
@@ -76,6 +76,11 @@ public class TestPlanInstanceDao{
         return jpaTemplate.findList(TestPlanInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询测试计划实例列表
+     * @param testPlanInstanceQuery
+     * @return
+     */
     public List<TestPlanInstanceEntity> findTestPlanInstanceList(TestPlanInstanceQuery testPlanInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanInstanceEntity.class)
                 .eq("testPlanId", testPlanInstanceQuery.getTestPlanId())
@@ -85,6 +90,11 @@ public class TestPlanInstanceDao{
         return jpaTemplate.findList(queryCondition,TestPlanInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询测试计划实例
+     * @param testPlanInstanceQuery
+     * @return
+     */
     public Pagination<TestPlanInstanceEntity> findTestPlanInstancePage(TestPlanInstanceQuery testPlanInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanInstanceEntity.class)
                 .eq("testPlanId", testPlanInstanceQuery.getTestPlanId())

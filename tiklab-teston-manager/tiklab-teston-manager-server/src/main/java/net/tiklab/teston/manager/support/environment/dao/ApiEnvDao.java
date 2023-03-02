@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiEnvDao
+ * 接口环境 数据访问
  */
 @Repository
 public class ApiEnvDao {
@@ -26,7 +26,7 @@ public class ApiEnvDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口环境
      * @param apiEnvEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ApiEnvDao {
     }
 
     /**
-     * 更新
+     * 更新接口环境
      * @param apiEnvEntity
      */
     public void updateApiEnv(ApiEnvEntity apiEnvEntity){
@@ -43,7 +43,7 @@ public class ApiEnvDao {
     }
 
     /**
-     * 删除
+     * 删除接口环境
      * @param id
      */
     public void deleteApiEnv(String id){
@@ -55,7 +55,7 @@ public class ApiEnvDao {
     }
 
     /**
-     * 查找
+     * 根据id查找接口环境
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ApiEnvDao {
     }
 
     /**
-    * findAllApiEnv
+    * 查找所有接口环境
     * @return
     */
     public List<ApiEnvEntity> findAllApiEnv() {
@@ -75,6 +75,11 @@ public class ApiEnvDao {
         return jpaTemplate.findList(ApiEnvEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询接口环境列表
+     * @param apiEnvQuery
+     * @return
+     */
     public List<ApiEnvEntity> findApiEnvList(ApiEnvQuery apiEnvQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiEnvEntity.class)
                 .eq("repositoryId", apiEnvQuery.getRepositoryId())
@@ -83,6 +88,11 @@ public class ApiEnvDao {
         return jpaTemplate.findList(queryCondition, ApiEnvEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询接口环境
+     * @param apiEnvQuery
+     * @return
+     */
     public Pagination<ApiEnvEntity> findApiEnvPage(ApiEnvQuery apiEnvQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiEnvEntity.class)
                 .eq("repositoryId", apiEnvQuery.getRepositoryId())

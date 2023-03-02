@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * JsonResponseController
+ * 响应中json 控制器
  */
 @RestController
 @RequestMapping("/jsonResponse")
@@ -34,7 +34,7 @@ public class JsonResponseController {
     private JsonResponseService jsonResponseService;
 
     @RequestMapping(path="/createJsonResponse",method = RequestMethod.POST)
-    @ApiMethod(name = "createJsonResponse",desc = "createJsonResponse")
+    @ApiMethod(name = "createJsonResponse",desc = "创建响应中json")
     @ApiParam(name = "jsonResponse",desc = "jsonResponse",required = true)
     public Result<String> createJsonResponse(@RequestBody @NotNull @Valid JsonResponse jsonResponse){
         String id = jsonResponseService.createJsonResponse(jsonResponse);
@@ -43,7 +43,7 @@ public class JsonResponseController {
     }
 
     @RequestMapping(path="/updateJsonResponse",method = RequestMethod.POST)
-    @ApiMethod(name = "updateJsonResponse",desc = "updateJsonResponse")
+    @ApiMethod(name = "updateJsonResponse",desc = "更新响应中json")
     @ApiParam(name = "jsonResponse",desc = "jsonResponse",required = true)
     public Result<Void> updateJsonResponse(@RequestBody @NotNull @Valid JsonResponse jsonResponse){
         jsonResponseService.updateJsonResponse(jsonResponse);
@@ -52,7 +52,7 @@ public class JsonResponseController {
     }
 
     @RequestMapping(path="/deleteJsonResponse",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteJsonResponse",desc = "deleteJsonResponse")
+    @ApiMethod(name = "deleteJsonResponse",desc = "删除响应中json")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteJsonResponse(@NotNull String id){
         jsonResponseService.deleteJsonResponse(id);
@@ -61,7 +61,7 @@ public class JsonResponseController {
     }
 
     @RequestMapping(path="/findJsonResponse",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonResponse",desc = "findJsonResponse")
+    @ApiMethod(name = "findJsonResponse",desc = "根据id查找响应中json")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<JsonResponse> findJsonResponse(@NotNull String id){
         JsonResponse jsonResponse = jsonResponseService.findJsonResponse(id);
@@ -70,7 +70,7 @@ public class JsonResponseController {
     }
 
     @RequestMapping(path="/findAllJsonResponse",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllJsonResponse",desc = "findAllJsonResponse")
+    @ApiMethod(name = "findAllJsonResponse",desc = "查找所有响应中json")
     public Result<List<JsonResponse>> findAllJsonResponse(){
         List<JsonResponse> jsonResponseList = jsonResponseService.findAllJsonResponse();
 
@@ -78,7 +78,7 @@ public class JsonResponseController {
     }
 
     @RequestMapping(path = "/findJsonResponseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonResponseList",desc = "findJsonResponseList")
+    @ApiMethod(name = "findJsonResponseList",desc = "根据查询参数查找查询响应中json列表")
     @ApiParam(name = "jsonResponseQuery",desc = "jsonResponseQuery",required = true)
     public Result<List<JsonResponse>> findJsonResponseList(@RequestBody @Valid @NotNull JsonResponseQuery jsonResponseQuery){
         List<JsonResponse> jsonResponseList = jsonResponseService.findJsonResponseList(jsonResponseQuery);
@@ -87,7 +87,7 @@ public class JsonResponseController {
     }
 
     @RequestMapping(path = "/findJsonResponsePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonResponsePage",desc = "findJsonResponsePage")
+    @ApiMethod(name = "findJsonResponsePage",desc = "根据查询参数查找按分页查询响应中json")
     @ApiParam(name = "jsonResponseQuery",desc = "jsonResponseQuery",required = true)
     public Result<Pagination<JsonResponse>> findJsonResponsePage(@RequestBody @Valid @NotNull JsonResponseQuery jsonResponseQuery){
         Pagination<JsonResponse> pagination = jsonResponseService.findJsonResponsePage(jsonResponseQuery);

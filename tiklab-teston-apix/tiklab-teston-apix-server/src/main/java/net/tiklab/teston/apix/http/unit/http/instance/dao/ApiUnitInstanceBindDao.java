@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiUnitInstanceBindDao
+ * 接口单元公共实例 数据访问
  */
 @Repository
 public class ApiUnitInstanceBindDao{
@@ -27,7 +27,7 @@ public class ApiUnitInstanceBindDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口单元公共实例
      * @param apiUnitInstanceBindEntity
      * @return
      */
@@ -36,7 +36,7 @@ public class ApiUnitInstanceBindDao{
     }
 
     /**
-     * 更新
+     * 更新接口单元公共实例
      * @param apiUnitInstanceBindEntity
      */
     public void updateApiUnitInstanceBind(ApiUnitInstanceBindEntity apiUnitInstanceBindEntity){
@@ -44,7 +44,7 @@ public class ApiUnitInstanceBindDao{
     }
 
     /**
-     * 删除
+     * 删除接口单元公共实例
      * @param id
      */
     public void deleteApiUnitInstanceBind(String id){
@@ -56,7 +56,7 @@ public class ApiUnitInstanceBindDao{
     }
 
     /**
-     * 查找
+     * 查找接口单元公共实例
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class ApiUnitInstanceBindDao{
     }
 
     /**
-    * findAllApiUnitInstanceBind
+    * 查找所有接口单元公共实例
     * @return
     */
     public List<ApiUnitInstanceBindEntity> findAllApiUnitInstanceBind() {
@@ -76,6 +76,11 @@ public class ApiUnitInstanceBindDao{
         return jpaTemplate.findList(ApiUnitInstanceBindEntity.class,idList);
     }
 
+    /**
+     * 查询接口单元公共实例列表
+     * @param apiUnitInstanceBindQuery
+     * @return
+     */
     public List<ApiUnitInstanceBindEntity> findApiUnitInstanceBindList(ApiUnitInstanceBindQuery apiUnitInstanceBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitInstanceBindEntity.class)
                 .eq("apiUnitId", apiUnitInstanceBindQuery.getApiUnitId())
@@ -84,6 +89,11 @@ public class ApiUnitInstanceBindDao{
         return jpaTemplate.findList(queryCondition,ApiUnitInstanceBindEntity.class);
     }
 
+    /**
+     * 按分页查询接口单元公共实例
+     * @param apiUnitInstanceBindQuery
+     * @return
+     */
     public Pagination<ApiUnitInstanceBindEntity> findApiUnitInstanceBindPage(ApiUnitInstanceBindQuery apiUnitInstanceBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitInstanceBindEntity.class)
                 .eq("apiUnitId", apiUnitInstanceBindQuery.getApiUnitId())

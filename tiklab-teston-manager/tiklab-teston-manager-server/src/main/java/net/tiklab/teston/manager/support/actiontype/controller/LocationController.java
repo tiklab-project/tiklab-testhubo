@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ *元素选择策略定位器 控制器
+ */
 @RestController
 @RequestMapping("/location")
 @Api(name = "LocationController",desc = "元素选择策略定位器管理")

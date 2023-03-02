@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RequestBodyDao
+ * 请求体 数据访问
  */
 @Repository
 public class RequestBodyDao{
@@ -26,7 +26,7 @@ public class RequestBodyDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建请求体
      * @param requestBodyEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class RequestBodyDao{
     }
 
     /**
-     * 更新
+     * 更新请求体
      * @param requestBodyEntity
      */
     public void updateRequestBody(RequestBodyEntity requestBodyEntity){
@@ -43,7 +43,7 @@ public class RequestBodyDao{
     }
 
     /**
-     * 删除
+     * 删除请求体
      * @param id
      */
     public void deleteRequestBody(String id){
@@ -55,7 +55,7 @@ public class RequestBodyDao{
     }
 
     /**
-     * 查找
+     * 查找请求体
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class RequestBodyDao{
     }
 
     /**
-    * findAllRequestBody
+    * 查找所有请求体
     * @return
     */
     public List<RequestBodyEntity> findAllRequestBody() {
@@ -75,6 +75,11 @@ public class RequestBodyDao{
         return jpaTemplate.findList(RequestBodyEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询请求体列表
+     * @param requestBodyQuery
+     * @return
+     */
     public List<RequestBodyEntity> findRequestBodyList(RequestBodyQuery requestBodyQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestBodyEntity.class)
                 .eq("apiUnitId", requestBodyQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class RequestBodyDao{
         return jpaTemplate.findList(queryCondition, RequestBodyEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询请求体
+     * @param requestBodyQuery
+     * @return
+     */
     public Pagination<RequestBodyEntity> findRequestBodyPage(RequestBodyQuery requestBodyQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestBodyEntity.class)
                 .eq("apiUnitId", requestBodyQuery.getApiUnitId())

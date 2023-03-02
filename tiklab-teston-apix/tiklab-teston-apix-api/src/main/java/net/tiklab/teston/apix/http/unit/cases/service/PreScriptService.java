@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* PreScriptService
+* 前置脚本 服务接口
 */
 public interface PreScriptService {
 
     /**
-    * 创建
+    * 创建前置脚本
     * @param preScript
     * @return
     */
     String createPreScript(@NotNull @Valid PreScript preScript);
 
     /**
-    * 更新
+    * 更新前置脚本
     * @param preScript
     */
     void updatePreScript(@NotNull @Valid PreScript preScript);
 
     /**
-    * 删除
+    * 删除前置脚本
     * @param id
     */
     void deletePreScript(@NotNull String id);
@@ -37,27 +37,27 @@ public interface PreScriptService {
     List<PreScript> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找前置脚本
     * @param id
     * @return
     */
     PreScript findPreScript(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有前置脚本
     * @return
     */
     List<PreScript> findAllPreScript();
 
     /**
-    * 查询列表
+    * 根据查询参数查询前置脚本列表
     * @param preScriptQuery
     * @return
     */
     List<PreScript> findPreScriptList(PreScriptQuery preScriptQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询前置脚本
     * @param preScriptQuery
     * @return
     */

@@ -2,6 +2,9 @@ package net.tiklab.teston.func.function.entity;
 
 import net.tiklab.dal.jpa.annotation.*;
 
+/**
+ * 功能用例 实体
+ */
 @Entity
 @Table(name="teston_func_unit")
 public class FuncUnitCaseEntity {
@@ -10,6 +13,7 @@ public class FuncUnitCaseEntity {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属测试用例
     @Column(name = "testcase_id" )
     private String  testCaseId;
 

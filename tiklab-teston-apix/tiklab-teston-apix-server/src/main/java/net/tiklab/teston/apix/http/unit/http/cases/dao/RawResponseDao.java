@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RawResponseDao
+ * 响应中raw 数据访问
  */
 @Repository
 public class RawResponseDao{
@@ -26,7 +26,7 @@ public class RawResponseDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建响应中raw
      * @param rawResponseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class RawResponseDao{
     }
 
     /**
-     * 更新
+     * 更新响应中raw
      * @param rawResponseEntity
      */
     public void updateRawResponse(RawResponseEntity rawResponseEntity){
@@ -43,7 +43,7 @@ public class RawResponseDao{
     }
 
     /**
-     * 删除
+     * 删除响应中raw
      * @param id
      */
     public void deleteRawResponse(String id){
@@ -55,7 +55,7 @@ public class RawResponseDao{
     }
 
     /**
-     * 查找
+     * 查找响应中raw
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class RawResponseDao{
     }
 
     /**
-    * findAllRawResponse
+    * 查找所有响应中raw
     * @return
     */
     public List<RawResponseEntity> findAllRawResponse() {
@@ -75,6 +75,11 @@ public class RawResponseDao{
         return jpaTemplate.findList(RawResponseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询响应中raw列表
+     * @param rawResponseQuery
+     * @return
+     */
     public List<RawResponseEntity> findRawResponseList(RawResponseQuery rawResponseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RawResponseEntity.class)
                 .eq("apiUnitId", rawResponseQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class RawResponseDao{
         return jpaTemplate.findList(queryCondition, RawResponseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询响应中raw
+     * @param rawResponseQuery
+     * @return
+     */
     public Pagination<RawResponseEntity> findRawResponsePage(RawResponseQuery rawResponseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RawResponseEntity.class)
                 .eq("apiUnitId", rawResponseQuery.getApiUnitId())

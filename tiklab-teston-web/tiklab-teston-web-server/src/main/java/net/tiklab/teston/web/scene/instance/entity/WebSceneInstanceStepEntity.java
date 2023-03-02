@@ -2,6 +2,9 @@ package net.tiklab.teston.web.scene.instance.entity;
 
 import net.tiklab.dal.jpa.annotation.*;
 
+/**
+ * web场景下步骤 实体
+ */
 @Entity
 @Table(name="teston_web_scene_instance_step")
 public class WebSceneInstanceStepEntity {
@@ -11,27 +14,35 @@ public class WebSceneInstanceStepEntity {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属场景实例
     @Column(name = "web_scene_instance_id")
     private String webSceneInstanceId;
 
+    // 定位器
     @Column(name = "location")
     private String location;
 
+    // 定位值
     @Column(name = "location_value")
     private String locationValue;
 
+    // 方法
     @Column(name = "action_type")
     private String actionType;
 
+    // 步骤动作
     @Column(name = "step_action")
     private String stepAction;
 
+    // 参数
     @Column(name = "parameter")
     private String parameter;
 
+    // 结果
     @Column(name = "result")
     private Integer result;
 
+    // 耗时
     @Column(name = "duration")
     private double duration;
 

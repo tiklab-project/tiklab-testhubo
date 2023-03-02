@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * 测试一些工具
+ */
 @Component
 public class TestApixUtil {
 

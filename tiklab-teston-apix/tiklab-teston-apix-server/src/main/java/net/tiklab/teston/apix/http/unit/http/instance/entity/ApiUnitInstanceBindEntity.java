@@ -9,6 +9,9 @@ import net.tiklab.dal.jpa.annotation.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * 接口单元实例中间表 实体
+ */
 @Entity
 @Table(name="teston_api_unit_instance_bind")
 public class ApiUnitInstanceBindEntity implements Serializable {
@@ -18,12 +21,15 @@ public class ApiUnitInstanceBindEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 接口单元用例
     @Column(name = "api_unit_id",length = 32)
     private String apiUnitId;
 
+    // 所属接口单元历史实例
     @Column(name = "api_unit_instance_id",length = 32)
     private String apiUnitInstanceId;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 

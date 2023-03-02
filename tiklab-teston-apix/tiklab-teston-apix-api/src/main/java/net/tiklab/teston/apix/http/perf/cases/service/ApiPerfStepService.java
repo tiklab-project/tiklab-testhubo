@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiPerfStepService
+* 接口性能场景步骤 服务接口
 */
 public interface ApiPerfStepService {
 
     /**
-    * 创建
+    * 创建接口性能场景步骤
     * @param apiPerfStep
     * @return
     */
     String createApiPerfStep(@NotNull @Valid ApiPerfStep apiPerfStep);
 
     /**
-    * 更新
+    * 更新接口性能场景步骤
     * @param apiPerfStep
     */
     void updateApiPerfStep(@NotNull @Valid ApiPerfStep apiPerfStep);
 
     /**
-    * 删除
+    * 删除接口性能场景步骤
     * @param id
     */
     void deleteApiPerfStep(@NotNull String id);
@@ -37,27 +37,27 @@ public interface ApiPerfStepService {
     List<ApiPerfStep> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找接口性能场景步骤
     * @param id
     * @return
     */
     ApiPerfStep findApiPerfStep(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口性能场景步骤
     * @return
     */
     List<ApiPerfStep> findAllApiPerfStep();
 
     /**
-    * 查询列表
+    * 查询列表接口性能场景步骤
     * @param apiPerfStepQuery
     * @return
     */
     List<ApiPerfStep> findApiPerfStepList(ApiPerfStepQuery apiPerfStepQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询接口性能场景步骤
     * @param apiPerfStepQuery
     * @return
     */
@@ -65,7 +65,7 @@ public interface ApiPerfStepService {
 
 
     /**
-     * 绑定Scene
+     * 绑定场景步骤
      * @param apiSceneStepList
      * @return
      */

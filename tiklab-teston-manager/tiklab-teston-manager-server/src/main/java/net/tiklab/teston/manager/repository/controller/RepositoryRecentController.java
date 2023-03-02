@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * RepositoryRecentController
+ * 最近访问仓库 控制器
  */
 @RestController
 @RequestMapping("/repositoryRecent")
@@ -34,52 +34,10 @@ public class RepositoryRecentController {
     @Autowired
     private RepositoryRecentService repositoryRecentService;
 
-    @RequestMapping(path="/createRepositoryRecent",method = RequestMethod.POST)
-    @ApiMethod(name = "createRepositoryRecent",desc = "createRepositoryRecent")
-    @ApiParam(name = "repositoryRecent",desc = "repositoryRecent",required = true)
-    public Result<String> createRepositoryRecent(@RequestBody @NotNull @Valid RepositoryRecent repositoryRecent){
-        String id = repositoryRecentService.createRepositoryRecent(repositoryRecent);
 
-        return Result.ok(id);
-    }
-
-    @RequestMapping(path="/updateRepositoryRecent",method = RequestMethod.POST)
-    @ApiMethod(name = "updateRepositoryRecent",desc = "updateRepositoryRecent")
-    @ApiParam(name = "repositoryRecent",desc = "repositoryRecent",required = true)
-    public Result<Void> updateRepositoryRecent(@RequestBody @NotNull @Valid RepositoryRecent repositoryRecent){
-        repositoryRecentService.updateRepositoryRecent(repositoryRecent);
-
-        return Result.ok();
-    }
-
-    @RequestMapping(path="/deleteRepositoryRecent",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteRepositoryRecent",desc = "deleteRepositoryRecent")
-    @ApiParam(name = "id",desc = "id",required = true)
-    public Result<Void> deleteRepositoryRecent(@NotNull String id){
-        repositoryRecentService.deleteRepositoryRecent(id);
-
-        return Result.ok();
-    }
-
-    @RequestMapping(path="/findRepositoryRecent",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryRecent",desc = "findRepositoryRecent")
-    @ApiParam(name = "id",desc = "id",required = true)
-    public Result<RepositoryRecent> findRepositoryRecent(@NotNull String id){
-        RepositoryRecent repositoryRecent = repositoryRecentService.findRepositoryRecent(id);
-
-        return Result.ok(repositoryRecent);
-    }
-
-    @RequestMapping(path="/findAllRepositoryRecent",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllRepositoryRecent",desc = "findAllRepositoryRecent")
-    public Result<List<RepositoryRecent>> findAllRepositoryRecent(){
-        List<RepositoryRecent> repositoryRecentList = repositoryRecentService.findAllRepositoryRecent();
-
-        return Result.ok(repositoryRecentList);
-    }
 
     @RequestMapping(path = "/findRepositoryRecentList",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryRecentList",desc = "findRepositoryRecentList")
+    @ApiMethod(name = "findRepositoryRecentList",desc = "查询最近访问仓库列表")
     @ApiParam(name = "repositoryRecentQuery",desc = "repositoryRecentQuery",required = true)
     public Result<List<Repository>> findRepositoryRecentList(@RequestBody @Valid @NotNull RepositoryRecentQuery repositoryRecentQuery){
         List<Repository> repositoryRecentList = repositoryRecentService.findRepositoryRecentList(repositoryRecentQuery);
@@ -88,7 +46,7 @@ public class RepositoryRecentController {
     }
 
     @RequestMapping(path = "/findRepositoryRecentPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findRepositoryRecentPage",desc = "findRepositoryRecentPage")
+    @ApiMethod(name = "findRepositoryRecentPage",desc = "按分页查询最近访问仓库")
     @ApiParam(name = "repositoryRecentQuery",desc = "repositoryRecentQuery",required = true)
     public Result<Pagination<RepositoryRecent>> findRepositoryRecentPage(@RequestBody @Valid @NotNull RepositoryRecentQuery repositoryRecentQuery){
         Pagination<RepositoryRecent> pagination = repositoryRecentService.findRepositoryRecentPage(repositoryRecentQuery);
@@ -97,7 +55,7 @@ public class RepositoryRecentController {
     }
 
     @RequestMapping(path="/repositoryRecent",method = RequestMethod.POST)
-    @ApiMethod(name = "repositoryRecent",desc = "repositoryRecent")
+    @ApiMethod(name = "repositoryRecent",desc = "设置最近访问仓库")
     @ApiParam(name = "repositoryRecent",desc = "repositoryRecent",required = true)
     public Result<Void> workspaceRecent(@RequestBody @NotNull @Valid RepositoryRecent repositoryRecent){
         repositoryRecentService.repositoryRecent(repositoryRecent);

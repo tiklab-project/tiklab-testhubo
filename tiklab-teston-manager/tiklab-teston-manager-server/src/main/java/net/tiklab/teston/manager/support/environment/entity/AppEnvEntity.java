@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 
 import java.io.Serializable;
 
+/**
+ * app环境 实体
+ */
 @Entity @Table(name="teston_env_app")
 public class AppEnvEntity implements Serializable {
 
@@ -13,9 +16,11 @@ public class AppEnvEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属仓库
     @Column(name = "repository_id",length = 32)
     private String repositoryId;
 
+    // 名称
     @Column(name = "name",length = 128)
     private String name;
 

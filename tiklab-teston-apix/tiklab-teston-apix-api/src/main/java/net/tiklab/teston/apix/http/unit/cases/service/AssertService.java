@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AssertCaseService
+* 断言 服务接口
 */
 public interface AssertService {
 
     /**
-    * 创建
+    * 创建断言
     * @param assertCase
     * @return
     */
     String createAssertCase(@NotNull @Valid AssertCase assertCase);
 
     /**
-    * 更新
+    * 更新断言
     * @param assertCase
     */
     void updateAssertCase(@NotNull @Valid AssertCase assertCase);
 
     /**
-    * 删除
+    * 删除断言
     * @param id
     */
     void deleteAssertCase(@NotNull String id);
@@ -37,27 +37,27 @@ public interface AssertService {
     List<AssertCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 通过id查找断言
     * @param id
     * @return
     */
     AssertCase findAssertCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有断言
     * @return
     */
     List<AssertCase> findAllAssertCase();
 
     /**
-    * 查询列表
+    * 查询断言列表
     * @param assertCaseQuery
     * @return
     */
     List<AssertCase> findAssertCaseList(AssertCaseQuery assertCaseQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询断言
     * @param assertCaseQuery
     * @return
     */

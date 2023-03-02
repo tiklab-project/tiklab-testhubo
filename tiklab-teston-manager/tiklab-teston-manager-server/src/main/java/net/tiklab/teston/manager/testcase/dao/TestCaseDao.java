@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * TestCaseDao
+ * 测试用例 数据访问
  */
 @Repository
 public class TestCaseDao {
@@ -26,7 +26,7 @@ public class TestCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建测试用例
      * @param testCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class TestCaseDao {
     }
 
     /**
-     * 更新
+     * 更新测试用例
      * @param testCaseEntity
      */
     public void updateTestCase(TestCaseEntity testCaseEntity){
@@ -43,7 +43,7 @@ public class TestCaseDao {
     }
 
     /**
-     * 删除
+     * 删除测试用例
      * @param id
      */
     public void deleteTestCase(String id){
@@ -55,7 +55,7 @@ public class TestCaseDao {
     }
 
     /**
-     * 查找
+     * 通过目录id删除
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class TestCaseDao {
     }
 
     /**
-    * findAllTestCase
+    * 查找所有测试用例
     * @return
     */
     public List<TestCaseEntity> findAllTestCase() {
@@ -75,6 +75,11 @@ public class TestCaseDao {
         return jpaTemplate.findList(TestCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询测试用例列表
+     * @param testCaseQuery
+     * @return
+     */
     public List<TestCaseEntity> findTestCaseList(TestCaseQuery testCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestCaseEntity.class)
                 .eq("repositoryId",testCaseQuery.getRepositoryId())
@@ -87,6 +92,11 @@ public class TestCaseDao {
         return jpaTemplate.findList(queryCondition, TestCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询测试用例
+     * @param testCaseQuery
+     * @return
+     */
     public Pagination<TestCaseEntity> findTestCasePage(TestCaseQuery testCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(TestCaseEntity.class)
                 .eq("repositoryId",testCaseQuery.getRepositoryId())

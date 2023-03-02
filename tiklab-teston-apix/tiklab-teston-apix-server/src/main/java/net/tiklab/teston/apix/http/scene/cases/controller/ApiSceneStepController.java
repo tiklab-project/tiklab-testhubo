@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiSceneStepController
+ * 接口场景下步骤 控制器
  */
 @RestController
 @RequestMapping("/apiSceneStep")
-@Api(name = "ApiSceneStepController",desc = "ApiSceneStepController")
+@Api(name = "ApiSceneStepController",desc = "接口场景下步骤管理")
 public class ApiSceneStepController {
 
     private static Logger logger = LoggerFactory.getLogger(ApiSceneStepController.class);
@@ -34,7 +34,7 @@ public class ApiSceneStepController {
     private ApiSceneStepService apiSceneStepService;
 
     @RequestMapping(path="/createApiSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "createApiSceneStep",desc = "createApiSceneStep")
+    @ApiMethod(name = "createApiSceneStep",desc = "创建步骤")
     @ApiParam(name = "apiSceneStep",desc = "apiSceneStep",required = true)
     public Result<String> createApiSceneStep(@RequestBody @NotNull @Valid ApiSceneStep apiSceneStep){
         String id = apiSceneStepService.createApiSceneStep(apiSceneStep);
@@ -43,18 +43,8 @@ public class ApiSceneStepController {
     }
 
 
-    @RequestMapping(path="/bindApiUnit",method = RequestMethod.POST)
-    @ApiMethod(name = "bindApiUnit",desc = "bindApiUnit")
-    @ApiParam(name = "apiSceneStep",desc = "apiSceneStep",required = true)
-    public Result<String> bindApiUnit(@RequestBody @NotNull @Valid List<ApiSceneStep> apiSceneStep){
-        apiSceneStepService.bindApiUnit(apiSceneStep);
-
-        return Result.ok();
-    }
-
-
     @RequestMapping(path="/updateApiSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "updateApiSceneStep",desc = "updateApiSceneStep")
+    @ApiMethod(name = "updateApiSceneStep",desc = "更新步骤")
     @ApiParam(name = "apiSceneStep",desc = "apiSceneStep",required = true)
     public Result<Void> updateApiSceneStep(@RequestBody @NotNull @Valid ApiSceneStep apiSceneStep){
         apiSceneStepService.updateApiSceneStep(apiSceneStep);
@@ -63,7 +53,7 @@ public class ApiSceneStepController {
     }
 
     @RequestMapping(path="/deleteApiSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteApiSceneStep",desc = "deleteApiSceneStep")
+    @ApiMethod(name = "deleteApiSceneStep",desc = "删除步骤")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteApiSceneStep(@NotNull String id){
         apiSceneStepService.deleteApiSceneStep(id);
@@ -72,7 +62,7 @@ public class ApiSceneStepController {
     }
 
     @RequestMapping(path="/findApiSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneStep",desc = "findApiSceneStep")
+    @ApiMethod(name = "findApiSceneStep",desc = "根据id查找步骤")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiSceneStep> findApiSceneStep(@NotNull String id){
         ApiSceneStep apiSceneStep = apiSceneStepService.findApiSceneStep(id);
@@ -81,7 +71,7 @@ public class ApiSceneStepController {
     }
 
     @RequestMapping(path="/findAllApiSceneStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllApiSceneStep",desc = "findAllApiSceneStep")
+    @ApiMethod(name = "findAllApiSceneStep",desc = "查找所有步骤")
     public Result<List<ApiSceneStep>> findAllApiSceneStep(){
         List<ApiSceneStep> apiSceneStepList = apiSceneStepService.findAllApiSceneStep();
 
@@ -89,7 +79,7 @@ public class ApiSceneStepController {
     }
 
     @RequestMapping(path = "/findApiSceneStepList",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneStepList",desc = "findApiSceneStepList")
+    @ApiMethod(name = "findApiSceneStepList",desc = "根据查询参数查找查询步骤列表")
     @ApiParam(name = "apiSceneStepQuery",desc = "apiSceneStepQuery",required = true)
     public Result<List<ApiSceneStep>> findApiSceneStepList(@RequestBody @Valid @NotNull ApiSceneStepQuery apiSceneStepQuery){
         List<ApiSceneStep> apiSceneStepList = apiSceneStepService.findApiSceneStepList(apiSceneStepQuery);
@@ -98,12 +88,22 @@ public class ApiSceneStepController {
     }
 
     @RequestMapping(path = "/findApiSceneStepPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneStepPage",desc = "findApiSceneStepPage")
+    @ApiMethod(name = "findApiSceneStepPage",desc = "根据查询参数查找按分页查询步骤")
     @ApiParam(name = "apiSceneStepQuery",desc = "apiSceneStepQuery",required = true)
     public Result<Pagination<ApiSceneStep>> findApiSceneStepPage(@RequestBody @Valid @NotNull ApiSceneStepQuery apiSceneStepQuery){
         Pagination<ApiSceneStep> pagination = apiSceneStepService.findApiSceneStepPage(apiSceneStepQuery);
 
         return Result.ok(pagination);
+    }
+
+
+    @RequestMapping(path="/bindApiUnit",method = RequestMethod.POST)
+    @ApiMethod(name = "bindApiUnit",desc = "绑定接口单元用例")
+    @ApiParam(name = "apiSceneStep",desc = "apiSceneStep",required = true)
+    public Result<String> bindApiUnit(@RequestBody @NotNull @Valid List<ApiSceneStep> apiSceneStep){
+        apiSceneStepService.bindApiUnit(apiSceneStep);
+
+        return Result.ok();
     }
 
 }

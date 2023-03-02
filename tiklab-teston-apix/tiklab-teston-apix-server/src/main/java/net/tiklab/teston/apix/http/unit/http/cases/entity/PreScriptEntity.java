@@ -7,6 +7,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 前置脚本 实体
+ */
 @Entity @Table(name="teston_api_pre_script")
 public class PreScriptEntity implements Serializable {
 
@@ -14,9 +17,11 @@ public class PreScriptEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属接口单元用例
     @Column(name = "api_unit_id",length = 32,notNull = true)
     private String apiUnitId;
 
+    // 脚本定义
     @Column(name = "script",length = 2048,notNull = true)
     private String scriptex;
 

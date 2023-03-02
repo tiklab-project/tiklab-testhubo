@@ -1,8 +1,10 @@
-package net.tiklab.teston.app.perf.cases.service;
+package net.tiklab.teston.app.perf.execute.service;
 
 import net.tiklab.rpc.client.router.lookup.FixedLookup;
 import net.tiklab.teston.agent.app.perf.AppPerfTestService;
 
+import net.tiklab.teston.app.perf.cases.service.AppPerfCaseService;
+import net.tiklab.teston.app.perf.cases.service.AppPerfStepService;
 import net.tiklab.teston.manager.support.agentconfig.model.AgentConfig;
 import net.tiklab.teston.manager.support.agentconfig.model.AgentConfigQuery;
 import net.tiklab.teston.manager.support.agentconfig.service.AgentConfigService;
@@ -12,7 +14,6 @@ import net.tiklab.teston.app.perf.cases.model.AppPerfStep;
 import net.tiklab.teston.app.perf.cases.model.AppPerfStepQuery;
 import net.tiklab.teston.app.perf.execute.mode.AppPerfTestRequest;
 import net.tiklab.teston.app.perf.execute.mode.AppPerfTestResponse;
-import net.tiklab.teston.app.perf.execute.service.AppPerfTestDispatchService;
 import net.tiklab.teston.app.perf.instance.mode.AppPerfInstance;
 import net.tiklab.teston.app.perf.instance.mode.AppPerfInstanceQuery;
 import net.tiklab.teston.app.perf.instance.service.AppPerfInstanceService;
@@ -36,6 +37,9 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * app性能测试调度 服务
+ */
 @Service
 public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchService {
 

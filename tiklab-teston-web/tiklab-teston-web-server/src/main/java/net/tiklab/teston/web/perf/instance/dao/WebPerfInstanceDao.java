@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebPerfInstanceDao
+ * web性能测试实例 数据访问
  */
 @Repository
 public class WebPerfInstanceDao {
@@ -26,7 +26,7 @@ public class WebPerfInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web性能测试实例
      * @param appPerfInstanceEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class WebPerfInstanceDao {
     }
 
     /**
-     * 更新
+     * 更新web性能测试实例
      * @param webPerfInstanceEntity
      */
     public void updateWebPerfInstance(WebPerfInstanceEntity webPerfInstanceEntity){
@@ -43,7 +43,7 @@ public class WebPerfInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除web性能测试实例
      * @param id
      */
     public void deleteWebPerfInstance(String id){
@@ -55,7 +55,7 @@ public class WebPerfInstanceDao {
     }
 
     /**
-     * 查找
+     * 根据id查找web性能测试实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class WebPerfInstanceDao {
     }
 
     /**
-    * findAllWebPerfInstance
+    * 查找所有web性能测试实例
     * @return
     */
     public List<WebPerfInstanceEntity> findAllWebPerfInstance() {
@@ -75,6 +75,11 @@ public class WebPerfInstanceDao {
         return jpaTemplate.findList(WebPerfInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web性能测试实例列表
+     * @param webPerfInstanceQuery
+     * @return
+     */
     public List<WebPerfInstanceEntity> findWebPerfInstanceList(WebPerfInstanceQuery webPerfInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebPerfInstanceEntity.class)
                 .eq("webPerfId", webPerfInstanceQuery.getWebPerfId())
@@ -83,6 +88,11 @@ public class WebPerfInstanceDao {
         return jpaTemplate.findList(queryCondition, WebPerfInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web性能测试实例
+     * @param webPerfInstanceQuery
+     * @return
+     */
     public Pagination<WebPerfInstanceEntity> findWebPerfInstancePage(WebPerfInstanceQuery webPerfInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebPerfInstanceEntity.class)
                 .eq("webPerfId", webPerfInstanceQuery.getWebPerfId())

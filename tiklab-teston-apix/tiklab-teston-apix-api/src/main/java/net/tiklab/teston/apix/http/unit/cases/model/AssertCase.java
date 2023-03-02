@@ -12,6 +12,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 断言 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AssertCaseEntity")
 @Join

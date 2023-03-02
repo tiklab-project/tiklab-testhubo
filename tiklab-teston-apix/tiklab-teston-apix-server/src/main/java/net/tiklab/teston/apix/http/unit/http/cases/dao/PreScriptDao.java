@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * PreScriptDao
+ * 前置脚本 数据访问
  */
 @Repository
 public class PreScriptDao{
@@ -26,7 +26,7 @@ public class PreScriptDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建前置脚本
      * @param preScriptEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class PreScriptDao{
     }
 
     /**
-     * 更新
+     * 更新前置脚本
      * @param preScriptEntity
      */
     public void updatePreScript(PreScriptEntity preScriptEntity){
@@ -43,7 +43,7 @@ public class PreScriptDao{
     }
 
     /**
-     * 删除
+     * 删除前置脚本
      * @param id
      */
     public void deletePreScript(String id){
@@ -55,7 +55,7 @@ public class PreScriptDao{
     }
 
     /**
-     * 查找
+     * 根据id查找前置脚本
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class PreScriptDao{
     }
 
     /**
-    * findAllPreScript
+    * 查找所有前置脚本
     * @return
     */
     public List<PreScriptEntity> findAllPreScript() {
@@ -75,6 +75,11 @@ public class PreScriptDao{
         return jpaTemplate.findList(PreScriptEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询前置脚本列表
+     * @param preScriptQuery
+     * @return
+     */
     public List<PreScriptEntity> findPreScriptList(PreScriptQuery preScriptQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(PreScriptEntity.class)
                 .eq("apiUnitId", preScriptQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class PreScriptDao{
         return jpaTemplate.findList(queryCondition, PreScriptEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询前置脚本
+     * @param preScriptQuery
+     * @return
+     */
     public Pagination<PreScriptEntity> findPreScriptPage(PreScriptQuery preScriptQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(PreScriptEntity.class)
                 .eq("apiUnitId", preScriptQuery.getApiUnitId())

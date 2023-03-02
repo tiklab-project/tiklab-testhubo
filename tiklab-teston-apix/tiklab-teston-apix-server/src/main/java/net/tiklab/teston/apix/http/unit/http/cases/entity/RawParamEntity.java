@@ -7,6 +7,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * raw 实体
+ */
 @Entity @Table(name="teston_api_raw")
 public class RawParamEntity implements Serializable {
 
@@ -14,12 +17,15 @@ public class RawParamEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属接口单元用例
     @Column(name = "api_unit_id",length = 32,notNull = true)
     private String apiUnitId;
 
+    // raw文本
     @Column(name = "raw",length = 2048,notNull = true)
     private String raw;
 
+    // raw中类型
     @Column(name = "type",length = 32,notNull = true)
     private String type;
 

@@ -5,13 +5,16 @@ import net.tiklab.postin.annotation.ApiModel;
 
 import java.util.Map;
 
+/**
+ * 接口单元用例数据封装 模型
+ */
 @ApiModel
 public class ApiUnitCaseExt extends BaseModel{
 
     //请求头
     private Map headerMap;
 
-    //
+    //查询参数
     private String query;
 
     //mediaType

@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestCaseService
+* web场景用例 服务接口
 */
 @JoinProvider(model = WebSceneCase.class)
 public interface WebSceneCaseService {
 
     /**
-    * 创建
+    * 创建web场景用例
     * @param sceneCase
     * @return
     */
     String createWebSceneCase(@NotNull @Valid WebSceneCase sceneCase);
 
     /**
-    * 更新
+    * 更新web场景用例
     * @param sceneCase
     */
     void updateWebSceneCase(@NotNull @Valid WebSceneCase sceneCase);
 
     /**
-    * 删除
+    * 删除web场景用例
     * @param id
     */
     void deleteWebSceneCase(@NotNull String id);
@@ -45,28 +45,28 @@ public interface WebSceneCaseService {
     List<WebSceneCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找web场景用例
     * @param id
     * @return
     */
     WebSceneCase findWebSceneCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有web场景用例
     * @return
     */
     @FindAll
     List<WebSceneCase> findAllWebSceneCase();
 
     /**
-    * 查询列表
+    * 查询web场景用例列表
     * @param sceneCaseQuery
     * @return
     */
     List<WebSceneCase> findWebSceneCaseList(WebSceneCaseQuery sceneCaseQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询web场景用例
     * @param sceneCaseQuery
     * @return
     */

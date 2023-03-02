@@ -30,24 +30,24 @@ public class Category extends BaseModel{
     private java.lang.String name;
 
     @NotNull
-    @ApiProperty(name="repository",desc="空间id",eg="@selectOne")
+    @ApiProperty(name="repository",desc="空间id")
     @Mappings({
             @Mapping(source = "repository.id",target = "repositoryId")
     })
     @JoinQuery(key = "id")
     private Repository repository;
 
-    @ApiProperty(name="parentCategory",desc="上级分类",eg="@selectOne")
+    @ApiProperty(name="parentCategory",desc="上级分类")
     @Mappings({
             @Mapping(source = "parentCategory.id",target = "parentCategoryId")
     })
     @JoinQuery(key = "id")
     private Category parentCategory;
 
-    @ApiProperty(name="sort",desc="sort")
+    @ApiProperty(name="sort",desc="排序")
     private java.lang.Integer sort;
 
-    @ApiProperty(name="desc",desc="desc")
+    @ApiProperty(name="desc",desc="描述")
     private java.lang.String desc;
 
     @ApiProperty(name="children",desc="下级分类列表")

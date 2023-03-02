@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiPerfInstanceController
+ * 接口性能历史实例 控制器
  */
 @RestController
 @RequestMapping("/apiPerfInstance")

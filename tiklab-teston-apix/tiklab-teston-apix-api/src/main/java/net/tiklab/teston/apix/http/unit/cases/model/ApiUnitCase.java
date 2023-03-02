@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * 接口单元用例 模型
+ */
 @ApiModel
 @Join
 @Mapper(targetAlias = "ApiUnitCaseEntity")

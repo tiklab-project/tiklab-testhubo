@@ -9,6 +9,9 @@ import net.tiklab.teston.app.scene.execute.model.AppTestConfig;
 
 import java.util.List;
 
+/**
+ * app性能测试数据封装 模型
+ */
 @ApiModel
 public class AppPerfTestRequest extends BaseModel {
 

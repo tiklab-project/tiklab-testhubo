@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * web场景测试调度 服务
+ */
 @Service
 public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchService {
 

@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppSceneStepService
+* app场景下步骤 服务接口
 */
 @JoinProvider(model = AppSceneStep.class)
 public interface AppSceneStepService {
 
     /**
-    * 创建
+    * 创建场景步骤
     * @param appSceneStep
     * @return
     */
     String createAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep);
 
     /**
-    * 更新
+    * 更新场景步骤
     * @param appSceneStep
     */
     void updateAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep);
 
     /**
-    * 删除
+    * 删除场景步骤
     * @param id
     */
     void deleteAppSceneStep(@NotNull String id);
@@ -44,38 +44,32 @@ public interface AppSceneStepService {
     List<AppSceneStep> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找场景步骤
     * @param id
     * @return
     */
     AppSceneStep findAppSceneStep(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有场景步骤
     * @return
     */
     @FindAll
     List<AppSceneStep> findAllAppSceneStep();
 
     /**
-    * 查询列表
+    * 根据查询参数查询场景步骤列表
     * @param appSceneStepQuery
     * @return
     */
     List<AppSceneStep> findAppSceneStepList(AppSceneStepQuery appSceneStepQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询场景步骤
     * @param appSceneStepQuery
     * @return
     */
     Pagination<AppSceneStep> findAppSceneStepPage(AppSceneStepQuery appSceneStepQuery);
 
-
-    /**
-     * 绑定webUnitCase
-     * @param appSceneStepList
-     */
-    void bindAppUnit(List<AppSceneStep> appSceneStepList);
 
 }

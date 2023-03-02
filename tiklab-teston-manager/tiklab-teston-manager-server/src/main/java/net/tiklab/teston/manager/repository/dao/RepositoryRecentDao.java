@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RepositoryRecentDao
+ * 最近访问仓库  数据访问
  */
 @Repository
 public class RepositoryRecentDao{
@@ -26,7 +26,7 @@ public class RepositoryRecentDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建最近访问仓库
      * @param repositoryRecentEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class RepositoryRecentDao{
     }
 
     /**
-     * 更新
+     * 更新最近访问仓库
      * @param repositoryRecentEntity
      */
     public void updateRepositoryRecent(RepositoryRecentEntity repositoryRecentEntity){
@@ -43,7 +43,7 @@ public class RepositoryRecentDao{
     }
 
     /**
-     * 删除
+     * 删除最近访问仓库
      * @param id
      */
     public void deleteRepositoryRecent(String id){
@@ -55,7 +55,7 @@ public class RepositoryRecentDao{
     }
 
     /**
-     * 查找
+     * 查找最近访问仓库
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class RepositoryRecentDao{
     }
 
     /**
-    * findAllRepositoryRecent
+    * 查找所有最近访问仓库
     * @return
     */
     public List<RepositoryRecentEntity> findAllRepositoryRecent() {
@@ -75,6 +75,11 @@ public class RepositoryRecentDao{
         return jpaTemplate.findList(RepositoryRecentEntity.class,idList);
     }
 
+    /**
+     * 查询最近访问仓库列表
+     * @param repositoryRecentQuery
+     * @return
+     */
     public List<RepositoryRecentEntity> findRepositoryRecentList(RepositoryRecentQuery repositoryRecentQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryRecentEntity.class)
                 .eq("repositoryId", repositoryRecentQuery.getRepositoryId())
@@ -84,6 +89,11 @@ public class RepositoryRecentDao{
         return jpaTemplate.findList(queryCondition,RepositoryRecentEntity.class);
     }
 
+    /**
+     * 按分页查询最近访问仓库
+     * @param repositoryRecentQuery
+     * @return
+     */
     public Pagination<RepositoryRecentEntity> findRepositoryRecentPage(RepositoryRecentQuery repositoryRecentQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryRecentEntity.class)
                 .eq("repositoryId", repositoryRecentQuery.getRepositoryId())

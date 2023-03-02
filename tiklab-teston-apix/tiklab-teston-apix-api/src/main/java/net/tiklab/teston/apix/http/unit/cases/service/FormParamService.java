@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* FormParamService
+* form-data 服务接口
 */
 public interface FormParamService {
 
     /**
-    * 创建
+    * 创建form-data
     * @param formParam
     * @return
     */
     String createFormParam(@NotNull @Valid FormParam formParam);
 
     /**
-    * 更新
+    * 更新form-data
     * @param formParam
     */
     void updateFormParam(@NotNull @Valid FormParam formParam);
 
     /**
-    * 删除
+    * 删除form-data
     * @param id
     */
     void deleteFormParam(@NotNull String id);
@@ -37,27 +37,27 @@ public interface FormParamService {
     List<FormParam> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找form-data
     * @param id
     * @return
     */
     FormParam findFormParam(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有form-data
     * @return
     */
     List<FormParam> findAllFormParam();
 
     /**
-    * 查询列表
+    * 根据查询参数查询form-data列表
     * @param formParamQuery
     * @return
     */
     List<FormParam> findFormParamList(FormParamQuery formParamQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询form-data
     * @param formParamQuery
     * @return
     */

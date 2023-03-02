@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AppEnvController
+ * app环境 控制器
  */
 @RestController
 @RequestMapping("/appEnv")
-@Api(name = "AppEnvController",desc = "AppEnvController")
+@Api(name = "AppEnvController",desc = "app环境管理")
 public class AppEnvController {
 
     private static Logger logger = LoggerFactory.getLogger(AppEnvController.class);
@@ -34,7 +34,7 @@ public class AppEnvController {
     private AppEnvService appEnvService;
 
     @RequestMapping(path="/createAppEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "createAppEnv",desc = "createAppEnv")
+    @ApiMethod(name = "createAppEnv",desc = "创建app环境")
     @ApiParam(name = "appEnv",desc = "appEnv",required = true)
     public Result<String> createAppEnv(@RequestBody @NotNull @Valid AppEnv appEnv){
         String id = appEnvService.createAppEnv(appEnv);
@@ -43,7 +43,7 @@ public class AppEnvController {
     }
 
     @RequestMapping(path="/updateAppEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAppEnv",desc = "updateAppEnv")
+    @ApiMethod(name = "updateAppEnv",desc = "更新app环境")
     @ApiParam(name = "appEnv",desc = "appEnv",required = true)
     public Result<Void> updateAppEnv(@RequestBody @NotNull @Valid AppEnv appEnv){
         appEnvService.updateAppEnv(appEnv);
@@ -52,7 +52,7 @@ public class AppEnvController {
     }
 
     @RequestMapping(path="/deleteAppEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAppEnv",desc = "deleteAppEnv")
+    @ApiMethod(name = "deleteAppEnv",desc = "删除app环境")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAppEnv(@NotNull String id){
         appEnvService.deleteAppEnv(id);
@@ -61,7 +61,7 @@ public class AppEnvController {
     }
 
     @RequestMapping(path="/findAppEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppEnv",desc = "findAppEnv")
+    @ApiMethod(name = "findAppEnv",desc = "根据id查找app环境")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AppEnv> findAppEnv(@NotNull String id){
         AppEnv appEnv = appEnvService.findAppEnv(id);
@@ -70,7 +70,7 @@ public class AppEnvController {
     }
 
     @RequestMapping(path="/findAllAppEnv",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAppEnv",desc = "findAllAppEnv")
+    @ApiMethod(name = "findAllAppEnv",desc = "查找所有app环境")
     public Result<List<AppEnv>> findAllAppEnv(){
         List<AppEnv> appEnvList = appEnvService.findAllAppEnv();
 
@@ -78,7 +78,7 @@ public class AppEnvController {
     }
 
     @RequestMapping(path = "/findAppEnvList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppEnvList",desc = "findAppEnvList")
+    @ApiMethod(name = "findAppEnvList",desc = "根据查询参数查询app环境列表")
     @ApiParam(name = "appEnvQuery",desc = "appEnvQuery",required = true)
     public Result<List<AppEnv>> findAppEnvList(@RequestBody @Valid @NotNull AppEnvQuery appEnvQuery){
         List<AppEnv> appEnvList = appEnvService.findAppEnvList(appEnvQuery);
@@ -87,7 +87,7 @@ public class AppEnvController {
     }
 
     @RequestMapping(path = "/findAppEnvPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppEnvPage",desc = "findAppEnvPage")
+    @ApiMethod(name = "findAppEnvPage",desc = "根据查询参数按分页查询app环境")
     @ApiParam(name = "appEnvQuery",desc = "appEnvQuery",required = true)
     public Result<Pagination<AppEnv>> findAppEnvPage(@RequestBody @Valid @NotNull AppEnvQuery appEnvQuery){
         Pagination<AppEnv> pagination = appEnvService.findAppEnvPage(appEnvQuery);

@@ -12,26 +12,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppEnvService
+* app环境 服务接口
 */
 @JoinProvider(model = AppEnv.class)
 public interface AppEnvService {
 
     /**
-    * 创建
+    * 创建app环境
     * @param appEnv
     * @return
     */
     String createAppEnv(@NotNull @Valid AppEnv appEnv);
 
     /**
-    * 更新
+    * 更新app环境
     * @param appEnv
     */
     void updateAppEnv(@NotNull @Valid AppEnv appEnv);
 
     /**
-    * 删除
+    * 删除app环境
     * @param id
     */
     void deleteAppEnv(@NotNull String id);
@@ -43,28 +43,28 @@ public interface AppEnvService {
     List<AppEnv> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找app环境
     * @param id
     * @return
     */
     AppEnv findAppEnv(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有app环境
     * @return
     */
     @FindAll
     List<AppEnv> findAllAppEnv();
 
     /**
-    * 查询列表
+    * 根据查询参数查询app环境列表
     * @param appEnvQuery
     * @return
     */
     List<AppEnv> findAppEnvList(AppEnvQuery appEnvQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询app环境
     * @param appEnvQuery
     * @return
     */

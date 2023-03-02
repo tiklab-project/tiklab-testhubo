@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AssertCaseDao
+ * 断言 数据访问
  */
 @Repository
 public class AssertCaseDao{
@@ -26,7 +26,7 @@ public class AssertCaseDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建断言
      * @param assertCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AssertCaseDao{
     }
 
     /**
-     * 更新
+     * 更新断言
      * @param assertCaseEntity
      */
     public void updateAssertCase(AssertCaseEntity assertCaseEntity){
@@ -43,7 +43,7 @@ public class AssertCaseDao{
     }
 
     /**
-     * 删除
+     * 删除断言
      * @param id
      */
     public void deleteAssertCase(String id){
@@ -55,7 +55,7 @@ public class AssertCaseDao{
     }
 
     /**
-     * 查找
+     * 通过id查找断言
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AssertCaseDao{
     }
 
     /**
-    * findAllAssertCase
+    * 查找所有断言
     * @return
     */
     public List<AssertCaseEntity> findAllAssertCase() {
@@ -75,6 +75,11 @@ public class AssertCaseDao{
         return jpaTemplate.findList(AssertCaseEntity.class,idList);
     }
 
+    /**
+     * 查询断言列表
+     * @param assertCaseQuery
+     * @return
+     */
     public List<AssertCaseEntity> findAssertCaseList(AssertCaseQuery assertCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AssertCaseEntity.class)
                 .eq("apiUnitId", assertCaseQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class AssertCaseDao{
         return jpaTemplate.findList(queryCondition, AssertCaseEntity.class);
     }
 
+    /**
+     * 按分页查询断言
+     * @param assertCaseQuery
+     * @return
+     */
     public Pagination<AssertCaseEntity> findAssertCasePage(AssertCaseQuery assertCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AssertCaseEntity.class)
                 .eq("apiUnitId", assertCaseQuery.getApiUnitId())

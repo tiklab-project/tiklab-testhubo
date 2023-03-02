@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * TestCaseController
+ * 测试用例 控制器
  */
 @RestController
 @RequestMapping("/testCase")
@@ -34,7 +34,7 @@ public class TestCaseController {
     private TestCaseService testCaseService;
 
     @RequestMapping(path="/createTestCase",method = RequestMethod.POST)
-    @ApiMethod(name = "createTestCase",desc = "createTestCase")
+    @ApiMethod(name = "createTestCase",desc = "创建测试用例")
     @ApiParam(name = "testCase",desc = "testCase",required = true)
     public Result<String> createTestCase(@RequestBody @NotNull @Valid TestCase testCase){
         String id = testCaseService.createTestCase(testCase);
@@ -43,7 +43,7 @@ public class TestCaseController {
     }
 
     @RequestMapping(path="/updateTestCase",method = RequestMethod.POST)
-    @ApiMethod(name = "updateTestCase",desc = "updateTestCase")
+    @ApiMethod(name = "updateTestCase",desc = "更新测试用例")
     @ApiParam(name = "testCase",desc = "testCase",required = true)
     public Result<Void> updateTestCase(@RequestBody @NotNull @Valid TestCase testCase){
         testCaseService.updateTestCase(testCase);
@@ -52,7 +52,7 @@ public class TestCaseController {
     }
 
     @RequestMapping(path="/deleteTestCase",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteTestCase",desc = "deleteTestCase")
+    @ApiMethod(name = "deleteTestCase",desc = "删除测试用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteTestCase(@NotNull String id){
         testCaseService.deleteTestCase(id);
@@ -61,7 +61,7 @@ public class TestCaseController {
     }
 
     @RequestMapping(path="/findTestCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestCase",desc = "findTestCase")
+    @ApiMethod(name = "findTestCase",desc = "根据id查找测试用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<TestCase> findTestCase(@NotNull String id){
         TestCase testCase = testCaseService.findTestCase(id);
@@ -70,7 +70,7 @@ public class TestCaseController {
     }
 
     @RequestMapping(path="/findAllTestCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllTestCase",desc = "findAllTestCase")
+    @ApiMethod(name = "findAllTestCase",desc = "查找所有测试用例")
     public Result<List<TestCase>> findAllTestCase(){
         List<TestCase> testCaseList = testCaseService.findAllTestCase();
 
@@ -78,7 +78,7 @@ public class TestCaseController {
     }
 
     @RequestMapping(path = "/findTestCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestCaseList",desc = "findTestCaseList")
+    @ApiMethod(name = "findTestCaseList",desc = "根据查询参数查询测试用例列表")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
     public Result<List<TestCase>> findTestCaseList(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
         List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
@@ -88,7 +88,7 @@ public class TestCaseController {
 
 
     @RequestMapping(path = "/findTestCasePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestCasePage",desc = "findTestCasePage")
+    @ApiMethod(name = "findTestCasePage",desc = "根据查询参数按分页查询测试用例")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
     public Result<Pagination<TestCase>> findTestCasePage(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
         Pagination<TestCase> pagination = testCaseService.findTestCasePage(testCaseQuery);

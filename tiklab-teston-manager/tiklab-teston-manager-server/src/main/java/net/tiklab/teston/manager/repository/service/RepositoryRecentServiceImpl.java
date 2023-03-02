@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* RepositoryRecentServiceImpl
+* 最近访问仓库 服务
 */
 @Service
 public class RepositoryRecentServiceImpl implements RepositoryRecentService {

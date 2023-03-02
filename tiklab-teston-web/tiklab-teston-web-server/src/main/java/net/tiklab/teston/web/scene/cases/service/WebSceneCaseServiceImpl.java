@@ -23,7 +23,7 @@ import java.util.List;
 
 
 /**
-* WebSceneCaseServiceImpl
+* web场景用例 服务
 */
 @Service
 public class WebSceneCaseServiceImpl implements WebSceneCaseService {

@@ -18,6 +18,9 @@ import net.tiklab.teston.web.scene.execute.service.WebSceneTestDispatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 测试计划中web测试调度
+ */
 @Component
 public class TestPlanExecuteWebDispatch {
 

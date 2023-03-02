@@ -7,6 +7,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.sql.Timestamp;
 
+/**
+ * 场景历史实例 实体
+ */
 @Entity
 @Table(name="teston_api_scene_instance")
 public class ApiSceneInstanceEntity {
@@ -16,33 +19,43 @@ public class ApiSceneInstanceEntity {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 测试用例id
     @Column(name = "api_scene_id")
     private String apiSceneId;
 
+    //测试结果 1,0
     @Column(name = "result")
     private Integer result;
 
+    // 步骤数量
     @Column(name = "test_number")
     private Integer testNumber;
 
+    // 测试通过数量
     @Column(name = "pass_number")
     private Integer passNumber;
 
+    // 未通过数量
     @Column(name = "fail_number")
     private Integer failNumber;
 
+    //测试通过率
     @Column(name = "pass_rate")
     private String passRate;
 
+    // 耗时
     @Column(name = "elapsed_time")
     private Integer elapsedTime;
 
+    // 创建时间
     @Column(name = "create_time",notNull = true)
     private Timestamp createTime;
 
+    // 创建人
     @Column(name = "create_user",notNull = true)
     private String createUser;
 
+    // 执行次数
     @Column(name = "execute_number")
     private Integer executeNumber;
 

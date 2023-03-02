@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiPerfCaseController
+ * 接口性能 控制器
  */
 @RestController
 @RequestMapping("/apiPerfCase")

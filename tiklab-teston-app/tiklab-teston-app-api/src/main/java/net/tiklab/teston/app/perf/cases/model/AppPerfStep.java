@@ -5,6 +5,7 @@ import net.tiklab.beans.annotation.Mapper;
 import net.tiklab.beans.annotation.Mapping;
 import net.tiklab.beans.annotation.Mappings;
 import net.tiklab.core.BaseModel;
+import net.tiklab.join.annotation.Join;
 import net.tiklab.join.annotation.JoinQuery;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
@@ -12,10 +13,12 @@ import net.tiklab.teston.app.scene.cases.model.AppSceneCase;
 
 import java.sql.Timestamp;
 
-
+/**
+ * app性能测试用例下绑定的步骤 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppPerfStepEntity")
-//@Join
+@Join
 public class AppPerfStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")
@@ -28,14 +31,14 @@ public class AppPerfStep extends BaseModel {
     @JoinQuery(key = "id")
     private AppPerfCase appPerf;
 
-    @ApiProperty(name="appScene",desc="绑定的unitcase")
+    @ApiProperty(name="appScene",desc="绑定的接口场景")
     @Mappings({
             @Mapping(source = "appScene.id",target = "appSceneId")
     })
     @JoinQuery(key = "id")
     private AppSceneCase appScene;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 

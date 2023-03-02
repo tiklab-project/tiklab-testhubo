@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+/**
+ * web场景测试调度 控制器
+ */
 @RestController
 @RequestMapping("/webSceneTestDispatch")
 @Api(name = "WebSceneTestDispatchController",desc = "web场景测试调度")

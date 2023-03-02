@@ -19,11 +19,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * TestPlanTestDispatchController
+ * 测试计划测试 控制器
  */
 @RestController
 @RequestMapping("/testPlanTestDispatch")
-@Api(name = "TestPlanTestDispatchController",desc = "api性能测试执行调度")
+@Api(name = "TestPlanTestDispatchController",desc = "测试计划测试调度")
 public class TestPlanTestDispatchController {
 
     private static Logger logger = LoggerFactory.getLogger(TestPlanTestDispatchController.class);
@@ -32,7 +32,7 @@ public class TestPlanTestDispatchController {
     TestPlanExecuteDispatchService testPlanExecuteDispatchService;
 
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
-    @ApiMethod(name = "execute", desc = "执行性能测试")
+    @ApiMethod(name = "execute", desc = "执行测试")
     @ApiParam(name = "performCaseExec", desc = "执行需要传的参数", required = true)
     public Result<Void> execute(@RequestBody @Valid @NotNull TestPlanTestData testPlanTestData) {
          testPlanExecuteDispatchService.execute(testPlanTestData);
@@ -41,7 +41,7 @@ public class TestPlanTestDispatchController {
     }
 
     @RequestMapping(path = "/exeResult", method = RequestMethod.POST)
-    @ApiMethod(name = "exeResult", desc = "获取性能测试结果")
+    @ApiMethod(name = "exeResult", desc = "获取测试结果")
     @ApiParam(name = "testPlanTestRequest", desc = "执行需要传的参数", required = true)
     public Result<TestPlanTestResponse> exeResult() {
         TestPlanTestResponse testPlanTestResponse = testPlanExecuteDispatchService.exeResult();

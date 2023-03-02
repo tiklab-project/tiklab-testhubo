@@ -32,6 +32,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * web性能测试调度 服务
+ */
 @Service
 public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchService {
 

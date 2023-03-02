@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiSceneInstanceController
+ * 场景历史实例 控制器
  */
 @RestController
 @RequestMapping("/apiSceneInstance")
@@ -34,7 +34,7 @@ public class ApiSceneInstanceController {
     private ApiSceneInstanceService apiSceneInstanceService;
 
     @RequestMapping(path="/createApiSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "createApiSceneInstance",desc = "createApiSceneInstance")
+    @ApiMethod(name = "createApiSceneInstance",desc = "创建接口场景历史实例")
     @ApiParam(name = "testInstance",desc = "testInstance",required = true)
     public Result<String> createApiSceneInstance(@RequestBody @NotNull @Valid ApiSceneInstance testInstance){
         String id = apiSceneInstanceService.createApiSceneInstance(testInstance);
@@ -43,7 +43,7 @@ public class ApiSceneInstanceController {
     }
 
     @RequestMapping(path="/updateApiSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "updateApiSceneInstance",desc = "updateApiSceneInstance")
+    @ApiMethod(name = "updateApiSceneInstance",desc = "更新接口场景历史实例")
     @ApiParam(name = "testInstance",desc = "testInstance",required = true)
     public Result<Void> updateApiSceneInstance(@RequestBody @NotNull @Valid ApiSceneInstance testInstance){
         apiSceneInstanceService.updateApiSceneInstance(testInstance);
@@ -52,7 +52,7 @@ public class ApiSceneInstanceController {
     }
 
     @RequestMapping(path="/deleteApiSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteApiSceneInstance",desc = "deleteApiSceneInstance")
+    @ApiMethod(name = "deleteApiSceneInstance",desc = "删除接口场景历史实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteApiSceneInstance(@NotNull String id){
         apiSceneInstanceService.deleteApiSceneInstance(id);
@@ -61,7 +61,7 @@ public class ApiSceneInstanceController {
     }
 
     @RequestMapping(path="/findApiSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneInstance",desc = "findApiSceneInstance")
+    @ApiMethod(name = "findApiSceneInstance",desc = "通过id查找接口场景历史实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiSceneInstance> findApiSceneInstance(@NotNull String id){
         ApiSceneInstance testInstance = apiSceneInstanceService.findApiSceneInstance(id);
@@ -70,7 +70,7 @@ public class ApiSceneInstanceController {
     }
 
     @RequestMapping(path="/findAllApiSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllApiSceneInstance",desc = "findAllApiSceneInstance")
+    @ApiMethod(name = "findAllApiSceneInstance",desc = "查找所有接口场景历史实例")
     public Result<List<ApiSceneInstance>> findAllApiSceneInstance(){
         List<ApiSceneInstance> allApiSceneInstance = apiSceneInstanceService.findAllApiSceneInstance();
 
@@ -78,7 +78,7 @@ public class ApiSceneInstanceController {
     }
 
     @RequestMapping(path = "/findApiSceneInstanceList",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneInstanceList",desc = "findApiSceneInstanceList")
+    @ApiMethod(name = "findApiSceneInstanceList",desc = "根据查询参数查询接口场景历史实例列表")
     @ApiParam(name = "testInstanceQuery",desc = "testInstanceQuery",required = true)
     public Result<List<ApiSceneInstance>> findApiSceneInstanceList(@RequestBody @Valid @NotNull ApiSceneInstanceQuery apiSceneInstanceQuery){
         List<ApiSceneInstance> apiSceneInstanceList = apiSceneInstanceService.findApiSceneInstanceList(apiSceneInstanceQuery);
@@ -87,7 +87,7 @@ public class ApiSceneInstanceController {
     }
 
     @RequestMapping(path = "/findApiSceneInstancePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneInstancePage",desc = "findApiSceneInstancePage")
+    @ApiMethod(name = "findApiSceneInstancePage",desc = "根据查询按分页查询接口场景历史实例")
     @ApiParam(name = "testInstanceQuery",desc = "testInstanceQuery",required = true)
     public Result<Pagination<ApiSceneInstance>> findApiSceneInstancePage(@RequestBody @Valid @NotNull ApiSceneInstanceQuery testInstanceQuery){
         Pagination<ApiSceneInstance> pagination = apiSceneInstanceService.findApiSceneInstancePage(testInstanceQuery);

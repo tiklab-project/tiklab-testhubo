@@ -8,6 +8,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
 
+/**
+ * app性能实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppPerfInstanceEntity")
 public class AppPerfInstance extends BaseModel{
@@ -15,7 +18,7 @@ public class AppPerfInstance extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="appPerfId",desc="性能测试表id")
+    @ApiProperty(name="appPerfId",desc="性能测试id")
     private String appPerfId;
 
     @ApiProperty(name="passRate",desc="通过率")
@@ -33,7 +36,7 @@ public class AppPerfInstance extends BaseModel{
     @ApiProperty(name="total",desc="测试总次数")
     private Integer total;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
@@ -41,7 +44,7 @@ public class AppPerfInstance extends BaseModel{
     @ApiProperty(name="result",desc="结果")
     private Integer result;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     public String getId() {

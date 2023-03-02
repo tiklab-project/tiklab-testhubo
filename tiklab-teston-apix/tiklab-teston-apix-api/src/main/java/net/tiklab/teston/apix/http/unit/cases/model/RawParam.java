@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * raw 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RawParamEntity")
 @Join

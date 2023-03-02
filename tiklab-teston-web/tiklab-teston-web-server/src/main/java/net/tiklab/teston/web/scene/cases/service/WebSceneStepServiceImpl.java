@@ -109,13 +109,5 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
         return PaginationBuilder.build(pagination,webSceneStepList);
     }
 
-    @Override
-    public void bindWebUnit(List<WebSceneStep> webSceneStepList) {
-        if(CollectionUtils.isNotEmpty(webSceneStepList)){
-            for (WebSceneStep webSceneStep : webSceneStepList) {
-                createWebSceneStep(webSceneStep);
-            }
-        }
-    }
 
 }

@@ -4,6 +4,9 @@ import net.tiklab.dal.jpa.annotation.*;
 
 import java.sql.Timestamp;
 
+/**
+ * web场景实例 实体
+ */
 @Entity
 @Table(name="teston_web_scene_instance")
 public class WebSceneInstanceEntity {
@@ -13,30 +16,39 @@ public class WebSceneInstanceEntity {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属场景
     @Column(name = "web_scene_id")
     private String webSceneId;
 
+    // 测试结果 成功:1 , 失败:0
     @Column(name = "result")
     private Integer result;
 
+    // 测试步骤数量
     @Column(name = "step_num")
     private Integer stepNum;
 
+    // 通过数量
     @Column(name = "pass_num")
     private Integer passNum;
 
+    // 未通过数量
     @Column(name = "fail_num")
     private Integer failNum;
 
+    // 通过率
     @Column(name = "pass_rate")
     private String passRate;
 
+    // 耗时
     @Column(name = "total_duration")
     private double totalDuration;
 
+     // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+     // 执行次数
     @Column(name = "execute_number")
     private Integer executeNumber;
 

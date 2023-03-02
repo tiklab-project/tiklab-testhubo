@@ -8,6 +8,9 @@ import net.tiklab.teston.app.scene.instance.model.AppSceneInstance;
 
 import java.util.List;
 
+/**
+ * app场景测试下返回的数据封装 模型
+ */
 @ApiModel
 public class AppSceneTestResponse extends BaseModel {
     @ApiProperty(name="webUnitResultList",desc="测试结果的list ")

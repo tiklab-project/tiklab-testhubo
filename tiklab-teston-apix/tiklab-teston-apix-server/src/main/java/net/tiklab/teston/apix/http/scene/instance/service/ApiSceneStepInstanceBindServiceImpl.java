@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiSceneStepInstanceBindServiceImpl
+* 接口场景下步骤的公共实例 服务
 */
 @Service
 public class ApiSceneStepInstanceBindServiceImpl implements ApiSceneStepInstanceBindService {

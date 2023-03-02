@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppSceneInstanceStepService
+* app场景步骤实例 服务接口
 */
 @JoinProvider(model = AppSceneInstanceStep.class)
 public interface AppSceneInstanceStepService {
 
     /**
-    * 创建
+    * 创建app场景步骤实例
     * @param appSceneInstanceStep
     * @return
     */
     String createAppSceneInstanceStep(@NotNull @Valid AppSceneInstanceStep appSceneInstanceStep);
 
     /**
-    * 更新
+    * 更新app场景步骤实例
     * @param appSceneInstanceStep
     */
     void updateAppSceneInstanceStep(@NotNull @Valid AppSceneInstanceStep appSceneInstanceStep);
 
     /**
-    * 删除
+    * 删除app场景步骤实例
     * @param id
     */
     void deleteAppSceneInstanceStep(@NotNull String id);
@@ -44,28 +44,28 @@ public interface AppSceneInstanceStepService {
     List<AppSceneInstanceStep> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找app场景步骤实例
     * @param id
     * @return
     */
     AppSceneInstanceStep findAppSceneInstanceStep(@NotNull String id);
 
     /**
-    * 查找所有
+    * 根据查询参数查找所有app场景步骤实例
     * @return
     */
     @FindAll
     List<AppSceneInstanceStep> findAllAppSceneInstanceStep();
 
     /**
-    * 查询列表
+    * 根据查询参数查询app场景步骤实例列表
     * @param appSceneInstanceStepQuery
     * @return
     */
     List<AppSceneInstanceStep> findAppSceneInstanceStepList(AppSceneInstanceStepQuery appSceneInstanceStepQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询app场景步骤实例
     * @param appSceneInstanceStepQuery
     * @return
     */

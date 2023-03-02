@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppPerfStepService
+* app性能测试用例下绑定的步骤 服务接口
 */
 @JoinProvider(model = AppPerfStep.class)
 public interface AppPerfStepService {
 
     /**
-    * 创建
+    * 创建绑定的步骤
     * @param appPerfStep
     * @return
     */
     String createAppPerfStep(@NotNull @Valid AppPerfStep appPerfStep);
 
     /**
-    * 更新
+    * 更新绑定的步骤
     * @param appPerfStep
     */
     void updateAppPerfStep(@NotNull @Valid AppPerfStep appPerfStep);
 
     /**
-    * 删除
+    * 删除绑定的步骤
     * @param id
     */
     void deleteAppPerfStep(@NotNull String id);
@@ -45,35 +45,35 @@ public interface AppPerfStepService {
     List<AppPerfStep> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找绑定的步骤
     * @param id
     * @return
     */
     AppPerfStep findAppPerfStep(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有绑定的步骤
     * @return
     */
     @FindAll
     List<AppPerfStep> findAllAppPerfStep();
 
     /**
-    * 查询列表
+    * 根据查询参数查询绑定的步骤 列表
     * @param appPerfStepQuery
     * @return
     */
     List<AppPerfStep> findAppPerfStepList(AppPerfStepQuery appPerfStepQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询绑定的步骤
     * @param appPerfStepQuery
     * @return
     */
     Pagination<AppPerfStep> findAppPerfStepPage(AppPerfStepQuery appPerfStepQuery);
 
     /**
-     * 绑定web场景
+     * 绑定app场景
      * @param appPerfStepList
      */
     void bindAppScene(List<AppPerfStep> appPerfStepList);

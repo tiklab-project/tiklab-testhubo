@@ -15,7 +15,7 @@ import net.tiklab.user.user.model.User;
 import java.sql.Timestamp;
 
 /**
- * 用例实例或用例步骤记录
+ * 用例实例或用例步骤记录 模型
  */
 @ApiModel
 @Mapper(targetAlias = "ApiUnitInstanceEntity")
@@ -62,7 +62,7 @@ public class ApiUnitInstance extends BaseModel{
     private User createUser;
 
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
 

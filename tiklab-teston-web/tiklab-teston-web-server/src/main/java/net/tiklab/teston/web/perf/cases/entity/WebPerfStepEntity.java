@@ -6,6 +6,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * web性能下绑定的场景 实体
+ */
 @Entity
 @Table(name="teston_web_perf_step")
 public class WebPerfStepEntity implements Serializable {
@@ -15,12 +18,15 @@ public class WebPerfStepEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属web性能
     @Column(name = "web_perf_id",length = 32)
     private String webPerfId;
 
+    // 绑定的web场景
     @Column(name = "web_scene_id",length = 32)
     private String webSceneId;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 

@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* WebSceneStepService
+* web场景下步骤 服务接口
 */
 @JoinProvider(model = WebSceneStep.class)
 public interface WebSceneStepService {
 
     /**
-    * 创建
+    * 创建web场景下步骤
     * @param webSceneStep
     * @return
     */
     String createWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep);
 
     /**
-    * 更新
+    * 更新web场景下步骤
     * @param webSceneStep
     */
     void updateWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep);
 
     /**
-    * 删除
+    * 删除web场景下步骤
     * @param id
     */
     void deleteWebSceneStep(@NotNull String id);
@@ -44,37 +44,32 @@ public interface WebSceneStepService {
     List<WebSceneStep> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找web场景下步骤
     * @param id
     * @return
     */
     WebSceneStep findWebSceneStep(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有web场景下步骤
     * @return
     */
     @FindAll
     List<WebSceneStep> findAllWebSceneStep();
 
     /**
-    * 查询列表
+    * 根据查询参数查询web场景下步骤列表
     * @param webSceneStepQuery
     * @return
     */
     List<WebSceneStep> findWebSceneStepList(WebSceneStepQuery webSceneStepQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询web场景下步骤
     * @param webSceneStepQuery
     * @return
     */
     Pagination<WebSceneStep> findWebSceneStepPage(WebSceneStepQuery webSceneStepQuery);
 
-    /**
-     * 绑定webUnitCase
-     * @param webSceneStepList
-     */
-    void bindWebUnit(List<WebSceneStep> webSceneStepList);
 
 }

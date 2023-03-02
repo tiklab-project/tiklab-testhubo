@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AssertCaseControllera
+ * 断言 控住器
  */
 @RestController
 @RequestMapping("/assertParam")
@@ -34,7 +34,7 @@ public class AssertController {
     private AssertService assertCaseService;
 
     @RequestMapping(path="/createAssertParam",method = RequestMethod.POST)
-    @ApiMethod(name = "createAssertCase",desc = "createAssertCase")
+    @ApiMethod(name = "createAssertCase",desc = "创建断言")
     @ApiParam(name = "assertCase",desc = "assertCase",required = true)
     public Result<String> createAssertCase(@RequestBody @NotNull @Valid AssertCase assertCase){
         String id = assertCaseService.createAssertCase(assertCase);
@@ -43,7 +43,7 @@ public class AssertController {
     }
 
     @RequestMapping(path="/updateAssertParam",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAssertCase",desc = "updateAssertCase")
+    @ApiMethod(name = "updateAssertCase",desc = "更新断言")
     @ApiParam(name = "assertCase",desc = "assertCase",required = true)
     public Result<Void> updateAssertCase(@RequestBody @NotNull @Valid AssertCase assertCase){
         assertCaseService.updateAssertCase(assertCase);
@@ -52,7 +52,7 @@ public class AssertController {
     }
 
     @RequestMapping(path="/deleteAssertParam",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAssertCase",desc = "deleteAssertCase")
+    @ApiMethod(name = "deleteAssertCase",desc = "删除断言")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAssertCase(@NotNull String id){
         assertCaseService.deleteAssertCase(id);
@@ -61,7 +61,7 @@ public class AssertController {
     }
 
     @RequestMapping(path="/findAssertParam",method = RequestMethod.POST)
-    @ApiMethod(name = "findAssertCase",desc = "findAssertCase")
+    @ApiMethod(name = "findAssertCase",desc = "通过id查找断言")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AssertCase> findAssertCase(@NotNull String id){
         AssertCase assertCase = assertCaseService.findAssertCase(id);
@@ -70,7 +70,7 @@ public class AssertController {
     }
 
     @RequestMapping(path="/findAllAssertParam",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAssertCase",desc = "findAllAssertCase")
+    @ApiMethod(name = "findAllAssertCase",desc = "查找所有断言")
     public Result<List<AssertCase>> findAllAssertCase(){
         List<AssertCase> assertCaseList = assertCaseService.findAllAssertCase();
 
@@ -78,7 +78,7 @@ public class AssertController {
     }
 
     @RequestMapping(path = "/findAssertParamList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAssertCaseList",desc = "findAssertCaseList")
+    @ApiMethod(name = "findAssertCaseList",desc = "查询断言列表")
     @ApiParam(name = "assertCaseQuery",desc = "assertCaseQuery",required = true)
     public Result<List<AssertCase>> findAssertCaseList(@RequestBody @Valid @NotNull AssertCaseQuery assertCaseQuery){
         List<AssertCase> assertCaseList = assertCaseService.findAssertCaseList(assertCaseQuery);
@@ -87,7 +87,7 @@ public class AssertController {
     }
 
     @RequestMapping(path = "/findAssertParamPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAssertCasePage",desc = "findAssertCasePage")
+    @ApiMethod(name = "findAssertCasePage",desc = "按分页查询断言")
     @ApiParam(name = "assertCaseQuery",desc = "assertCaseQuery",required = true)
     public Result<Pagination<AssertCase>> findAssertCasePage(@RequestBody @Valid @NotNull AssertCaseQuery assertCaseQuery){
         Pagination<AssertCase> pagination = assertCaseService.findAssertCasePage(assertCaseQuery);

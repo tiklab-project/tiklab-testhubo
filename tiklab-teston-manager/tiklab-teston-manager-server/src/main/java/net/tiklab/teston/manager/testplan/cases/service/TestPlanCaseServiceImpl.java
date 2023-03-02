@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**
-* TestPlanCaseServiceImpl
+* 测试计划绑定的用例 服务
 */
 @Service
 public class TestPlanCaseServiceImpl implements TestPlanCaseService {

@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiPerfCaseService
+* 接口性能 服务接口
 */
 @JoinProvider(model = ApiPerfCase.class)
 public interface ApiPerfCaseService {
 
     /**
-    * 创建
+    * 创建接口性能
     * @param perfCase
     * @return
     */
     String createApiPerfCase(@NotNull @Valid ApiPerfCase perfCase);
 
     /**
-    * 更新
+    * 更新接口性能
     * @param perfCase
     */
     void updateApiPerfCase(@NotNull @Valid ApiPerfCase perfCase);
 
     /**
-    * 删除
+    * 删除接口性能
     * @param id
     */
     void deleteApiPerfCase(@NotNull String id);
@@ -45,28 +45,28 @@ public interface ApiPerfCaseService {
     List<ApiPerfCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找接口性能
     * @param id
     * @return
     */
     ApiPerfCase findApiPerfCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口性能
     * @return
     */
     @FindAll
     List<ApiPerfCase> findAllApiPerfCase();
 
     /**
-    * 查询列表
+    * 查询列表接口性能
     * @param performanceTestQuery
     * @return
     */
     List<ApiPerfCase> findApiPerfCaseList(ApiPerfCaseQuery performanceTestQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询接口性能
     * @param performanceTestQuery
     * @return
     */
@@ -74,7 +74,7 @@ public interface ApiPerfCaseService {
 
 
     /**
-     * 通过testCaseQuery查询
+     * 通过testCaseQuery查询接口性能
      * @param testCaseQuery
      * @return
      */

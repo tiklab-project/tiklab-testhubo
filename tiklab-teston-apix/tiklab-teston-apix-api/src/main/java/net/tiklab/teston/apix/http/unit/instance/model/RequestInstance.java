@@ -11,6 +11,11 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 接口单元
+ * http协议
+ * 请求参数实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RequestInstanceEntity")
 @Join

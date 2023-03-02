@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* FuncUnitCaseServiceImpl
+* 功能用例 服务
 */
 @Service
 public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {

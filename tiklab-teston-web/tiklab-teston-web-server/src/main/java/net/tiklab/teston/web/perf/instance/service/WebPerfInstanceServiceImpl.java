@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* WebPerfInstanceServiceImpl
+* web性能测试实例 服务
 */
 @Service
 public class WebPerfInstanceServiceImpl implements WebPerfInstanceService {

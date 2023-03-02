@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * 接口性能 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiPerfCaseEntity")
 @Join
@@ -18,17 +21,17 @@ public class ApiPerfCase extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="testCase",desc="用例",eg="@selectOne")
+    @ApiProperty(name="testCase",desc="用例")
     @Mappings({
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
     @JoinQuery(key = "id")
     private TestCase testCase;
 
-    @ApiProperty(name="threadCount",desc="threadCount")
+    @ApiProperty(name="threadCount",desc="线程数")
     private Integer threadCount;
 
-    @ApiProperty(name="executeCount",desc="executeCount")
+    @ApiProperty(name="executeCount",desc="执行数")
     private Integer executeCount;
 
     @ApiProperty(name="executeType",desc="1:循环 2:随机")

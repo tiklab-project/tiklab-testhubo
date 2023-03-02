@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* WebEnvService
+* Web环境 服务接口
 */
 @JoinProvider(model = WebEnv.class)
 public interface WebEnvService {
 
     /**
-    * 创建
+    * 创建Web环境
     * @param webEnv
     * @return
     */
     String createWebEnv(@NotNull @Valid WebEnv webEnv);
 
     /**
-    * 更新
+    * 更新Web环境
     * @param webEnv
     */
     void updateWebEnv(@NotNull @Valid WebEnv webEnv);
 
     /**
-    * 删除
+    * 删除Web环境
     * @param id
     */
     void deleteWebEnv(@NotNull String id);
@@ -44,28 +44,28 @@ public interface WebEnvService {
     List<WebEnv> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找Web环境
     * @param id
     * @return
     */
     WebEnv findWebEnv(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有Web环境
     * @return
     */
     @FindAll
     List<WebEnv> findAllWebEnv();
 
     /**
-    * 查询列表
+    * 根据查询参数查询Web环境列表
     * @param webEnvQuery
     * @return
     */
     List<WebEnv> findWebEnvList(WebEnvQuery webEnvQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询Web环境
     * @param webEnvQuery
     * @return
     */

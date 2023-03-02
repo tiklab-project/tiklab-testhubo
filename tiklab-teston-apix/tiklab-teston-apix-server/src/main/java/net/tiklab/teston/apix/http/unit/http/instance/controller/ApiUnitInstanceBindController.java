@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiUnitInstanceBindController
+ * 接口单元公共实例 控制器
  */
 @RestController
 @RequestMapping("/apiUnitInstanceBind")
@@ -35,7 +35,7 @@ public class ApiUnitInstanceBindController {
     private ApiUnitInstanceBindService apiUnitInstanceBindService;
 
     @RequestMapping(path="/createApiUnitInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "createApiUnitInstanceBind",desc = "createApiUnitInstanceBind")
+    @ApiMethod(name = "createApiUnitInstanceBind",desc = "创建接口单元公共实例")
     @ApiParam(name = "apiUnitInstanceBind",desc = "apiUnitInstanceBind",required = true)
     public Result<String> createApiUnitInstanceBind(@RequestBody @NotNull @Valid ApiUnitInstanceBind apiUnitInstanceBind){
         String id = apiUnitInstanceBindService.createApiUnitInstanceBind(apiUnitInstanceBind);
@@ -44,7 +44,7 @@ public class ApiUnitInstanceBindController {
     }
 
     @RequestMapping(path="/updateApiUnitInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "updateApiUnitInstanceBind",desc = "updateApiUnitInstanceBind")
+    @ApiMethod(name = "updateApiUnitInstanceBind",desc = "更新接口单元公共实例")
     @ApiParam(name = "apiUnitInstanceBind",desc = "apiUnitInstanceBind",required = true)
     public Result<Void> updateApiUnitInstanceBind(@RequestBody @NotNull @Valid ApiUnitInstanceBind apiUnitInstanceBind){
         apiUnitInstanceBindService.updateApiUnitInstanceBind(apiUnitInstanceBind);
@@ -53,7 +53,7 @@ public class ApiUnitInstanceBindController {
     }
 
     @RequestMapping(path="/deleteApiUnitInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteApiUnitInstanceBind",desc = "deleteApiUnitInstanceBind")
+    @ApiMethod(name = "deleteApiUnitInstanceBind",desc = "删除接口单元公共实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteApiUnitInstanceBind(@NotNull String id){
         apiUnitInstanceBindService.deleteApiUnitInstanceBind(id);
@@ -62,7 +62,7 @@ public class ApiUnitInstanceBindController {
     }
 
     @RequestMapping(path="/findApiUnitInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitInstanceBind",desc = "findApiUnitInstanceBind")
+    @ApiMethod(name = "findApiUnitInstanceBind",desc = "查找接口单元公共实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiUnitInstanceBind> findApiUnitInstanceBind(@NotNull String id){
         ApiUnitInstanceBind apiUnitInstanceBind = apiUnitInstanceBindService.findApiUnitInstanceBind(id);
@@ -71,7 +71,7 @@ public class ApiUnitInstanceBindController {
     }
 
     @RequestMapping(path="/findAllApiUnitInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllApiUnitInstanceBind",desc = "findAllApiUnitInstanceBind")
+    @ApiMethod(name = "findAllApiUnitInstanceBind",desc = "查找所有接口单元公共实例")
     public Result<List<ApiUnitInstanceBind>> findAllApiUnitInstanceBind(){
         List<ApiUnitInstanceBind> apiUnitInstanceBindList = apiUnitInstanceBindService.findAllApiUnitInstanceBind();
 
@@ -79,7 +79,7 @@ public class ApiUnitInstanceBindController {
     }
 
     @RequestMapping(path = "/findApiUnitInstanceBindList",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitInstanceBindList",desc = "findApiUnitInstanceBindList")
+    @ApiMethod(name = "findApiUnitInstanceBindList",desc = "查询接口单元公共实例列表")
     @ApiParam(name = "apiUnitInstanceBindQuery",desc = "apiUnitInstanceBindQuery",required = true)
     public Result<List<ApiUnitInstanceBind>> findApiUnitInstanceBindList(@RequestBody @Valid @NotNull ApiUnitInstanceBindQuery apiUnitInstanceBindQuery){
         List<ApiUnitInstanceBind> apiUnitInstanceBindList = apiUnitInstanceBindService.findApiUnitInstanceBindList(apiUnitInstanceBindQuery);
@@ -88,7 +88,7 @@ public class ApiUnitInstanceBindController {
     }
 
     @RequestMapping(path = "/findApiUnitInstanceBindPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiUnitInstanceBindPage",desc = "findApiUnitInstanceBindPage")
+    @ApiMethod(name = "findApiUnitInstanceBindPage",desc = "按分页查询接口单元公共实例")
     @ApiParam(name = "apiUnitInstanceBindQuery",desc = "apiUnitInstanceBindQuery",required = true)
     public Result<Pagination<ApiUnitInstanceBind>> findApiUnitInstanceBindPage(@RequestBody @Valid @NotNull ApiUnitInstanceBindQuery apiUnitInstanceBindQuery){
         Pagination<ApiUnitInstanceBind> pagination = apiUnitInstanceBindService.findApiUnitInstanceBindPage(apiUnitInstanceBindQuery);

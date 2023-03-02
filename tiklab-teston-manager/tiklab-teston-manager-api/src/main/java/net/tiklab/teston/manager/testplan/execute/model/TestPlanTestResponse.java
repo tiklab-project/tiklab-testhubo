@@ -8,7 +8,9 @@ import net.tiklab.teston.manager.testplan.instance.model.TestPlanInstance;
 
 import java.util.List;
 
-
+/**
+ * 测试数据返回 模型
+ */
 @ApiModel
 public class TestPlanTestResponse extends BaseModel{
 

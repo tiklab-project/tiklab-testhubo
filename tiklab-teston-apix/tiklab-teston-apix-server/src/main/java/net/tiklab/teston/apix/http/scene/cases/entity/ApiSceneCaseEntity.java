@@ -9,6 +9,9 @@ import net.tiklab.dal.jpa.annotation.Entity;
 
 import java.io.Serializable;
 
+/**
+ * 接口性能测试用例 实体
+ */
 @Entity
 @Table(name="teston_api_scene")
 public class ApiSceneCaseEntity implements Serializable {

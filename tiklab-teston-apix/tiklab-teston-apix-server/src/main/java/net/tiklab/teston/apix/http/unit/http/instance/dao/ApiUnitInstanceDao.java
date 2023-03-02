@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TestInstanceDao
+ * 接口单元实例 数据访问
  */
 @Repository
 public class ApiUnitInstanceDao {
@@ -31,7 +31,7 @@ public class ApiUnitInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建步骤实例
      * @param testStepInstanceEntity
      * @return
      */
@@ -40,7 +40,7 @@ public class ApiUnitInstanceDao {
     }
 
     /**
-     * 更新
+     * 更新测试用例实例
      * @param testStepInstanceEntity
      */
     public void updateApiUnitInstance(ApiUnitInstanceEntity testStepInstanceEntity){
@@ -48,7 +48,7 @@ public class ApiUnitInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除测试用例实例
      * @param id
      */
     public void deleteApiUnitInstance(String id){
@@ -60,7 +60,7 @@ public class ApiUnitInstanceDao {
     }
 
     /**
-     * 查找
+     * 通过id查询测试用例实例
      * @param id
      * @return
      */
@@ -69,7 +69,7 @@ public class ApiUnitInstanceDao {
     }
 
     /**
-    * findAllApiUnitInstance
+    * 查询所有测试用例实例
     * @return
     */
     public List<ApiUnitInstanceEntity> findAllApiUnitInstance() {
@@ -80,6 +80,11 @@ public class ApiUnitInstanceDao {
         return jpaTemplate.findList(ApiUnitInstanceEntity.class,idList);
     }
 
+    /**
+     * 通过查询对象查询测试用例实例
+     * @param apiUnitInstanceQuery
+     * @return
+     */
     public List<ApiUnitInstanceEntity> findApiUnitInstanceList(ApiUnitInstanceQuery apiUnitInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitInstanceEntity.class)
                 .eq("apiUnitId", apiUnitInstanceQuery.getApiUnitId())
@@ -88,6 +93,11 @@ public class ApiUnitInstanceDao {
         return jpaTemplate.findList(queryCondition, ApiUnitInstanceEntity.class);
     }
 
+    /**
+     * 通过查询对象分页查询测试用例实例
+     * @param apiUnitInstanceQuery
+     * @return
+     */
     public Pagination<ApiUnitInstanceEntity> findApiUnitInstancePage(ApiUnitInstanceQuery apiUnitInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitInstanceEntity.class)
                 .eq("apiUnitId", apiUnitInstanceQuery.getApiUnitId())
@@ -97,21 +107,4 @@ public class ApiUnitInstanceDao {
         return jpaTemplate.findPage(queryCondition, ApiUnitInstanceEntity.class);
     }
 
-    /**
-     * 通过list查询
-     * @return
-     */
-    public List<ApiUnitInstanceEntity> findApiUnitInstanceByList(List<String> collect) {
-       String sql = "select * from jest_test_instance t where id in (:collect)";
-        Map<String, Object> paramMap = new HashMap<String, Object>();
-        paramMap.put("collect", collect);
-        NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(getJdbcTemplate());
-        List<ApiUnitInstanceEntity> testInstanceList = jdbc.query(sql, paramMap, new BeanPropertyRowMapper(ApiUnitInstanceEntity.class));
-        return testInstanceList;
-
-    }
-
-    public JdbcTemplate getJdbcTemplate() {
-        return jpaTemplate.getJdbcTemplate();
-    }
 }

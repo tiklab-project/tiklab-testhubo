@@ -5,7 +5,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
-
+/**
+ * 测试计划下用例的实例的中间层 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "TestPlanCaseInstanceBindEntity")
 public class TestPlanCaseInstanceBind extends BaseModel {
@@ -13,22 +15,22 @@ public class TestPlanCaseInstanceBind extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="testPlanInstanceId",desc="testPlanInstanceId")
+    @ApiProperty(name="testPlanInstanceId",desc="所属测试计划实例")
     private java.lang.String testPlanInstanceId;
 
-    @ApiProperty(name="caseInstanceId",desc="caseInstanceId")
+    @ApiProperty(name="caseInstanceId",desc="用例实例id")
     private java.lang.String caseInstanceId;
 
-    @ApiProperty(name="name",desc="name")
+    @ApiProperty(name="name",desc="名称")
     private java.lang.String name;
 
-    @ApiProperty(name="testType",desc="testType")
+    @ApiProperty(name="testType",desc="测试类型")
     private java.lang.String testType;
 
-    @ApiProperty(name="caseType",desc="caseType")
+    @ApiProperty(name="caseType",desc="用例类型")
     private java.lang.String caseType;
 
-    @ApiProperty(name="result",desc="result")
+    @ApiProperty(name="result",desc="结果")
     private java.lang.Integer result;
 
     public java.lang.String getId() {

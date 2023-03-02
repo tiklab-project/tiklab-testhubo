@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * QueryParamDao
+ * query 数据访问
  */
 @Repository
 public class QueryParamDao{
@@ -26,7 +26,7 @@ public class QueryParamDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建query
      * @param queryParamEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class QueryParamDao{
     }
 
     /**
-     * 更新
+     * 更新query
      * @param queryParamEntity
      */
     public void updateQueryParam(QueryParamEntity queryParamEntity){
@@ -43,7 +43,7 @@ public class QueryParamDao{
     }
 
     /**
-     * 删除
+     * 删除query
      * @param id
      */
     public void deleteQueryParam(String id){
@@ -55,7 +55,7 @@ public class QueryParamDao{
     }
 
     /**
-     * 查找
+     * 根据id查找query
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class QueryParamDao{
     }
 
     /**
-    * findAllQueryParam
+    * 查找所有query
     * @return
     */
     public List<QueryParamEntity> findAllQueryParam() {
@@ -75,6 +75,11 @@ public class QueryParamDao{
         return jpaTemplate.findList(QueryParamEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询query列表
+     * @param queryParamQuery
+     * @return
+     */
     public List<QueryParamEntity> findQueryParamList(QueryParamQuery queryParamQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamEntity.class)
                 .eq("apiUnitId", queryParamQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class QueryParamDao{
         return jpaTemplate.findList(queryCondition, QueryParamEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询query
+     * @param queryParamQuery
+     * @return
+     */
     public Pagination<QueryParamEntity> findQueryParamPage(QueryParamQuery queryParamQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamEntity.class)
                 .eq("apiUnitId", queryParamQuery.getApiUnitId())

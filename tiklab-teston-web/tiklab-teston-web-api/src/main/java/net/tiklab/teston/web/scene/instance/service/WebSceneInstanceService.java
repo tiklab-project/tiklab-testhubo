@@ -10,25 +10,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestInstanceService
+* web场景实例 服务接口
 */
 public interface WebSceneInstanceService {
 
     /**
-    * 创建
+    * 创建web场景实例
     * @param scenInstance
     * @return
     */
     String createWebSceneInstance(@NotNull @Valid WebSceneInstance scenInstance);
 
     /**
-    * 更新
+    * 更新web场景实例
     * @param scenInstance
     */
     void updateWebSceneInstance(@NotNull @Valid WebSceneInstance scenInstance);
 
     /**
-    * 删除
+    * 删除web场景实例
     * @param id
     */
     void deleteWebSceneInstance(@NotNull String id);
@@ -38,27 +38,27 @@ public interface WebSceneInstanceService {
     List<WebSceneInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找web场景实例
     * @param id
     * @return
     */
     WebSceneInstance findWebSceneInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有web场景实例
     * @return
     */
     List<WebSceneInstance> findAllWebSceneInstance();
 
     /**
-    * 查询列表
+    * 根据查询参数查询web场景实例列表
     * @param scenInstanceQuery
     * @return
     */
     List<WebSceneInstance> findWebSceneInstanceList(WebSceneInstanceQuery scenInstanceQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询web场景实例
     * @param scenInstanceQuery
     * @return
     */

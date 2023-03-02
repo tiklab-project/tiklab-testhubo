@@ -5,18 +5,18 @@ import net.tiklab.teston.apix.http.perf.instance.model.ApiPerfInstance;
 import net.tiklab.teston.apix.http.perf.execute.model.ApiPerfTestRequest;
 import net.tiklab.teston.apix.http.perf.execute.model.ApiPerfTestResponse;
 import net.tiklab.teston.apix.http.perf.instance.service.ApiPerfInstanceService;
-import net.tiklab.teston.apix.http.perf.execute.service.ApiPerfTestDispatchService;
+import net.tiklab.teston.apix.http.perf.execute.service.ApiPerfExecuteDispatchService;
 import net.tiklab.teston.apix.http.scene.cases.model.ApiSceneCase;
 import net.tiklab.teston.apix.http.scene.instance.model.ApiSceneInstance;
 import net.tiklab.teston.apix.http.scene.execute.model.ApiSceneTestRequest;
 import net.tiklab.teston.apix.http.scene.execute.model.ApiSceneTestResponse;
 import net.tiklab.teston.apix.http.scene.instance.service.ApiSceneInstanceService;
-import net.tiklab.teston.apix.http.scene.execute.service.ApiSceneTestDispatchService;
+import net.tiklab.teston.apix.http.scene.execute.service.ApiSceneExecuteDispatchService;
 import net.tiklab.teston.apix.http.unit.cases.model.ApiUnitCase;
 import net.tiklab.teston.apix.http.unit.instance.model.ApiUnitInstance;
 import net.tiklab.teston.apix.http.unit.execute.model.ApiUnitTestRequest;
 import net.tiklab.teston.apix.http.unit.instance.service.ApiUnitInstanceService;
-import net.tiklab.teston.apix.http.unit.execute.service.ApiUnitTestDispatchService;
+import net.tiklab.teston.apix.http.unit.execute.service.ApiUnitExecuteDispatchService;
 import net.tiklab.teston.manager.testplan.cases.model.TestPlanCase;
 import net.tiklab.teston.manager.testplan.instance.model.TestPlanCaseInstanceBind;
 import net.tiklab.teston.manager.testplan.execute.model.TestPlanTestData;
@@ -24,11 +24,14 @@ import net.tiklab.teston.manager.testplan.instance.service.TestPlanCaseInstanceB
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 测试计划中接口的执行测试
+ */
 @Component
 public class TestPlanExecuteApiDispatch {
 
     @Autowired
-    ApiUnitTestDispatchService apiUnitTestDispatchService;
+    ApiUnitExecuteDispatchService apiUnitExecuteDispatchService;
 
     @Autowired
     ApiUnitInstanceService apiUnitInstanceService;
@@ -37,10 +40,10 @@ public class TestPlanExecuteApiDispatch {
     ApiSceneInstanceService apiSceneInstanceService;
 
     @Autowired
-    ApiSceneTestDispatchService apiSceneTestDispatchService;
+    ApiSceneExecuteDispatchService apiSceneExecuteDispatchService;
 
     @Autowired
-    ApiPerfTestDispatchService apiPerfTestDispatchService;
+    ApiPerfExecuteDispatchService apiPerfExecuteDispatchService;
 
     @Autowired
     ApiPerfInstanceService apiPerfInstanceService;
@@ -85,7 +88,7 @@ public class TestPlanExecuteApiDispatch {
         apiUnitTestRequest.setExeType("testPlanTest");
 
         //执行
-        ApiUnitInstance apiUnitInstance = apiUnitTestDispatchService.execute(apiUnitTestRequest);
+        ApiUnitInstance apiUnitInstance = apiUnitExecuteDispatchService.execute(apiUnitTestRequest);
 
         //保存历史
         String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
@@ -128,7 +131,7 @@ public class TestPlanExecuteApiDispatch {
 
 
         //执行
-        ApiSceneTestResponse apiSceneTestResponse = apiSceneTestDispatchService.execute(apiSceneTestRequest);
+        ApiSceneTestResponse apiSceneTestResponse = apiSceneExecuteDispatchService.execute(apiSceneTestRequest);
 
         ApiSceneInstance apiSceneInstance = apiSceneTestResponse.getApiSceneInstance();
         String apiSceneInstanceId = apiSceneInstanceService.saveApiSceneInstanceToSql(apiSceneInstance,apiSceneTestResponse);
@@ -168,13 +171,13 @@ public class TestPlanExecuteApiDispatch {
         apiPerfTestRequest.setExeType("testPlanTest");
         apiPerfTestRequest.setApiEnv(testPlanTestData.getApiEnv());
 
-        apiPerfTestDispatchService.execute(apiPerfTestRequest);
+        apiPerfExecuteDispatchService.execute(apiPerfTestRequest);
 
     }
 
 
     public TestPlanCaseInstanceBind apiPerfResult(){
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfTestDispatchService.exeResult(apiPerfTestRequest);
+        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.exeResult(apiPerfTestRequest);
 
         //测试计划历史 与 绑定用例的历史 公共历史表
         TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();

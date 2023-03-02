@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiEnvService
+* 接口环境 服务接口
 */
 @JoinProvider(model = ApiEnv.class)
 public interface ApiEnvService {
 
     /**
-    * 创建
+    * 创建接口环境
     * @param apiEnv
     * @return
     */
     String createApiEnv(@NotNull @Valid ApiEnv apiEnv);
 
     /**
-    * 更新
+    * 更新接口环境
     * @param apiEnv
     */
     void updateApiEnv(@NotNull @Valid ApiEnv apiEnv);
 
     /**
-    * 删除
+    * 删除接口环境
     * @param id
     */
     void deleteApiEnv(@NotNull String id);
@@ -43,28 +43,28 @@ public interface ApiEnvService {
     List<ApiEnv> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找接口环境
     * @param id
     * @return
     */
     ApiEnv findApiEnv(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口环境
     * @return
     */
     @FindAll
     List<ApiEnv> findAllApiEnv();
 
     /**
-    * 查询列表
+    * 根据查询参数查询接口环境列表
     * @param apiEnvQuery
     * @return
     */
     List<ApiEnv> findApiEnvList(ApiEnvQuery apiEnvQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询接口环境
     * @param apiEnvQuery
     * @return
     */

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * PreScriptController
+ * 前置脚本 控制器
  */
 @RestController
 @RequestMapping("/preScript")
@@ -34,7 +34,7 @@ public class PreScriptController {
     private PreScriptService preScriptService;
 
     @RequestMapping(path="/createPreScript",method = RequestMethod.POST)
-    @ApiMethod(name = "createPreScript",desc = "createPreScript")
+    @ApiMethod(name = "createPreScript",desc = "创建前置脚本")
     @ApiParam(name = "preScript",desc = "preScript",required = true)
     public Result<String> createPreScript(@RequestBody @NotNull @Valid PreScript preScript){
         String id = preScriptService.createPreScript(preScript);
@@ -43,7 +43,7 @@ public class PreScriptController {
     }
 
     @RequestMapping(path="/updatePreScript",method = RequestMethod.POST)
-    @ApiMethod(name = "updatePreScript",desc = "updatePreScript")
+    @ApiMethod(name = "updatePreScript",desc = "更新前置脚本")
     @ApiParam(name = "preScript",desc = "preScript",required = true)
     public Result<Void> updatePreScript(@RequestBody @NotNull @Valid PreScript preScript){
         preScriptService.updatePreScript(preScript);
@@ -52,7 +52,7 @@ public class PreScriptController {
     }
 
     @RequestMapping(path="/deletePreScript",method = RequestMethod.POST)
-    @ApiMethod(name = "deletePreScript",desc = "deletePreScript")
+    @ApiMethod(name = "deletePreScript",desc = "删除前置脚本")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deletePreScript(@NotNull String id){
         preScriptService.deletePreScript(id);
@@ -61,7 +61,7 @@ public class PreScriptController {
     }
 
     @RequestMapping(path="/findPreScript",method = RequestMethod.POST)
-    @ApiMethod(name = "findPreScript",desc = "findPreScript")
+    @ApiMethod(name = "findPreScript",desc = "根据id查找前置脚本")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<PreScript> findPreScript(@NotNull String id){
         PreScript preScript = preScriptService.findPreScript(id);
@@ -70,7 +70,7 @@ public class PreScriptController {
     }
 
     @RequestMapping(path="/findAllPreScript",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllPreScript",desc = "findAllPreScript")
+    @ApiMethod(name = "findAllPreScript",desc = "查找所有前置脚本")
     public Result<List<PreScript>> findAllPreScript(){
         List<PreScript> preScriptList = preScriptService.findAllPreScript();
 
@@ -78,7 +78,7 @@ public class PreScriptController {
     }
 
     @RequestMapping(path = "/findPreScriptList",method = RequestMethod.POST)
-    @ApiMethod(name = "findPreScriptList",desc = "findPreScriptList")
+    @ApiMethod(name = "findPreScriptList",desc = "根据查询参数查询前置脚本列表")
     @ApiParam(name = "preScriptQuery",desc = "preScriptQuery",required = true)
     public Result<List<PreScript>> findPreScriptList(@RequestBody @Valid @NotNull PreScriptQuery preScriptQuery){
         List<PreScript> preScriptList = preScriptService.findPreScriptList(preScriptQuery);
@@ -87,7 +87,7 @@ public class PreScriptController {
     }
 
     @RequestMapping(path = "/findPreScriptPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findPreScriptPage",desc = "findPreScriptPage")
+    @ApiMethod(name = "findPreScriptPage",desc = "根据查询参数按分页查询前置脚本")
     @ApiParam(name = "preScriptQuery",desc = "preScriptQuery",required = true)
     public Result<Pagination<PreScript>> findPreScriptPage(@RequestBody @Valid @NotNull PreScriptQuery preScriptQuery){
         Pagination<PreScript> pagination = preScriptService.findPreScriptPage(preScriptQuery);

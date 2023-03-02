@@ -6,6 +6,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * agent配置 实体
+ */
 @Entity
 @Table(name="teston_agent_config")
 public class AgentConfigEntity implements Serializable {
@@ -15,21 +18,27 @@ public class AgentConfigEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属仓库
     @Column(name = "repository_id",length = 32)
     private String repositoryId;
 
+    // 名称
     @Column(name = "name",length = 64)
     private String name;
 
+    // 地址
     @Column(name = "url",length = 256)
     private String url;
 
+    // 状态
     @Column(name = "status",length = 8)
     private Integer status;
 
+    // 数量
     @Column(name = "number",length = 8)
     private Integer number;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 

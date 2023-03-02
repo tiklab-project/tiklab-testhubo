@@ -9,6 +9,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * web场景实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebSceneInstanceEntity")
 public class WebSceneInstance extends BaseModel{
@@ -40,11 +43,11 @@ public class WebSceneInstance extends BaseModel{
     @ApiProperty(name="stepList",desc="存放webUI测试步骤结果")
     private List<WebSceneInstanceStep> stepList;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     public String getId() {

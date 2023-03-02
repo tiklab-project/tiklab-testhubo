@@ -8,6 +8,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 仓库关注 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RepositoryFollowEntity")
 public class RepositoryFollow extends BaseModel {
@@ -16,13 +19,13 @@ public class RepositoryFollow extends BaseModel {
     private java.lang.String id;
 
     @NotNull
-    @ApiProperty(name="repositoryId",desc="repositoryId",required = true)
+    @ApiProperty(name="repositoryId",desc="仓库",required = true)
     private java.lang.String repositoryId;
 
-    @ApiProperty(name="userId",desc="userId")
+    @ApiProperty(name="userId",desc="所属人")
     private java.lang.String userId;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private java.sql.Timestamp createTime;
 

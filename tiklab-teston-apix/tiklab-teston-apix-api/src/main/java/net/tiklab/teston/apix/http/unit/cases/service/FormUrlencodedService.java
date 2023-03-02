@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* FormUrlencodedService
+* form-urlencoded 服务接口
 */
 public interface FormUrlencodedService {
 
     /**
-    * 创建
+    * 创建form-urlencoded
     * @param formUrlencoded
     * @return
     */
     String createFormUrlencoded(@NotNull @Valid FormUrlencoded formUrlencoded);
 
     /**
-    * 更新
+    * 更新form-urlencoded
     * @param formUrlencoded
     */
     void updateFormUrlencoded(@NotNull @Valid FormUrlencoded formUrlencoded);
 
     /**
-    * 删除
+    * 删除form-urlencoded
     * @param id
     */
     void deleteFormUrlencoded(@NotNull String id);
@@ -37,27 +37,27 @@ public interface FormUrlencodedService {
     List<FormUrlencoded> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找form-urlencoded
     * @param id
     * @return
     */
     FormUrlencoded findFormUrlencoded(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有form-urlencoded
     * @return
     */
     List<FormUrlencoded> findAllFormUrlencoded();
 
     /**
-    * 查询列表
+    * 查询form-urlencoded 列表
     * @param formUrlencodedQuery
     * @return
     */
     List<FormUrlencoded> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询form-urlencoded
     * @param formUrlencodedQuery
     * @return
     */

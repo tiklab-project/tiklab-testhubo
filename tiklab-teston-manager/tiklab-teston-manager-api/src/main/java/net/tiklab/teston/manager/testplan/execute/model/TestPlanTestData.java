@@ -6,6 +6,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.util.List;
 
+/**
+ * 测试数据构造 模型
+ */
 @ApiModel
 public class TestPlanTestData extends BaseModel{
 

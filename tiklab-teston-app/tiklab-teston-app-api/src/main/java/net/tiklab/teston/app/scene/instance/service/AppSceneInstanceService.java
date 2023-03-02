@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestInstanceService
+* app场景测试历史实例 服务接口
 */
 @JoinProvider(model = AppSceneInstance.class)
 public interface AppSceneInstanceService {
 
     /**
-    * 创建
+    * 创建app场景测试历史实例
     * @param scenInstance
     * @return
     */
     String createAppSceneInstance(@NotNull @Valid AppSceneInstance scenInstance);
 
     /**
-    * 更新
+    * 更新app场景测试历史实例
     * @param scenInstance
     */
     void updateAppSceneInstance(@NotNull @Valid AppSceneInstance scenInstance);
 
     /**
-    * 删除
+    * 删除app场景测试历史实例
     * @param id
     */
     void deleteAppSceneInstance(@NotNull String id);
@@ -45,34 +45,40 @@ public interface AppSceneInstanceService {
     List<AppSceneInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找app场景测试历史实例
     * @param id
     * @return
     */
     AppSceneInstance findAppSceneInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有app场景测试历史实例
     * @return
     */
     @FindAll
     List<AppSceneInstance> findAllAppSceneInstance();
 
     /**
-    * 查询列表
+    * 根据查询参数查询app场景测试历史实例列表
     * @param scenInstanceQuery
     * @return
     */
     List<AppSceneInstance> findAppSceneInstanceList(AppSceneInstanceQuery scenInstanceQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询app场景测试历史实例
     * @param scenInstanceQuery
     * @return
     */
     Pagination<AppSceneInstance> findAppSceneInstancePage(AppSceneInstanceQuery scenInstanceQuery);
 
 
+    /**
+     * 保存app场景实例
+     * @param appSceneInstance
+     * @param appSceneTestResponse
+     * @return
+     */
     String saveAppSceneInstanceToSql(AppSceneInstance appSceneInstance, AppSceneTestResponse appSceneTestResponse);
 
 }

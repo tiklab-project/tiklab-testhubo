@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiPerfStepController
+ * 接口性能下场景步骤 控制器
  */
 @RestController
 @RequestMapping("/apiPerfStep")
@@ -35,7 +35,7 @@ public class ApiPerfStepController {
     private ApiPerfStepService apiPerfStepService;
 
     @RequestMapping(path="/createApiPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "createApiPerfStep",desc = "createApiPerfStep")
+    @ApiMethod(name = "createApiPerfStep",desc = "新增场景步骤")
     @ApiParam(name = "apiPerfStep",desc = "apiPerfStep",required = true)
     public Result<String> createApiPerfStep(@RequestBody @NotNull @Valid ApiPerfStep apiPerfStep){
         String id = apiPerfStepService.createApiPerfStep(apiPerfStep);
@@ -44,7 +44,7 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path="/updateApiPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "updateApiPerfStep",desc = "updateApiPerfStep")
+    @ApiMethod(name = "updateApiPerfStep",desc = "更新场景步骤")
     @ApiParam(name = "apiPerfStep",desc = "apiPerfStep",required = true)
     public Result<Void> updateApiPerfStep(@RequestBody @NotNull @Valid ApiPerfStep apiPerfStep){
         apiPerfStepService.updateApiPerfStep(apiPerfStep);
@@ -53,7 +53,7 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path="/deleteApiPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteApiPerfStep",desc = "deleteApiPerfStep")
+    @ApiMethod(name = "deleteApiPerfStep",desc = "删除场景步骤")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteApiPerfStep(@NotNull String id){
         apiPerfStepService.deleteApiPerfStep(id);
@@ -62,7 +62,7 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path="/findApiPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiPerfStep",desc = "findApiPerfStep")
+    @ApiMethod(name = "findApiPerfStep",desc = "通过id查询场景步骤")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiPerfStep> findApiPerfStep(@NotNull String id){
         ApiPerfStep apiPerfStep = apiPerfStepService.findApiPerfStep(id);
@@ -71,7 +71,7 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path="/findAllApiPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllApiPerfStep",desc = "findAllApiPerfStep")
+    @ApiMethod(name = "findAllApiPerfStep",desc = "查询所有场景步骤")
     public Result<List<ApiPerfStep>> findAllApiPerfStep(){
         List<ApiPerfStep> apiPerfStepList = apiPerfStepService.findAllApiPerfStep();
 
@@ -79,7 +79,7 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path = "/findApiPerfStepList",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiPerfStepList",desc = "findApiPerfStepList")
+    @ApiMethod(name = "findApiPerfStepList",desc = "查询列表接口性能场景步骤")
     @ApiParam(name = "apiPerfStepQuery",desc = "apiPerfStepQuery",required = true)
     public Result<List<ApiPerfStep>> findApiPerfStepList(@RequestBody @Valid @NotNull ApiPerfStepQuery apiPerfStepQuery){
         List<ApiPerfStep> apiPerfStepList = apiPerfStepService.findApiPerfStepList(apiPerfStepQuery);
@@ -88,7 +88,7 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path = "/findApiPerfStepPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiPerfStepPage",desc = "findApiPerfStepPage")
+    @ApiMethod(name = "findApiPerfStepPage",desc = "按分页查询接口性能场景步骤")
     @ApiParam(name = "apiPerfStepQuery",desc = "apiPerfStepQuery",required = true)
     public Result<Pagination<ApiPerfStep>> findApiPerfStepPage(@RequestBody @Valid @NotNull ApiPerfStepQuery apiPerfStepQuery){
         Pagination<ApiPerfStep> pagination = apiPerfStepService.findApiPerfStepPage(apiPerfStepQuery);
@@ -98,7 +98,7 @@ public class ApiPerfStepController {
 
 
     @RequestMapping(path="/bindApiScene",method = RequestMethod.POST)
-    @ApiMethod(name = "bindApiScene",desc = "bindApiScene")
+    @ApiMethod(name = "bindApiScene",desc = "绑定场景步骤")
     @ApiParam(name = "apiPerfStep",desc = "apiPerfStep",required = true)
     public Result<String> bindApiScene(@RequestBody @NotNull @Valid List<ApiPerfStep> apiPerfStep){
           apiPerfStepService.bindApiScene(apiPerfStep);

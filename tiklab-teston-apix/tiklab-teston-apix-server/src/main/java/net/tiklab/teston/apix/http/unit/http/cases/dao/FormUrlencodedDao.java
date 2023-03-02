@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * FormUrlencodedDao
+ * form-urlencoded 数据访问
  */
 @Repository
 public class FormUrlencodedDao{
@@ -26,7 +26,7 @@ public class FormUrlencodedDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建form-urlencoded
      * @param formUrlencodedEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class FormUrlencodedDao{
     }
 
     /**
-     * 更新
+     * 更新form-urlencoded
      * @param formUrlencodedEntity
      */
     public void updateFormUrlencoded(FormUrlencodedEntity formUrlencodedEntity){
@@ -43,7 +43,7 @@ public class FormUrlencodedDao{
     }
 
     /**
-     * 删除
+     *  删除form-urlencoded
      * @param id
      */
     public void deleteFormUrlencoded(String id){
@@ -55,7 +55,7 @@ public class FormUrlencodedDao{
     }
 
     /**
-     * 查找
+     * 根据id查找form-urlencoded
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class FormUrlencodedDao{
     }
 
     /**
-    * findAllFormUrlencoded
+    * 查找所有form-urlencoded
     * @return
     */
     public List<FormUrlencodedEntity> findAllFormUrlencoded() {
@@ -75,6 +75,11 @@ public class FormUrlencodedDao{
         return jpaTemplate.findList(FormUrlencodedEntity.class,idList);
     }
 
+    /**
+     * 查询form-urlencoded 列表
+     * @param formUrlencodedQuery
+     * @return
+     */
     public List<FormUrlencodedEntity> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlencodedEntity.class)
                 .eq("apiUnitId", formUrlencodedQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class FormUrlencodedDao{
         return jpaTemplate.findList(queryCondition,FormUrlencodedEntity.class);
     }
 
+    /**
+     * 按分页查询form-urlencoded
+     * @param formUrlencodedQuery
+     * @return
+     */
     public Pagination<FormUrlencodedEntity> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlencodedEntity.class)
                 .eq("apiUnitId", formUrlencodedQuery.getApiUnitId())

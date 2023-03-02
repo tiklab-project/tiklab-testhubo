@@ -11,6 +11,11 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 接口单元
+ * http协议
+ * 响应数据实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ResponseInstanceEntity")
 @Join
@@ -28,11 +33,11 @@ public class ResponseInstance extends BaseModel{
     private ApiUnitInstance apiUnitInstance;
 
 
-    @ApiProperty(name="responseHeader",desc="responseHeader")
+    @ApiProperty(name="responseHeader",desc="响应头数据")
     private String responseHeader;
 
 
-    @ApiProperty(name="responseBody",desc="responseBody")
+    @ApiProperty(name="responseBody",desc="响应体数据")
     private String responseBody;
 
     public String getId() {

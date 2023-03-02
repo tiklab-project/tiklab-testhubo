@@ -8,6 +8,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
 
+/**
+ * web性能测试实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebPerfInstanceEntity")
 public class WebPerfInstance extends BaseModel{
@@ -15,7 +18,7 @@ public class WebPerfInstance extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="webPerfId",desc="性能测试表id")
+    @ApiProperty(name="webPerfId",desc="所属web性能测试")
     private String webPerfId;
 
     @ApiProperty(name="passRate",desc="通过率")
@@ -36,11 +39,11 @@ public class WebPerfInstance extends BaseModel{
     @ApiProperty(name="result",desc="结果")
     private Integer result;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     public String getId() {

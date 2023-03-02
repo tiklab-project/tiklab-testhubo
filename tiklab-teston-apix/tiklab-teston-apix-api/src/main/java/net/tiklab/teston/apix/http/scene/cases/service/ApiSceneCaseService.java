@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* TestCaseService
+* 接口场景 服务接口
 */
 @JoinProvider(model = ApiSceneCase.class)
 public interface ApiSceneCaseService {
 
     /**
-    * 创建
+    * 创建接口场景
     * @param scenCase
     * @return
     */
     String createApiSceneCase(@NotNull @Valid ApiSceneCase scenCase);
 
     /**
-    * 更新
+    * 更新接口场景
     * @param scenCase
     */
     void updateApiSceneCase(@NotNull @Valid ApiSceneCase scenCase);
 
     /**
-    * 删除
+    * 删除接口场景
     * @param id
     */
     void deleteApiSceneCase(@NotNull String id);
@@ -45,35 +45,35 @@ public interface ApiSceneCaseService {
     List<ApiSceneCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找接口场景
     * @param id
     * @return
     */
     ApiSceneCase findApiSceneCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口场景
     * @return
     */
     @FindAll
     List<ApiSceneCase> findAllApiSceneCase();
 
     /**
-    * 查询列表
+    * 根据查询参数查询接口场景列表
     * @param scenCaseQuery
     * @return
     */
     List<ApiSceneCase> findApiSceneCaseList(ApiSceneCaseQuery scenCaseQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询接口场景列表
     * @param scenCaseQuery
     * @return
     */
     Pagination<ApiSceneCase> findApiSceneCasePage(ApiSceneCaseQuery scenCaseQuery);
 
     /**
-     * 通过testCaseQuery查询
+     * 根据测试用例查询参数查找接口场景列表
      * @param testCaseQuery
      * @return
      */

@@ -15,26 +15,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* StepService
+* 接口单元 服务接口
 */
 @JoinProvider(model = ApiUnitCase.class)
 public interface ApiUnitCaseService {
 
     /**
-    * 创建
+    * 创建接口单元
     * @param unitCase
     * @return
     */
     String createApiUnitCase(@NotNull @Valid ApiUnitCase unitCase);
 
     /**
-    * 更新
+    * 更新接口单元
     * @param unitCase
     */
     void updateApiUnitCase(@NotNull @Valid ApiUnitCase unitCase);
 
     /**
-    * 删除
+    * 删除接口单元
     * @param id
     */
     void deleteApiUnitCase(@NotNull String id);
@@ -46,35 +46,35 @@ public interface ApiUnitCaseService {
     List<ApiUnitCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 通过id查找接口单元
     * @param id
     * @return
     */
     ApiUnitCase findApiUnitCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口单元
     * @return
     */
     @FindAll
     List<ApiUnitCase> findAllApiUnitCase();
 
     /**
-    * 查询列表
+    * 根据查询参数查询接口单元列表
     * @param apiUnitCaseQuery
     * @return
     */
     List<ApiUnitCase> findApiUnitCaseList(ApiUnitCaseQuery apiUnitCaseQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询接口单元
     * @param apiUnitCaseQuery
     * @return
     */
     Pagination<ApiUnitCase> findApiUnitCasePage(ApiUnitCaseQuery apiUnitCaseQuery);
 
     /**
-     * -------------for exec-----------
+     * 用于封装单元数据
      */
     ApiUnitCaseExt findApiUnitCaseExt(ApiUnitCase apiUnitCase);
 

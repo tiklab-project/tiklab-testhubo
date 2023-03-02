@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ResponseInstanceController
+ * 响应数据实例 控制器
  */
 @RestController
 @RequestMapping("/responseInstance")
@@ -34,7 +34,7 @@ public class ResponseInstanceController {
     private ResponseInstanceService responseInstanceService;
 
     @RequestMapping(path="/createResponseInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "createResponseInstance",desc = "createResponseInstance")
+    @ApiMethod(name = "createResponseInstance",desc = "创建响应数据实例")
     @ApiParam(name = "responseInstance",desc = "responseInstance",required = true)
     public Result<String> createResponseInstance(@RequestBody @NotNull @Valid ResponseInstance responseInstance){
         String id = responseInstanceService.createResponseInstance(responseInstance);
@@ -43,7 +43,7 @@ public class ResponseInstanceController {
     }
 
     @RequestMapping(path="/updateResponseInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "updateResponseInstance",desc = "updateResponseInstance")
+    @ApiMethod(name = "updateResponseInstance",desc = "更新响应数据实例")
     @ApiParam(name = "responseInstance",desc = "responseInstance",required = true)
     public Result<Void> updateResponseInstance(@RequestBody @NotNull @Valid ResponseInstance responseInstance){
         responseInstanceService.updateResponseInstance(responseInstance);
@@ -52,7 +52,7 @@ public class ResponseInstanceController {
     }
 
     @RequestMapping(path="/deleteResponseInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteResponseInstance",desc = "deleteResponseInstance")
+    @ApiMethod(name = "deleteResponseInstance",desc = "删除响应数据实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteResponseInstance(@NotNull String id){
         responseInstanceService.deleteResponseInstance(id);
@@ -61,7 +61,7 @@ public class ResponseInstanceController {
     }
 
     @RequestMapping(path="/findResponseInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseInstance",desc = "findResponseInstance")
+    @ApiMethod(name = "findResponseInstance",desc = "根据id查找响应数据实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ResponseInstance> findResponseInstance(@NotNull String id){
         ResponseInstance responseInstance = responseInstanceService.findResponseInstance(id);
@@ -70,7 +70,7 @@ public class ResponseInstanceController {
     }
 
     @RequestMapping(path="/findAllResponseInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllResponseInstance",desc = "findAllResponseInstance")
+    @ApiMethod(name = "findAllResponseInstance",desc = "查找所有响应数据实例")
     public Result<List<ResponseInstance>> findAllResponseInstance(){
         List<ResponseInstance> responseInstanceList = responseInstanceService.findAllResponseInstance();
 
@@ -78,7 +78,7 @@ public class ResponseInstanceController {
     }
 
     @RequestMapping(path = "/findResponseInstanceList",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseInstanceList",desc = "findResponseInstanceList")
+    @ApiMethod(name = "findResponseInstanceList",desc = "根据查询参数查询响应数据实例列表")
     @ApiParam(name = "responseInstanceQuery",desc = "responseInstanceQuery",required = true)
     public Result<List<ResponseInstance>> findResponseInstanceList(@RequestBody @Valid @NotNull ResponseInstanceQuery responseInstanceQuery){
         List<ResponseInstance> responseInstanceList = responseInstanceService.findResponseInstanceList(responseInstanceQuery);
@@ -87,7 +87,7 @@ public class ResponseInstanceController {
     }
 
     @RequestMapping(path = "/findResponseInstancePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseInstancePage",desc = "findResponseInstancePage")
+    @ApiMethod(name = "findResponseInstancePage",desc = "根据查询参数按分页查询响应数据实例")
     @ApiParam(name = "responseInstanceQuery",desc = "responseInstanceQuery",required = true)
     public Result<Pagination<ResponseInstance>> findResponseInstancePage(@RequestBody @Valid @NotNull ResponseInstanceQuery responseInstanceQuery){
         Pagination<ResponseInstance> pagination = responseInstanceService.findResponseInstancePage(responseInstanceQuery);

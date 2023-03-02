@@ -1,4 +1,4 @@
-package net.tiklab.teston.app.perf.execute.service;
+package net.tiklab.teston.app.perf.cases.service;
 
 import net.tiklab.beans.BeanMapper;
 import net.tiklab.core.page.Pagination;
@@ -23,7 +23,7 @@ import java.util.List;
 
 
 /**
-* AppPerfStepServiceImpl
+* app性能测试用例下绑定的步骤 服务
 */
 @Service
 public class AppPerfStepServiceImpl implements AppPerfStepService {

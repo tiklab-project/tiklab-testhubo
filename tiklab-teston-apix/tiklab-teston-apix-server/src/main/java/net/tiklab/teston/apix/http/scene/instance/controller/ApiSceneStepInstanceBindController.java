@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiSceneStepInstanceBindController
+ * 接口场景下步骤的公共实例 控制器
  */
 @RestController
 @RequestMapping("/apiSceneStepInstanceBind")
-@Api(name = "ApiSceneStepInstanceBindController",desc = "ApiSceneStepInstanceBindController")
+@Api(name = "ApiSceneStepInstanceBindController",desc = "接口场景下步骤的公共实例管理")
 public class ApiSceneStepInstanceBindController {
 
     private static Logger logger = LoggerFactory.getLogger(ApiSceneStepInstanceBindController.class);
@@ -34,7 +34,7 @@ public class ApiSceneStepInstanceBindController {
     private ApiSceneStepInstanceBindService apiSceneStepInstanceBindService;
 
     @RequestMapping(path="/createApiSceneStepInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "createApiSceneStepInstanceBind",desc = "createApiSceneStepInstanceBind")
+    @ApiMethod(name = "createApiSceneStepInstanceBind",desc = "创建接口场景下步骤的公共实例")
     @ApiParam(name = "apiSceneStepInstanceBind",desc = "apiSceneStepInstanceBind",required = true)
     public Result<String> createApiSceneStepInstanceBind(@RequestBody @NotNull @Valid ApiSceneStepInstanceBind apiSceneStepInstanceBind){
         String id = apiSceneStepInstanceBindService.createApiSceneStepInstanceBind(apiSceneStepInstanceBind);
@@ -43,7 +43,7 @@ public class ApiSceneStepInstanceBindController {
     }
 
     @RequestMapping(path="/updateApiSceneStepInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "updateApiSceneStepInstanceBind",desc = "updateApiSceneStepInstanceBind")
+    @ApiMethod(name = "updateApiSceneStepInstanceBind",desc = "更新接口场景下步骤的公共实例")
     @ApiParam(name = "apiSceneStepInstanceBind",desc = "apiSceneStepInstanceBind",required = true)
     public Result<Void> updateApiSceneStepInstanceBind(@RequestBody @NotNull @Valid ApiSceneStepInstanceBind apiSceneStepInstanceBind){
         apiSceneStepInstanceBindService.updateApiSceneStepInstanceBind(apiSceneStepInstanceBind);
@@ -52,7 +52,7 @@ public class ApiSceneStepInstanceBindController {
     }
 
     @RequestMapping(path="/deleteApiSceneStepInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteApiSceneStepInstanceBind",desc = "deleteApiSceneStepInstanceBind")
+    @ApiMethod(name = "deleteApiSceneStepInstanceBind",desc = "删除接口场景下步骤的公共实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteApiSceneStepInstanceBind(@NotNull String id){
         apiSceneStepInstanceBindService.deleteApiSceneStepInstanceBind(id);
@@ -61,7 +61,7 @@ public class ApiSceneStepInstanceBindController {
     }
 
     @RequestMapping(path="/findApiSceneStepInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneStepInstanceBind",desc = "findApiSceneStepInstanceBind")
+    @ApiMethod(name = "findApiSceneStepInstanceBind",desc = "查找接口场景下步骤的公共实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiSceneStepInstanceBind> findApiSceneStepInstanceBind(@NotNull String id){
         ApiSceneStepInstanceBind apiSceneStepInstanceBind = apiSceneStepInstanceBindService.findApiSceneStepInstanceBind(id);
@@ -70,7 +70,7 @@ public class ApiSceneStepInstanceBindController {
     }
 
     @RequestMapping(path="/findAllApiSceneStepInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllApiSceneStepInstanceBind",desc = "findAllApiSceneStepInstanceBind")
+    @ApiMethod(name = "findAllApiSceneStepInstanceBind",desc = "查找所有接口场景下步骤的公共实例")
     public Result<List<ApiSceneStepInstanceBind>> findAllApiSceneStepInstanceBind(){
         List<ApiSceneStepInstanceBind> apiSceneStepInstanceBindList = apiSceneStepInstanceBindService.findAllApiSceneStepInstanceBind();
 
@@ -78,7 +78,7 @@ public class ApiSceneStepInstanceBindController {
     }
 
     @RequestMapping(path = "/findApiSceneStepInstanceBindList",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneStepInstanceBindList",desc = "findApiSceneStepInstanceBindList")
+    @ApiMethod(name = "findApiSceneStepInstanceBindList",desc = "查询接口场景下步骤的实例公共实例")
     @ApiParam(name = "apiSceneStepInstanceBindQuery",desc = "apiSceneStepInstanceBindQuery",required = true)
     public Result<List<ApiSceneStepInstanceBind>> findApiSceneStepInstanceBindList(@RequestBody @Valid @NotNull ApiSceneStepInstanceBindQuery apiSceneStepInstanceBindQuery){
         List<ApiSceneStepInstanceBind> apiSceneStepInstanceBindList = apiSceneStepInstanceBindService.findApiSceneStepInstanceBindList(apiSceneStepInstanceBindQuery);
@@ -87,7 +87,7 @@ public class ApiSceneStepInstanceBindController {
     }
 
     @RequestMapping(path = "/findApiSceneStepInstanceBindPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findApiSceneStepInstanceBindPage",desc = "findApiSceneStepInstanceBindPage")
+    @ApiMethod(name = "findApiSceneStepInstanceBindPage",desc = "按分页查询接口场景下步骤的公共实例")
     @ApiParam(name = "apiSceneStepInstanceBindQuery",desc = "apiSceneStepInstanceBindQuery",required = true)
     public Result<Pagination<ApiSceneStepInstanceBind>> findApiSceneStepInstanceBindPage(@RequestBody @Valid @NotNull ApiSceneStepInstanceBindQuery apiSceneStepInstanceBindQuery){
         Pagination<ApiSceneStepInstanceBind> pagination = apiSceneStepInstanceBindService.findApiSceneStepInstanceBindPage(apiSceneStepInstanceBindQuery);

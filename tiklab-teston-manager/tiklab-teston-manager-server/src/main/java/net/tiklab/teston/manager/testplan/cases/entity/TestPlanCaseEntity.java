@@ -8,6 +8,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 测试计划绑定的用例 实体
+ */
 @Entity @Table(name="teston_test_plan_detail")
 public class TestPlanCaseEntity implements Serializable {
 
@@ -16,15 +19,19 @@ public class TestPlanCaseEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 测试计划
     @Column(name = "test_plan_id",length = 32)
     private String testPlanId;
 
+    // 用例id
     @Column(name = "test_case_id",length = 32)
     private String testCaseId;
 
+    // 状态
     @Column(name = "status",length = 32)
     private Integer status;
 
+    // 排序
     @Column(name = "sort")
     private Integer sort;
 

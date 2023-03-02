@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * JsonParamDao
+ * 请求中json 数据访问
  */
 @Repository
 public class JsonParamDao{
@@ -26,7 +26,7 @@ public class JsonParamDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建请求中json
      * @param jsonParamEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class JsonParamDao{
     }
 
     /**
-     * 更新
+     * 更新请求中json
      * @param jsonParamEntity
      */
     public void updateJsonParam(JsonParamEntity jsonParamEntity){
@@ -43,7 +43,7 @@ public class JsonParamDao{
     }
 
     /**
-     * 删除
+     * 删除请求中json
      * @param id
      */
     public void deleteJsonParam(String id){
@@ -55,7 +55,7 @@ public class JsonParamDao{
     }
 
     /**
-     * 查找
+     * 查找请求中json
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class JsonParamDao{
     }
 
     /**
-    * findAllJsonParam
+    * 查找所有json
     * @return
     */
     public List<JsonParamEntity> findAllJsonParam() {
@@ -75,6 +75,11 @@ public class JsonParamDao{
         return jpaTemplate.findList(JsonParamEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询json列表
+     * @param jsonParamQuery
+     * @return
+     */
     public List<JsonParamEntity> findJsonParamList(JsonParamQuery jsonParamQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonParamEntity.class)
                 .eq("apiUnitId", jsonParamQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class JsonParamDao{
         return jpaTemplate.findList(queryCondition, JsonParamEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询json
+     * @param jsonParamQuery
+     * @return
+     */
     public Pagination<JsonParamEntity> findJsonParamPage(JsonParamQuery jsonParamQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonParamEntity.class)
                 .eq("apiUnitId", jsonParamQuery.getApiUnitId())

@@ -8,6 +8,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
 
+/**
+ * 接口性能历史实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiPerfInstanceEntity")
 public class ApiPerfInstance extends BaseModel{
@@ -36,11 +39,11 @@ public class ApiPerfInstance extends BaseModel{
     @ApiProperty(name="result",desc="结果")
     private Integer result;
 
-    @ApiProperty(name="createTime",desc="updateTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     public String getId() {

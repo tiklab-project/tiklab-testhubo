@@ -6,6 +6,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * 接口场景下绑定的步骤 实体
+ */
 @Entity
 @Table(name="teston_api_scene_step")
 public class ApiSceneStepEntity implements Serializable {
@@ -15,12 +18,15 @@ public class ApiSceneStepEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属场景
     @Column(name = "api_scene_id",length = 32)
     private String apiSceneId;
 
+    // 绑定的单元用例
     @Column(name = "api_unit_id",length = 32)
     private String apiUnitId;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 

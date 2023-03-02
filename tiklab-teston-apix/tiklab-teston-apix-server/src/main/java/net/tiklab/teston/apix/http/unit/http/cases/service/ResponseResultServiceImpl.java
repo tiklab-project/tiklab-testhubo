@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ResponseResultServiceImpl
+* 响应结果 服务
 */
 @Service
 public class ResponseResultServiceImpl implements ResponseResultService {

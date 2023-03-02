@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * StepDao
+ * 接口单元用例 数据访问
  */
 @Repository
 public class ApiUnitCaseDao {
@@ -32,7 +32,7 @@ public class ApiUnitCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口单元
      * @param apiUnitCaseEntity
      * @return
      */
@@ -41,7 +41,7 @@ public class ApiUnitCaseDao {
     }
 
     /**
-     * 更新
+     * 更新接口单元
      * @param apiUnitCaseEntity
      */
     public void updateApiUnitCase(ApiUnitCaseEntity apiUnitCaseEntity){
@@ -49,7 +49,7 @@ public class ApiUnitCaseDao {
     }
 
     /**
-     * 删除
+     * 删除接口单元
      * @param id
      */
     public void deleteApiUnitCase(String id){
@@ -61,7 +61,7 @@ public class ApiUnitCaseDao {
     }
 
     /**
-     * 查找
+     * 通过id查找接口单元
      * @param id
      * @return
      */
@@ -70,7 +70,7 @@ public class ApiUnitCaseDao {
     }
 
     /**
-    * findAllStep
+    * 查找所有接口单元
     * @return
     */
     public List<ApiUnitCaseEntity> findAllApiUnitCase() {
@@ -81,6 +81,11 @@ public class ApiUnitCaseDao {
         return jpaTemplate.findList(ApiUnitCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询接口单元列表
+     * @param apiUnitCaseQuery
+     * @return
+     */
     public List<ApiUnitCaseEntity> findApiUnitCaseList(ApiUnitCaseQuery apiUnitCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitCaseEntity.class)
                 .eq("testCaseId",apiUnitCaseQuery.getTestCaseId())
@@ -89,6 +94,11 @@ public class ApiUnitCaseDao {
         return jpaTemplate.findList(queryCondition, ApiUnitCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询接口单元
+     * @param apiUnitCaseQuery
+     * @return
+     */
     public Pagination<ApiUnitCaseEntity> findApiUnitCasePage(ApiUnitCaseQuery apiUnitCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitCaseEntity.class)
                 .eq("testCaseId",apiUnitCaseQuery.getTestCaseId())
@@ -98,16 +108,5 @@ public class ApiUnitCaseDao {
         return jpaTemplate.findPage(queryCondition, ApiUnitCaseEntity.class);
     }
 
-    public List<ApiUnitCase> findApiUnitCaseBylist(List<String> testCaseId){
-        String sql="select id from teston_step where testcase_id in (:testCaseId)";
-        Map<String, Object> map = new HashMap<>();
-        map.put("testCaseId",testCaseId);
-        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(getJdbcTemplate());
-        List<ApiUnitCase> steps = jdbcTemplate.query(sql, map, new BeanPropertyRowMapper<>(ApiUnitCase.class));
-        return steps;
-    }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jpaTemplate.getJdbcTemplate();
-    }
 }

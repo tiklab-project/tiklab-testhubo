@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * FuncUnitStepDao
+ * 功能用例下步骤 数据访问
  */
 @Repository
 public class FuncUnitStepDao{
@@ -27,7 +27,7 @@ public class FuncUnitStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建功能用例下步骤
      * @param funcUnitStepEntity
      * @return
      */
@@ -36,7 +36,7 @@ public class FuncUnitStepDao{
     }
 
     /**
-     * 更新
+     * 更新功能用例下步骤
      * @param funcUnitStepEntity
      */
     public void updateFuncUnitStep(FuncUnitStepEntity funcUnitStepEntity){
@@ -44,7 +44,7 @@ public class FuncUnitStepDao{
     }
 
     /**
-     * 删除
+     * 删除功能用例下步骤
      * @param id
      */
     public void deleteFuncUnitStep(String id){
@@ -56,7 +56,7 @@ public class FuncUnitStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找功能用例下步骤
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class FuncUnitStepDao{
     }
 
     /**
-    * findAllFuncUnitStep
+    * 查找所有功能用例下步骤
     * @return
     */
     public List<FuncUnitStepEntity> findAllFuncUnitStep() {
@@ -76,6 +76,11 @@ public class FuncUnitStepDao{
         return jpaTemplate.findList(FuncUnitStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询功能用例下步骤列表
+     * @param funcUnitStepQuery
+     * @return
+     */
     public List<FuncUnitStepEntity> findFuncUnitStepList(FuncUnitStepQuery funcUnitStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FuncUnitStepEntity.class)
                 .eq("funcUnitId", funcUnitStepQuery.getFuncUnitId())
@@ -85,6 +90,11 @@ public class FuncUnitStepDao{
         return jpaTemplate.findList(queryCondition,FuncUnitStepEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询功能用例下步骤
+     * @param funcUnitStepQuery
+     * @return
+     */
     public Pagination<FuncUnitStepEntity> findFuncUnitStepPage(FuncUnitStepQuery funcUnitStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FuncUnitStepEntity.class)
                 .eq("funcUnitId", funcUnitStepQuery.getFuncUnitId())

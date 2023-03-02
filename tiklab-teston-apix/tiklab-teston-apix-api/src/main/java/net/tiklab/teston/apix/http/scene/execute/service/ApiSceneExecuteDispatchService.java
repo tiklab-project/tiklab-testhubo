@@ -7,9 +7,9 @@ import net.tiklab.teston.apix.http.unit.execute.model.ApiUnitTestRequest;
 import java.util.List;
 
 /**
- * api场景测试调度服务
+ * 接口场景测试调度 服务接口
  */
-public interface ApiSceneTestDispatchService {
+public interface ApiSceneExecuteDispatchService {
 
     /**
      * 测试

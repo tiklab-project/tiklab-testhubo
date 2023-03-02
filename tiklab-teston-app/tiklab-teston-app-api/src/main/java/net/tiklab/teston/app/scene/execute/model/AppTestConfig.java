@@ -5,7 +5,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
-
+/**
+ * appium的配置
+ */
 @ApiModel
 public class AppTestConfig extends BaseModel {
 

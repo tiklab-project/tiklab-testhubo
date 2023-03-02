@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* RawResponseServiceImpl
+* 响应中raw 服务
 */
 @Service
 public class RawResponseServiceImpl implements RawResponseService {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiPerfInstanceDao
+ * 接口性能历史实例 数据访问
  */
 @Repository
 public class ApiPerfInstanceDao {
@@ -26,7 +26,7 @@ public class ApiPerfInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建性能测试汇总报告
      * @param apiPerfInstanceEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ApiPerfInstanceDao {
     }
 
     /**
-     * 更新
+     * 修改性能测试汇总报告
      * @param apiPerfInstanceEntity
      */
     public void updateApiPerfInstance(ApiPerfInstanceEntity apiPerfInstanceEntity){
@@ -43,7 +43,7 @@ public class ApiPerfInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除性能测试汇总报告
      * @param id
      */
     public void deleteApiPerfInstance(String id){
@@ -55,7 +55,7 @@ public class ApiPerfInstanceDao {
     }
 
     /**
-     * 查找
+     * 通过id查询性能测试汇总报告
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ApiPerfInstanceDao {
     }
 
     /**
-    * findAllApiPerfInstance
+    * 查询所有性能测试汇总报告
     * @return
     */
     public List<ApiPerfInstanceEntity> findAllApiPerfInstance() {
@@ -75,6 +75,11 @@ public class ApiPerfInstanceDao {
         return jpaTemplate.findList(ApiPerfInstanceEntity.class,idList);
     }
 
+    /**
+     * 通过条件查询性能测试汇总报告
+     * @param apiPerfInstanceQuery
+     * @return
+     */
     public List<ApiPerfInstanceEntity> findApiPerfInstanceList(ApiPerfInstanceQuery apiPerfInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfInstanceEntity.class)
                 .eq("apiPerfId", apiPerfInstanceQuery.getApiPerfId())
@@ -83,6 +88,11 @@ public class ApiPerfInstanceDao {
         return jpaTemplate.findList(queryCondition, ApiPerfInstanceEntity.class);
     }
 
+    /**
+     * 通过条件分页查询性能测试汇总报告
+     * @param apiPerfInstanceQuery
+     * @return
+     */
     public Pagination<ApiPerfInstanceEntity> findApiPerfInstancePage(ApiPerfInstanceQuery apiPerfInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfInstanceEntity.class)
                 .eq("apiPerfId", apiPerfInstanceQuery.getApiPerfId())

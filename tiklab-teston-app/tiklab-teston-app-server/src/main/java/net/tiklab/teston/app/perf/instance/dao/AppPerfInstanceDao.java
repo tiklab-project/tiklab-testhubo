@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AppPerfInstanceDao
+ * app性能实例 数据访问
  */
 @Repository
 public class AppPerfInstanceDao {
@@ -26,7 +26,7 @@ public class AppPerfInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建app性能实例
      * @param appPerfInstanceEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AppPerfInstanceDao {
     }
 
     /**
-     * 更新
+     * 更新app性能实例
      * @param appPerfInstanceEntity
      */
     public void updateAppPerfInstance(AppPerfInstanceEntity appPerfInstanceEntity){
@@ -43,7 +43,7 @@ public class AppPerfInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除app性能实例
      * @param id
      */
     public void deleteAppPerfInstance(String id){
@@ -55,7 +55,7 @@ public class AppPerfInstanceDao {
     }
 
     /**
-     * 查找
+     * 根据id查找app性能实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AppPerfInstanceDao {
     }
 
     /**
-    * findAllAppPerfInstance
+    * 查找所有app性能实例
     * @return
     */
     public List<AppPerfInstanceEntity> findAllAppPerfInstance() {
@@ -75,6 +75,11 @@ public class AppPerfInstanceDao {
         return jpaTemplate.findList(AppPerfInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询app性能实例列表
+     * @param appPerfInstanceQuery
+     * @return
+     */
     public List<AppPerfInstanceEntity> findAppPerfInstanceList(AppPerfInstanceQuery appPerfInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppPerfInstanceEntity.class)
                 .eq("appPerfId", appPerfInstanceQuery.getAppPerfId())
@@ -83,6 +88,11 @@ public class AppPerfInstanceDao {
         return jpaTemplate.findList(queryCondition, AppPerfInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询app性能实例
+     * @param appPerfInstanceQuery
+     * @return
+     */
     public Pagination<AppPerfInstanceEntity> findAppPerfInstancePage(AppPerfInstanceQuery appPerfInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppPerfInstanceEntity.class)
                 .eq("appPerfId", appPerfInstanceQuery.getAppPerfId())

@@ -9,25 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* RawParamService
+* raw类型 服务接口
 */
 public interface RawParamService {
 
     /**
-    * 创建
+    * 创建raw
     * @param rawParam
     * @return
     */
     String createRawParam(@NotNull @Valid RawParam rawParam);
 
     /**
-    * 更新
+    * 更新raw
     * @param rawParam
     */
     void updateRawParam(@NotNull @Valid RawParam rawParam);
 
     /**
-    * 删除
+    * 删除raw
     * @param id
     */
     void deleteRawParam(@NotNull String id);
@@ -37,27 +37,27 @@ public interface RawParamService {
     List<RawParam> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找raw
     * @param id
     * @return
     */
     RawParam findRawParam(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有raw
     * @return
     */
     List<RawParam> findAllRawParam();
 
     /**
-    * 查询列表
+    * 根据查询参数查询raw列表
     * @param rawParamQuery
     * @return
     */
     List<RawParam> findRawParamList(RawParamQuery rawParamQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询raw
     * @param rawParamQuery
     * @return
     */

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AppSceneInstanceDao
+ * app场景测试历史实例 数据访问
  */
 @Repository
 public class AppSceneInstanceDao {
@@ -26,7 +26,7 @@ public class AppSceneInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建app场景测试历史实例
      * @param appSceneInstanceEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AppSceneInstanceDao {
     }
 
     /**
-     * 更新
+     * 更新app场景测试历史实例
      * @param appSceneInstanceEntity
      */
     public void updateAppSceneInstance(AppSceneInstanceEntity appSceneInstanceEntity){
@@ -43,7 +43,7 @@ public class AppSceneInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除app场景测试历史实例
      * @param id
      */
     public void deleteAppSceneInstance(String id){
@@ -55,7 +55,7 @@ public class AppSceneInstanceDao {
     }
 
     /**
-     * 查找
+     * 根据id查找app场景测试历史实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AppSceneInstanceDao {
     }
 
     /**
-    * findAllAppSceneInstance
+    * 查找所有app场景测试历史实例
     * @return
     */
     public List<AppSceneInstanceEntity> findAllAppSceneInstance() {
@@ -75,6 +75,11 @@ public class AppSceneInstanceDao {
         return jpaTemplate.findList(AppSceneInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询app场景测试历史实例列表
+     * @param appSceneInstanceQuery
+     * @return
+     */
     public List<AppSceneInstanceEntity> findAppSceneInstanceList(AppSceneInstanceQuery appSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppSceneInstanceEntity.class)
                 .eq("appSceneId", appSceneInstanceQuery.getAppSceneId())
@@ -83,6 +88,11 @@ public class AppSceneInstanceDao {
         return jpaTemplate.findList(queryCondition, AppSceneInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询app场景测试历史实例
+     * @param appSceneInstanceQuery
+     * @return
+     */
     public Pagination<AppSceneInstanceEntity> findAppSceneInstancePage(AppSceneInstanceQuery appSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppSceneInstanceEntity.class)
                 .eq("appSceneId", appSceneInstanceQuery.getAppSceneId())

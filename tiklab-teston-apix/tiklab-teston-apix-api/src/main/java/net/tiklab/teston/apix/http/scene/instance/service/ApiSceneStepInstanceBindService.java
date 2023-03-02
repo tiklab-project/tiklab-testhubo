@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiSceneStepInstanceBindService
+* 接口场景下步骤的实例公共表 服务接口
 */
 @JoinProvider(model = ApiSceneStepInstanceBind.class)
 public interface ApiSceneStepInstanceBindService {
 
     /**
-    * 创建
+    * 创建接口场景下步骤的实例公共表
     * @param apiSceneStepInstanceBind
     * @return
     */
     String createApiSceneStepInstanceBind(@NotNull @Valid ApiSceneStepInstanceBind apiSceneStepInstanceBind);
 
     /**
-    * 更新
+    * 更新接口场景下步骤的实例公共表
     * @param apiSceneStepInstanceBind
     */
     void updateApiSceneStepInstanceBind(@NotNull @Valid ApiSceneStepInstanceBind apiSceneStepInstanceBind);
 
     /**
-    * 删除
+    * 删除接口场景下步骤的实例公共表
     * @param id
     */
     void deleteApiSceneStepInstanceBind(@NotNull String id);
@@ -44,28 +44,28 @@ public interface ApiSceneStepInstanceBindService {
     List<ApiSceneStepInstanceBind> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找接口场景下步骤的实例公共表
     * @param id
     * @return
     */
     ApiSceneStepInstanceBind findApiSceneStepInstanceBind(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口场景下步骤的实例公共表
     * @return
     */
     @FindList
     List<ApiSceneStepInstanceBind> findAllApiSceneStepInstanceBind();
 
     /**
-    * 查询列表
+    * 查询接口场景下步骤的实例公共表列表
     * @param apiSceneStepInstanceBindQuery
     * @return
     */
     List<ApiSceneStepInstanceBind> findApiSceneStepInstanceBindList(ApiSceneStepInstanceBindQuery apiSceneStepInstanceBindQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询接口场景下步骤的实例公共表
     * @param apiSceneStepInstanceBindQuery
     * @return
     */

@@ -15,26 +15,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* RepositoryRecentService
+* 最近访问仓库 服务接口
 */
 @JoinProvider(model = RepositoryRecent.class)
 public interface RepositoryRecentService {
 
     /**
-    * 创建
+    * 创建最近访问仓库
     * @param repositoryRecent
     * @return
     */
     String createRepositoryRecent(@NotNull @Valid RepositoryRecent repositoryRecent);
 
     /**
-    * 更新
+    * 更新最近访问仓库
     * @param repositoryRecent
     */
     void updateRepositoryRecent(@NotNull @Valid RepositoryRecent repositoryRecent);
 
     /**
-    * 删除
+    * 删除最近访问仓库
     * @param id
     */
     void deleteRepositoryRecent(@NotNull String id);
@@ -46,28 +46,28 @@ public interface RepositoryRecentService {
     List<RepositoryRecent> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找最近访问仓库
     * @param id
     * @return
     */
     RepositoryRecent findRepositoryRecent(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有最近访问仓库
     * @return
     */
     @FindAll
     List<RepositoryRecent> findAllRepositoryRecent();
 
     /**
-    * 查询列表
+    * 查询最近访问仓库列表
     * @param repositoryRecentQuery
     * @return
     */
     List<Repository> findRepositoryRecentList(RepositoryRecentQuery repositoryRecentQuery);
 
     /**
-     * 查询列表
+     * 查询最近访问仓库列表
      * @param repositoryRecentQuery
      * @return
      */
@@ -75,14 +75,14 @@ public interface RepositoryRecentService {
 
 
     /**
-    * 按分页查询
+    * 按分页查询最近访问仓库
     * @param repositoryRecentQuery
     * @return
     */
     Pagination<RepositoryRecent> findRepositoryRecentPage(RepositoryRecentQuery repositoryRecentQuery);
 
     /**
-     * 删除
+     * 设置最近访问仓库
      * @param repositoryRecent
      */
     void repositoryRecent(@NotNull @Valid RepositoryRecent repositoryRecent);

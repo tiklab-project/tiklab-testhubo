@@ -24,11 +24,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AppPerfCaseController
+ * app性能测试用例 控制器
  */
 @RestController
 @RequestMapping("/appPerfCase")
-@Api(name = "AppPerfCaseController",desc = "AppPerfCaseController")
+@Api(name = "AppPerfCaseController",desc = "app性能测试用例管理")
 public class AppPerfCaseController {
 
     private static Logger logger = LoggerFactory.getLogger(AppPerfCaseController.class);
@@ -37,7 +37,7 @@ public class AppPerfCaseController {
     private AppPerfCaseService appPerfCaseService;
 
     @RequestMapping(path="/createAppPerfCase",method = RequestMethod.POST)
-    @ApiMethod(name = "createAppPerfCase",desc = "createAppPerfCase")
+    @ApiMethod(name = "createAppPerfCase",desc = "创建app性能测试用例")
     @ApiParam(name = "appPerfCase",desc = "appPerfCase",required = true)
     public Result<String> createAppPerfCase(@RequestBody @NotNull @Valid AppPerfCase appPerfCase){
         String id = appPerfCaseService.createAppPerfCase(appPerfCase);
@@ -46,7 +46,7 @@ public class AppPerfCaseController {
     }
 
     @RequestMapping(path="/updateAppPerfCase",method = RequestMethod.POST)
-    @ApiMethod(name = "updateAppPerfCase",desc = "updateAppPerfCase")
+    @ApiMethod(name = "updateAppPerfCase",desc = "更新app性能测试用例")
     @ApiParam(name = "appPerfCase",desc = "appPerfCase",required = true)
     public Result<Void> updateAppPerfCase(@RequestBody @NotNull @Valid AppPerfCase appPerfCase){
         appPerfCaseService.updateAppPerfCase(appPerfCase);
@@ -55,7 +55,7 @@ public class AppPerfCaseController {
     }
 
     @RequestMapping(path="/deleteAppPerfCase",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteAppPerfCase",desc = "deleteAppPerfCase")
+    @ApiMethod(name = "deleteAppPerfCase",desc = "删除app性能测试用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteAppPerfCase(@NotNull String id){
         appPerfCaseService.deleteAppPerfCase(id);
@@ -64,7 +64,7 @@ public class AppPerfCaseController {
     }
 
     @RequestMapping(path="/findAppPerfCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppPerfCase",desc = "findAppPerfCase")
+    @ApiMethod(name = "findAppPerfCase",desc = "根据id查找app性能测试用例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<AppPerfCase> findAppPerfCase(@NotNull String id){
         AppPerfCase appPerfCase = appPerfCaseService.findAppPerfCase(id);
@@ -73,7 +73,7 @@ public class AppPerfCaseController {
     }
 
     @RequestMapping(path="/findAllAppPerfCase",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllAppPerfCase",desc = "findAllAppPerfCase")
+    @ApiMethod(name = "findAllAppPerfCase",desc = "查找所有app性能测试用例")
     public Result<List<AppPerfCase>> findAllAppPerfCase(){
         List<AppPerfCase> appPerfCaseList = appPerfCaseService.findAllAppPerfCase();
 
@@ -81,7 +81,7 @@ public class AppPerfCaseController {
     }
 
     @RequestMapping(path = "/findAppPerfCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppPerfCaseList",desc = "findAppPerfCaseList")
+    @ApiMethod(name = "findAppPerfCaseList",desc = "根据查询参数查询查询app性能测试用例列表")
     @ApiParam(name = "appPerfCaseQuery",desc = "appPerfCaseQuery",required = true)
     public Result<List<AppPerfCase>> findAppPerfCaseList(@RequestBody @Valid @NotNull AppPerfCaseQuery appPerfCaseQuery){
         List<AppPerfCase> appPerfCaseList = appPerfCaseService.findAppPerfCaseList(appPerfCaseQuery);
@@ -90,7 +90,7 @@ public class AppPerfCaseController {
     }
 
     @RequestMapping(path = "/findAppPerfCasePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findAppPerfCasePage",desc = "findAppPerfCasePage")
+    @ApiMethod(name = "findAppPerfCasePage",desc = "根据查询参数查询按分页查询app性能测试用例")
     @ApiParam(name = "appPerfCaseQuery",desc = "appPerfCaseQuery",required = true)
     public Result<Pagination<AppPerfCase>> findAppPerfCasePage(@RequestBody @Valid @NotNull AppPerfCaseQuery appPerfCaseQuery){
         Pagination<AppPerfCase> pagination = appPerfCaseService.findAppPerfCasePage(appPerfCaseQuery);

@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebPerfStepController
+ * web性能用例下绑定的场景 控制器
  */
 @RestController
 @RequestMapping("/webPerfStep")
-@Api(name = "WebPerfStepController",desc = "WebPerfStepController")
+@Api(name = "WebPerfStepController",desc = "web性能用例下绑定的场景管理")
 public class WebPerfStepController {
 
     private static Logger logger = LoggerFactory.getLogger(WebPerfStepController.class);
@@ -35,7 +35,7 @@ public class WebPerfStepController {
 
 
     @RequestMapping(path="/bindWebScene",method = RequestMethod.POST)
-    @ApiMethod(name = "bindWebScene",desc = "bindWebScene")
+    @ApiMethod(name = "bindWebScene",desc = "绑定web场景")
     @ApiParam(name = "webPerfStep",desc = "webPerfStep",required = true)
     public Result<String> bindWebScene(@RequestBody @NotNull @Valid List<WebPerfStep> webPerfStepList){
         webPerfStepService.bindWebScene(webPerfStepList);
@@ -44,7 +44,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path="/createWebPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "createWebPerfStep",desc = "createWebPerfStep")
+    @ApiMethod(name = "createWebPerfStep",desc = "创建web性能用例下绑定的场景")
     @ApiParam(name = "webPerfStep",desc = "webPerfStep",required = true)
     public Result<String> createWebPerfStep(@RequestBody @NotNull @Valid WebPerfStep webPerfStep){
         String id = webPerfStepService.createWebPerfStep(webPerfStep);
@@ -53,7 +53,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path="/updateWebPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "updateWebPerfStep",desc = "updateWebPerfStep")
+    @ApiMethod(name = "updateWebPerfStep",desc = "更新web性能用例下绑定的场景")
     @ApiParam(name = "webPerfStep",desc = "webPerfStep",required = true)
     public Result<Void> updateWebPerfStep(@RequestBody @NotNull @Valid WebPerfStep webPerfStep){
         webPerfStepService.updateWebPerfStep(webPerfStep);
@@ -62,7 +62,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path="/deleteWebPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteWebPerfStep",desc = "deleteWebPerfStep")
+    @ApiMethod(name = "deleteWebPerfStep",desc = "删除web性能用例下绑定的场景")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteWebPerfStep(@NotNull String id){
         webPerfStepService.deleteWebPerfStep(id);
@@ -71,7 +71,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path="/findWebPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebPerfStep",desc = "findWebPerfStep")
+    @ApiMethod(name = "findWebPerfStep",desc = "根据id查找web性能用例下绑定的场景")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<WebPerfStep> findWebPerfStep(@NotNull String id){
         WebPerfStep webPerfStep = webPerfStepService.findWebPerfStep(id);
@@ -80,7 +80,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path="/findAllWebPerfStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllWebPerfStep",desc = "findAllWebPerfStep")
+    @ApiMethod(name = "findAllWebPerfStep",desc = "查找所有web性能用例下绑定的场景")
     public Result<List<WebPerfStep>> findAllWebPerfStep(){
         List<WebPerfStep> webPerfStepList = webPerfStepService.findAllWebPerfStep();
 
@@ -88,7 +88,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path = "/findWebPerfStepList",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebPerfStepList",desc = "findWebPerfStepList")
+    @ApiMethod(name = "findWebPerfStepList",desc = "根据查询参数查询web性能用例下绑定的场景列表")
     @ApiParam(name = "webPerfStepQuery",desc = "webPerfStepQuery",required = true)
     public Result<List<WebPerfStep>> findWebPerfStepList(@RequestBody @Valid @NotNull WebPerfStepQuery webPerfStepQuery){
         List<WebPerfStep> webPerfStepList = webPerfStepService.findWebPerfStepList(webPerfStepQuery);
@@ -97,7 +97,7 @@ public class WebPerfStepController {
     }
 
     @RequestMapping(path = "/findWebPerfStepPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebPerfStepPage",desc = "findWebPerfStepPage")
+    @ApiMethod(name = "findWebPerfStepPage",desc = "根据查询参数按分页查询web性能用例下绑定的场景")
     @ApiParam(name = "webPerfStepQuery",desc = "webPerfStepQuery",required = true)
     public Result<Pagination<WebPerfStep>> findWebPerfStepPage(@RequestBody @Valid @NotNull WebPerfStepQuery webPerfStepQuery){
         Pagination<WebPerfStep> pagination = webPerfStepService.findWebPerfStepPage(webPerfStepQuery);

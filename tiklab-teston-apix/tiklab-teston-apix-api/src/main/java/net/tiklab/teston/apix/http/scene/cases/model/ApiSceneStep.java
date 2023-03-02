@@ -13,6 +13,9 @@ import net.tiklab.teston.apix.http.unit.cases.model.ApiUnitCase;
 
 import java.sql.Timestamp;
 
+/**
+ * 接口场景下绑定的步骤 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiSceneStepEntity")
 @Join
@@ -29,14 +32,14 @@ public class ApiSceneStep extends BaseModel{
     @JoinQuery(key = "id")
     private ApiSceneCase apiScene;
 
-    @ApiProperty(name="apiUnit",desc="绑定的unitcase")
+    @ApiProperty(name="apiUnit",desc="绑定的单元用例")
     @Mappings({
             @Mapping(source = "apiUnit.id",target = "apiUnitId")
     })
     @JoinQuery(key = "id")
     private ApiUnitCase apiUnit;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 

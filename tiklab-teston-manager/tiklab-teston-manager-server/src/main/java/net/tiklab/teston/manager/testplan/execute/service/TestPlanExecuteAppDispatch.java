@@ -21,6 +21,9 @@ import net.tiklab.teston.manager.testplan.instance.service.TestPlanCaseInstanceB
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 测试计划中app的执行测试
+ */
 @Component
 public class TestPlanExecuteAppDispatch {
 

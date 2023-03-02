@@ -6,6 +6,9 @@ import net.tiklab.utils.context.LoginContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 公共方法
+ */
 @Service
 public class TestOnUnit {
 

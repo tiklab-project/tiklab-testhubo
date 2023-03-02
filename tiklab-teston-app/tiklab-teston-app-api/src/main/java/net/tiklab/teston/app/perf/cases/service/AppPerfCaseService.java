@@ -15,26 +15,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppPerfCaseService
+* app性能测试用例 服务接口
 */
 @JoinProvider(model = AppPerfCase.class)
 public interface AppPerfCaseService {
 
     /**
-    * 创建
+    * 创建app性能测试用例
     * @param appPerfCase
     * @return
     */
     String createAppPerfCase(@NotNull @Valid AppPerfCase appPerfCase);
 
     /**
-    * 更新
+    * 更新app性能测试用例
     * @param appPerfCase
     */
     void updateAppPerfCase(@NotNull @Valid AppPerfCase appPerfCase);
 
     /**
-    * 删除
+    * 删除app性能测试用例
     * @param id
     */
     void deleteAppPerfCase(@NotNull String id);
@@ -46,35 +46,35 @@ public interface AppPerfCaseService {
     List<AppPerfCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找app性能测试用例
     * @param id
     * @return
     */
     AppPerfCase findAppPerfCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有app性能测试用例
     * @return
     */
     @FindAll
     List<AppPerfCase> findAllAppPerfCase();
 
     /**
-    * 查询列表
+    * 根据查询参数查询查询app性能测试用例列表
     * @param appPerfCaseQuery
     * @return
     */
     List<AppPerfCase> findAppPerfCaseList(AppPerfCaseQuery appPerfCaseQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数查询按分页查询app性能测试用例
     * @param appPerfCaseQuery
     * @return
     */
     Pagination<AppPerfCase> findAppPerfCasePage(AppPerfCaseQuery appPerfCaseQuery);
 
     /**
-     * 通过testcase查询
+     * 通过testcase查询app性能测试用例
      * @param testCaseQuery
      * @return
      */

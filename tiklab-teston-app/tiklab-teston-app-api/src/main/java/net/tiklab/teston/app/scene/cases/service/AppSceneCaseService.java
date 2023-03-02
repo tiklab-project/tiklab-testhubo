@@ -15,26 +15,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppSceneCaseService
+* app场景用例 服务接口
 */
 @JoinProvider(model = AppSceneCase.class)
 public interface AppSceneCaseService {
 
     /**
-    * 创建
+    * 创建app场景用例
     * @param appSceneCase
     * @return
     */
     String createAppSceneCase(@NotNull @Valid AppSceneCase appSceneCase);
 
     /**
-    * 更新
+    * 更新app场景用例
     * @param appSceneCase
     */
     void updateAppSceneCase(@NotNull @Valid AppSceneCase appSceneCase);
 
     /**
-    * 删除
+    * 删除app场景用例
     * @param id
     */
     void deleteAppSceneCase(@NotNull String id);
@@ -46,28 +46,28 @@ public interface AppSceneCaseService {
     List<AppSceneCase> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找app场景用例
     * @param id
     * @return
     */
     AppSceneCase findAppSceneCase(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有app场景用例
     * @return
     */
     @FindAll
     List<AppSceneCase> findAllAppSceneCase();
 
     /**
-    * 查询列表
+    * 根据查询参数查询app场景用例列表
     * @param appSceneCaseQuery
     * @return
     */
     List<AppSceneCase> findAppSceneCaseList(AppSceneCaseQuery appSceneCaseQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询app场景用例
     * @param appSceneCaseQuery
     * @return
     */

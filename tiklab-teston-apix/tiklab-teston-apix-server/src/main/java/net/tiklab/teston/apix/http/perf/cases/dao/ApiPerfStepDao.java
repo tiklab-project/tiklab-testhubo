@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiPerfStepDao
+ * 接口性能下场景步骤 数据访问
  */
 @Repository
 public class ApiPerfStepDao {
@@ -26,7 +26,7 @@ public class ApiPerfStepDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口性能场景步骤
      * @param apiPerfStepEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ApiPerfStepDao {
     }
 
     /**
-     * 更新
+     * 更新接口性能场景步骤
      * @param apiPerfStepEntity
      */
     public void updateApiPerfStep(ApiPerfStepEntity apiPerfStepEntity){
@@ -43,7 +43,7 @@ public class ApiPerfStepDao {
     }
 
     /**
-     * 删除
+     * 删除接口性能场景步骤
      * @param id
      */
     public void deleteApiPerfStep(String id){
@@ -55,7 +55,7 @@ public class ApiPerfStepDao {
     }
 
     /**
-     * 查找
+     * 查找接口性能场景步骤
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ApiPerfStepDao {
     }
 
     /**
-    * findAllApiPerfStep
+    * 查找所有接口性能场景步骤
     * @return
     */
     public List<ApiPerfStepEntity> findAllApiPerfStep() {
@@ -75,6 +75,11 @@ public class ApiPerfStepDao {
         return jpaTemplate.findList(ApiPerfStepEntity.class,idList);
     }
 
+    /**
+     * 查询列表接口性能场景步骤
+     * @param apiPerfStepQuery
+     * @return
+     */
     public List<ApiPerfStepEntity> findApiPerfStepList(ApiPerfStepQuery apiPerfStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfStepEntity.class)
                 .eq("apiPerfId", apiPerfStepQuery.getApiPerfId())
@@ -83,6 +88,11 @@ public class ApiPerfStepDao {
         return jpaTemplate.findList(queryCondition, ApiPerfStepEntity.class);
     }
 
+    /**
+     * 按分页查询接口性能场景步骤
+     * @param apiPerfStepQuery
+     * @return
+     */
     public Pagination<ApiPerfStepEntity> findApiPerfStepPage(ApiPerfStepQuery apiPerfStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfStepEntity.class)
                 .eq("apiPerfId", apiPerfStepQuery.getApiPerfId())

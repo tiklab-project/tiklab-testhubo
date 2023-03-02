@@ -15,7 +15,9 @@ import java.util.Map;
 
 import static net.tiklab.teston.manager.common.MessageTemplateConstant.LOG_TEMPLATE_ID;
 
-
+/**
+ * 日志公共方法
+ */
 @Service
 public class LogUnit {
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RepositoryDao
+ * 仓库 数据访问
  */
 @Repository
 public class RepositoryDao{
@@ -26,7 +26,7 @@ public class RepositoryDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建仓库
      * @param repositoryEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class RepositoryDao{
     }
 
     /**
-     * 更新
+     * 更新仓库
      * @param repositoryEntity
      */
     public void updateRepository(RepositoryEntity repositoryEntity){
@@ -43,7 +43,7 @@ public class RepositoryDao{
     }
 
     /**
-     * 删除
+     * 删除仓库
      * @param id
      */
     public void deleteRepository(String id){
@@ -55,7 +55,7 @@ public class RepositoryDao{
     }
 
     /**
-     * 查找
+     * 根据id查找仓库
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class RepositoryDao{
     }
 
     /**
-    * findAllRepository
+    * 查找所有仓库
     * @return
     */
     public List<RepositoryEntity> findAllRepository() {
@@ -75,6 +75,11 @@ public class RepositoryDao{
         return jpaTemplate.findList(RepositoryEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询仓库列表
+     * @param repositoryQuery
+     * @return
+     */
     public List<RepositoryEntity> findRepositoryList(RepositoryQuery repositoryQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryEntity.class)
                 .eq("userId",repositoryQuery.getUserId())
@@ -84,6 +89,11 @@ public class RepositoryDao{
         return jpaTemplate.findList(queryCondition, RepositoryEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询仓库
+     * @param repositoryQuery
+     * @return
+     */
     public Pagination<RepositoryEntity> findRepositoryPage(RepositoryQuery repositoryQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryEntity.class)
                 .eq("userId",repositoryQuery.getUserId())

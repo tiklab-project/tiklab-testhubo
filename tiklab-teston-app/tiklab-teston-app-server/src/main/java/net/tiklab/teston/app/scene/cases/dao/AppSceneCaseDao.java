@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AppSceneCaseDao
+ * app场景用例 数据访问
  */
 @Repository
 public class AppSceneCaseDao{
@@ -26,7 +26,7 @@ public class AppSceneCaseDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建app场景用例
      * @param appSceneCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AppSceneCaseDao{
     }
 
     /**
-     * 更新
+     * 更新app场景用例
      * @param appSceneCaseEntity
      */
     public void updateAppSceneCase(AppSceneCaseEntity appSceneCaseEntity){
@@ -43,7 +43,7 @@ public class AppSceneCaseDao{
     }
 
     /**
-     * 删除
+     * 删除app场景用例
      * @param id
      */
     public void deleteAppSceneCase(String id){
@@ -55,7 +55,7 @@ public class AppSceneCaseDao{
     }
 
     /**
-     * 查找
+     * 根据id查找app场景用例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AppSceneCaseDao{
     }
 
     /**
-    * findAllAppSceneCase
+    * 查找所有app场景用例
     * @return
     */
     public List<AppSceneCaseEntity> findAllAppSceneCase() {
@@ -75,6 +75,11 @@ public class AppSceneCaseDao{
         return jpaTemplate.findList(AppSceneCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询app场景用例列表
+     * @param appSceneCaseQuery
+     * @return
+     */
     public List<AppSceneCaseEntity> findAppSceneCaseList(AppSceneCaseQuery appSceneCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppSceneCaseEntity.class)
                 .eq("testCaseId", appSceneCaseQuery.getTestCaseId())
@@ -84,6 +89,11 @@ public class AppSceneCaseDao{
         return jpaTemplate.findList(queryCondition,AppSceneCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询app场景用例
+     * @param appSceneCaseQuery
+     * @return
+     */
     public Pagination<AppSceneCaseEntity> findAppSceneCasePage(AppSceneCaseQuery appSceneCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppSceneCaseEntity.class)
                 .eq("testCaseId", appSceneCaseQuery.getTestCaseId())

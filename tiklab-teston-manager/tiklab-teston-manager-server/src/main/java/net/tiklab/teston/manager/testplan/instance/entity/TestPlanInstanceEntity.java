@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * 测试计划实例 实体
+ */
 @Entity
 @Table(name="teston_test_plan_instance")
 public class TestPlanInstanceEntity implements Serializable {
@@ -13,36 +16,47 @@ public class TestPlanInstanceEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属计划
     @Column(name = "test_plan_id")
     private String testPlanId;
 
+    // 所属仓库
     @Column(name = "repository_id")
     private String repositoryId;
 
+    // 执行次数
     @Column(name = "execute_number")
     private Integer executeNumber;
 
+    // 结果
     @Column(name = "result")
     private Integer result;
 
+    // 测试总次数
     @Column(name = "total")
     private Integer total;
 
+    // 通过数
     @Column(name = "pass_num")
     private Integer passNum;
 
+    // 错误数
     @Column(name = "fail_num")
     private Integer failNum;
 
+    // 通过率
     @Column(name = "pass_rate")
     private String passRate;
 
+    // 错误率
     @Column(name = "error_rate")
     private String errorRate;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 执行人
     @Column(name = "create_user")
     private String createUser;
 

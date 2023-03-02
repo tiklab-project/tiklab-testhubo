@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* AppSceneCaseServiceImpl
+* app场景用例 服务
 */
 @Service
 public class AppSceneCaseServiceImpl implements AppSceneCaseService {

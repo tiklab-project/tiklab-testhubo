@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiPerfCaseDao
+ * 接口性能 数据访问
  */
 @Repository
 public class ApiPerfCaseDao {
@@ -27,7 +27,7 @@ public class ApiPerfCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口性能
      * @param apiPerfCaseEntity
      * @return
      */
@@ -36,7 +36,7 @@ public class ApiPerfCaseDao {
     }
 
     /**
-     * 更新
+     * 更新接口性能
      * @param apiPerfCaseEntity
      */
     public void updateApiPerfCase(ApiPerfCaseEntity apiPerfCaseEntity){
@@ -44,7 +44,7 @@ public class ApiPerfCaseDao {
     }
 
     /**
-     * 删除
+     * 删除接口性能
      * @param id
      */
     public void deleteApiPerfCase(String id){
@@ -56,7 +56,7 @@ public class ApiPerfCaseDao {
     }
 
     /**
-     * 查找
+     * 查找接口性能
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class ApiPerfCaseDao {
     }
 
     /**
-    * findAllApiPerfCase
+    * 查找所有接口性能
     * @return
     */
     public List<ApiPerfCaseEntity> findAllApiPerfCase() {
@@ -76,6 +76,11 @@ public class ApiPerfCaseDao {
         return jpaTemplate.findList(ApiPerfCaseEntity.class,idList);
     }
 
+    /**
+     * 查询列表接口性能
+     * @param apiPerfCaseQuery
+     * @return
+     */
     public List<ApiPerfCaseEntity> findApiPerfCaseList(ApiPerfCaseQuery apiPerfCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfCaseEntity.class)
                 .eq("testCaseId",apiPerfCaseQuery.getTestCaseId())
@@ -84,6 +89,11 @@ public class ApiPerfCaseDao {
         return jpaTemplate.findList(queryCondition, ApiPerfCaseEntity.class);
     }
 
+    /**
+     * 按分页查询接口性能
+     * @param apiPerfCaseQuery
+     * @return
+     */
     public Pagination<ApiPerfCaseEntity> findApiPerfCasePage(ApiPerfCaseQuery apiPerfCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfCaseEntity.class)
                 .eq("testCaseId",apiPerfCaseQuery.getTestCaseId())

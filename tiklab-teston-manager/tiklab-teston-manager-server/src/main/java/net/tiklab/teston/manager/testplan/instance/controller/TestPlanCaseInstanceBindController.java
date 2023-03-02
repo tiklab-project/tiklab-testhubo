@@ -22,11 +22,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * TestPlanCaseInstanceBindController
+ * 测试计划下用例的实例中间层 控制器
  */
 @RestController
 @RequestMapping("/testPlanCaseInstanceBind")
-@Api(name = "TestPlanCaseInstanceBindController",desc = "TestPlanCaseInstanceBindController")
+@Api(name = "TestPlanCaseInstanceBindController",desc = "测试计划下用例的实例中间层管理")
 public class TestPlanCaseInstanceBindController {
 
     private static Logger logger = LoggerFactory.getLogger(TestPlanCaseInstanceBindController.class);
@@ -35,7 +35,7 @@ public class TestPlanCaseInstanceBindController {
     private TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
 
     @RequestMapping(path="/createTestPlanCaseInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "createTestPlanCaseInstanceBind",desc = "createTestPlanCaseInstanceBind")
+    @ApiMethod(name = "createTestPlanCaseInstanceBind",desc = "创建用例的实例中间层")
     @ApiParam(name = "testPlanCaseInstanceBind",desc = "testPlanCaseInstanceBind",required = true)
     public Result<String> createTestPlanCaseInstanceBind(@RequestBody @NotNull @Valid TestPlanCaseInstanceBind testPlanCaseInstanceBind){
         String id = testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
@@ -44,7 +44,7 @@ public class TestPlanCaseInstanceBindController {
     }
 
     @RequestMapping(path="/updateTestPlanCaseInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "updateTestPlanCaseInstanceBind",desc = "updateTestPlanCaseInstanceBind")
+    @ApiMethod(name = "updateTestPlanCaseInstanceBind",desc = "更新用例的实例中间层")
     @ApiParam(name = "testPlanCaseInstanceBind",desc = "testPlanCaseInstanceBind",required = true)
     public Result<Void> updateTestPlanCaseInstanceBind(@RequestBody @NotNull @Valid TestPlanCaseInstanceBind testPlanCaseInstanceBind){
         testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
@@ -53,7 +53,7 @@ public class TestPlanCaseInstanceBindController {
     }
 
     @RequestMapping(path="/deleteTestPlanCaseInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteTestPlanCaseInstanceBind",desc = "deleteTestPlanCaseInstanceBind")
+    @ApiMethod(name = "deleteTestPlanCaseInstanceBind",desc = "删除用例的实例中间层")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteTestPlanCaseInstanceBind(@NotNull String id){
         testPlanCaseInstanceBindService.deleteTestPlanCaseInstanceBind(id);
@@ -62,7 +62,7 @@ public class TestPlanCaseInstanceBindController {
     }
 
     @RequestMapping(path="/findTestPlanCaseInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestPlanCaseInstanceBind",desc = "findTestPlanCaseInstanceBind")
+    @ApiMethod(name = "findTestPlanCaseInstanceBind",desc = "查找用例的实例中间层")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<TestPlanCaseInstanceBind> findTestPlanCaseInstanceBind(@NotNull String id){
         TestPlanCaseInstanceBind testPlanCaseInstanceBind = testPlanCaseInstanceBindService.findTestPlanCaseInstanceBind(id);
@@ -71,7 +71,7 @@ public class TestPlanCaseInstanceBindController {
     }
 
     @RequestMapping(path="/findAllTestPlanCaseInstanceBind",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllTestPlanCaseInstanceBind",desc = "findAllTestPlanCaseInstanceBind")
+    @ApiMethod(name = "findAllTestPlanCaseInstanceBind",desc = "查找所有用例的实例中间层")
     public Result<List<TestPlanCaseInstanceBind>> findAllTestPlanCaseInstanceBind(){
         List<TestPlanCaseInstanceBind> testPlanCaseInstanceBindList = testPlanCaseInstanceBindService.findAllTestPlanCaseInstanceBind();
 
@@ -79,7 +79,7 @@ public class TestPlanCaseInstanceBindController {
     }
 
     @RequestMapping(path = "/findTestPlanCaseInstanceBindList",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestPlanCaseInstanceBindList",desc = "findTestPlanCaseInstanceBindList")
+    @ApiMethod(name = "findTestPlanCaseInstanceBindList",desc = "根据查询参数查询用例的实例中间层列表")
     @ApiParam(name = "testPlanCaseInstanceBindQuery",desc = "testPlanCaseInstanceBindQuery",required = true)
     public Result<List<TestPlanCaseInstanceBind>> findTestPlanCaseInstanceBindList(@RequestBody @Valid @NotNull TestPlanCaseInstanceBindQuery testPlanCaseInstanceBindQuery){
         List<TestPlanCaseInstanceBind> testPlanCaseInstanceBindList = testPlanCaseInstanceBindService.findTestPlanCaseInstanceBindList(testPlanCaseInstanceBindQuery);
@@ -88,7 +88,7 @@ public class TestPlanCaseInstanceBindController {
     }
 
     @RequestMapping(path = "/findTestPlanCaseInstanceBindPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestPlanCaseInstanceBindPage",desc = "findTestPlanCaseInstanceBindPage")
+    @ApiMethod(name = "findTestPlanCaseInstanceBindPage",desc = "根据查询参数按分页查询用例的实例中间层")
     @ApiParam(name = "testPlanCaseInstanceBindQuery",desc = "testPlanCaseInstanceBindQuery",required = true)
     public Result<Pagination<TestPlanCaseInstanceBind>> findTestPlanCaseInstanceBindPage(@RequestBody @Valid @NotNull TestPlanCaseInstanceBindQuery testPlanCaseInstanceBindQuery){
         Pagination<TestPlanCaseInstanceBind> pagination = testPlanCaseInstanceBindService.findTestPlanCaseInstanceBindPage(testPlanCaseInstanceBindQuery);

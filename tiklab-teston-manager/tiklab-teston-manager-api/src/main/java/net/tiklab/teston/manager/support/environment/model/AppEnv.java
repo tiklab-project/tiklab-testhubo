@@ -5,7 +5,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.beans.annotation.Mapper;
 import net.tiklab.core.BaseModel;
 
-
+/**
+ * app环境 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppEnvEntity")
 public class AppEnv extends BaseModel {
@@ -13,10 +15,10 @@ public class AppEnv extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="repositoryId",desc="repositoryId")
+    @ApiProperty(name="repositoryId",desc="所属仓库")
     private java.lang.String repositoryId;
 
-    @ApiProperty(name="name",desc="name")
+    @ApiProperty(name="name",desc="名称")
     private java.lang.String name;
 
     @ApiProperty(name="appiumSever",desc="appiumSever")

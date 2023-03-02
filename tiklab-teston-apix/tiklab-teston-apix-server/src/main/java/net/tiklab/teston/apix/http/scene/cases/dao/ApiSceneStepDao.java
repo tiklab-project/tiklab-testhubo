@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiSceneStepDao
+ * 接口场景下步骤 数据访问
  */
 @Repository
 public class ApiSceneStepDao{
@@ -26,7 +26,7 @@ public class ApiSceneStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建步骤
      * @param apiSceneStepEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ApiSceneStepDao{
     }
 
     /**
-     * 更新
+     * 更新步骤
      * @param apiSceneStepEntity
      */
     public void updateApiSceneStep(ApiSceneStepEntity apiSceneStepEntity){
@@ -43,7 +43,7 @@ public class ApiSceneStepDao{
     }
 
     /**
-     * 删除
+     * 删除步骤
      * @param id
      */
     public void deleteApiSceneStep(String id){
@@ -55,7 +55,7 @@ public class ApiSceneStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找步骤
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ApiSceneStepDao{
     }
 
     /**
-    * findAllApiSceneStep
+    * 查找所有步骤
     * @return
     */
     public List<ApiSceneStepEntity> findAllApiSceneStep() {
@@ -75,6 +75,11 @@ public class ApiSceneStepDao{
         return jpaTemplate.findList(ApiSceneStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查找查询步骤列表
+     * @param apiSceneStepQuery
+     * @return
+     */
     public List<ApiSceneStepEntity> findApiSceneStepList(ApiSceneStepQuery apiSceneStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneStepEntity.class)
                 .eq("apiSceneId",apiSceneStepQuery.getApiSceneId())
@@ -83,6 +88,11 @@ public class ApiSceneStepDao{
         return jpaTemplate.findList(queryCondition,ApiSceneStepEntity.class);
     }
 
+    /**
+     * 根据查询参数查找按分页查询步骤
+     * @param apiSceneStepQuery
+     * @return
+     */
     public Pagination<ApiSceneStepEntity> findApiSceneStepPage(ApiSceneStepQuery apiSceneStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneStepEntity.class)
                 .eq("apiSceneId",apiSceneStepQuery.getApiSceneId())

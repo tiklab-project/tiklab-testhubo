@@ -23,7 +23,7 @@ import java.util.List;
 
 
 /**
-* WebPerfStepServiceImpl
+* web性能用例下绑定的场景 服务
 */
 @Service
 public class WebPerfStepServiceImpl implements WebPerfStepService {

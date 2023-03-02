@@ -7,6 +7,9 @@ import net.tiklab.core.BaseModel;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 接口环境 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiEnvEntity")
 public class ApiEnv extends BaseModel{

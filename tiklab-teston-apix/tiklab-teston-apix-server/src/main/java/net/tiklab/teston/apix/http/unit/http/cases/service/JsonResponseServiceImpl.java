@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* JsonResponseServiceImpl
+* 响应中json 服务
 */
 @Service
 public class JsonResponseServiceImpl implements JsonResponseService {

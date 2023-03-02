@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * web场景用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebSceneCaseEntity")
 @Join
@@ -18,7 +21,7 @@ public class WebSceneCase extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="testCase",desc="用例",required = true)
+    @ApiProperty(name="testCase",desc="所属用例",required = true)
     @Mappings({
             @Mapping(source = "testCase.id",target = "testCaseId")
     })

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AppSceneInstanceStepServiceImpl
+* app场景步骤实例 服务
 */
 @Service
 public class AppSceneInstanceStepServiceImpl implements AppSceneInstanceStepService {

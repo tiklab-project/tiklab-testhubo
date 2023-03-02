@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * JsonResponseDao
+ * 响应中json 数据访问
  */
 @Repository
 public class JsonResponseDao{
@@ -26,7 +26,7 @@ public class JsonResponseDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建响应中json
      * @param jsonResponseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class JsonResponseDao{
     }
 
     /**
-     * 更新
+     * 更新响应中json
      * @param jsonResponseEntity
      */
     public void updateJsonResponse(JsonResponseEntity jsonResponseEntity){
@@ -43,7 +43,7 @@ public class JsonResponseDao{
     }
 
     /**
-     * 删除
+     * 删除响应中json
      * @param id
      */
     public void deleteJsonResponse(String id){
@@ -55,7 +55,7 @@ public class JsonResponseDao{
     }
 
     /**
-     * 查找
+     * 根据id查找响应中json
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class JsonResponseDao{
     }
 
     /**
-    * findAllJsonResponse
+    * 查找所有响应中json
     * @return
     */
     public List<JsonResponseEntity> findAllJsonResponse() {
@@ -75,6 +75,11 @@ public class JsonResponseDao{
         return jpaTemplate.findList(JsonResponseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查找查询响应中json列表
+     * @param jsonResponseQuery
+     * @return
+     */
     public List<JsonResponseEntity> findJsonResponseList(JsonResponseQuery jsonResponseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonResponseEntity.class)
                 .eq("apiUnitId", jsonResponseQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class JsonResponseDao{
         return jpaTemplate.findList(queryCondition, JsonResponseEntity.class);
     }
 
+    /**
+     * 根据查询参数查找按分页查询响应中json
+     * @param jsonResponseQuery
+     * @return
+     */
     public Pagination<JsonResponseEntity> findJsonResponsePage(JsonResponseQuery jsonResponseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonResponseEntity.class)
                 .eq("apiUnitId", jsonResponseQuery.getApiUnitId())

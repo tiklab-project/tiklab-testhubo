@@ -8,6 +8,9 @@ import net.tiklab.teston.web.scene.execute.model.WebSceneTestRequest;
 
 import java.util.List;
 
+/**
+ * web性能测试数据封装 模型
+ */
 @ApiModel
 public class WebPerfTestRequest extends BaseModel {
 

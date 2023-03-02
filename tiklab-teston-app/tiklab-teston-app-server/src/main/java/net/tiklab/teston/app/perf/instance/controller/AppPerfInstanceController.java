@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * AppPerfInstanceController
+ * app性能实例 控制器
  */
 @RestController
 @RequestMapping("/appPerfInstance")

@@ -25,7 +25,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* TestInstanceServiceImpl
+* 接口场景实例 服务
 */
 @Service
 public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {

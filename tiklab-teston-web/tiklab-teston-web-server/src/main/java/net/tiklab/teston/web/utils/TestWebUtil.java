@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * 测试用到的一些公共方法
+ */
 @Component
 public class TestWebUtil {
 

@@ -8,6 +8,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 接口环境 实体
+ */
 @Entity @Table(name="teston_env_api")
 public class ApiEnvEntity implements Serializable {
 
@@ -16,12 +19,15 @@ public class ApiEnvEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 环境名称
     @Column(name = "name",length = 128)
     private String name;
 
+    // 前置url
     @Column(name = "pre_url",length = 128)
     private String preUrl;
 
+    // 所属仓库
     @Column(name = "repository_id",length = 32)
     private String repositoryId;
 

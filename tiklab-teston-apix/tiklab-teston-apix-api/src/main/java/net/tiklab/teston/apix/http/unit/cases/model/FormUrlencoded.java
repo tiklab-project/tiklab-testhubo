@@ -12,6 +12,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * form-url 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "FormUrlencodedEntity")
 @Join
@@ -29,24 +32,24 @@ public class FormUrlencoded extends BaseModel{
     private ApiUnitCase apiUnit;
 
     @NotNull
-    @ApiProperty(name="paramName",desc="paramName",required = true)
+    @ApiProperty(name="paramName",desc="名称",required = true)
     private String paramName;
 
     @NotNull
-    @ApiProperty(name="dataType",desc="dataType",required = true)
+    @ApiProperty(name="dataType",desc="数据类型",required = true)
     private String dataType;
 
     @NotNull
-    @ApiProperty(name="required",desc="required",required = true)
+    @ApiProperty(name="required",desc="是否必选",required = true)
     private Integer required;
 
-    @ApiProperty(name="desc",desc="desc")
+    @ApiProperty(name="desc",desc="说明描述")
     private String desc;
 
-    @ApiProperty(name="value",desc="value")
+    @ApiProperty(name="value",desc="示例值")
     private String value;
 
-    @ApiProperty(name="sort",desc="sort")
+    @ApiProperty(name="sort",desc="排序")
     private Integer sort;
 
     public String getId() {

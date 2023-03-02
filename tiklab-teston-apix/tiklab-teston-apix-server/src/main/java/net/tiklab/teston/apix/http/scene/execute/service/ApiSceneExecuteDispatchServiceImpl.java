@@ -28,10 +28,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 接口场景测试调度 服务
+ */
 @Service
-public class ApiSceneTestDispatchServiceImpl implements ApiSceneTestDispatchService {
+public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispatchService {
 
-    static Logger logger = LoggerFactory.getLogger(ApiSceneTestDispatchServiceImpl.class);
+    static Logger logger = LoggerFactory.getLogger(ApiSceneExecuteDispatchServiceImpl.class);
 
     @Autowired
     ApiUnitCaseService apiUnitCaseService;

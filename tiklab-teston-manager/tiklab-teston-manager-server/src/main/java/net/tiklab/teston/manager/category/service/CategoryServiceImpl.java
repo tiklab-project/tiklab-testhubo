@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import org.springframework.util.ObjectUtils;
 
 /**
-* CategoryServiceImpl
+* 目录 服务
 */
 @Service
 public class CategoryServiceImpl implements CategoryService {

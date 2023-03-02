@@ -16,6 +16,9 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Map;
 
+/**
+ * 测试用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "TestCaseEntity")
 @Join
@@ -25,17 +28,17 @@ public class TestCase extends BaseModel{
     private String id;
 
     @NotNull
-    @ApiProperty(name="name",desc="参数名字",required = true)
+    @ApiProperty(name="name",desc="用例名",required = true)
     private String name;
 
-    @ApiProperty(name="category",desc="用例")
+    @ApiProperty(name="category",desc="所属模块")
     @Mappings({
             @Mapping(source = "category.id",target = "categoryId")
     })
     @JoinQuery(key = "id")
     private Category category;
 
-    @ApiProperty(name="仓库Id",desc="repositoryId")
+    @ApiProperty(name="仓库Id",desc="所属仓库")
     private String repositoryId;
 
     @NotNull
@@ -43,7 +46,7 @@ public class TestCase extends BaseModel{
     private String testType;
 
     @NotNull
-    @ApiProperty(name="caseType",desc="测试类型，例：api-unit,api-scene",required = true)
+    @ApiProperty(name="caseType",desc="用例类型，例：api-unit,api-scene",required = true)
     private String caseType;
 
     @ApiProperty(name="user",desc="创建人")
@@ -60,11 +63,11 @@ public class TestCase extends BaseModel{
     @JoinQuery(key = "id")
     private User updateUser;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private java.sql.Timestamp createTime;
 
-    @ApiProperty(name="updateTime",desc="updateTime")
+    @ApiProperty(name="updateTime",desc="更新时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private java.sql.Timestamp updateTime;
 

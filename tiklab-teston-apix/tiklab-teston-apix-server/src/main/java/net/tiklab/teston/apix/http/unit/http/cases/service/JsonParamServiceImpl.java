@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import org.springframework.util.ObjectUtils;
 
 /**
-* JsonParamServiceImpl
+* 请求中json  服务
 */
 @Service
 public class JsonParamServiceImpl implements JsonParamService {

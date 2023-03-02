@@ -10,6 +10,9 @@ import net.tiklab.join.annotation.JoinQuery;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
+/**
+ * 最近访问仓库 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RepositoryRecentEntity")
 @Join
@@ -18,17 +21,17 @@ public class RepositoryRecent extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="repository",desc="所属仓库",eg="@selectOne")
+    @ApiProperty(name="repository",desc="所属仓库")
     @Mappings({
             @Mapping(source = "repository.id",target = "repositoryId")
     })
     @JoinQuery(key = "id")
     private Repository repository;
 
-    @ApiProperty(name="userId",desc="userId")
+    @ApiProperty(name="userId",desc="所属人")
     private java.lang.String userId;
 
-    @ApiProperty(name="updateTime",desc="updateTime")
+    @ApiProperty(name="updateTime",desc="更新时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private java.sql.Timestamp updateTime;
 

@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* RequestBodyServiceImpl
+* 请求体 服务
 */
 @Service
 public class RequestBodyServiceImpl implements RequestBodyService {
@@ -106,67 +106,5 @@ public class RequestBodyServiceImpl implements RequestBodyService {
         return PaginationBuilder.build(pagination,requestBodyList);
     }
 
-    //----------------
-    /**
-     *请求体参数拼接
-     * @param step 用例步骤
-     * @param requestInstance 测试结果po
-     */
-//    public Map jointParamBody(Step step, RequestInstance requestInstance){
-//        RequestBodyEx requestBody = requestBodyService.findRequestBody(step.getId());
-//        HashMap<String, Object> map = new HashMap<>();
-//        if (!ObjectUtils.isEmpty(requestBody)){
-//            String request=null;
-//            //请求体为raw格式
-//            if ("raw".equals(requestBody.getBodyType())){
-//                //通过测试步骤方法的id查询
-//                RawParamQuery rawParamQuery = new RawParamQuery();
-//                rawParamQuery.setStepId(step.getId());
-//                List<RawParamEntity> rawParamList = rawParamDao.findRawParamList(rawParamQuery);
-//                if(CollectionUtils.isNotEmpty(rawParamList)){
-//                    String raw = rawParamList.get(0).getRaw();
-//                    map.put("raw",raw);
-//                    //给用例测试报告-请求表添加请求体raw数据
-//                    request = JSON.toJSONString(rawParamList);
-//                }
-//            }
-//            //请求体为form格式
-//            if ("form".equals(requestBody.getBodyType())){
-//                //通过测试步骤方法的id查询
-//                FormParamQuery formParamQuery = new FormParamQuery();
-//                formParamQuery.setStepId(step.getId());
-//                List<FormParamEntity> formParamList = formParamDao.findFormParamList(formParamQuery);
-//                if (CollectionUtils.isNotEmpty(formParamList)){
-//                    for (FormParamEntity formParam:formParamList){
-//                        map.put(formParam.getParamName(),formParam.getEg());
-//                    }
-//                    //给用例测试报告-请求表添加请求体form数据
-//                    request =JSON.toJSONString(formParamList);
-//                }
-//
-//            }
-//            //请求体为json
-//            if ("json".equals(requestBody.getBodyType())){
-//                //通过测试步骤方法的id查询
-//                JsonParamQuery jsonParamQuery = new JsonParamQuery();
-//                jsonParamQuery.setStepId(step.getId());
-//                List<JsonParam> jsonParamListTree = jsonParamService.findJsonParamListTree(jsonParamQuery);
-//                if (CollectionUtils.isNotEmpty(jsonParamListTree)){
-//                    for (JsonParam jsonParam:jsonParamListTree){
-//                        //第一级的
-//                        if (ObjectUtils.isEmpty(jsonParam.getParent())){
-//                            map.put(jsonParam.getParamName(), jsonParam.getEg());
-//                        }
-//                        if (!ObjectUtils.isEmpty(jsonParam.getParent())){
-//                            map.put(jsonParam.getParamName(),jsonParam.getChildren());
-//                        }
-//                    }
-//                    //给用例测试报告-请求表添加请求体json数据
-//                    request =JSON.toJSONString(jsonParamListTree);
-//                }
-//                requestInstance.setRequestParam(request);
-//            }
-//        }
-//        return map;
-//    }
+
 }

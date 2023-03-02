@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 响应头 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RequestHeaderEntity")
 @Join

@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ResponseHeaderServiceImpl
+* 响应头 服务
 */
 @Service
 public class ResponseHeaderServiceImpl implements ResponseHeaderService {

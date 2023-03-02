@@ -9,6 +9,9 @@ import net.tiklab.dal.jpa.annotation.Entity;
 
 import java.io.Serializable;
 
+/**
+ * 仓库 实体
+ */
 @Entity
 @Table(name="teston_repository")
 public class RepositoryEntity implements Serializable {
@@ -18,18 +21,23 @@ public class RepositoryEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 名称
     @Column(name = "name",length = 64)
     private String name;
 
+    // 所属用户
     @Column(name = "user_id",length = 32)
     private String userId;
 
+    // 描述
     @Column(name = "description",length = 64)
     private String desc;
 
+    // 可见范围
     @Column(name = "visibility")
     private Integer visibility;
 
+    // 图标地址
     @Column(name = "icon_url",length = 256)
     private String iconUrl;
 

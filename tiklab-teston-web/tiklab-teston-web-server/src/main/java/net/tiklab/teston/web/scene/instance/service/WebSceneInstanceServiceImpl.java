@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* WebSceneInstanceServiceImpl
+* web场景实例 服务
 */
 @Service
 public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebSceneStepDao
+ * web场景下步骤 数据访问
  */
 @Repository
 public class WebSceneStepDao{
@@ -26,7 +26,7 @@ public class WebSceneStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web场景下步骤
      * @param webSceneStepEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class WebSceneStepDao{
     }
 
     /**
-     * 更新
+     * 更新web场景下步骤
      * @param webSceneStepEntity
      */
     public void updateWebSceneStep(WebSceneStepEntity webSceneStepEntity){
@@ -43,7 +43,7 @@ public class WebSceneStepDao{
     }
 
     /**
-     * 删除
+     * 删除web场景下步骤
      * @param id
      */
     public void deleteWebSceneStep(String id){
@@ -55,7 +55,7 @@ public class WebSceneStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找web场景下步骤
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class WebSceneStepDao{
     }
 
     /**
-    * findAllWebSceneStep
+    * 查找所有web场景下步骤
     * @return
     */
     public List<WebSceneStepEntity> findAllWebSceneStep() {
@@ -75,6 +75,11 @@ public class WebSceneStepDao{
         return jpaTemplate.findList(WebSceneStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web场景下步骤列表
+     * @param webSceneStepQuery
+     * @return
+     */
     public List<WebSceneStepEntity> findWebSceneStepList(WebSceneStepQuery webSceneStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneStepEntity.class)
                 .eq("webSceneId",webSceneStepQuery.getWebSceneId())
@@ -83,6 +88,11 @@ public class WebSceneStepDao{
         return jpaTemplate.findList(queryCondition,WebSceneStepEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web场景下步骤
+     * @param webSceneStepQuery
+     * @return
+     */
     public Pagination<WebSceneStepEntity> findWebSceneStepPage(WebSceneStepQuery webSceneStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneStepEntity.class)
                 .eq("webSceneId",webSceneStepQuery.getWebSceneId())

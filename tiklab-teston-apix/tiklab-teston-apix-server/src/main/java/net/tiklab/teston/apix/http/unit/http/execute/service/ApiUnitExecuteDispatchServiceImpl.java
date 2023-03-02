@@ -7,7 +7,7 @@ import net.tiklab.teston.apix.http.unit.cases.model.ApiUnitCaseExt;
 import net.tiklab.teston.apix.http.unit.cases.service.ApiUnitCaseService;
 import net.tiklab.teston.apix.http.unit.cases.service.AssertService;
 import net.tiklab.teston.apix.http.unit.execute.model.ApiUnitTestRequest;
-import net.tiklab.teston.apix.http.unit.execute.service.ApiUnitTestDispatchService;
+import net.tiklab.teston.apix.http.unit.execute.service.ApiUnitExecuteDispatchService;
 import net.tiklab.teston.apix.http.unit.instance.model.ApiUnitInstance;
 import net.tiklab.teston.apix.http.unit.instance.model.ApiUnitInstanceBind;
 import net.tiklab.teston.apix.http.unit.instance.model.ApiUnitInstanceQuery;
@@ -24,9 +24,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * 接口单元测试调度 服务
+ */
 @Service
-public class ApiUnitTestDispatchServiceImpl implements ApiUnitTestDispatchService {
+public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatchService {
 
     @Autowired
     ApiUnitCaseService apiUnitCaseService;

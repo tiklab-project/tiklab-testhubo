@@ -6,7 +6,9 @@ import net.tiklab.core.BaseModel;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
-
+/**
+ * 测试计划实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "TestPlanInstanceEntity")
 public class TestPlanInstance extends BaseModel {
@@ -14,38 +16,38 @@ public class TestPlanInstance extends BaseModel {
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="testPlanId",desc="testPlanId")
+    @ApiProperty(name="testPlanId",desc="所属计划")
     private java.lang.String testPlanId;
 
-    @ApiProperty(name="repositoryId",desc="repositoryId")
+    @ApiProperty(name="repositoryId",desc="所属仓库")
     private java.lang.String repositoryId;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private java.lang.Integer executeNumber;
 
-    @ApiProperty(name="result",desc="result")
+    @ApiProperty(name="result",desc="结果")
     private java.lang.Integer result;
 
-    @ApiProperty(name="total",desc="total")
+    @ApiProperty(name="total",desc="测试总次数")
     private java.lang.Integer total;
 
-    @ApiProperty(name="passNum",desc="passNum")
+    @ApiProperty(name="passNum",desc="通过数")
     private java.lang.Integer passNum;
 
-    @ApiProperty(name="failNum",desc="failNum")
+    @ApiProperty(name="failNum",desc="错误数")
     private java.lang.Integer failNum;
 
-    @ApiProperty(name="passRate",desc="passRate")
+    @ApiProperty(name="passRate",desc="通过率")
     private java.lang.String passRate;
 
-    @ApiProperty(name="errorRate",desc="errorRate")
+    @ApiProperty(name="errorRate",desc="错误率")
     private java.lang.String errorRate;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private java.sql.Timestamp createTime;
 
-    @ApiProperty(name="createUser",desc="createUser")
+    @ApiProperty(name="createUser",desc="执行人")
     private java.lang.String createUser;
 
     private TestPlanCaseInstanceBind bindCase;

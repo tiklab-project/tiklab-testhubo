@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* AppSceneInstanceServiceImpl
+* app场景测试历史实例 服务
 */
 @Service
 public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {

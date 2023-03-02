@@ -14,6 +14,9 @@ import net.tiklab.user.user.model.User;
 
 import java.sql.Timestamp;
 
+/**
+ * 测试计划 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "TestPlanEntity")
 @Join
@@ -41,7 +44,7 @@ public class TestPlan extends BaseModel{
     @JoinQuery(key = "id")
     private User principal;
 
-    @ApiProperty(name="repository",desc="用例库id",eg="@selectOne")
+    @ApiProperty(name="repository",desc="所属仓库")
     @Mappings({
             @Mapping(source = "repository.id",target = "repositoryId")
     })

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AppEnvDao
+ * app环境 数据访问
  */
 @Repository
 public class AppEnvDao{
@@ -26,7 +26,7 @@ public class AppEnvDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建app环境
      * @param appEnvEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class AppEnvDao{
     }
 
     /**
-     * 更新
+     * 更新app环境
      * @param appEnvEntity
      */
     public void updateAppEnv(AppEnvEntity appEnvEntity){
@@ -43,7 +43,7 @@ public class AppEnvDao{
     }
 
     /**
-     * 删除
+     * 删除app环境
      * @param id
      */
     public void deleteAppEnv(String id){
@@ -55,7 +55,7 @@ public class AppEnvDao{
     }
 
     /**
-     * 查找
+     * 根据id查找app环境
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class AppEnvDao{
     }
 
     /**
-    * findAllAppEnv
+    * 查找所有app环境
     * @return
     */
     public List<AppEnvEntity> findAllAppEnv() {
@@ -75,6 +75,11 @@ public class AppEnvDao{
         return jpaTemplate.findList(AppEnvEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询app环境列表
+     * @param appEnvQuery
+     * @return
+     */
     public List<AppEnvEntity> findAppEnvList(AppEnvQuery appEnvQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppEnvEntity.class)
                 .eq("repositoryId", appEnvQuery.getRepositoryId())
@@ -83,6 +88,11 @@ public class AppEnvDao{
         return jpaTemplate.findList(queryCondition,AppEnvEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询app环境
+     * @param appEnvQuery
+     * @return
+     */
     public Pagination<AppEnvEntity> findAppEnvPage(AppEnvQuery appEnvQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppEnvEntity.class)
                 .eq("repositoryId", appEnvQuery.getRepositoryId())

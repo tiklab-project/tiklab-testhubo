@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ResponseResultController
+ * 响应结果 控制器
  */
 @RestController
 @RequestMapping("/responseResult")
@@ -34,7 +34,7 @@ public class ResponseResultController {
     private ResponseResultService responseResultService;
 
     @RequestMapping(path="/createResponseResult",method = RequestMethod.POST)
-    @ApiMethod(name = "createResponseResult",desc = "createResponseResult")
+    @ApiMethod(name = "createResponseResult",desc = "创建响应结果")
     @ApiParam(name = "responseResult",desc = "responseResult",required = true)
     public Result<String> createResponseResult(@RequestBody @NotNull @Valid ResponseResult responseResult){
         String id = responseResultService.createResponseResult(responseResult);
@@ -43,7 +43,7 @@ public class ResponseResultController {
     }
 
     @RequestMapping(path="/updateResponseResult",method = RequestMethod.POST)
-    @ApiMethod(name = "updateResponseResult",desc = "updateResponseResult")
+    @ApiMethod(name = "updateResponseResult",desc = "更新响应结果")
     @ApiParam(name = "responseResult",desc = "responseResult",required = true)
     public Result<Void> updateResponseResult(@RequestBody @NotNull @Valid ResponseResult responseResult){
         responseResultService.updateResponseResult(responseResult);
@@ -52,7 +52,7 @@ public class ResponseResultController {
     }
 
     @RequestMapping(path="/deleteResponseResult",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteResponseResult",desc = "deleteResponseResult")
+    @ApiMethod(name = "deleteResponseResult",desc = "删除响应结果")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteResponseResult(@NotNull String id){
         responseResultService.deleteResponseResult(id);
@@ -61,7 +61,7 @@ public class ResponseResultController {
     }
 
     @RequestMapping(path="/findResponseResult",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseResult",desc = "findResponseResult")
+    @ApiMethod(name = "findResponseResult",desc = "查找响应结果")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ResponseResult> findResponseResult(@NotNull String id){
         ResponseResult responseResult = responseResultService.findResponseResult(id);
@@ -70,7 +70,7 @@ public class ResponseResultController {
     }
 
     @RequestMapping(path="/findAllResponseResult",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllResponseResult",desc = "findAllResponseResult")
+    @ApiMethod(name = "findAllResponseResult",desc = "查找所有响应结果")
     public Result<List<ResponseResult>> findAllResponseResult(){
         List<ResponseResult> responseResultList = responseResultService.findAllResponseResult();
 
@@ -78,7 +78,7 @@ public class ResponseResultController {
     }
 
     @RequestMapping(path = "/findResponseResultList",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseResultList",desc = "findResponseResultList")
+    @ApiMethod(name = "findResponseResultList",desc = "根据查询参数查询响应结果列表")
     @ApiParam(name = "responseResultQuery",desc = "responseResultQuery",required = true)
     public Result<List<ResponseResult>> findResponseResultList(@RequestBody @Valid @NotNull ResponseResultQuery responseResultQuery){
         List<ResponseResult> responseResultList = responseResultService.findResponseResultList(responseResultQuery);
@@ -87,7 +87,7 @@ public class ResponseResultController {
     }
 
     @RequestMapping(path = "/findResponseResultPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findResponseResultPage",desc = "findResponseResultPage")
+    @ApiMethod(name = "findResponseResultPage",desc = "根据查询参数按分页查询响应结果")
     @ApiParam(name = "responseResultQuery",desc = "responseResultQuery",required = true)
     public Result<Pagination<ResponseResult>> findResponseResultPage(@RequestBody @Valid @NotNull ResponseResultQuery responseResultQuery){
         Pagination<ResponseResult> pagination = responseResultService.findResponseResultPage(responseResultQuery);

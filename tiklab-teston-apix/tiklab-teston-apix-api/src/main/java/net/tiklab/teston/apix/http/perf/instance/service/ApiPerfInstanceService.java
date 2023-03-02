@@ -9,12 +9,12 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ApiPerfInstanceService
+* 接口性能历史服务接口
 */
 public interface ApiPerfInstanceService {
 
     /**
-    * 创建
+    * 创建接口性能历史
     * @param perfInstance
     * @return
     */
@@ -27,7 +27,7 @@ public interface ApiPerfInstanceService {
     void updateApiPerfInstance(@NotNull @Valid ApiPerfInstance perfInstance);
 
     /**
-    * 删除
+    * 删除接口性能历史
     * @param id
     */
     void deleteApiPerfInstance(@NotNull String id);
@@ -37,27 +37,27 @@ public interface ApiPerfInstanceService {
     List<ApiPerfInstance> findList(List<String> idList);
 
     /**
-    * 查找
+    * 查找接口性能历史
     * @param id
     * @return
     */
     ApiPerfInstance findApiPerfInstance(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有接口性能历史
     * @return
     */
     List<ApiPerfInstance> findAllApiPerfInstance();
 
     /**
-    * 查询列表
+    * 查询列表接口性能历史
     * @param apiPerfInstanceQuery
     * @return
     */
     List<ApiPerfInstance> findApiPerfInstanceList(ApiPerfInstanceQuery apiPerfInstanceQuery);
 
     /**
-    * 按分页查询
+    * 按分页查询接口性能历史
     * @param apiPerfInstanceQuery
     * @return
     */

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebSceneInstanceController
+ * web场景实例 控制器
  */
 @RestController
 @RequestMapping("/webSceneInstance")
@@ -34,7 +34,7 @@ public class WebSceneInstanceController {
     private WebSceneInstanceService webSceneInstanceService;
 
     @RequestMapping(path="/createWebSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "createWebSceneInstance",desc = "createWebSceneInstance")
+    @ApiMethod(name = "createWebSceneInstance",desc = "创建web场景实例")
     @ApiParam(name = "webSceneInstance",desc = "webSceneInstance",required = true)
     public Result<String> createWebSceneInstance(@RequestBody @NotNull @Valid WebSceneInstance webSceneInstance){
         String id = webSceneInstanceService.createWebSceneInstance(webSceneInstance);
@@ -43,7 +43,7 @@ public class WebSceneInstanceController {
     }
 
     @RequestMapping(path="/updateWebSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "updateWebSceneInstance",desc = "updateWebSceneInstance")
+    @ApiMethod(name = "updateWebSceneInstance",desc = "更新web场景实例")
     @ApiParam(name = "webSceneInstance",desc = "webSceneInstance",required = true)
     public Result<Void> updateWebSceneInstance(@RequestBody @NotNull @Valid WebSceneInstance webSceneInstance){
         webSceneInstanceService.updateWebSceneInstance(webSceneInstance);
@@ -52,7 +52,7 @@ public class WebSceneInstanceController {
     }
 
     @RequestMapping(path="/deleteWebSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteWebSceneInstance",desc = "deleteWebSceneInstance")
+    @ApiMethod(name = "deleteWebSceneInstance",desc = "删除web场景实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteWebSceneInstance(@NotNull String id){
         webSceneInstanceService.deleteWebSceneInstance(id);
@@ -61,7 +61,7 @@ public class WebSceneInstanceController {
     }
 
     @RequestMapping(path="/findWebSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebSceneInstance",desc = "findWebSceneInstance")
+    @ApiMethod(name = "findWebSceneInstance",desc = "根据id查找web场景实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<WebSceneInstance> findWebSceneInstance(@NotNull String id){
         WebSceneInstance webSceneInstance = webSceneInstanceService.findWebSceneInstance(id);
@@ -70,7 +70,7 @@ public class WebSceneInstanceController {
     }
 
     @RequestMapping(path="/findAllWebSceneInstance",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllWebSceneInstance",desc = "findAllWebSceneInstance")
+    @ApiMethod(name = "findAllWebSceneInstance",desc = "查找所有web场景实例")
     public Result<List<WebSceneInstance>> findAllWebSceneInstance(){
         List<WebSceneInstance> allWebSceneInstance = webSceneInstanceService.findAllWebSceneInstance();
 
@@ -78,7 +78,7 @@ public class WebSceneInstanceController {
     }
 
     @RequestMapping(path = "/findWebSceneInstanceList",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebSceneInstanceList",desc = "findWebSceneInstanceList")
+    @ApiMethod(name = "findWebSceneInstanceList",desc = "根据查询参数查询web场景实例列表")
     @ApiParam(name = "webSceneInstanceQuery",desc = "webSceneInstanceQuery",required = true)
     public Result<List<WebSceneInstance>> findWebSceneInstanceList(@RequestBody @Valid @NotNull WebSceneInstanceQuery webSceneInstanceQuery){
         List<WebSceneInstance> webSceneInstanceList = webSceneInstanceService.findWebSceneInstanceList(webSceneInstanceQuery);
@@ -87,7 +87,7 @@ public class WebSceneInstanceController {
     }
 
     @RequestMapping(path = "/findWebSceneInstancePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebSceneInstancePage",desc = "findWebSceneInstancePage")
+    @ApiMethod(name = "findWebSceneInstancePage",desc = "根据查询参数按分页查询web场景实例")
     @ApiParam(name = "webSceneInstanceQuery",desc = "webSceneInstanceQuery",required = true)
     public Result<Pagination<WebSceneInstance>> findWebSceneInstancePage(@RequestBody @Valid @NotNull WebSceneInstanceQuery webSceneInstanceQuery){
         Pagination<WebSceneInstance> pagination = webSceneInstanceService.findWebSceneInstancePage(webSceneInstanceQuery);

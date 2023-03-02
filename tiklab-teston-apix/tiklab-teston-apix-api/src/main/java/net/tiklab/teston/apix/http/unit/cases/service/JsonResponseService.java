@@ -13,26 +13,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* JsonResponseService
+* 响应中json 服务接口
 */
 @JoinProvider(model = JsonResponse.class)
 public interface JsonResponseService {
 
     /**
-    * 创建
+    * 创建响应中json
     * @param jsonResponse
     * @return
     */
     String createJsonResponse(@NotNull @Valid JsonResponse jsonResponse);
 
     /**
-    * 更新
+    * 更新响应中json
     * @param jsonResponse
     */
     void updateJsonResponse(@NotNull @Valid JsonResponse jsonResponse);
 
     /**
-    * 删除
+    * 删除响应中json
     * @param id
     */
     void deleteJsonResponse(@NotNull String id);
@@ -44,28 +44,28 @@ public interface JsonResponseService {
     List<JsonResponse> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找响应中json
     * @param id
     * @return
     */
     JsonResponse findJsonResponse(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有响应中json
     * @return
     */
     @FindAll
     List<JsonResponse> findAllJsonResponse();
 
     /**
-    * 查询列表
+    * 根据查询参数查找查询响应中json列表
     * @param jsonResponseQuery
     * @return
     */
     List<JsonResponse> findJsonResponseList(JsonResponseQuery jsonResponseQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数查找按分页查询响应中json
     * @param jsonResponseQuery
     * @return
     */

@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * AppPerfTestController
+ * app性能测试执行 控制器
  */
 @RestController
 @RequestMapping("/appPerfTestDispatch")

@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * 功能用例下步骤 实体
+ */
 @Entity
 @Table(name="teston_func_unit_step")
 public class FuncUnitStepEntity implements Serializable {
@@ -13,21 +16,27 @@ public class FuncUnitStepEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属功能用例
     @Column(name = "func_unit_id",length = 32)
     private String funcUnitId;
 
+    // 功能描述
     @Column(name = "described",length =512)
     private String described;
 
+    // 期望
     @Column(name = "expect",length = 512)
     private String expect;
 
+    // 实际结果
     @Column(name = "actual",length = 512)
     private String actual;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 更新时间
     @Column(name = "update_time")
     private Timestamp updateTime;
 

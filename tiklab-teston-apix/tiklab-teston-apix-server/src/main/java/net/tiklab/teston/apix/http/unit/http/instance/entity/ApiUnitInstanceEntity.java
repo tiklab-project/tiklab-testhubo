@@ -6,6 +6,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * 用例实例或用例步骤记录
+ */
 @Entity
 @Table(name="teston_api_unit_instance")
 public class ApiUnitInstanceEntity implements Serializable {
@@ -14,27 +17,35 @@ public class ApiUnitInstanceEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    //所属接口
     @Column(name = "api_unit_id",length = 32)
     private String apiUnitId;
 
+    //执行次数
     @Column(name = "execute_number")
     private Integer executeNumber;
 
+    // 状态码
     @Column(name = "status_code")
     private String statusCode;
 
+    // 结果
     @Column(name = "result")
     private Integer result;
 
+    // 创建人
     @Column(name = "create_user")
     private String createUser;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 耗时
     @Column(name = "elapsed_time")
     private Double elapsedTime;
 
+    // 错误信息
     @Column(name = "err_message",length = 2048)
     private String errMessage;
 

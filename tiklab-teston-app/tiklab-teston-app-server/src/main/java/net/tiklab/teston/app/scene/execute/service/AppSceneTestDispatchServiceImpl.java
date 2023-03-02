@@ -22,6 +22,9 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
+/**
+ * app场景测试调度 服务
+ */
 @Service
 public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchService {
 

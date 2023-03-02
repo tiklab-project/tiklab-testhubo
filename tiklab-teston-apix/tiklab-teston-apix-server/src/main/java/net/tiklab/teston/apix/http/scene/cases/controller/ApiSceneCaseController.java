@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * ApiSceneCaseController
+ * 接口场景用例 控制器
  */
 @RestController
 @RequestMapping("/apiSceneCase")

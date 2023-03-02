@@ -10,6 +10,9 @@ import net.tiklab.join.annotation.Join;
 import net.tiklab.join.annotation.JoinQuery;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * 测试计划绑定的用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "TestPlanDetailEntity")
 @Join
@@ -38,7 +41,7 @@ public class TestPlanCase extends BaseModel{
     @ApiProperty(name="status",desc="状态:0 失败  1 通过  2未执行")
     private java.lang.Integer status;
 
-    @ApiProperty(name="sort",desc="sort")
+    @ApiProperty(name="sort",desc="排序")
     private java.lang.Integer sort;
 
     public java.lang.String getId() {

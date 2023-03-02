@@ -8,6 +8,9 @@ import net.tiklab.teston.apix.http.unit.execute.model.ApiUnitTestRequest;
 
 import java.util.List;
 
+/**
+ * 接口场景发送请求数据 模型
+ */
 @ApiModel
 public class ApiSceneTestRequest extends BaseModel {
 

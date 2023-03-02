@@ -7,6 +7,9 @@ import net.tiklab.teston.apix.http.scene.instance.model.ApiSceneInstance;
 
 import java.util.List;
 
+/**
+ * 接口场景测试中返回的数据封装 模型
+ */
 @ApiModel
 public class ApiSceneTestResponse extends BaseModel {
 

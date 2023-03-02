@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 
 import java.io.Serializable;
 
+/**
+ * 测试计划下用例的实例的中间层 实体
+ */
 @Entity
 @Table(name="teston_test_plan_case_instance_bind")
 public class TestPlanCaseInstanceBindEntity implements Serializable {
@@ -14,21 +17,27 @@ public class TestPlanCaseInstanceBindEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属测试计划实例
     @Column(name = "test_plan_instance_id",length = 32)
     private String testPlanInstanceId;
 
+    // 用例实例id
     @Column(name = "case_instance_id",length = 32)
     private String caseInstanceId;
 
+    // 名称
     @Column(name="name",length = 128)
     private String name;
 
+    // 测试类型
     @Column(name="test_type",length = 32)
     private String testType;
 
+    // 用例类型
     @Column(name="case_type",length = 32)
     private String caseType;
 
+    // 结果
     @Column(name="result")
     private Integer result;
 

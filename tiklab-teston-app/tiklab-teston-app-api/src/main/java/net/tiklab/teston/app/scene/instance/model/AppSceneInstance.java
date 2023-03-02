@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * app场景实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppSceneInstanceEntity")
 @Join
@@ -18,7 +21,7 @@ public class AppSceneInstance extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="appSceneId",desc="appSceneId")
+    @ApiProperty(name="appSceneId",desc="app场景id")
     private String appSceneId;
 
     @ApiProperty(name="result",desc="测试结果 成功:1 , 失败:0")
@@ -39,11 +42,11 @@ public class AppSceneInstance extends BaseModel{
     @ApiProperty(name="stepList",desc="存放app测试步骤结果")
     private List<AppSceneInstanceStep> stepList;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     public String getId() {

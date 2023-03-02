@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * app场景用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "AppSceneCaseEntity")
 @Join

@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 
 import java.io.Serializable;
 
+/**
+ * web环境 实体
+ */
 @Entity @Table(name="teston_env_web")
 public class WebEnvEntity implements Serializable {
 
@@ -13,12 +16,15 @@ public class WebEnvEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 仓库id
     @Column(name = "repository_id",length = 32)
     private String repositoryId;
 
+    // 名称
     @Column(name = "name",length = 128)
     private String name;
 
+    // webDriver 如: chrome, firefox
     @Column(name = "web_driver",length = 32)
     private String webDriver;
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebSceneInstanceDao
+ * web场景实例 服务
  */
 @Repository
 public class WebSceneInstanceDao {
@@ -26,7 +26,7 @@ public class WebSceneInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web场景实例
      * @param webSceneInstanceEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class WebSceneInstanceDao {
     }
 
     /**
-     * 更新
+     * 更新web场景实例
      * @param webSceneInstanceEntity
      */
     public void updateWebSceneInstance(WebSceneInstanceEntity webSceneInstanceEntity){
@@ -43,7 +43,7 @@ public class WebSceneInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除web场景实例
      * @param id
      */
     public void deleteWebSceneInstance(String id){
@@ -55,7 +55,7 @@ public class WebSceneInstanceDao {
     }
 
     /**
-     * 查找
+     * 根据id查找web场景实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class WebSceneInstanceDao {
     }
 
     /**
-    * findAllWebSceneInstance
+    * 查找所有web场景实例
     * @return
     */
     public List<WebSceneInstanceEntity> findAllWebSceneInstance() {
@@ -75,6 +75,11 @@ public class WebSceneInstanceDao {
         return jpaTemplate.findList(WebSceneInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web场景实例列表
+     * @param webSceneInstanceQuery
+     * @return
+     */
     public List<WebSceneInstanceEntity> findWebSceneInstanceList(WebSceneInstanceQuery webSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneInstanceEntity.class)
                 .eq("webSceneId", webSceneInstanceQuery.getWebSceneId())
@@ -83,6 +88,11 @@ public class WebSceneInstanceDao {
         return jpaTemplate.findList(queryCondition, WebSceneInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web场景实例
+     * @param webSceneInstanceQuery
+     * @return
+     */
     public Pagination<WebSceneInstanceEntity> findWebSceneInstancePage(WebSceneInstanceQuery webSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneInstanceEntity.class)
                 .eq("webSceneId", webSceneInstanceQuery.getWebSceneId())

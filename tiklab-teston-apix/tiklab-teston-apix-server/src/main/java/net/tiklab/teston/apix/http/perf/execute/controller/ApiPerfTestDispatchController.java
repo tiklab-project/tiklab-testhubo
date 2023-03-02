@@ -6,7 +6,7 @@ import net.tiklab.postin.annotation.ApiParam;
 import net.tiklab.core.Result;
 import net.tiklab.teston.apix.http.perf.execute.model.ApiPerfTestRequest;
 import net.tiklab.teston.apix.http.perf.execute.model.ApiPerfTestResponse;
-import net.tiklab.teston.apix.http.perf.execute.service.ApiPerfTestDispatchService;
+import net.tiklab.teston.apix.http.perf.execute.service.ApiPerfExecuteDispatchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * ApiPerfTestDispatchController
+ * 接口性能测试调度 控制器
  */
 @RestController
 @RequestMapping("/apiPerfTestDispatch")
@@ -29,13 +29,13 @@ public class ApiPerfTestDispatchController {
     private static Logger logger = LoggerFactory.getLogger(ApiPerfTestDispatchController.class);
 
     @Autowired
-    ApiPerfTestDispatchService apiPerfTestDispatchService;
+    ApiPerfExecuteDispatchService apiPerfExecuteDispatchService;
 
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
     @ApiMethod(name = "execute", desc = "执行性能测试")
     @ApiParam(name = "performCaseExec", desc = "执行需要传的参数", required = true)
     public Result<Void> execute(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
-         apiPerfTestDispatchService.execute(apiPerfTestRequest);
+         apiPerfExecuteDispatchService.execute(apiPerfTestRequest);
 
         return Result.ok();
     }
@@ -44,7 +44,7 @@ public class ApiPerfTestDispatchController {
     @ApiMethod(name = "exeResult", desc = "获取性能测试结果")
     @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数", required = true)
     public Result<ApiPerfTestResponse> exeResult(@RequestBody @Valid ApiPerfTestRequest apiPerfTestRequest) {
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfTestDispatchService.exeResult(apiPerfTestRequest);
+        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.exeResult(apiPerfTestRequest);
         return Result.ok(apiPerfTestResponse);
     }
 
@@ -53,7 +53,7 @@ public class ApiPerfTestDispatchController {
     @ApiMethod(name = "endOrPause", desc = "停止或暂停性能测试")
     @ApiParam(name = "performCaseExec", desc = "执行需要传的参数 testCaseId  executeType ", required = true)
     public Result<Void> endOrPause(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
-        apiPerfTestDispatchService.stop(apiPerfTestRequest);
+        apiPerfExecuteDispatchService.stop(apiPerfTestRequest);
 
         return Result.ok();
     }

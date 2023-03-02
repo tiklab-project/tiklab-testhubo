@@ -13,6 +13,9 @@ import net.tiklab.teston.apix.http.scene.cases.model.ApiSceneCase;
 
 import java.sql.Timestamp;
 
+/**
+ * 接口性能场景步骤 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiPerfStepEntity")
 @Join
@@ -35,7 +38,7 @@ public class ApiPerfStep extends BaseModel{
     @JoinQuery(key = "id")
     private ApiSceneCase apiScene;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 

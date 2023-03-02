@@ -27,7 +27,7 @@ public class AppPerfStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建绑定的步骤
      * @param appPerfStepEntity
      * @return
      */
@@ -36,7 +36,7 @@ public class AppPerfStepDao{
     }
 
     /**
-     * 更新
+     * 更新绑定的步骤
      * @param appPerfStepEntity
      */
     public void updateAppPerfStep(AppPerfStepEntity appPerfStepEntity){
@@ -44,7 +44,7 @@ public class AppPerfStepDao{
     }
 
     /**
-     * 删除
+     * 删除绑定的步骤
      * @param id
      */
     public void deleteAppPerfStep(String id){
@@ -56,7 +56,7 @@ public class AppPerfStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找绑定的步骤
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class AppPerfStepDao{
     }
 
     /**
-    * findAllAppPerfStep
+    * 查找所有绑定的步骤
     * @return
     */
     public List<AppPerfStepEntity> findAllAppPerfStep() {
@@ -76,6 +76,11 @@ public class AppPerfStepDao{
         return jpaTemplate.findList(AppPerfStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询绑定的步骤 列表
+     * @param appPerfStepQuery
+     * @return
+     */
     public List<AppPerfStepEntity> findAppPerfStepList(AppPerfStepQuery appPerfStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppPerfStepEntity.class)
                 .eq("appPerfId", appPerfStepQuery.getAppPerfId())
@@ -84,6 +89,11 @@ public class AppPerfStepDao{
         return jpaTemplate.findList(queryCondition,AppPerfStepEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询绑定的步骤
+     * @param appPerfStepQuery
+     * @return
+     */
     public Pagination<AppPerfStepEntity> findAppPerfStepPage(AppPerfStepQuery appPerfStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AppPerfStepEntity.class)
                 .eq("appPerfId", appPerfStepQuery.getAppPerfId())

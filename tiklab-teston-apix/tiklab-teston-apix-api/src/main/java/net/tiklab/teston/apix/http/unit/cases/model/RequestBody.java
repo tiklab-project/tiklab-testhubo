@@ -6,6 +6,9 @@ import net.tiklab.join.annotation.Join;
 import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 
+/**
+ * 请求体的 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RequestBodyEntity")
 @Join

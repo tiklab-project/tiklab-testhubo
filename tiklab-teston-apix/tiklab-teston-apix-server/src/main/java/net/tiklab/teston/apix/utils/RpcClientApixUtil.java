@@ -4,6 +4,9 @@ import net.tiklab.rpc.client.RpcClient;
 import net.tiklab.rpc.client.config.RpcClientConfig;
 import org.springframework.stereotype.Component;
 
+/**
+ * rpc实例
+ */
 @Component
 public class RpcClientApixUtil {
 

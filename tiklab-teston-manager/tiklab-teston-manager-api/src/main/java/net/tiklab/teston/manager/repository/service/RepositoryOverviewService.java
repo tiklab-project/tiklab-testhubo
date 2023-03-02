@@ -6,7 +6,7 @@ import net.tiklab.teston.manager.repository.model.RepositoryTotal;
 import javax.validation.constraints.NotNull;
 
 /**
-* RepositoryOverviewService
+* 仓库概况 服务接口
 */
 public interface RepositoryOverviewService {
 

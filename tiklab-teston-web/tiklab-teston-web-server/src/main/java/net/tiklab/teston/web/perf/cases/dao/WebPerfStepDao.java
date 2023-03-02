@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebPerfStepDao
+ * web性能用例下绑定的场景 数据访问
  */
 @Repository
 public class WebPerfStepDao{
@@ -26,7 +26,7 @@ public class WebPerfStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web性能用例下绑定的场景
      * @param webPerfStepEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class WebPerfStepDao{
     }
 
     /**
-     * 更新
+     * 更新web性能用例下绑定的场景
      * @param webPerfStepEntity
      */
     public void updateWebPerfStep(WebPerfStepEntity webPerfStepEntity){
@@ -43,7 +43,7 @@ public class WebPerfStepDao{
     }
 
     /**
-     * 删除
+     * 删除web性能用例下绑定的场景
      * @param id
      */
     public void deleteWebPerfStep(String id){
@@ -55,7 +55,7 @@ public class WebPerfStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找web性能用例下绑定的场景
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class WebPerfStepDao{
     }
 
     /**
-    * findAllWebPerfStep
+    * 查找所有web性能用例下绑定的场景
     * @return
     */
     public List<WebPerfStepEntity> findAllWebPerfStep() {
@@ -75,6 +75,11 @@ public class WebPerfStepDao{
         return jpaTemplate.findList(WebPerfStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web性能用例下绑定的场景列表
+     * @param webPerfStepQuery
+     * @return
+     */
     public List<WebPerfStepEntity> findWebPerfStepList(WebPerfStepQuery webPerfStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebPerfStepEntity.class)
                 .eq("webPerfId",webPerfStepQuery.getWebPerfId())
@@ -83,6 +88,11 @@ public class WebPerfStepDao{
         return jpaTemplate.findList(queryCondition,WebPerfStepEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web性能用例下绑定的场景
+     * @param webPerfStepQuery
+     * @return
+     */
     public Pagination<WebPerfStepEntity> findWebPerfStepPage(WebPerfStepQuery webPerfStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebPerfStepEntity.class)
                 .eq("webPerfId",webPerfStepQuery.getWebPerfId())

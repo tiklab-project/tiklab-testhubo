@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* AppPerfCaseServiceImpl
+* app性能测试用例 服务
 */
 @Service
 public class AppPerfCaseServiceImpl implements AppPerfCaseService {

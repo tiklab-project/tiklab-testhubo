@@ -14,6 +14,9 @@ import net.tiklab.user.user.model.User;
 import java.sql.Timestamp;
 import java.util.List;
 
+/**
+ * 场景历史实例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "ApiSceneInstanceEntity")
 @Join
@@ -57,7 +60,7 @@ public class ApiSceneInstance extends BaseModel{
     @JoinQuery(key = "id")
     private User createUser;
 
-    @ApiProperty(name="executeNumber",desc="executeNumber")
+    @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     public String getId() {

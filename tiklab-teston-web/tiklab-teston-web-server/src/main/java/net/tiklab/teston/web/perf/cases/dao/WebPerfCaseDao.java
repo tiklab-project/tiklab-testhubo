@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebPerfCaseDao
+ * web性能用例 数据访问
  */
 @Repository
 public class WebPerfCaseDao {
@@ -26,7 +26,7 @@ public class WebPerfCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web性能用例
      * @param appPerfCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class WebPerfCaseDao {
     }
 
     /**
-     * 更新
+     * 更新web性能用例
      * @param webPerfCaseEntity
      */
     public void updateWebPerfCase(WebPerfCaseEntity webPerfCaseEntity){
@@ -43,7 +43,7 @@ public class WebPerfCaseDao {
     }
 
     /**
-     * 删除
+     * 删除web性能用例
      * @param id
      */
     public void deleteWebPerfCase(String id){
@@ -55,7 +55,7 @@ public class WebPerfCaseDao {
     }
 
     /**
-     * 查找
+     * 根据id查找web性能用例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class WebPerfCaseDao {
     }
 
     /**
-    * findAllWebPerfCase
+    * 查找所有web性能用例
     * @return
     */
     public List<WebPerfCaseEntity> findAllWebPerfCase() {
@@ -75,6 +75,11 @@ public class WebPerfCaseDao {
         return jpaTemplate.findList(WebPerfCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web性能用例列表
+     * @param webPerfCaseQuery
+     * @return
+     */
     public List<WebPerfCaseEntity> findWebPerfCaseList(WebPerfCaseQuery webPerfCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebPerfCaseEntity.class)
                 .eq("testCaseId", webPerfCaseQuery.getTestCaseId())
@@ -83,6 +88,11 @@ public class WebPerfCaseDao {
         return jpaTemplate.findList(queryCondition, WebPerfCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web性能用例
+     * @param webPerfCaseQuery
+     * @return
+     */
     public Pagination<WebPerfCaseEntity> findWebPerfCasePage(WebPerfCaseQuery webPerfCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebPerfCaseEntity.class)
                 .eq("testCaseId", webPerfCaseQuery.getTestCaseId())

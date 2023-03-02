@@ -14,26 +14,26 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* ActionTypeService
+* app、web中操作类型 接口服务
 */
 @JoinProvider(model = ActionType.class)
 public interface ActionTypeService {
 
     /**
-    * 创建
+    * 创建操作类型
     * @param actionType
     * @return
     */
     String createActionType(@NotNull @Valid ActionType actionType);
 
     /**
-    * 更新
+    * 更新操作类型
     * @param actionType
     */
     void updateActionType(@NotNull @Valid ActionType actionType);
 
     /**
-    * 删除
+    * 删除操作类型
     * @param id
     */
     void deleteActionType(@NotNull String id);
@@ -45,28 +45,28 @@ public interface ActionTypeService {
     List<ActionType> findList(List<String> idList);
 
     /**
-    * 查找
+    * 根据id查找操作类型
     * @param id
     * @return
     */
     ActionType findActionType(@NotNull String id);
 
     /**
-    * 查找所有
+    * 查找所有操作类型
     * @return
     */
     @FindAll
     List<ActionType> findAllActionType();
 
     /**
-    * 查询列表
+    * 根据查询参数查询操作类型列表
     * @param actionTypeQuery
     * @return
     */
     List<ActionType> findActionTypeList(ActionTypeQuery actionTypeQuery);
 
     /**
-    * 按分页查询
+    * 根据查询参数按分页查询操作类型
     * @param actionTypeQuery
     * @return
     */

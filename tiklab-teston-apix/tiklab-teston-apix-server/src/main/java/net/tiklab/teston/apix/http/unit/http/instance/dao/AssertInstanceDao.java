@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * AssertInstanceDao
+ * 断言实例 舒服访问
  */
 @Repository
 public class AssertInstanceDao{
@@ -24,7 +24,7 @@ public class AssertInstanceDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建断言实例
      * @param assertInstanceEntity
      * @return
      */
@@ -41,7 +41,7 @@ public class AssertInstanceDao{
     }
 
     /**
-     * 删除
+     * 删除断言实例
      * @param id
      */
     public void deleteAssertInstance(String id){
@@ -53,7 +53,7 @@ public class AssertInstanceDao{
     }
 
     /**
-     * 查找
+     * 根据id查找断言实例
      * @param id
      * @return
      */
@@ -62,7 +62,7 @@ public class AssertInstanceDao{
     }
 
     /**
-    * findAllAssertInstance
+    * 查找所有断言实例
     * @return
     */
     public List<AssertInstanceEntity> findAllAssertInstance() {
@@ -73,10 +73,20 @@ public class AssertInstanceDao{
         return jpaTemplate.findList(AssertInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询断言实例列表
+     * @param assertInstanceQuery
+     * @return
+     */
     public List<AssertInstanceEntity> findAssertInstanceList(AssertInstanceQuery assertInstanceQuery) {
         return jpaTemplate.findList(assertInstanceQuery, AssertInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询断言实例
+     * @param assertInstanceQuery
+     * @return
+     */
     public Pagination<AssertInstanceEntity> findAssertInstancePage(AssertInstanceQuery assertInstanceQuery) {
         return jpaTemplate.findPage(assertInstanceQuery, AssertInstanceEntity.class);
     }

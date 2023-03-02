@@ -4,6 +4,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.core.BaseModel;
 
+/**
+ * app、web中操作类型 模型
+ */
 @ApiModel
 public class ActionType extends BaseModel{
 

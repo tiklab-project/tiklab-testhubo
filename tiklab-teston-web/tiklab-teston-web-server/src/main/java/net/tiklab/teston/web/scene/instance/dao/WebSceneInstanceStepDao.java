@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * WebSceneInstanceStepDao
+ * web场景下步骤实例 数据访问
  */
 @Repository
 public class WebSceneInstanceStepDao{
@@ -26,7 +26,7 @@ public class WebSceneInstanceStepDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建web场景下步骤实例
      * @param webSceneInstanceStepEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class WebSceneInstanceStepDao{
     }
 
     /**
-     * 更新
+     * 更新web场景下步骤实例
      * @param webSceneInstanceStepEntity
      */
     public void updateWebSceneInstanceStep(WebSceneInstanceStepEntity webSceneInstanceStepEntity){
@@ -43,7 +43,7 @@ public class WebSceneInstanceStepDao{
     }
 
     /**
-     * 删除
+     * 删除web场景下步骤实例
      * @param id
      */
     public void deleteWebSceneInstanceStep(String id){
@@ -55,7 +55,7 @@ public class WebSceneInstanceStepDao{
     }
 
     /**
-     * 查找
+     * 根据id查找web场景下步骤实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class WebSceneInstanceStepDao{
     }
 
     /**
-    * findAllWebSceneInstanceStep
+    * 查找所有web场景下步骤实例
     * @return
     */
     public List<WebSceneInstanceStepEntity> findAllWebSceneInstanceStep() {
@@ -75,6 +75,11 @@ public class WebSceneInstanceStepDao{
         return jpaTemplate.findList(WebSceneInstanceStepEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询web场景下步骤实例列表
+     * @param webSceneInstanceStepQuery
+     * @return
+     */
     public List<WebSceneInstanceStepEntity> findWebSceneInstanceStepList(WebSceneInstanceStepQuery webSceneInstanceStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneInstanceStepEntity.class)
                 .eq("webSceneInstanceId", webSceneInstanceStepQuery.getWebSceneInstanceId())
@@ -84,6 +89,11 @@ public class WebSceneInstanceStepDao{
         return jpaTemplate.findList(queryCondition,WebSceneInstanceStepEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询web场景下步骤实例
+     * @param webSceneInstanceStepQuery
+     * @return
+     */
     public Pagination<WebSceneInstanceStepEntity> findWebSceneInstanceStepPage(WebSceneInstanceStepQuery webSceneInstanceStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneInstanceStepEntity.class)
                 .eq("webSceneInstanceId", webSceneInstanceStepQuery.getWebSceneInstanceId())

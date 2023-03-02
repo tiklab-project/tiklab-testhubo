@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* AssertCaseServiceImpl
+* 断言 服务
 */
 @Service
 public class AssertCaseServiceImpl implements AssertService {

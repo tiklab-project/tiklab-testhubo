@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
-* ApiUnitInstanceBindServiceImpl
+* 接口单元公共实例 服务
 */
 @Service
 public class ApiUnitInstanceBindServiceImpl implements ApiUnitInstanceBindService {

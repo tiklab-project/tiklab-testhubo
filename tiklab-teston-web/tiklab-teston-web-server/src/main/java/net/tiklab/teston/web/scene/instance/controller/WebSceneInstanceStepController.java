@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebSceneInstanceStepController
+ * web场景下步骤实例 控制器
  */
 @RestController
 @RequestMapping("/webSceneInstanceStep")
-@Api(name = "WebSceneInstanceStepController",desc = "WebSceneInstanceStepController")
+@Api(name = "WebSceneInstanceStepController",desc = "web场景下步骤实例管理")
 public class WebSceneInstanceStepController {
 
     private static Logger logger = LoggerFactory.getLogger(WebSceneInstanceStepController.class);
@@ -34,7 +34,7 @@ public class WebSceneInstanceStepController {
     private WebSceneInstanceStepService webSceneInstanceStepService;
 
     @RequestMapping(path="/createWebSceneInstanceStep",method = RequestMethod.POST)
-    @ApiMethod(name = "createWebSceneInstanceStep",desc = "createWebSceneInstanceStep")
+    @ApiMethod(name = "createWebSceneInstanceStep",desc = "创建web场景下步骤实例")
     @ApiParam(name = "webSceneInstanceStep",desc = "webSceneInstanceStep",required = true)
     public Result<String> createWebSceneInstanceStep(@RequestBody @NotNull @Valid WebSceneInstanceStep webSceneInstanceStep){
         String id = webSceneInstanceStepService.createWebSceneInstanceStep(webSceneInstanceStep);
@@ -43,7 +43,7 @@ public class WebSceneInstanceStepController {
     }
 
     @RequestMapping(path="/updateWebSceneInstanceStep",method = RequestMethod.POST)
-    @ApiMethod(name = "updateWebSceneInstanceStep",desc = "updateWebSceneInstanceStep")
+    @ApiMethod(name = "updateWebSceneInstanceStep",desc = "更新web场景下步骤实例")
     @ApiParam(name = "webSceneInstanceStep",desc = "webSceneInstanceStep",required = true)
     public Result<Void> updateWebSceneInstanceStep(@RequestBody @NotNull @Valid WebSceneInstanceStep webSceneInstanceStep){
         webSceneInstanceStepService.updateWebSceneInstanceStep(webSceneInstanceStep);
@@ -52,7 +52,7 @@ public class WebSceneInstanceStepController {
     }
 
     @RequestMapping(path="/deleteWebSceneInstanceStep",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteWebSceneInstanceStep",desc = "deleteWebSceneInstanceStep")
+    @ApiMethod(name = "deleteWebSceneInstanceStep",desc = "删除web场景下步骤实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteWebSceneInstanceStep(@NotNull String id){
         webSceneInstanceStepService.deleteWebSceneInstanceStep(id);
@@ -61,7 +61,7 @@ public class WebSceneInstanceStepController {
     }
 
     @RequestMapping(path="/findWebSceneInstanceStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebSceneInstanceStep",desc = "findWebSceneInstanceStep")
+    @ApiMethod(name = "findWebSceneInstanceStep",desc = "根据id查找web场景下步骤实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<WebSceneInstanceStep> findWebSceneInstanceStep(@NotNull String id){
         WebSceneInstanceStep webSceneInstanceStep = webSceneInstanceStepService.findWebSceneInstanceStep(id);
@@ -70,7 +70,7 @@ public class WebSceneInstanceStepController {
     }
 
     @RequestMapping(path="/findAllWebSceneInstanceStep",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllWebSceneInstanceStep",desc = "findAllWebSceneInstanceStep")
+    @ApiMethod(name = "findAllWebSceneInstanceStep",desc = "查找所有web场景下步骤实例")
     public Result<List<WebSceneInstanceStep>> findAllWebSceneInstanceStep(){
         List<WebSceneInstanceStep> webSceneInstanceStepList = webSceneInstanceStepService.findAllWebSceneInstanceStep();
 
@@ -78,7 +78,7 @@ public class WebSceneInstanceStepController {
     }
 
     @RequestMapping(path = "/findWebSceneInstanceStepList",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebSceneInstanceStepList",desc = "findWebSceneInstanceStepList")
+    @ApiMethod(name = "findWebSceneInstanceStepList",desc = "根据查询参数查询web场景下步骤实例列表")
     @ApiParam(name = "webSceneInstanceStepQuery",desc = "webSceneInstanceStepQuery",required = true)
     public Result<List<WebSceneInstanceStep>> findWebSceneInstanceStepList(@RequestBody @Valid @NotNull WebSceneInstanceStepQuery webSceneInstanceStepQuery){
         List<WebSceneInstanceStep> webSceneInstanceStepList = webSceneInstanceStepService.findWebSceneInstanceStepList(webSceneInstanceStepQuery);
@@ -87,7 +87,7 @@ public class WebSceneInstanceStepController {
     }
 
     @RequestMapping(path = "/findWebSceneInstanceStepPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findWebSceneInstanceStepPage",desc = "findWebSceneInstanceStepPage")
+    @ApiMethod(name = "findWebSceneInstanceStepPage",desc = "根据查询参数按分页查询web场景下步骤实例")
     @ApiParam(name = "webSceneInstanceStepQuery",desc = "webSceneInstanceStepQuery",required = true)
     public Result<Pagination<WebSceneInstanceStep>> findWebSceneInstanceStepPage(@RequestBody @Valid @NotNull WebSceneInstanceStepQuery webSceneInstanceStepQuery){
         Pagination<WebSceneInstanceStep> pagination = webSceneInstanceStepService.findWebSceneInstanceStepPage(webSceneInstanceStepQuery);

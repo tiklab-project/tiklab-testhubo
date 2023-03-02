@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * RequestBodyController
+ * 请求体 控制器
  */
 @RestController
 @RequestMapping("/requestBody")
@@ -33,7 +33,7 @@ public class RequestBodyController {
     private RequestBodyService requestBodyService;
 
     @RequestMapping(path="/createRequestBody",method = RequestMethod.POST)
-    @ApiMethod(name = "createRequestBody",desc = "createRequestBody")
+    @ApiMethod(name = "createRequestBody",desc = "创建请求体")
     @ApiParam(name = "requestBody",desc = "requestBody",required = true)
     public Result<String> createRequestBody(@org.springframework.web.bind.annotation.RequestBody @NotNull @Valid RequestBody requestBody){
         String id = requestBodyService.createRequestBody(requestBody);
@@ -42,7 +42,7 @@ public class RequestBodyController {
     }
 
     @RequestMapping(path="/updateRequestBody",method = RequestMethod.POST)
-    @ApiMethod(name = "updateRequestBody",desc = "updateRequestBody")
+    @ApiMethod(name = "updateRequestBody",desc = "更新请求体")
     @ApiParam(name = "requestBody",desc = "requestBody",required = true)
     public Result<Void> updateRequestBody(@org.springframework.web.bind.annotation.RequestBody @NotNull @Valid RequestBody requestBody){
         requestBodyService.updateRequestBody(requestBody);
@@ -51,7 +51,7 @@ public class RequestBodyController {
     }
 
     @RequestMapping(path="/deleteRequestBody",method = RequestMethod.POST)
-    @ApiMethod(name = "deleteRequestBody",desc = "deleteRequestBody")
+    @ApiMethod(name = "deleteRequestBody",desc = "删除请求体")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<Void> deleteRequestBody(@NotNull String id){
         requestBodyService.deleteRequestBody(id);
@@ -60,7 +60,7 @@ public class RequestBodyController {
     }
 
     @RequestMapping(path="/findRequestBody",method = RequestMethod.POST)
-    @ApiMethod(name = "findRequestBody",desc = "findRequestBody")
+    @ApiMethod(name = "findRequestBody",desc = "查找请求体")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<RequestBody> findRequestBody(@NotNull String id){
         RequestBody requestBody = requestBodyService.findRequestBody(id);
@@ -69,7 +69,7 @@ public class RequestBodyController {
     }
 
     @RequestMapping(path="/findAllRequestBody",method = RequestMethod.POST)
-    @ApiMethod(name = "findAllRequestBody",desc = "findAllRequestBody")
+    @ApiMethod(name = "findAllRequestBody",desc = "查找所有请求体")
     public Result<List<RequestBody>> findAllRequestBody(){
         List<RequestBody> requestBodyList = requestBodyService.findAllRequestBody();
 
@@ -77,7 +77,7 @@ public class RequestBodyController {
     }
 
     @RequestMapping(path = "/findRequestBodyList",method = RequestMethod.POST)
-    @ApiMethod(name = "findRequestBodyList",desc = "findRequestBodyList")
+    @ApiMethod(name = "findRequestBodyList",desc = "根据查询参数查询请求体列表")
     @ApiParam(name = "requestBodyQuery",desc = "requestBodyQuery",required = true)
     public Result<List<RequestBody>> findRequestBodyList(@org.springframework.web.bind.annotation.RequestBody @Valid @NotNull RequestBodyQuery requestBodyQuery){
         List<RequestBody> requestBodyList = requestBodyService.findRequestBodyList(requestBodyQuery);
@@ -86,7 +86,7 @@ public class RequestBodyController {
     }
 
     @RequestMapping(path = "/findRequestBodyPage",method = RequestMethod.POST)
-    @ApiMethod(name = "findRequestBodyPage",desc = "findRequestBodyPage")
+    @ApiMethod(name = "findRequestBodyPage",desc = "根据查询参数按分页查询请求体")
     @ApiParam(name = "requestBodyQuery",desc = "requestBodyQuery",required = true)
     public Result<Pagination<RequestBody>> findRequestBodyPage(@org.springframework.web.bind.annotation.RequestBody @Valid @NotNull RequestBodyQuery requestBodyQuery){
         Pagination<RequestBody> pagination = requestBodyService.findRequestBodyPage(requestBodyQuery);

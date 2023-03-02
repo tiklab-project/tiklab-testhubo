@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * TestInstanceDao
+ * 接口场景历史实例 数据访问
  */
 @Repository
 public class ApiSceneInstanceDao {
@@ -27,7 +27,7 @@ public class ApiSceneInstanceDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口场景历史实例
      * @param testInstanceEntity
      * @return
      */
@@ -44,7 +44,7 @@ public class ApiSceneInstanceDao {
     }
 
     /**
-     * 删除
+     * 删除接口场景历史实例
      * @param id
      */
     public void deleteTestInstance(String id){
@@ -56,7 +56,7 @@ public class ApiSceneInstanceDao {
     }
 
     /**
-     * 查找
+     * 通过id查找接口场景历史实例
      * @param id
      * @return
      */
@@ -65,7 +65,7 @@ public class ApiSceneInstanceDao {
     }
 
     /**
-    * findAllTestInstance
+    * 查找所有接口场景历史实例
     * @return
     */
     public List<ApiSceneInstanceEntity> findAllTestInstance() {
@@ -76,6 +76,11 @@ public class ApiSceneInstanceDao {
         return jpaTemplate.findList(ApiSceneInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询接口场景历史实例列表
+     * @param apiSceneInstanceQuery
+     * @return
+     */
     public List<ApiSceneInstanceEntity> findTestInstanceList(ApiSceneInstanceQuery apiSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneInstanceEntity.class)
                 .eq("apiSceneId", apiSceneInstanceQuery.getApiSceneId())
@@ -84,6 +89,11 @@ public class ApiSceneInstanceDao {
         return jpaTemplate.findList(queryCondition, ApiSceneInstanceEntity.class);
     }
 
+    /**
+     * 根据查询按分页查询接口场景历史实例
+     * @param apiSceneInstanceQuery
+     * @return
+     */
     public Pagination<ApiSceneInstanceEntity> findTestInstancePage(ApiSceneInstanceQuery apiSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneInstanceEntity.class)
                 .eq("apiSceneId", apiSceneInstanceQuery.getApiSceneId())

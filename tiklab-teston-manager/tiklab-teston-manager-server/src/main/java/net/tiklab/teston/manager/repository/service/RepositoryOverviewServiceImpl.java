@@ -17,7 +17,7 @@ import java.util.*;
 
 
 /**
-* RepositoryServiceImpl
+* 仓库概况 服务
 */
 @Service
 public class RepositoryOverviewServiceImpl implements RepositoryOverviewService {

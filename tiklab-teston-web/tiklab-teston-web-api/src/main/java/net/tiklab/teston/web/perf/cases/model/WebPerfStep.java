@@ -10,7 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.web.scene.cases.model.WebSceneCase;
 
-
+/**
+ * web性能下绑定的场景 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebPerfStepEntity")
 public class WebPerfStep extends BaseModel {
@@ -25,14 +27,14 @@ public class WebPerfStep extends BaseModel {
     @JoinQuery(key = "id")
     private WebPerfCase webPerf;
 
-    @ApiProperty(name="webScene",desc="绑定的unitcase")
+    @ApiProperty(name="webScene",desc="绑定的web场景")
     @Mappings({
             @Mapping(source = "webScene.id",target = "webSceneId")
     })
     @JoinQuery(key = "id")
     private WebSceneCase webScene;
 
-    @ApiProperty(name="createTime",desc="createTime")
+    @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private java.sql.Timestamp createTime;
 

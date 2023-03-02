@@ -7,6 +7,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 请求体 实体
+ */
 @Entity @Table(name="teston_api_request_body")
 public class RequestBodyEntity implements Serializable {
 
@@ -14,9 +17,11 @@ public class RequestBodyEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属接口单元用例
     @Column(name = "api_unit_id",length = 32)
     private String apiUnitId;
 
+    // 请求体类型
     @Column(name = "body_type",length = 32)
     private String bodyType;
 

@@ -5,6 +5,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * app性能实例 实体
+ */
 @Entity
 @Table(name="teston_app_perf_instance")
 public class AppPerfInstanceEntity implements Serializable {
@@ -13,30 +16,39 @@ public class AppPerfInstanceEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 性能测试id
     @Column(name = "app_perf_id")
     private String appPerfId;
 
+    // 测试总次数
     @Column(name = "total")
     private Integer total;
 
+    // 通过数
     @Column(name = "pass_num")
     private Integer passNum;
 
+    // 错误数
     @Column(name = "fail_num")
     private Integer failNum;
 
+    // 通过率
     @Column(name = "pass_rate")
     private String passRate;
 
+    // 错误率
     @Column(name = "error_rate")
     private String errorRate;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 结果
     @Column(name = "result")
     private Integer result;
 
+    // 执行次数
     @Column(name = "execute_number")
     private Integer executeNumber;
 

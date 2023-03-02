@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ResponseHeaderDao
+ * 响应头 数据访问
  */
 @Repository
 public class ResponseHeaderDao{
@@ -26,7 +26,7 @@ public class ResponseHeaderDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建响应头
      * @param responseHeaderEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ResponseHeaderDao{
     }
 
     /**
-     * 更新
+     * 更新响应头
      * @param responseHeaderEntity
      */
     public void updateResponseHeader(ResponseHeaderEntity responseHeaderEntity){
@@ -43,7 +43,7 @@ public class ResponseHeaderDao{
     }
 
     /**
-     * 删除
+     * 删除响应头
      * @param id
      */
     public void deleteResponseHeader(String id){
@@ -55,7 +55,7 @@ public class ResponseHeaderDao{
     }
 
     /**
-     * 查找
+     * 查找响应头
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ResponseHeaderDao{
     }
 
     /**
-    * findAllResponseHeader
+    * 查找所有响应头
     * @return
     */
     public List<ResponseHeaderEntity> findAllResponseHeader() {
@@ -75,6 +75,11 @@ public class ResponseHeaderDao{
         return jpaTemplate.findList(ResponseHeaderEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询响应头列表
+     * @param responseHeaderQuery
+     * @return
+     */
     public List<ResponseHeaderEntity> findResponseHeaderList(ResponseHeaderQuery responseHeaderQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ResponseHeaderEntity.class)
                 .eq("apiUnitId", responseHeaderQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class ResponseHeaderDao{
         return jpaTemplate.findList(queryCondition, ResponseHeaderEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询响应头
+     * @param responseHeaderQuery
+     * @return
+     */
     public Pagination<ResponseHeaderEntity> findResponseHeaderPage(ResponseHeaderQuery responseHeaderQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ResponseHeaderEntity.class)
                 .eq("apiUnitId", responseHeaderQuery.getApiUnitId())

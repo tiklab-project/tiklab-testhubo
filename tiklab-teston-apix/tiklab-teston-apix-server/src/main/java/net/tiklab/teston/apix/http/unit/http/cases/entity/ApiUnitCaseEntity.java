@@ -9,7 +9,9 @@ import net.tiklab.teston.manager.testcase.model.TestCase;
 
 import java.io.Serializable;
 
-
+/**
+ * 接口单元用例 实体
+ */
 @Entity
 @Table(name="teston_api_unit")
 public class ApiUnitCaseEntity implements Serializable {
@@ -19,12 +21,15 @@ public class ApiUnitCaseEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 用例
     @Column(name = "testcase_id",length = 32,notNull = true)
     private String testCaseId;
 
+    // 路径
     @Column(name = "path",length = 256)
     private String path;
 
+    // 请求类型,GET/POST
     @Column(name = "method_type",length = 32)
     private String methodType;
 

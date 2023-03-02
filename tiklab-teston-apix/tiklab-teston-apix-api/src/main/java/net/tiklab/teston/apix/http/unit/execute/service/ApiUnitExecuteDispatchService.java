@@ -5,9 +5,9 @@ import net.tiklab.teston.apix.http.unit.execute.model.ApiUnitTestRequest;
 import net.tiklab.teston.apix.http.unit.instance.model.ApiUnitInstance;
 
 /**
- * api单元用例测试
+ * api单元用例测试 服务接口
  */
-public interface ApiUnitTestDispatchService {
+public interface ApiUnitExecuteDispatchService {
 
     /**
      * 执行

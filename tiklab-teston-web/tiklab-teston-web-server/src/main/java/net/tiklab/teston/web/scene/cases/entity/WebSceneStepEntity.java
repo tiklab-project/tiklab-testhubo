@@ -6,6 +6,9 @@ import net.tiklab.dal.jpa.annotation.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * web场景步骤 实体
+ */
 @Entity
 @Table(name="teston_web_scene_step")
 public class WebSceneStepEntity implements Serializable {
@@ -15,33 +18,43 @@ public class WebSceneStepEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 所属场景
     @Column(name = "web_scene_id",length = 32)
     private String webSceneId;
 
+    // 名称
     @Column(name = "name",length = 256)
     private String name;
 
+    // 定位器
     @Column(name = "location",length = 32)
     private String location;
 
+    // 定位值
     @Column(name = "location_value",length = 256)
     private String locationValue;
 
+    // 方法
     @Column(name = "action_type",length = 256)
     private String actionType;
 
+    // 步骤动作
     @Column(name = "step_action",length = 64)
     private String stepAction;
 
+    // 参数
     @Column(name = "parameter",length = 256)
     private String parameter;
 
+    // 预期值
     @Column(name = "expected_result",length = 128)
     private String expectedResult;
 
+    // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 排序
     @Column(name = "sort")
     private Integer sort;
 

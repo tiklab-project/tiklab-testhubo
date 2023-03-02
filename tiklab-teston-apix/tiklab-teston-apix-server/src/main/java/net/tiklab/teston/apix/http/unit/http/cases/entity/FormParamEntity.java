@@ -8,6 +8,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * form-data 实体
+ */
 @Entity @Table(name="teston_api_form")
 public class FormParamEntity implements Serializable {
 
@@ -16,24 +19,31 @@ public class FormParamEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    //所属接口单元用例
     @Column(name = "api_unit_id",length = 32,notNull = true)
     private String apiUnitId;
 
+    //参数名字
     @Column(name = "param_name",length = 64,notNull = true)
     private String paramName;
 
+    // 数据类型
     @Column(name = "data_type",length = 32,notNull = true)
     private String dataType;
 
+    // 是否必须,0:非必须;1:必须
     @Column(name = "required",length = 2,notNull = true)
     private Integer required;
 
+    // 描述
     @Column(name = "description",length = 128)
     private String desc;
 
+    // 值
     @Column(name = "value",length = 128)
     private String value;
 
+    // 排序
     @Column(name = "sort",length = 4)
     private Integer sort;
 

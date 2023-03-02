@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * WebPerfCaseController
+ * web性能用例 控制器
  */
 @RestController
 @RequestMapping("/webPerfCase")

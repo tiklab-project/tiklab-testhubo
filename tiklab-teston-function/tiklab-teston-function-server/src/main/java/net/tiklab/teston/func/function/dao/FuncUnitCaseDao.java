@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * FuncUnitCaseDao
+ * 功能用例 数据访问
  */
 @Repository
 public class FuncUnitCaseDao {
@@ -26,7 +26,7 @@ public class FuncUnitCaseDao {
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建功能用例
      * @param funcUnitCaseEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class FuncUnitCaseDao {
     }
 
     /**
-     * 更新
+     * 更新功能用例
      * @param funcUnitCaseEntity
      */
     public void updateFuncUnitCase(FuncUnitCaseEntity funcUnitCaseEntity){
@@ -43,7 +43,7 @@ public class FuncUnitCaseDao {
     }
 
     /**
-     * 删除
+     * 删除功能用例
      * @param id
      */
     public void deleteFuncUnitCase(String id){
@@ -55,7 +55,7 @@ public class FuncUnitCaseDao {
     }
 
     /**
-     * 查找
+     * 根据id查找功能用例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class FuncUnitCaseDao {
     }
 
     /**
-    * findAllFunctionalTestStep
+    * 查找所有功能用例
     * @return
     */
     public List<FuncUnitCaseEntity> findAllFuncUnitCase() {
@@ -75,6 +75,11 @@ public class FuncUnitCaseDao {
         return jpaTemplate.findList(FuncUnitCaseEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询列表功能用例
+     * @param funcUnitCaseQuery
+     * @return
+     */
     public List<FuncUnitCaseEntity> findFuncUnitCaseList(FuncUnitCaseQuery funcUnitCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FuncUnitCaseEntity.class)
                 .eq("testCaseId", funcUnitCaseQuery.getTestCaseId())
@@ -83,6 +88,11 @@ public class FuncUnitCaseDao {
         return jpaTemplate.findList(queryCondition, FuncUnitCaseEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询功能用例
+     * @param funcUnitCaseQuery
+     * @return
+     */
     public Pagination<FuncUnitCaseEntity> findFuncUnitCasePage(FuncUnitCaseQuery funcUnitCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FuncUnitCaseEntity.class)
                 .eq("testCaseId", funcUnitCaseQuery.getTestCaseId())

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * FormParamDao
+ * form-data 数据访问
  */
 @Repository
 public class FormParamDao{
@@ -26,7 +26,7 @@ public class FormParamDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建form-data
      * @param formParamEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class FormParamDao{
     }
 
     /**
-     * 更新
+     * 更新form-data
      * @param formParamEntity
      */
     public void updateFormParam(FormParamEntity formParamEntity){
@@ -43,7 +43,7 @@ public class FormParamDao{
     }
 
     /**
-     * 删除
+     * 删除form-data
      * @param id
      */
     public void deleteFormParam(String id){
@@ -55,7 +55,7 @@ public class FormParamDao{
     }
 
     /**
-     * 查找
+     * 根据id查找form-data
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class FormParamDao{
     }
 
     /**
-    * findAllFormParam
+    * 查找所有form-data
     * @return
     */
     public List<FormParamEntity> findAllFormParam() {
@@ -75,6 +75,11 @@ public class FormParamDao{
         return jpaTemplate.findList(FormParamEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询form-data列表
+     * @param formParamQuery
+     * @return
+     */
     public List<FormParamEntity> findFormParamList(FormParamQuery formParamQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormParamEntity.class)
                 .eq("apiUnitId",formParamQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class FormParamDao{
         return jpaTemplate.findList(queryCondition, FormParamEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询form-data
+     * @param formParamQuery
+     * @return
+     */
     public Pagination<FormParamEntity> findFormParamPage(FormParamQuery formParamQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormParamEntity.class)
                 .eq("apiUnitId",formParamQuery.getApiUnitId())

@@ -24,7 +24,7 @@ public class RequestInstanceDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建请求数据实例
      * @param requestInstanceEntity
      * @return
      */
@@ -41,7 +41,7 @@ public class RequestInstanceDao{
     }
 
     /**
-     * 删除
+     * 删除请求数据实例
      * @param id
      */
     public void deleteRequestInstance(String id){
@@ -53,7 +53,7 @@ public class RequestInstanceDao{
     }
 
     /**
-     * 查找
+     * 查找请求数据实例
      * @param id
      * @return
      */
@@ -62,7 +62,7 @@ public class RequestInstanceDao{
     }
 
     /**
-    * findAllRequestInstance
+    * 查找所有请求数据实例
     * @return
     */
     public List<RequestInstanceEntity> findAllRequestInstance() {
@@ -73,10 +73,20 @@ public class RequestInstanceDao{
         return jpaTemplate.findList(RequestInstanceEntity.class,idList);
     }
 
+    /**
+     * 根据查询参数查询请求数据实例列表
+     * @param requestInstanceQuery
+     * @return
+     */
     public List<RequestInstanceEntity> findRequestInstanceList(RequestInstanceQuery requestInstanceQuery) {
         return jpaTemplate.findList(requestInstanceQuery, RequestInstanceEntity.class);
     }
 
+    /**
+     * 根据查询参数按分页查询请求数据实例
+     * @param requestInstanceQuery
+     * @return
+     */
     public Pagination<RequestInstanceEntity> findRequestInstancePage(RequestInstanceQuery requestInstanceQuery) {
         return jpaTemplate.findPage(requestInstanceQuery, RequestInstanceEntity.class);
     }

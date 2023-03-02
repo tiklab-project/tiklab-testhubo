@@ -7,6 +7,11 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 接口单元
+ * http协议
+ * 响应体实例 实体
+ */
 @Entity @Table(name="teston_api_response_instance")
 public class ResponseInstanceEntity implements Serializable {
 

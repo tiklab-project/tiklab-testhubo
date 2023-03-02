@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ *
+ */
 @ApiModel
 @Mapper(targetAlias = "PreScriptEntity")
 @Join

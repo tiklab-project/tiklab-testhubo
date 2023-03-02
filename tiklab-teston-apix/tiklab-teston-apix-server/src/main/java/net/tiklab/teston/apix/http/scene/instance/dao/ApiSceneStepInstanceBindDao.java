@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * ApiSceneStepInstanceBindDao
+ * 接口场景下步骤的公共实例 数据访问
  */
 @Repository
 public class ApiSceneStepInstanceBindDao{
@@ -26,7 +26,7 @@ public class ApiSceneStepInstanceBindDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建接口场景下步骤的公共实例
      * @param apiSceneStepInstanceBindEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class ApiSceneStepInstanceBindDao{
     }
 
     /**
-     * 更新
+     * 更新接口场景下步骤的公共实例
      * @param apiSceneStepInstanceBindEntity
      */
     public void updateApiSceneStepInstanceBind(ApiSceneStepInstanceBindEntity apiSceneStepInstanceBindEntity){
@@ -43,7 +43,7 @@ public class ApiSceneStepInstanceBindDao{
     }
 
     /**
-     * 删除
+     * 删除接口场景下步骤的公共实例
      * @param id
      */
     public void deleteApiSceneStepInstanceBind(String id){
@@ -55,7 +55,7 @@ public class ApiSceneStepInstanceBindDao{
     }
 
     /**
-     * 查找
+     * 查找接口场景下步骤的公共实例
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class ApiSceneStepInstanceBindDao{
     }
 
     /**
-    * findAllApiSceneStepInstanceBind
+    * 查找所有接口场景下步骤的公共实例
     * @return
     */
     public List<ApiSceneStepInstanceBindEntity> findAllApiSceneStepInstanceBind() {
@@ -75,6 +75,11 @@ public class ApiSceneStepInstanceBindDao{
         return jpaTemplate.findList(ApiSceneStepInstanceBindEntity.class,idList);
     }
 
+    /**
+     * 查询接口场景下步骤的实例公共实例
+     * @param apiSceneStepInstanceBindQuery
+     * @return
+     */
     public List<ApiSceneStepInstanceBindEntity> findApiSceneStepInstanceBindList(ApiSceneStepInstanceBindQuery apiSceneStepInstanceBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneStepInstanceBindEntity.class)
                 .eq("apiSceneInstanceId",apiSceneStepInstanceBindQuery.getApiSceneInstanceId())
@@ -83,6 +88,11 @@ public class ApiSceneStepInstanceBindDao{
         return jpaTemplate.findList(queryCondition,ApiSceneStepInstanceBindEntity.class);
     }
 
+    /**
+     * 按分页查询接口场景下步骤的公共实例
+     * @param apiSceneStepInstanceBindQuery
+     * @return
+     */
     public Pagination<ApiSceneStepInstanceBindEntity> findApiSceneStepInstanceBindPage(ApiSceneStepInstanceBindQuery apiSceneStepInstanceBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneStepInstanceBindEntity.class)
                 .eq("apiSceneInstanceId",apiSceneStepInstanceBindQuery.getApiSceneInstanceId())

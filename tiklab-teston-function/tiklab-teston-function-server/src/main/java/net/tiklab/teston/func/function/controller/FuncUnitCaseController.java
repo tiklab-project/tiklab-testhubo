@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * FuncUnitCaseController
+ * 功能用例 控制器
  */
 @RestController
 @RequestMapping("/funcUnitCase")

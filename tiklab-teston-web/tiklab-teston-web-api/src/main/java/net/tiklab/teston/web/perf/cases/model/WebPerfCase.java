@@ -10,6 +10,9 @@ import net.tiklab.postin.annotation.ApiModel;
 import net.tiklab.postin.annotation.ApiProperty;
 import net.tiklab.teston.manager.testcase.model.TestCase;
 
+/**
+ * web性能用例 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "WebPerfCaseEntity")
 @Join
@@ -18,20 +21,20 @@ public class WebPerfCase extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="testCase",desc="用例",eg="@selectOne")
+    @ApiProperty(name="testCase",desc="所属用例",eg="@selectOne")
     @Mappings({
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
     @JoinQuery(key = "id")
     private TestCase testCase;
 
-    @ApiProperty(name="threadCount",desc="threadCount")
+    @ApiProperty(name="threadCount",desc="线程数")
     private Integer threadCount;
 
     @ApiProperty(name="executeType",desc="0:执行次数 1:执行时间")
     private Integer executeType;
 
-    @ApiProperty(name="executeCount",desc="executeCount")
+    @ApiProperty(name="executeCount",desc="执行次数")
     private Integer executeCount;
 
     public String getId() {

@@ -11,6 +11,9 @@ import net.tiklab.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 响应raw 模型
+ */
 @ApiModel
 @Mapper(targetAlias = "RawResponseEntity")
 @Join
@@ -28,7 +31,7 @@ public class RawResponse extends BaseModel{
     private ApiUnitCase apiUnit;
 
     @NotNull
-    @ApiProperty(name="raw",desc="raw",required = true)
+    @ApiProperty(name="raw",desc="raw文本",required = true)
     private String raw;
 
     public String getId() {

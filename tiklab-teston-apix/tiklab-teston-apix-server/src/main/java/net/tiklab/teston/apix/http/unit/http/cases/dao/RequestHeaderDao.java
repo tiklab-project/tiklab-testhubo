@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RequestHeaderDao
+ * 请求头 数据访问
  */
 @Repository
 public class RequestHeaderDao{
@@ -26,7 +26,7 @@ public class RequestHeaderDao{
     JpaTemplate jpaTemplate;
 
     /**
-     * 创建
+     * 创建请求头
      * @param requestHeaderEntity
      * @return
      */
@@ -35,7 +35,7 @@ public class RequestHeaderDao{
     }
 
     /**
-     * 更新
+     * 更新请求头
      * @param requestHeaderEntity
      */
     public void updateRequestHeader(RequestHeaderEntity requestHeaderEntity){
@@ -43,7 +43,7 @@ public class RequestHeaderDao{
     }
 
     /**
-     * 删除
+     * 删除请求头
      * @param id
      */
     public void deleteRequestHeader(String id){
@@ -55,7 +55,7 @@ public class RequestHeaderDao{
     }
 
     /**
-     * 查找
+     * 查找请求头
      * @param id
      * @return
      */
@@ -64,7 +64,7 @@ public class RequestHeaderDao{
     }
 
     /**
-    * findAllRequestHeader
+    * 查找所有请求头
     * @return
     */
     public List<RequestHeaderEntity> findAllRequestHeader() {
@@ -75,6 +75,11 @@ public class RequestHeaderDao{
         return jpaTemplate.findList(RequestHeaderEntity.class,idList);
     }
 
+    /**
+     * 根据参数查询请求头列表
+     * @param requestHeaderQuery
+     * @return
+     */
     public List<RequestHeaderEntity> findRequestHeaderList(RequestHeaderQuery requestHeaderQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestHeaderEntity.class)
                 .eq("apiUnitId", requestHeaderQuery.getApiUnitId())
@@ -83,6 +88,11 @@ public class RequestHeaderDao{
         return jpaTemplate.findList(queryCondition, RequestHeaderEntity.class);
     }
 
+    /**
+     * 根据参数按分页查询请求头
+     * @param requestHeaderQuery
+     * @return
+     */
     public Pagination<RequestHeaderEntity> findRequestHeaderPage(RequestHeaderQuery requestHeaderQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestHeaderEntity.class)
                 .eq("apiUnitId", requestHeaderQuery.getApiUnitId())

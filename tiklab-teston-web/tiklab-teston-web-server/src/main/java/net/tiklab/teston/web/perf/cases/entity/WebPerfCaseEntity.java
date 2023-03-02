@@ -4,6 +4,9 @@ import net.tiklab.dal.jpa.annotation.*;
 
 import java.io.Serializable;
 
+/**
+ * web性能用例 实体
+ */
 @Entity @Table(name="teston_web_perfcase")
 public class WebPerfCaseEntity implements Serializable {
     @Id
@@ -11,15 +14,19 @@ public class WebPerfCaseEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
+    // 线程数
     @Column(name = "thread_count")
     private Integer threadCount;
 
+    // 执行次数
     @Column(name = "execute_count")
     private Integer executeCount;
 
+    // 执行类型 0:执行次数 1:执行时间
     @Column(name = "execute_type")
     private Integer executeType;
 
+    // 所属用例
     @Column(name = "testcase_id")
     private String testCaseId;
 

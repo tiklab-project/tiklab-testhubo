@@ -8,6 +8,9 @@ import net.tiklab.dal.jpa.annotation.Table;import net.tiklab.dal.jpa.annotation.
 
 import java.io.Serializable;
 
+/**
+ * 目录 实体
+ */
 @Entity
 @Table(name="teston_category")
 public class CategoryEntity implements Serializable {
@@ -21,7 +24,7 @@ public class CategoryEntity implements Serializable {
     @Column(name = "name",length = 64,notNull = true)
     private String name;
 
-    //repositoryId
+    //仓库id
     @Column(name = "repository_id",length = 32,notNull = true)
     private String repositoryId;
 

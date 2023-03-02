@@ -7,7 +7,7 @@ import net.tiklab.teston.apix.http.perf.execute.model.ApiPerfTestResponse;
 /**
  * api性能测试调度服务
  */
-public interface ApiPerfTestDispatchService {
+public interface ApiPerfExecuteDispatchService {
 
     /**
      * 性能执行

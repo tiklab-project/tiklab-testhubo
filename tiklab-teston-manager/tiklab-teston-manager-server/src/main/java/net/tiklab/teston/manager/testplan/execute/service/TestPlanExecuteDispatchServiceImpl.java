@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 /**
- * @author Sun
+ * 测试计划测试调度
  */
 @Service
 public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispatchService {
