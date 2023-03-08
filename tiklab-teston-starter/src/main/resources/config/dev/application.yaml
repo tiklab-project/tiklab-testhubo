@@ -1,4 +1,4 @@
-#application net.tiklab.teston.config
+#application io.tiklab.teston.config
 app:
   name: tiklab-teston
 spring:
@@ -7,11 +7,11 @@ spring:
 
 PROJECT_HOME: ${user.home}/tiklab/${app.name}
 
-#web net.tiklab.teston.config
+#web io.tiklab.teston.config
 server:
   port: 8080
 
-#dal net.tiklab.teston.config
+#dal io.tiklab.teston.config
 jdbc:
   driverClassName: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://172.10.1.10:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -19,7 +19,7 @@ jdbc:
   password: darth2020
 
 
-#dfs net.tiklab.teston.config
+#dfs io.tiklab.teston.config
 dfs:
   server:
     enable: false
@@ -30,7 +30,7 @@ dfs:
     url: 127.0.0.1:4010
     bucket: ${app.name}
 
-#dcs net.tiklab.teston.config
+#dcs io.tiklab.teston.config
 dcs:
   server:
     enable: false
@@ -41,7 +41,7 @@ dcs:
     url: 127.0.0.1:5010
     bucket: ${app.name}
 
-#dss net.tiklab.teston.config
+#dss io.tiklab.teston.config
 dss:
   server:
     enable: false
@@ -52,18 +52,18 @@ dss:
     url: 127.0.0.1:6010
     bucket: ${app.name}
 
-#integration net.tiklab.teston.config
+#integration io.tiklab.teston.config
 homes:
   address: http://192.168.10.19:8080
 
 #project:
 #  address: http://127.0.0.1:8081
 
-#plugin net.tiklab.teston.config
+#plugin io.tiklab.teston.config
 plugin:
   path: ${PROJECT_HOME}/plugin
 
-#licences net.tiklab.teston.config
+#licences io.tiklab.teston.config
 licences:
   path: ${PROJECT_HOME}/licences
 

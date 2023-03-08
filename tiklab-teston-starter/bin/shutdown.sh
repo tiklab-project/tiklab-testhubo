@@ -9,7 +9,7 @@ if [ -e "${DIRS}/embbed/${JDK_VERSION}" ]; then
 fi
 
 
-APP_MAIN="net.tiklab.teston.TestOnApplication"
+APP_MAIN="io.tiklab.teston.TestOnApplication"
 
 PID=0
 getPID(){

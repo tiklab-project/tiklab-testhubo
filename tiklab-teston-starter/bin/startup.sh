@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------------------------------------------------
 DIRS=$(dirname "$PWD")
 
-APP_MAIN="net.tiklab.teston.TestOnApplication"
+APP_MAIN="io.tiklab.teston.TestOnApplication"
 
 JAVA_HOME="/usr/local/jdk-16.0.2"
 JDK_VERSION=jdk-16.0.2
