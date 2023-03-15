@@ -1,5 +1,6 @@
 package io.tiklab.teston.testplan.cases.service;
 
+import io.tiklab.join.annotation.JoinProvider;
 import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCaseQuery;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
 * 测试计划绑定的用例 服务接口
 */
+@JoinProvider(model = TestPlanCase.class)
 public interface TestPlanCaseService {
 
     /**

@@ -486,45 +486,6 @@ CREATE TABLE teston_env_app(
 );
 
 
-CREATE TABLE teston_quartz_master(
-    id VARCHAR(32) PRIMARY KEY,
-    name VARCHAR(32) NOT NULL,
-    task_Class_url VARCHAR(32),
-    description varchar (32),
-    cycle_index int,
-    environment_id varchar (32),
-    repository_id varchar (32),
-    type int not null,
-    quartz_type varchar (12),
-    period varchar (32),
-    weeks varchar (128),
-    state int,
-    sort int,
-    create_time timestamp,
-    update_time timestamp
-);
-
-CREATE TABLE teston_quartz_task(
-    id VARCHAR(32) PRIMARY KEY,
-    cron_expression varchar (32),
-    end_Time timestamp,
-    execution_time varchar(32),
-    quartz_master_id varchar (32)
-
-);
-
-CREATE TABLE teston_quartz_testcase(
-    id VARCHAR(32) PRIMARY KEY,
-    testcase_id varchar (32),
-    quartz_master_id varchar (32)
-);
-
-CREATE TABLE teston_quartz_testcase(
-    id VARCHAR(32) PRIMARY KEY,
-    testcase_id varchar (32),
-    quartz_master_id varchar (32)
-);
-
 CREATE TABLE teston_action_type(
     id VARCHAR(32) PRIMARY KEY,
     name VARCHAR(32),

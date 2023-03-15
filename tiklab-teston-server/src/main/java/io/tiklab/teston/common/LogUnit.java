@@ -1,11 +1,11 @@
 package io.tiklab.teston.common;
 
 import com.alibaba.fastjson.JSONObject;
+import io.tiklab.eam.common.context.LoginContext;
 import io.tiklab.security.logging.model.Logging;
 import io.tiklab.security.logging.model.LoggingType;
 import io.tiklab.security.logging.service.LoggingByTemplService;
 import io.tiklab.user.user.model.User;
-import io.tiklab.utils.context.LoginContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

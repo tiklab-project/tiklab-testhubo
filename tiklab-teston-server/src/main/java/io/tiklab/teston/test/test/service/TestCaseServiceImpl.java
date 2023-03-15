@@ -32,7 +32,7 @@ import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstance;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
 import io.tiklab.teston.test.web.scene.instance.service.WebSceneInstanceService;
-import io.tiklab.utils.context.LoginContext;
+import io.tiklab.eam.common.context.LoginContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

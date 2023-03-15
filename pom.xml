@@ -62,11 +62,7 @@
                 <artifactId>tiklab-web-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>io.tiklab</groupId>
-                <artifactId>tiklab-tks-annotation</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>io.tiklab</groupId>
                 <artifactId>tiklab-tks-core</artifactId>

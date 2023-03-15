@@ -10,7 +10,7 @@ import io.tiklab.teston.testplan.instance.service.TestPlanInstanceService;
 import io.tiklab.teston.testplan.cases.model.TestPlanCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.tiklab.teston.testplan.cases.service.TestPlanCaseService;
-import io.tiklab.utils.context.LoginContext;
+import io.tiklab.eam.common.context.LoginContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

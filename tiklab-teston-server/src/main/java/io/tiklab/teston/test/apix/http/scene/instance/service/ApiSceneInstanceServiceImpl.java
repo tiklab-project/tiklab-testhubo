@@ -15,7 +15,7 @@ import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.apix.http.scene.instance.dao.ApiSceneInstanceDao;
-import io.tiklab.utils.context.LoginContext;
+import io.tiklab.eam.common.context.LoginContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

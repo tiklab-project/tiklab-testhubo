@@ -13,7 +13,7 @@ import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstanceQuery;
 import io.tiklab.teston.test.apix.http.unit.instance.model.RequestInstance;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ResponseInstance;
-import io.tiklab.utils.context.LoginContext;
+import io.tiklab.eam.common.context.LoginContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
