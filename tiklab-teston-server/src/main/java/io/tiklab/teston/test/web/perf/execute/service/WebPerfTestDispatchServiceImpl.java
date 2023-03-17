@@ -27,6 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,10 +62,20 @@ public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchServic
     @Autowired
     TestWebUtil testWebUtil;
 
-    WebPerfTestService webPerfTestService(String agentId){
-        AgentConfig agentConfig = agentConfigService.findAgentConfig(agentId);
+    @Autowired
+    WebPerfTestService webPerfTestService;
 
-        return rpcClientWebUtil.rpcClient().getBean(WebPerfTestService.class, new FixedLookup(agentConfig.getUrl()));
+    /**
+     *  环境中获取是否是内嵌agent
+     */
+    @Value("${teston-agent.embbed.enable:false}")
+    Boolean enable;
+
+    /**
+     * rpc 调用
+     */
+    WebPerfTestService webPerfTestServiceRPC(String agentUrl){
+        return rpcClientWebUtil.rpcClient().getBean(WebPerfTestService.class, new FixedLookup(agentUrl));
     }
 
     private List<AgentConfig> agentConfigList;
@@ -134,8 +145,13 @@ public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchServic
             AgentConfig agentConfig = agentConfigList.get(i);
 
             //执行压力测试
-            webPerfTestService(agentConfig.getId()).execute(webPerfTestRequest);
+            if(enable){
+                webPerfTestService.execute(webPerfTestRequest);
+            }else {
+                webPerfTestServiceRPC(agentConfig.getUrl()).execute(webPerfTestRequest);
+            }
         }
+
 
     }
 
@@ -146,8 +162,15 @@ public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchServic
         //用于存放agent返回来的实例
         ArrayList<WebSceneInstance> arrayList = new ArrayList<>();
 
+        WebPerfTestResponse response =null;
+
         for(int i = 0;i<agentConfigList.size();i++){
-            WebPerfTestResponse response = webPerfTestService(agentConfigList.get(i).getId()).exeResult(webPerfTestRequest);
+
+            if(enable){
+                response = webPerfTestService.exeResult(webPerfTestRequest);
+            }else {
+                response = webPerfTestServiceRPC(agentConfigList.get(i).getUrl()).exeResult(webPerfTestRequest);
+            }
 
             if(CollectionUtils.isNotEmpty(response.getWebSceneInstanceList())){
                 arrayList.addAll(response.getWebSceneInstanceList());

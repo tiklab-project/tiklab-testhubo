@@ -19,7 +19,7 @@ jdbc:
   password: darth2020
 
 
-#dfs io.tiklab.teston.config
+#dfs
 dfs:
   server:
     enable: false
@@ -30,7 +30,7 @@ dfs:
     url: 127.0.0.1:4010
     bucket: ${app.name}
 
-#dcs io.tiklab.teston.config
+#dcs
 dcs:
   server:
     enable: false
@@ -41,7 +41,7 @@ dcs:
     url: 127.0.0.1:5010
     bucket: ${app.name}
 
-#dss io.tiklab.teston.config
+#dss
 dss:
   server:
     enable: false
@@ -52,19 +52,22 @@ dss:
     url: 127.0.0.1:6010
     bucket: ${app.name}
 
-#integration io.tiklab.teston.config
+#name
+application: teston
+
+#homes
 homes:
   address: http://172.11.1.11:8080
 
-#plugin io.tiklab.teston.config
+#plugin
 plugin:
   path: ${PROJECT_HOME}/plugin
 
-#licences io.tiklab.teston.config
+#licences
 licences:
   path: ${PROJECT_HOME}/licences
 
-application: teston
+
 
 file:
   path: http://file.test.tiklab.net
@@ -79,5 +82,9 @@ eas:
 
 mysql:
   database: tiklab_teston
+  embbed:
+    enable: true
+
+teston-agent:
   embbed:
     enable: true

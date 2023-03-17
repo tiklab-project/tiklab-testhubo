@@ -3,6 +3,7 @@ package io.tiklab.teston.test.web.scene.execute.service;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.web.scene.WebSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
+import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
@@ -14,7 +15,9 @@ import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstance;
 import io.tiklab.teston.test.web.scene.instance.service.WebSceneInstanceService;
 import io.tiklab.teston.test.web.scene.instance.service.WebSceneInstanceStepService;
 import io.tiklab.teston.test.web.utils.RpcClientWebUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,10 +43,20 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     @Autowired
     RpcClientWebUtil rpcClientWebUtil;
 
-    WebSceneTestService webSceneTestService(String agentConfigId){
-        AgentConfig agentConfig = agentConfigService.findAgentConfig("111111");
+    @Autowired
+    WebSceneTestService webSceneTestService;
 
-        return rpcClientWebUtil.rpcClient().getBean(WebSceneTestService.class, new FixedLookup(agentConfig.getUrl()));
+    /**
+     *  环境中获取是否是内嵌agent
+     */
+    @Value("${teston-agent.embbed.enable:false}")
+    Boolean enable;
+
+    /**
+     * rpc 远程调用
+     */
+    WebSceneTestService webSceneTestServiceRPC(String agentUrl){
+        return rpcClientWebUtil.rpcClient().getBean(WebSceneTestService.class, new FixedLookup(agentUrl));
     }
 
 
@@ -60,14 +73,26 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         //设置步骤数据
         webSceneTestRequest.setWebSceneStepList(webSceneStepList);
 
-        //调用执行方法返回结果数据
-        WebSceneTestResponse webSceneTestResponse = webSceneTestService(webSceneTestRequest.getAgentConfigId()).execute(webSceneTestRequest);
+        WebSceneTestResponse webSceneTestResponse =null;
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable) {
+            //调用执行方法返回结果数据
+            webSceneTestResponse = webSceneTestService.execute(webSceneTestRequest);
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)){
+                AgentConfig agentConfig = agentConfigList.get(0);
 
+                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).execute(webSceneTestRequest);
+            }
+        }
+
+        //测试计划中设置了执行类型，其他没设置
         if(webSceneTestRequest.getExeType()==null){
             //返回的数据存入数据库
             saveToSql(webSceneTestResponse,webSceneId);
         }
-
 
 
         return webSceneTestResponse;

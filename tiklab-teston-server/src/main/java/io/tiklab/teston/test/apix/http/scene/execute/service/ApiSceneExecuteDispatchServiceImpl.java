@@ -1,8 +1,10 @@
 package io.tiklab.teston.test.apix.http.scene.execute.service;
 
+import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 
 import io.tiklab.teston.agent.api.http.scene.ApiSceneTestService;
+import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
 import io.tiklab.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
@@ -23,6 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,10 +54,20 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
     @Autowired
     RpcClientApixUtil rpcClientApixUtil;
 
-    ApiSceneTestService apiSceneTestService(){
-        AgentConfig agentConfig = agentConfigService.findAgentConfig("111111");
+    @Autowired
+    ApiSceneTestService apiSceneTestService;
 
-        return rpcClientApixUtil.rpcClient().getBean(ApiSceneTestService.class, new FixedLookup(agentConfig.getUrl()));
+    /**
+     *  环境中获取是否是内嵌agent
+     */
+    @Value("${teston-agent.embbed.enable:false}")
+    Boolean enable;
+
+    /**
+     * rpc 调用
+     */
+    ApiSceneTestService apiSceneTestServiceRPC(String agentUrl){
+        return rpcClientApixUtil.rpcClient().getBean(ApiSceneTestService.class, new FixedLookup(agentUrl));
     }
 
     /**
@@ -69,8 +82,21 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         List<ApiUnitTestRequest> apiUnitTestRequestList = processApiSceneTestData(apiSceneTestRequest);
         apiSceneTestRequest.setApiUnitTestRequestList(apiUnitTestRequestList);
 
-        //执行测试步骤返回数据
-        ApiSceneTestResponse apiSceneTestResponse = apiSceneTestService().execute(apiSceneTestRequest);
+
+        ApiSceneTestResponse apiSceneTestResponse = null;
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable){
+            //执行测试步骤返回数据
+            apiSceneTestResponse = apiSceneTestService.execute(apiSceneTestRequest);
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)){
+                AgentConfig agentConfig = agentConfigList.get(0);
+
+                apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
+            }
+        }
 
         //测试计划中设置了执行类型，其他没设置
         if(apiSceneTestRequest.getExeType()==null){

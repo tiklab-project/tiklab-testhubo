@@ -75,6 +75,10 @@ file:
 base:
   url: http://192.168.10.16:3000
 
+teston-agent:
+  embbed:
+    enable: true
+
 eas:
   embbed:
     enable: true

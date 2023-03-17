@@ -82,3 +82,7 @@ mysql:
   database: tiklab_teston
   embbed:
     enable: false
+
+teston-agent:
+  embbed:
+    enable: true

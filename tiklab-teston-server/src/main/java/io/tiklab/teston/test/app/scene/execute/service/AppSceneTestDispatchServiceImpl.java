@@ -3,6 +3,7 @@ package io.tiklab.teston.test.app.scene.execute.service;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.app.scene.AppSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
+import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 import io.tiklab.teston.support.environment.service.AppEnvService;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
@@ -14,9 +15,11 @@ import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.tiklab.teston.test.app.scene.instance.service.AppSceneInstanceService;
 import io.tiklab.teston.test.app.utils.RpcClientAppUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -45,19 +48,21 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     @Autowired
     RpcClientAppUtil rpcClientAppUtil;
 
-    AppSceneTestService appSceneTestService(String agentId){
 
-        String id=null;
+    @Autowired
+    AppSceneTestService appSceneTestService;
 
-        if(ObjectUtils.isEmpty(agentId)){
-            id= "111111";
-        }else {
-            id=agentId;
-        }
+    /**
+     *  环境中获取是否是内嵌agent
+     */
+    @Value("${teston-agent.embbed.enable:false}")
+    Boolean enable;
 
-        AgentConfig agentConfig = agentConfigService.findAgentConfig(id);
-
-        return rpcClientAppUtil.rpcClient().getBean(AppSceneTestService.class, new FixedLookup(agentConfig.getUrl()));
+    /**
+     * rpc 调用
+     */
+    AppSceneTestService appSceneTestServiceRPC(String agentUrl){
+        return rpcClientAppUtil.rpcClient().getBean(AppSceneTestService.class, new FixedLookup(agentUrl));
     }
 
 
@@ -72,8 +77,19 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
         appSceneTestRequest.setAppSceneStepList(appSceneStepList);
 
+        AppSceneTestResponse appSceneTestResponse = null;
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable) {
+            appSceneTestResponse = appSceneTestService.execute(appSceneTestRequest);
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)){
+                AgentConfig agentConfig = agentConfigList.get(0);
 
-        AppSceneTestResponse appSceneTestResponse = appSceneTestService(appSceneTestRequest.getCurrentAgentId()).execute(appSceneTestRequest);
+                appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
+            }
+        }
 
        //测试计划中设置了值
         if(appSceneTestRequest.getExeType()==null){

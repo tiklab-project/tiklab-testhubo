@@ -28,6 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,12 +63,21 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     @Autowired
     TestApixUtil testApixUtil;
 
-    ApiPerfTestService apiPerfTestService(String agentId){
-        AgentConfig agentConfig = agentConfigService.findAgentConfig(agentId);
+    @Autowired
+    ApiPerfTestService apiPerfTestService;
 
-        return rpcClientApixUtil.rpcClient().getBean(ApiPerfTestService.class, new FixedLookup(agentConfig.getUrl()));
+    /**
+     * rpc 远程调用
+     */
+    ApiPerfTestService apiPerfTestServiceRPC(String agentUrl){
+        return rpcClientApixUtil.rpcClient().getBean(ApiPerfTestService.class, new FixedLookup(agentUrl));
     }
 
+    /**
+     *  环境中获取是否是内嵌agent
+     */
+    @Value("${teston-agent.embbed.enable:false}")
+    Boolean enable;
 
     private List<AgentConfig> agentConfigList;
     //执行次数
@@ -128,9 +138,16 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
             //获取agentId，agentList index 从0开始
             AgentConfig agentConfig = agentConfigList.get(i);
+            String agentUrl = agentConfig.getUrl();
 
-            apiPerfTestService(agentConfig.getId()).execute(apiPerfTestRequest);
+            //执行测试
+            if(enable){
+                apiPerfTestService.execute(apiPerfTestRequest);
+            }else {
+                apiPerfTestServiceRPC(agentUrl).execute(apiPerfTestRequest);
+            }
         }
+
     }
 
 
@@ -142,7 +159,15 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         ArrayList<ApiSceneInstance> arrayList = new ArrayList<>();
 
         for(int i = 0;i<agentConfigList.size();i++){
-            ApiPerfTestResponse response = apiPerfTestService(agentConfigList.get(i).getId()).exeResult();
+
+            ApiPerfTestResponse response = null;
+
+            if(enable){
+                response = apiPerfTestService.exeResult();
+            }else {
+                response = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).exeResult();
+            }
+
 
             //获取每个agent的实例
             if(CollectionUtils.isNotEmpty(response.getApiSceneInstanceList())){

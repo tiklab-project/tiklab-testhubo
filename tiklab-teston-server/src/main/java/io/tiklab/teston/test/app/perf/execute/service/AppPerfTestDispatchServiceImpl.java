@@ -29,6 +29,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,11 +67,21 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
 
     @Autowired
     TestAppUtil testAppUtil;
+    @Autowired
+    AppPerfTestService appPerfTestService;
 
-    AppPerfTestService appPerfTestService(String agentId){
-        AgentConfig agentConfig = agentConfigService.findAgentConfig(agentId);
 
-        return rpcClientAppUtil.rpcClient().getBean(AppPerfTestService.class, new FixedLookup(agentConfig.getUrl()));
+    /**
+     *  环境中获取是否是内嵌agent
+     */
+    @Value("${teston-agent.embbed.enable:false}")
+    Boolean enable;
+
+    /**
+     * rpc 调用
+     */
+    AppPerfTestService appPerfTestServiceRPC(String agentUrl){
+        return rpcClientAppUtil.rpcClient().getBean(AppPerfTestService.class, new FixedLookup(agentUrl));
     }
 
     private List<AgentConfig> agentConfigList;
@@ -164,15 +175,15 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
             distributionList = testAppUtil.random(executeCount, agentSize);
         }
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 999, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(10));
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 999, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(10));
+//
+//        threadPoolExecutor.setCorePoolSize(agentSize);
 
-        threadPoolExecutor.setCorePoolSize(agentSize);
 
 
+        for (int i = 0; i < agentSize; i++) {
 
-        for(int i = 0; i<agentSize;i++){
-
-            threadPoolExecutor.setCorePoolSize(agentSize);
+//                threadPoolExecutor.setCorePoolSize(agentSize);
 
             //设置执行次数
             appPerfTestRequest.setExeNum(distributionList.get(i));
@@ -184,8 +195,14 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
             appPerfTestRequest.setCurrentAgentId(agentConfig.getId());
 
             //执行测试
-            appPerfTestService(agentConfig.getId()).execute(appPerfTestRequest);
+            if(enable){
+                appPerfTestService.execute(appPerfTestRequest);
+            }else {
+                appPerfTestServiceRPC(agentConfig.getUrl()).execute(appPerfTestRequest);
+            }
         }
+
+
 
     }
 
@@ -196,7 +213,13 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
         ArrayList<AppSceneInstance> arrayList = new ArrayList<>();
 
         for(int i = 0;i<agentConfigList.size();i++){
-            AppPerfTestResponse response = appPerfTestService(agentConfigList.get(i).getId()).exeResult(appPerfTestRequest);
+            AppPerfTestResponse response;
+
+            if(enable){
+                response = appPerfTestService.exeResult(appPerfTestRequest);
+            }else {
+                response = appPerfTestServiceRPC(agentConfigList.get(i).getId()).exeResult(appPerfTestRequest);
+            }
 
             if(CollectionUtils.isNotEmpty(response.getAppSceneInstanceList())){
                 //获取每个agent的实例
