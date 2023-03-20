@@ -27,6 +27,7 @@
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-rpc-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
@@ -112,6 +113,8 @@
             <artifactId>tiklab-teston-agent-starter</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
+
     </dependencies>
 
     <profiles>
@@ -136,13 +139,21 @@
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
-<!--                <dependency>-->
-<!--                    <groupId>io.tiklab</groupId>-->
-<!--                    <artifactId>tiklab-teston-agent-starter</artifactId>-->
-<!--                    <version>${project.version}</version>-->
-<!--                    <type>zip</type>-->
-<!--                    <scope>provided</scope>-->
-<!--                </dependency>-->
+
+                <dependency>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-teston-chrome-linux</artifactId>
+                    <version>1.0.0</version>
+                    <type>zip</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-teston-node-linux</artifactId>
+                    <version>1.0.0</version>
+                    <type>zip</type>
+                    <scope>provided</scope>
+                </dependency>
 
             </dependencies>
             <properties>
@@ -178,6 +189,27 @@
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
+                                        <dependency>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-teston-chrome-linux</artifactId>
+                                            <version>1.0.0</version>
+                                            <type>zip</type>
+                                            <outputDirectory>embbed</outputDirectory>
+                                        </dependency>
+                                        <dependency>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-teston-node-linux</artifactId>
+                                            <version>1.0.0</version>
+                                            <type>zip</type>
+                                            <outputDirectory>embbed</outputDirectory>
+                                        </dependency>
+<!--                                        <dependency>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-teston-appium</artifactId>-->
+<!--                                            <version>1.0.0</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </dependency>-->
 <!--                                        <dependency>-->
 <!--                                            <groupId>io.tiklab</groupId>-->
 <!--                                            <artifactId>tiklab-teston-agent-starter</artifactId>-->
@@ -257,65 +289,65 @@
         </profile>
 
         <!--mac-->
-        <profile>
-            <id>system-mac</id>
-            <dependencies>
-                <dependency>
-                    <groupId>io.tiklab</groupId>
-                    <artifactId>tiklab-jdk-mac</artifactId>
-                    <version>${project.version}</version>
-                    <type>zip</type>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>io.tiklab</groupId>
-                    <artifactId>tiklab-jdk-mac</artifactId>
-                    <version>${project.version}</version>
-                    <type>zip</type>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-            <properties>
-                <assembly>mac</assembly>
-                <systemType>mac</systemType>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <version>2.8</version>
-                        <executions>
-                            <execution>
-                                <id>unpack</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>unpack</goal>
-                                </goals>
-                                <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-jdk-mac</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>embbed</outputDirectory>
-                                        </artifactItem>
-                                        <artifactItem>
-                                            <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-mysql-mac</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>embbed</outputDirectory>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+<!--        <profile>-->
+<!--            <id>system-mac</id>-->
+<!--            <dependencies>-->
+<!--                <dependency>-->
+<!--                    <groupId>io.tiklab</groupId>-->
+<!--                    <artifactId>tiklab-jdk-mac</artifactId>-->
+<!--                    <version>${project.version}</version>-->
+<!--                    <type>zip</type>-->
+<!--                    <scope>provided</scope>-->
+<!--                </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>io.tiklab</groupId>-->
+<!--                    <artifactId>tiklab-jdk-mac</artifactId>-->
+<!--                    <version>${project.version}</version>-->
+<!--                    <type>zip</type>-->
+<!--                    <scope>provided</scope>-->
+<!--                </dependency>-->
+<!--            </dependencies>-->
+<!--            <properties>-->
+<!--                <assembly>mac</assembly>-->
+<!--                <systemType>mac</systemType>-->
+<!--            </properties>-->
+<!--            <build>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                        <version>2.8</version>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>unpack</id>-->
+<!--                                <phase>compile</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>unpack</goal>-->
+<!--                                </goals>-->
+<!--                                <configuration>-->
+<!--                                    <artifactItems>-->
+<!--                                        <artifactItem>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-jdk-mac</artifactId>-->
+<!--                                            <version>${project.version}</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </artifactItem>-->
+<!--                                        <artifactItem>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-mysql-mac</artifactId>-->
+<!--                                            <version>${project.version}</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </artifactItem>-->
+<!--                                    </artifactItems>-->
+<!--                                </configuration>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
 
         <!--dev-->
         <profile>

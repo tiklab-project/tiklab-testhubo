@@ -11,6 +11,21 @@ if [ -e "${DIRS}/embbed/${JDK_VERSION}" ]; then
       JAVA_HOME="${DIRS}/embbed/${JDK_VERSION}"
 fi
 
+#-------chrome----------------
+if [ ! -d "/opt/chrome" ]; then
+  mv ${DIRS}/embbed/chrome-linux/chrome /opt
+  mv ${DIRS}/embbed/chrome-linux/lib64/* /usr/lib64
+
+  ln -s /opt/chrome/google-chrome /usr/bin/google-chrome
+fi
+
+#-------node-----
+NODE_HOME="/usr/local/nodejs-linux"
+if [ -e "${DIRS}/embbed/nodejs-linux" ]; then
+      NODE_HOME="${DIRS}/embbed/nodejs-linux"
+fi
+
+
 find ${DIRS}/ -name '*.sh' | xargs dos2unix;
 
 #-------------------------------------------------------------------------------------------------------------
@@ -99,9 +114,9 @@ startup(){
 
 startup
 
-if [  -d "/usr/local/apps/tiklab-teston/embbed/tiklab-teston-agent-starter" ]; then
-
-   cd  /usr/local/apps/tiklab-teston/embbed/tiklab-teston-agent-starter/bin
-
-   sh startup.sh
-fi
+#if [  -d "/usr/local/apps/tiklab-teston/embbed/tiklab-teston-agent-starter" ]; then
+#
+#   cd  /usr/local/apps/tiklab-teston/embbed/tiklab-teston-agent-starter/bin
+#
+#   sh startup.sh
+#fi
