@@ -103,7 +103,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         categoryService.createCategory(category);
 
         //初始化项目权限
-        dmRoleService.initDmRoles(repositoryId,userId,"teston" );
+        dmRoleService.initPatchDmRole(repositoryId,repository.getUserList(),"teston" );
 
         //日志
         Map<String,String> map = new HashMap<>();
@@ -294,9 +294,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         dmUserQuery.setUserId(repositoryQuery.getUserId());
         List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
 
-        RepositoryQuery repositoryQuery1 = new RepositoryQuery();
-        List<Repository> repositoryList = findRepositoryList(repositoryQuery1);
-
+        List<Repository> repositoryList = findRepositoryList(repositoryQuery);
 
         ArrayList<Repository> repositoryArrayList = new ArrayList<>();
 

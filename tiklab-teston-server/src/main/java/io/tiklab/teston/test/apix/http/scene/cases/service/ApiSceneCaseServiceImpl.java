@@ -106,8 +106,10 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
     @Override
     public ApiSceneCase findApiSceneCase(@NotNull String id) {
         ApiSceneCase apiSceneCase = findOne(id);
-
         joinTemplate.joinQuery(apiSceneCase);
+
+
+
         return apiSceneCase;
     }
 

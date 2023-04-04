@@ -94,7 +94,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
        //测试计划中设置了值
         if(appSceneTestRequest.getExeType()==null){
             //errorMessage 是启动系统失败
-            if(ObjectUtils.isEmpty(appSceneTestResponse.getErrMsg())){
+            if(appSceneTestResponse!=null&&ObjectUtils.isEmpty(appSceneTestResponse.getErrMsg())){
                 saveToSQL(appSceneTestResponse,appSceneId);
             }
         }

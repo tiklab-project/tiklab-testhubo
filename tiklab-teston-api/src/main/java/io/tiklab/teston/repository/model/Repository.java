@@ -8,6 +8,7 @@ import io.tiklab.beans.annotation.Mappings;
 import io.tiklab.core.BaseModel;
 import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
+import io.tiklab.privilege.role.model.PatchUser;
 import io.tiklab.user.user.model.User;
 
 import java.util.List;
@@ -50,6 +51,10 @@ public class Repository extends BaseModel{
 
     @ApiProperty(name="memberNum",desc="成员数")
     private Integer memberNum;
+
+
+    @ApiProperty(name="userList",desc="拉入的成员")
+    private List<PatchUser> userList;
 
     public java.lang.String getId() {
         return id;
@@ -121,5 +126,13 @@ public class Repository extends BaseModel{
 
     public void setMemberNum(Integer memberNum) {
         this.memberNum = memberNum;
+    }
+
+    public List<PatchUser> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<PatchUser> userList) {
+        this.userList = userList;
     }
 }

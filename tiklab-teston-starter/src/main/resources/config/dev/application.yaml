@@ -77,7 +77,7 @@ base:
 
 teston-agent:
   embbed:
-    enable: true
+    enable: false
 
 eas:
   embbed:

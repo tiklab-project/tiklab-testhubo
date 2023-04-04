@@ -1,5 +1,7 @@
 package io.tiklab.teston.support.actiontype.model;
 
+import io.tiklab.beans.annotation.Mapper;
+import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
 import io.tiklab.core.BaseModel;
@@ -8,6 +10,7 @@ import io.tiklab.core.BaseModel;
  * app、web中操作类型 模型
  */
 @ApiModel
+@Mapper(targetAlias = "ActionTypeEntity")
 public class ActionType extends BaseModel{
 
     @ApiProperty(name="id",desc="编码")
