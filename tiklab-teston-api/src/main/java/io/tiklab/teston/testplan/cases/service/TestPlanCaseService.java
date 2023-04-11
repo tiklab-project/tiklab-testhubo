@@ -78,4 +78,11 @@ public interface TestPlanCaseService {
      * @return
      */
     Pagination<TestPlanCase> findBindTestCaseList(TestPlanCaseQuery testPlanCaseQuery);
+
+
+    /**
+     * 测试计划中关联用例
+     * @param testPlanCaseList
+     */
+    void  planBindCase(List<TestPlanCase> testPlanCaseList);
 }

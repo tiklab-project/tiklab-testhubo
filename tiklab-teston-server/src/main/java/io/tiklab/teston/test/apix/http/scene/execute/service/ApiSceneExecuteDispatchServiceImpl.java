@@ -1,6 +1,5 @@
 package io.tiklab.teston.test.apix.http.scene.execute.service;
 
-import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 
 import io.tiklab.teston.agent.api.http.scene.ApiSceneTestService;
@@ -14,7 +13,7 @@ import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
 import io.tiklab.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseExt;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.tiklab.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
 import io.tiklab.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
 import io.tiklab.teston.support.utils.RpcClientApixUtil;
@@ -131,8 +130,8 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
                 apiUnitTestRequest.setApiUnitCase(apiUnitCase);
 
                 //参数设置
-                ApiUnitCaseExt apiUnitCaseExt = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
-                apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseExt);
+                ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
+                apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
 
                 //前置地址
                 apiUnitTestRequest.setApiEnv(apiSceneTestRequest.getApiEnv());

@@ -61,9 +61,11 @@ public class ApiUnitInstance extends BaseModel{
     @JoinQuery(key = "id")
     private User createUser;
 
-
     @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
+
+    @ApiProperty(name="afterScript",desc="后置脚本执行后返回的数据")
+    private String afterScript;
 
 
     public String getId() {
@@ -153,5 +155,13 @@ public class ApiUnitInstance extends BaseModel{
 
     public void setExecuteNumber(Integer executeNumber) {
         this.executeNumber = executeNumber;
+    }
+
+    public String getAfterScript() {
+        return afterScript;
+    }
+
+    public void setAfterScript(String afterScript) {
+        this.afterScript = afterScript;
     }
 }

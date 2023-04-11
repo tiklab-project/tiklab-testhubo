@@ -9,7 +9,7 @@ import java.util.Map;
  * 接口单元用例数据封装 模型
  */
 @ApiModel
-public class ApiUnitCaseExt extends BaseModel{
+public class ApiUnitCaseDataConstruction extends BaseModel{
 
     //请求头
     private Map headerMap;
@@ -27,7 +27,7 @@ public class ApiUnitCaseExt extends BaseModel{
     private Object preScript;
 
     //调用后置脚本
-    private Object afterScript;
+    private String afterScript;
 
 
     public Map getHeaderMap() {
@@ -54,11 +54,11 @@ public class ApiUnitCaseExt extends BaseModel{
         this.mediaTypeMap = mediaTypeMap;
     }
 
-    public Object getAfterScript() {
+    public String getAfterScript() {
         return afterScript;
     }
 
-    public void setAfterScript(Object afterScript) {
+    public void setAfterScript(String afterScript) {
         this.afterScript = afterScript;
     }
 

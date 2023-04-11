@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.app.perf.cases.service;
 
+import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.app.perf.cases.dao.AppPerfCaseDao;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
@@ -12,6 +14,8 @@ import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.app.perf.cases.entity.AppPerfCaseEntity;
 import io.tiklab.teston.test.app.perf.cases.model.AppPerfCase;
 import io.tiklab.teston.test.app.perf.cases.model.AppPerfCaseQuery;
+import io.tiklab.user.user.model.User;
+import io.tiklab.user.user.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,13 +44,19 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
     @Autowired
     JoinTemplate joinTemplate;
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
+
     @Override
     public String createAppPerfCase(@NotNull @Valid AppPerfCase appPerfCase) {
         AppPerfCaseEntity appPerfCaseEntity = BeanMapper.map(appPerfCase, AppPerfCaseEntity.class);
 
         //初始值
         appPerfCaseEntity.setExecuteCount(1);
-        appPerfCaseEntity.setExecuteType(0);
+        appPerfCaseEntity.setExecuteType(1);
         appPerfCaseEntity.setThreadCount(1);
         String id = appPerfCaseDao.createAppPerfCase(appPerfCaseEntity);
 
@@ -98,6 +108,17 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
         AppPerfCase appPerfCase = findOne(id);
 
         joinTemplate.joinQuery(appPerfCase);
+
+        //手动添加字段
+        TestCase testCase = appPerfCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
+            appPerfCase.getTestCase().setCategory(category);
+        }
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
+            appPerfCase.getTestCase().setUpdateUser(updateUser);
+        }
 
         return appPerfCase;
     }

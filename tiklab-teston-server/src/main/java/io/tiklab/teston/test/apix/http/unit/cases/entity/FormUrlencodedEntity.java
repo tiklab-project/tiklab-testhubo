@@ -29,8 +29,8 @@ public class FormUrlencodedEntity implements Serializable {
     private String dataType;
 
      // 是否必选
-    @Column(name = "required",length = 2,notNull = true)
-    private Integer required;
+//    @Column(name = "required",length = 2,notNull = true)
+//    private Integer required;
 
     // 说明描述
     @Column(name = "description",length = 128)
@@ -77,13 +77,6 @@ public class FormUrlencodedEntity implements Serializable {
         this.dataType = dataType;
     }
 
-    public Integer getRequired() {
-        return required;
-    }
-
-    public void setRequired(Integer required) {
-        this.required = required;
-    }
 
     public String getDesc() {
         return desc;

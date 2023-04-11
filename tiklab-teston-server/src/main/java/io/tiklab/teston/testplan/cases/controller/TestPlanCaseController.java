@@ -115,16 +115,13 @@ public class TestPlanCaseController {
         return Result.ok(pagination);
     }
 
-    @RequestMapping(path="/createTestPlanCaseList",method = RequestMethod.POST)
+    @RequestMapping(path="/planBindCase",method = RequestMethod.POST)
     @ApiMethod(name = "createTestPlanCaseList",desc = "给测试计划关联测试用例")
     @ApiParam(name = "testPlanDetailList",desc = "testPlanDetailList",required = true)
     public Result<String> createTestPlanCaseList( @RequestBody @NotNull @Valid List<TestPlanCase> testPlanCaseList){
-        String id=null;
-        for (TestPlanCase testPlanCase : testPlanCaseList){
-            id= testPlanCaseService.createTestPlanCase(testPlanCase);
+            testPlanCaseService.planBindCase(testPlanCaseList);
 
-        }
-        return Result.ok(id);
+        return Result.ok();
 
     }
 }

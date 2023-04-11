@@ -31,9 +31,9 @@ public class FormParamEntity implements Serializable {
     @Column(name = "data_type",length = 32,notNull = true)
     private String dataType;
 
-    // 是否必须,0:非必须;1:必须
-    @Column(name = "required",length = 2,notNull = true)
-    private Integer required;
+//    // 是否必须,0:非必须;1:必须
+//    @Column(name = "required",length = 2,notNull = true)
+//    private Integer required;
 
     // 描述
     @Column(name = "description",length = 128)
@@ -79,13 +79,6 @@ public class FormParamEntity implements Serializable {
         this.dataType = dataType;
     }
 
-    public Integer getRequired() {
-        return required;
-    }
-
-    public void setRequired(Integer required) {
-        this.required = required;
-    }
 
     public String getDesc() {
         return desc;

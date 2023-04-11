@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.web.perf.cases.service;
 
+import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.web.perf.cases.dao.WebPerfCaseDao;
 import io.tiklab.teston.test.web.perf.cases.entity.WebPerfCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -12,6 +14,8 @@ import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.web.perf.cases.model.WebPerfCase;
 import io.tiklab.teston.test.web.perf.cases.model.WebPerfCaseQuery;
+import io.tiklab.user.user.model.User;
+import io.tiklab.user.user.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,12 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
     @Autowired
     JoinTemplate joinTemplate;
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
+
     @Override
     public String createWebPerfCase(@NotNull @Valid WebPerfCase webPerfCase) {
         WebPerfCaseEntity webPerfCaseEntity = BeanMapper.map(webPerfCase, WebPerfCaseEntity.class);
@@ -46,7 +56,7 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
         //初始值
         webPerfCaseEntity.setExecuteCount(1);
         webPerfCaseEntity.setThreadCount(1);
-        webPerfCaseEntity.setExecuteType(0);
+        webPerfCaseEntity.setExecuteType(1);
         String id = webPerfCaseDao.createWebPerfCase(webPerfCaseEntity);
         
         webPerfCaseEntity.setTestCaseId(id);
@@ -98,6 +108,18 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
         WebPerfCase webPerfCase = findOne(id);
 
         joinTemplate.joinQuery(webPerfCase);
+
+        //手动添加字段
+        TestCase testCase = webPerfCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
+            webPerfCase.getTestCase().setCategory(category);
+        }
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
+            webPerfCase.getTestCase().setUpdateUser(updateUser);
+        }
+
         return webPerfCase;
     }
 

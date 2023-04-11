@@ -5,14 +5,13 @@ import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.api.http.unit.ApiUnitTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseExt;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.tiklab.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
 import io.tiklab.teston.test.apix.http.unit.cases.service.AssertService;
 import io.tiklab.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBind;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBindQuery;
-import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstanceQuery;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceBindService;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
 import io.tiklab.teston.test.apix.http.unit.instance.service.AssertInstanceService;
@@ -24,7 +23,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.script.Bindings;
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 接口单元测试调度 服务
@@ -76,10 +84,10 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiUnitId);
 
         //数据准备
-        ApiUnitCaseExt apiUnitCaseExt = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
+        ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
 
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
-        apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseExt);
+        apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
 
         ApiUnitInstance apiUnitInstance = null;
 
@@ -94,6 +102,21 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
                 apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(apiUnitTestRequest);
             }
         }
+
+
+        //后置
+        if(apiUnitTestRequest.getApiUnitCaseExt().getAfterScript()!=null){
+            Map afterScript = actionAfterScript(apiUnitTestRequest.getApiUnitCaseExt().getAfterScript());
+
+            if(afterScript!=null&&afterScript.get("preUrl")!=null){
+                Object preUrl = afterScript.get("preUrl");
+
+                if((Boolean) preUrl){
+                    apiUnitInstance.setAfterScript(apiUnitTestRequest.getApiEnv());
+                }
+            }
+        }
+
 
 
         //测试计划中设置了执行类型，其他没设置
@@ -135,6 +158,45 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
     }
 
+
+
+    private Map<String, Object> actionAfterScript(String script){
+
+        if (script!=null){
+
+            ScriptEngineManager manager = new ScriptEngineManager();
+            ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+            URL resourceUrl = getClass().getClassLoader().getResource("static/script.js");
+            String path = resourceUrl.getPath();
+            try (FileInputStream fip = new FileInputStream(path);
+                 InputStreamReader reader = new InputStreamReader(fip, StandardCharsets.UTF_8)) {
+
+                // 读取 JavaScript 文件中的代码
+                engine.eval(reader);
+
+                // 在解释器中添加一个名为"dk"的全局对象
+                engine.put("to", engine.get("to"));
+
+                // 执行 JavaScript 函数
+                engine.eval(script);
+
+                // 调用 getData 方法
+                Invocable invocable = (Invocable) engine;
+                Object result = invocable.invokeMethod(engine.get("to"), "getPreUrl");
+                // 将 JavaScript 对象转换为 Java Map
+                Bindings bindings = engine.createBindings();
+                bindings.put("result", result);
+                Map<String, Object> resultMap = (Map<String, Object>) engine.eval("JSON.parse(JSON.stringify(result))", bindings);
+
+                return resultMap;
+
+            } catch (Exception e) {
+                throw new ApplicationException(e);
+            }
+        }
+        return null;
+    }
 
 
 }

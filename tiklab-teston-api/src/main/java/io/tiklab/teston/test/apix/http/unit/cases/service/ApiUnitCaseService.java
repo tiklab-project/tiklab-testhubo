@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseExt;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseQuery;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.join.annotation.FindAll;
@@ -76,7 +76,7 @@ public interface ApiUnitCaseService {
     /**
      * 用于封装单元数据
      */
-    ApiUnitCaseExt findApiUnitCaseExt(ApiUnitCase apiUnitCase);
+    ApiUnitCaseDataConstruction findApiUnitCaseExt(ApiUnitCase apiUnitCase);
 
     /**
      * 通过testCaseQuery查询

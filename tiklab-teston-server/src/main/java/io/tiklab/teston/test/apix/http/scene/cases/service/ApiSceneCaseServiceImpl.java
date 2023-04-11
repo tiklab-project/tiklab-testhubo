@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.apix.http.scene.cases.service;
 
+import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.apix.http.scene.cases.dao.ApiSceneCaseDao;
 import io.tiklab.teston.test.apix.http.scene.cases.entity.ApiSceneCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -12,6 +14,8 @@ import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneCaseQuery;
 import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
+import io.tiklab.user.user.model.User;
+import io.tiklab.user.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -35,6 +39,12 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
 
     @Autowired
     TestCaseService testCaseService;
+
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
     
 
     @Override
@@ -108,7 +118,16 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
         ApiSceneCase apiSceneCase = findOne(id);
         joinTemplate.joinQuery(apiSceneCase);
 
-
+        //手动添加字段
+        TestCase testCase = apiSceneCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
+            apiSceneCase.getTestCase().setCategory(category);
+        }
+        if(testCase.getUpdateUser()!=null){
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
+            apiSceneCase.getTestCase().setUpdateUser(updateUser);
+        }
 
         return apiSceneCase;
     }

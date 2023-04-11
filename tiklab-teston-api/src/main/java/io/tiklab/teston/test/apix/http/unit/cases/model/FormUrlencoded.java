@@ -39,9 +39,9 @@ public class FormUrlencoded extends BaseModel{
     @ApiProperty(name="dataType",desc="数据类型",required = true)
     private String dataType;
 
-    @NotNull
-    @ApiProperty(name="required",desc="是否必选",required = true)
-    private Integer required;
+//    @NotNull
+//    @ApiProperty(name="required",desc="是否必选",required = true)
+//    private Integer required;
 
     @ApiProperty(name="desc",desc="说明描述")
     private String desc;
@@ -81,13 +81,7 @@ public class FormUrlencoded extends BaseModel{
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
-    public Integer getRequired() {
-        return required;
-    }
 
-    public void setRequired(Integer required) {
-        this.required = required;
-    }
     public String getDesc() {
         return desc;
     }

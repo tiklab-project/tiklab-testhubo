@@ -87,7 +87,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             if(CollectionUtils.isNotEmpty(agentConfigList)){
                 AgentConfig agentConfig = agentConfigList.get(0);
 
-                appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
+                appSceneTestResponse =appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
             }
         }
 

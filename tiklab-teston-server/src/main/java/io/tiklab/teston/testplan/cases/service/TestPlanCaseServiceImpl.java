@@ -132,4 +132,11 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
 
         return testPlanDetailPage;
     }
+
+    @Override
+    public void planBindCase(List<TestPlanCase> testPlanCaseList) {
+        for(TestPlanCase testPlanCase: testPlanCaseList){
+            createTestPlanCase(testPlanCase);
+        }
+    }
 }

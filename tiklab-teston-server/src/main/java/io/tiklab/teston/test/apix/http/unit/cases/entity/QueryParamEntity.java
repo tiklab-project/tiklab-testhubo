@@ -28,12 +28,12 @@ public class QueryParamEntity implements Serializable {
     private String paramName;
 
     // 数据类型
-    @Column(name = "data_type",length = 32,notNull = true)
-    private String dataType;
-
-    // 是否必选
-    @Column(name = "required",length = 2,notNull = true)
-    private Integer required;
+//    @Column(name = "data_type",length = 32,notNull = true)
+//    private String dataType;
+//
+//    // 是否必选
+//    @Column(name = "required",length = 2,notNull = true)
+//    private Integer required;
 
     // 说明描述
     @Column(name = "description",length = 128)
@@ -71,21 +71,6 @@ public class QueryParamEntity implements Serializable {
         this.paramName = paramName;
     }
 
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
-    }
-
-    public Integer getRequired() {
-        return required;
-    }
-
-    public void setRequired(Integer required) {
-        this.required = required;
-    }
 
     public String getDesc() {
         return desc;

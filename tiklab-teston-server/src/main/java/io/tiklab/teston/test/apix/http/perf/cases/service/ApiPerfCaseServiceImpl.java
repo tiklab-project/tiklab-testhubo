@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.apix.http.perf.cases.service;
 
+import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.apix.http.perf.cases.dao.ApiPerfCaseDao;
 import io.tiklab.teston.test.apix.http.perf.cases.entity.ApiPerfCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -11,6 +13,8 @@ import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfCaseQuery;
 import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
+import io.tiklab.user.user.model.User;
+import io.tiklab.user.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -35,6 +39,12 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Autowired
     TestCaseService testCaseService;
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
+
     @Override
     public String createApiPerfCase(@NotNull @Valid ApiPerfCase apiPerfCase) {
         ApiPerfCaseEntity apiPerfCaseEntity = BeanMapper.map(apiPerfCase, ApiPerfCaseEntity.class);
@@ -42,7 +52,7 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
         //初始值
         apiPerfCaseEntity.setExecuteCount(1);
         apiPerfCaseEntity.setThreadCount(1);
-        apiPerfCaseEntity.setExecuteType(0);
+        apiPerfCaseEntity.setExecuteType(1);
         String id = apiPerfCaseDao.createApiPerfCase(apiPerfCaseEntity);
 
         apiPerfCaseEntity.setTestCaseId(id);
@@ -91,6 +101,18 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
         ApiPerfCase apiPerfCase = findOne(id);
 
         joinTemplate.joinQuery(apiPerfCase);
+
+        //手动添加字段
+        TestCase testCase = apiPerfCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
+            apiPerfCase.getTestCase().setCategory(category);
+        }
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
+            apiPerfCase.getTestCase().setUpdateUser(updateUser);
+        }
+
         return apiPerfCase;
     }
 

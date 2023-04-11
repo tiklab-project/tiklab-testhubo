@@ -20,7 +20,7 @@ INSERT INTO `teston_api_raw`  (`id`, `api_unit_id`, `raw`, `type`)  VALUES ('161
 INSERT INTO `teston_api_scene` VALUES ('aea59c50c968b575042a2e8739cb05e7', 'aea59c50c968b575042a2e8739cb05e7');
 INSERT INTO `teston_api_scene_step` VALUES ('771c6a4c212e175eeb1e88af6c7a13cd', 'aea59c50c968b575042a2e8739cb05e7', '1614d5d7027bfc289eb191c6d7402831', '2022-7-21 00:59:28');
 
-INSERT INTO `teston_api_perfcase` VALUES ('78846d53e2981e02f924716dd64a74c2', '78846d53e2981e02f924716dd64a74c2', 3, NULL, 2);
+INSERT INTO `teston_api_perfcase` (`id`, `testcase_id`, `thread_count`, `execute_type`, `execute_count`) VALUES ('78846d53e2981e02f924716dd64a74c2', '78846d53e2981e02f924716dd64a74c2', 3, 1, 2);
 INSERT INTO `teston_api_perf_step` VALUES ('927cfaf94f5ee6235dac35b0bbfd92cf', 'aea59c50c968b575042a2e8739cb05e7', '78846d53e2981e02f924716dd64a74c2', '2022-7-20 13:25:39');
 
 INSERT INTO `teston_web_scene` VALUES ('b51c0d9b2c9d8f80582d9979bfb98eb0', 'b51c0d9b2c9d8f80582d9979bfb98eb0');

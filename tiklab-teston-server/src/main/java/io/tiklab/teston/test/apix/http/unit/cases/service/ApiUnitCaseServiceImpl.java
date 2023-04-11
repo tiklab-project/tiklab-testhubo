@@ -1,6 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.tiklab.teston.test.apix.http.unit.cases.model.*;
 import io.tiklab.beans.BeanMapper;
@@ -8,7 +9,6 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.ApiUnitCaseEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.*;
 import io.tiklab.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
 import io.tiklab.teston.test.test.model.TestCase;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import javax.script.Bindings;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -26,6 +27,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +72,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
     @Autowired
     PreScriptService preScriptService;
+
+    @Autowired
+    AfterScriptService afterScriptService;
 
     @Autowired
     ResponseResultServiceImpl responseResultService;
@@ -242,7 +248,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
 
     @Override
-    public ApiUnitCaseExt findApiUnitCaseExt(ApiUnitCase apiUnitCase) {
+    public ApiUnitCaseDataConstruction findApiUnitCaseExt(ApiUnitCase apiUnitCase) {
 
         //封装请求头数据
         Map headerMap = requestHeaderService.jointHeader(apiUnitCase);
@@ -251,22 +257,35 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         //封装mediaType
         Map mediaType = jointMediaType(apiUnitCase);
         //封装请求体数据
-        String body = jointParamBody(apiUnitCase);
+        String body = bodyConstruction(apiUnitCase);
         //调用前置脚本
-        Object preScript = findPreScript(apiUnitCase.getId());
+        Map preScript = processPreScript(apiUnitCase.getId());
 
-        ApiUnitCaseExt apiUnitCaseExt = new ApiUnitCaseExt();
-        apiUnitCaseExt.setHeaderMap(headerMap);
-        apiUnitCaseExt.setQuery(query);
-        apiUnitCaseExt.setMediaTypeMap(mediaType);
-        apiUnitCaseExt.setBody(body);
-        apiUnitCaseExt.setPreScript(preScript);
+        String afterScript = processAfterScript(apiUnitCase.getId());
 
-        return apiUnitCaseExt;
+        //前置脚本添加header
+        if(preScript!=null&&preScript.get("header")!=null){
+            Object header = preScript.get("header");
+
+            headerMap.putAll((Map) header);
+        }
+
+        ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = new ApiUnitCaseDataConstruction();
+        apiUnitCaseDataConstruction.setHeaderMap(headerMap);
+        apiUnitCaseDataConstruction.setQuery(query);
+        apiUnitCaseDataConstruction.setMediaTypeMap(mediaType);
+        apiUnitCaseDataConstruction.setBody(body);
+        apiUnitCaseDataConstruction.setAfterScript(afterScript);
+
+
+        return apiUnitCaseDataConstruction;
     }
 
 
-    //获取contentType
+    /**
+     * 获取请求体
+     * 获取contentType
+     */
     Map jointMediaType(ApiUnitCase apiUnitCase){
         RequestBody bodyType = requestBodyService.findRequestBody(apiUnitCase.getId());
 
@@ -294,7 +313,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * @param apiUnitCase 用例步骤
      *
      */
-    private String jointParamBody(ApiUnitCase apiUnitCase){
+    private String bodyConstruction(ApiUnitCase apiUnitCase){
         RequestBody bodyType = requestBodyService.findRequestBody(apiUnitCase.getId());
        
 //        HashMap<String, Object> map = new HashMap<>();
@@ -321,7 +340,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     }
 
 
-    //获取formData
+    /**
+     *  获取formData
+     */
     private String getFormData (ApiUnitCase apiUnitCase,String bodyStr){
         FormParamQuery formParamQuery = new FormParamQuery();
         formParamQuery.setApiUnitId(apiUnitCase.getId());
@@ -336,7 +357,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         return bodyStr;
     }
 
-    //获取FormUrlDataMap
+    /**
+     * 获取FormUrlDataMap
+     */
     private String getFormUrlencoded (ApiUnitCase apiUnitCase, String bodyStr){
         FormUrlencodedQuery formUrlencodedQuery = new FormUrlencodedQuery();
         formUrlencodedQuery.setApiUnitId(apiUnitCase.getId());
@@ -350,7 +373,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         return bodyStr;
     }
 
-    //获取JsonDataMap
+    /**
+     * 获取JsonDataMap
+     */
     private String getJson(ApiUnitCase apiUnitCase, String bodyStr){
         JsonParamQuery jsonParamQuery = new JsonParamQuery();
         jsonParamQuery.setApiUnitId(apiUnitCase.getId());
@@ -415,43 +440,63 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * @param caseId
      * @return
      */
-    Object  findPreScript(String caseId)   {
-        PreScriptQuery preScriptQuery = new PreScriptQuery();
-        preScriptQuery.setApiUnitId(caseId);
-        List<PreScript> preScriptList = preScriptService.findPreScriptList(preScriptQuery);
+    private Map<String,Object> processPreScript(String caseId)   {
 
-        if (CollectionUtils.isNotEmpty(preScriptList)){
-            String scriptex = preScriptList.get(0).getScriptex();
+        PreScript preScript = preScriptService.findPreScript(caseId);
+
+        if (preScript!=null){
+            String script = preScript.getScriptex();
+
             ScriptEngineManager manager = new ScriptEngineManager();
-            ScriptEngine engine = manager.getEngineByName("javascript");
-            try {
-                String jsFileName = "tiklab-teston-ce-server/src/main/resources/static/dk.js";
-                FileInputStream fip = new FileInputStream(jsFileName);
-                InputStreamReader reader = new InputStreamReader(fip, "UTF-8");
-                engine.eval(reader);
-                if (engine instanceof Invocable){
-                    Invocable invocable = (Invocable) engine;
-                    Object execute = invocable.invokeFunction("execute", scriptex);
-                    //当断言为请求头时
-                    /*
-                    ScriptObjectMirror header=(ScriptObjectMirror) engine.get("header");
-                    if (!ObjectUtils.isEmpty(header)){
-                        String key =(String) header.get("key");
-                        String value = (String) header.get("value");
-                        headerMap.put(key,value);
-                    }
-                     */
+            ScriptEngine engine = manager.getEngineByName("JavaScript");
 
-                }
+            URL resourceUrl = getClass().getClassLoader().getResource("static/script.js");
+            String path = resourceUrl.getPath();
+            try (FileInputStream fip = new FileInputStream(path);
+                 InputStreamReader reader = new InputStreamReader(fip, StandardCharsets.UTF_8)) {
+
+                // 读取 JavaScript 文件中的代码
+                engine.eval(reader);
+
+                // 在解释器中添加一个名为"dk"的全局对象
+                engine.put("to", engine.get("to"));
+
+                // 执行 JavaScript 函数
+                engine.eval(script);
+
+                // 调用 getData 方法
+                Invocable invocable = (Invocable) engine;
+                Object result = invocable.invokeMethod(engine.get("to"), "getData");
+                // 将 JavaScript 对象转换为 Java Map
+                Bindings bindings = engine.createBindings();
+                bindings.put("result", result);
+                Map<String, Object> resultMap = (Map<String, Object>) engine.eval("JSON.parse(JSON.stringify(result))", bindings);
+
+                return resultMap;
 
             } catch (Exception e) {
-                e.getMessage();
+                throw new ApplicationException(e);
             }
         }
+
         return null;
     }
 
 
+    /**
+     * 后置脚本获取
+     * @param caseId
+     */
 
+    private String processAfterScript(String caseId){
+        String script = null;
 
+        AfterScript afterScript = afterScriptService.findAfterScript(caseId);
+
+        if(afterScript!=null){
+            script=afterScript.getScriptex();
+        }
+
+        return script;
+    }
 }

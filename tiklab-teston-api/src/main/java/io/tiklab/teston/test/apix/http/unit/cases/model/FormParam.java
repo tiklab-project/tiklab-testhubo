@@ -38,9 +38,9 @@ public class FormParam extends BaseModel{
     @ApiProperty(name="dataType",desc="数据类型",required = true)
     private String dataType;
 
-    @NotNull
-    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",required = true)
-    private Integer required=0;
+//    @NotNull
+//    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",required = true)
+//    private Integer required=0;
 
     @ApiProperty(name="desc",desc="描述")
     private String desc;
@@ -81,13 +81,7 @@ public class FormParam extends BaseModel{
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
-    public Integer getRequired() {
-        return required;
-    }
 
-    public void setRequired(Integer required) {
-        this.required = required;
-    }
     public String getDesc() {
         return desc;
     }

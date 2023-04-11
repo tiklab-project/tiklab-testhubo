@@ -106,7 +106,7 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
         //配置参数，先固定写走通用测试，后面再改成可配置的
         AppTestConfig appTestConfig = new AppTestConfig();
         appTestConfig.setPlatformName("Android");
-        appTestConfig.setAppiumSever("192.168.10.16:4723");
+        appTestConfig.setAppiumSever("127.0.0.1:4723");
         appTestConfig.setAppPackage("com.tencent.mobileqq");
         appTestConfig.setAppActivity("com.tencent.mobileqq.activity.SplashActivity");
         appTestConfig.setDeviceName("127.0.0.1:62001");
@@ -114,7 +114,7 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
         //配置参数，先固定写走通用测试，后面再改成可配置的
         AppTestConfig appTestConfig1 = new AppTestConfig();
         appTestConfig1.setPlatformName("Android");
-        appTestConfig1.setAppiumSever("192.168.10.16:4724");
+        appTestConfig1.setAppiumSever("192.168.10.18:4724");
         appTestConfig1.setAppPackage("com.tencent.mobileqq");
         appTestConfig1.setAppActivity("com.tencent.mobileqq.activity.SplashActivity");
         appTestConfig1.setDeviceName("127.0.0.1:62025");
@@ -122,7 +122,7 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
         //配置参数，先固定写走通用测试，后面再改成可配置的
         AppTestConfig appTestConfig2 = new AppTestConfig();
         appTestConfig2.setPlatformName("Android");
-        appTestConfig2.setAppiumSever("192.168.10.16:4725");
+        appTestConfig2.setAppiumSever("192.168.10.18:4725");
         appTestConfig2.setAppPackage("com.tencent.mobileqq");
         appTestConfig2.setAppActivity("com.tencent.mobileqq.activity.SplashActivity");
         appTestConfig2.setDeviceName("127.0.0.1:62026");
@@ -218,7 +218,7 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
             if(enable){
                 response = appPerfTestService.exeResult(appPerfTestRequest);
             }else {
-                response = appPerfTestServiceRPC(agentConfigList.get(i).getId()).exeResult(appPerfTestRequest);
+                response = appPerfTestServiceRPC(agentConfigList.get(i).getUrl()).exeResult(appPerfTestRequest);
             }
 
             if(CollectionUtils.isNotEmpty(response.getAppSceneInstanceList())){

@@ -84,6 +84,7 @@ public class TestPlanDao{
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanEntity.class)
                 .eq("repositoryId", testPlanQuery.getRepositoryId())
                 .eq("state",testPlanQuery.getState())
+                .like("name",testPlanQuery.getName())
                 .orders(testPlanQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, TestPlanEntity.class);
@@ -98,6 +99,7 @@ public class TestPlanDao{
         QueryCondition queryCondition = QueryBuilders.createQuery(TestPlanEntity.class)
                 .eq("repositoryId", testPlanQuery.getRepositoryId())
                 .eq("state",testPlanQuery.getState())
+                .like("name",testPlanQuery.getName())
                 .orders(testPlanQuery.getOrderParams())
                 .pagination(testPlanQuery.getPageParam())
                 .get();

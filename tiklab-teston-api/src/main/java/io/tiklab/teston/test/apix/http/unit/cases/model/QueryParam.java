@@ -34,13 +34,13 @@ public class QueryParam extends BaseModel{
     @ApiProperty(name="paramName",desc="参数名字",required = true)
     private String paramName;
 
-    @NotNull
-    @ApiProperty(name="dataType",desc="参数类型",required = true)
-    private String dataType;
-
-    @NotNull
-    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",required = true)
-    private Integer required=0;
+//    @NotNull
+//    @ApiProperty(name="dataType",desc="参数类型")
+//    private String dataType;
+//
+//    @NotNull
+//    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须")
+//    private Integer required=0;
 
     @ApiProperty(name="desc",desc="参数说明")
     private String desc;
@@ -74,20 +74,7 @@ public class QueryParam extends BaseModel{
     public void setParamName(String paramName) {
         this.paramName = paramName;
     }
-    public String getDataType() {
-        return dataType;
-    }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
-    }
-    public Integer getRequired() {
-        return required;
-    }
-
-    public void setRequired(Integer required) {
-        this.required = required;
-    }
     public String getDesc() {
         return desc;
     }

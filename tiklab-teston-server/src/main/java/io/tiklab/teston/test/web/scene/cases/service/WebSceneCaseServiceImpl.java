@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.web.scene.cases.service;
 
+import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.web.scene.cases.dao.WebSceneCaseDao;
 import io.tiklab.teston.test.web.scene.cases.entity.WebSceneCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -11,6 +13,8 @@ import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneCase;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneCaseQuery;
+import io.tiklab.user.user.model.User;
+import io.tiklab.user.user.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +41,11 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
     @Autowired
     JoinTemplate joinTemplate;
 
-    
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
 
     @Override
     public String createWebSceneCase(@NotNull @Valid WebSceneCase webSceneCase) {
@@ -93,6 +101,19 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
         WebSceneCase webSceneCase = findOne(id);
 
         joinTemplate.joinQuery(webSceneCase);
+
+        //手动添加字段
+        TestCase testCase = webSceneCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
+            webSceneCase.getTestCase().setCategory(category);
+        }
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
+            webSceneCase.getTestCase().setUpdateUser(updateUser);
+        }
+
+
         return webSceneCase;
     }
 

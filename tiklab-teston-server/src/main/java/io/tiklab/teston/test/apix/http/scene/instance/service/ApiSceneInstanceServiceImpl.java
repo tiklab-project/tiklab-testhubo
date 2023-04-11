@@ -11,6 +11,8 @@ import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneStepInstanceBind;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneStepInstanceBindQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
+import io.tiklab.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
 import io.tiklab.teston.test.test.service.TestCaseService;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +47,9 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Autowired
     TestCaseService unitCaseService;
+
+    @Autowired
+    ApiUnitCaseService apiUnitCaseService;
 
     @Override
     public String createApiSceneInstance(@NotNull @Valid ApiSceneInstance scenInstance) {
@@ -93,8 +99,19 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         apiSceneStepInstanceBindQuery.setApiSceneInstanceId(id);
         List<ApiSceneStepInstanceBind> apiSceneStepInstanceBindList = apiSceneStepInstanceBindService.findApiSceneStepInstanceBindList(apiSceneStepInstanceBindQuery);
 
+        //用于手动添加字段
+        ArrayList<ApiSceneStepInstanceBind> newApiStepList = new ArrayList<>();
+        for(ApiSceneStepInstanceBind apiSceneStepInstanceBind:apiSceneStepInstanceBindList){
+            ApiUnitCase apiUnit = apiSceneStepInstanceBind.getApiUnitInstance().getApiUnit();
+            ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiUnit.getId());
 
-        apiSceneInstance.setStepList(apiSceneStepInstanceBindList);
+            apiSceneStepInstanceBind.getApiUnitInstance().setApiUnit(apiUnitCase);
+
+            newApiStepList.add(apiSceneStepInstanceBind);
+        }
+
+
+        apiSceneInstance.setStepList(newApiStepList);
 
         joinTemplate.joinQuery(apiSceneInstance);
         return apiSceneInstance;

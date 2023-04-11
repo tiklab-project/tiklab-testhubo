@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.execute.model;
 
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseExt;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
@@ -19,7 +19,7 @@ public class ApiUnitTestRequest extends BaseModel {
     private String apiEnv;
 
     @ApiProperty(name="apiUnitCaseExt",desc="测试用例")
-    private ApiUnitCaseExt apiUnitCaseExt;
+    private ApiUnitCaseDataConstruction apiUnitCaseDataConstruction;
 
     @ApiProperty(name="exeType",desc="当前执行的类型，用于测试计划中")
     private String exeType;
@@ -40,12 +40,12 @@ public class ApiUnitTestRequest extends BaseModel {
         this.apiEnv = apiEnv;
     }
 
-    public ApiUnitCaseExt getApiUnitCaseExt() {
-        return apiUnitCaseExt;
+    public ApiUnitCaseDataConstruction getApiUnitCaseExt() {
+        return apiUnitCaseDataConstruction;
     }
 
-    public void setApiUnitCaseExt(ApiUnitCaseExt apiUnitCaseExt) {
-        this.apiUnitCaseExt = apiUnitCaseExt;
+    public void setApiUnitCaseExt(ApiUnitCaseDataConstruction apiUnitCaseDataConstruction) {
+        this.apiUnitCaseDataConstruction = apiUnitCaseDataConstruction;
     }
 
     public String getExeType() {
