@@ -94,6 +94,12 @@
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-privilege-spring-boot-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-mysql-starter</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>compile</scope>
@@ -113,7 +119,6 @@
             <artifactId>tiklab-teston-agent-starter</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
 
     </dependencies>
 
@@ -203,21 +208,6 @@
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </dependency>
-<!--                                        <dependency>-->
-<!--                                            <groupId>io.tiklab</groupId>-->
-<!--                                            <artifactId>tiklab-teston-appium</artifactId>-->
-<!--                                            <version>1.0.0</version>-->
-<!--                                            <type>zip</type>-->
-<!--                                            <outputDirectory>embbed</outputDirectory>-->
-<!--                                        </dependency>-->
-<!--                                        <dependency>-->
-<!--                                            <groupId>io.tiklab</groupId>-->
-<!--                                            <artifactId>tiklab-teston-agent-starter</artifactId>-->
-<!--                                            <version>${project.version}</version>-->
-<!--                                            <type>zip</type>-->
-<!--                                            <outputDirectory>embbed</outputDirectory>-->
-<!--                                        </dependency>-->
-
                                     </artifactItems>
                                 </configuration>
                             </execution>

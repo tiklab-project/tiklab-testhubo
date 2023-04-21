@@ -41,6 +41,8 @@ public class TestPlanServiceImpl implements TestPlanService {
     public String createTestPlan(@NotNull @Valid TestPlan testPlan) {
         TestPlanEntity testPlanEntity = BeanMapper.map(testPlan, TestPlanEntity.class);
         testPlanEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        //状态
+        testPlanEntity.setState(0);
 
         return testPlanDao.createTestPlan(testPlanEntity);
     }

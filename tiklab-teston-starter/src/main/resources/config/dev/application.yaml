@@ -82,9 +82,9 @@ teston-agent:
 eas:
   embbed:
     enable: true
-#  address: http://192.168.10.14:8080
+#  address: http://eas.dev.tiklab.net
 #  web:
-#    address: http://192.168.10.14:3001
+#    address: http://eas.local.tiklab.net
 
 mysql:
   database: tiklab_teston
