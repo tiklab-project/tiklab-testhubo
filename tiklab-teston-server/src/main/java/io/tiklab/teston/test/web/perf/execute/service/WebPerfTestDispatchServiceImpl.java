@@ -83,7 +83,7 @@ public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchServic
     private Integer executeCount;
 
     /**
-     * 执行的状态：0：未执行，1：正在进行，2：结束
+     * 执行的状态：0：未执行，1：正在进行
      */
     public Integer status=0;
 
@@ -180,7 +180,7 @@ public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchServic
         webPerfTestResponse.setWebSceneInstanceList(arrayList);
 
         if(webPerfTestResponse.getWebSceneInstanceList().size()==executeCount){
-            status=2;
+            status=0;
         }else {
             status=1;
         }

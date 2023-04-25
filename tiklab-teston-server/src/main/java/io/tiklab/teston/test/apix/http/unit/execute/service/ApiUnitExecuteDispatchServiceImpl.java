@@ -93,14 +93,18 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        if(enable){
-             apiUnitInstance = apiUnitTestService.execute(apiUnitTestRequest);
-        }else {
-            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-            if( CollectionUtils.isNotEmpty(agentConfigList)){
-                AgentConfig agentConfig = agentConfigList.get(0);
-                apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(apiUnitTestRequest);
+        try {
+            if(enable){
+                apiUnitInstance = apiUnitTestService.execute(apiUnitTestRequest);
+            }else {
+                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+                if( CollectionUtils.isNotEmpty(agentConfigList)){
+                    AgentConfig agentConfig = agentConfigList.get(0);
+                    apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(apiUnitTestRequest);
+                }
             }
+        }catch (Exception e){
+            throw new ApplicationException("agent错误");
         }
 
 

@@ -65,9 +65,12 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         return rpcClientAppUtil.rpcClient().getBean(AppSceneTestService.class, new FixedLookup(agentUrl));
     }
 
+    private AgentConfig agentConfig = null;
+
+    private Integer status;
 
     @Override
-    public AppSceneTestResponse execute(AppSceneTestRequest appSceneTestRequest) {
+    public Integer execute(AppSceneTestRequest appSceneTestRequest) {
         String appSceneId = appSceneTestRequest.getAppSceneId();
 
         //先查询所有场景步骤
@@ -77,27 +80,63 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
         appSceneTestRequest.setAppSceneStepList(appSceneStepList);
 
-        AppSceneTestResponse appSceneTestResponse = null;
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         if(enable) {
-            appSceneTestResponse = appSceneTestService.execute(appSceneTestRequest);
+             appSceneTestService.execute(appSceneTestRequest);
         }else {
             List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
             if(CollectionUtils.isNotEmpty(agentConfigList)){
                 AgentConfig agentConfig = agentConfigList.get(0);
 
-                appSceneTestResponse =appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
+                appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
             }
         }
 
-       //测试计划中设置了值
-        if(appSceneTestRequest.getExeType()==null){
-            //errorMessage 是启动系统失败
-            if(appSceneTestResponse!=null&&ObjectUtils.isEmpty(appSceneTestResponse.getErrMsg())){
-                saveToSQL(appSceneTestResponse,appSceneId);
+
+        return status=1;
+    }
+
+    @Override
+    public Integer status() {
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable) {
+            //调用执行方法返回结果数据
+            status = appSceneTestService.status();
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)) {
+                agentConfig = agentConfigList.get(0);
+                status = appSceneTestServiceRPC(agentConfig.getUrl()).status();
             }
         }
+
+
+        return status;
+    }
+
+    @Override
+    public AppSceneTestResponse result(AppSceneTestRequest appSceneTestRequest) {
+        AppSceneTestResponse appSceneTestResponse;
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable) {
+            //调用执行方法返回结果数据
+            appSceneTestResponse = appSceneTestService.result();
+        }else {
+            appSceneTestResponse = appSceneTestServiceRPC(agentConfig.getUrl()).result();
+        }
+
+        String appSceneId = appSceneTestRequest.getAppSceneId();
+        //测试计划中设置了值
+//        if(appSceneTestRequest.getExeType()==null){
+//            //errorMessage 是启动系统失败
+//            if(appSceneTestResponse!=null&&ObjectUtils.isEmpty(appSceneTestResponse.getErrMsg())){
+                saveToSQL(appSceneTestResponse,appSceneId);
+//            }
+//        }
+
 
         return appSceneTestResponse;
     }

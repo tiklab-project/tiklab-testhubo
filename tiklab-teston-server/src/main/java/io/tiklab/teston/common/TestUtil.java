@@ -17,8 +17,13 @@ public class TestUtil {
      * 百分比计算
      * */
     public String processRate(Integer num, Integer totalNum) {
-        double rate = Double.valueOf(num) / Double.valueOf(totalNum);
-
+        if (totalNum == 0) {
+            return "0.00%";
+        }
+        double rate = (double) num / (double) totalNum;
+        if (Double.isNaN(rate)) {
+            return "0.00%";
+        }
         DecimalFormat df = new DecimalFormat("0.00%");
         return df.format(rate);
     }

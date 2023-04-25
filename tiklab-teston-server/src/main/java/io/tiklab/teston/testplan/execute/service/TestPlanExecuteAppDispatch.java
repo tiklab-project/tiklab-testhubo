@@ -87,24 +87,26 @@ public class TestPlanExecuteAppDispatch {
         appSceneTestRequest.setAppTestConfig(appTestConfig);
         appSceneTestRequest.setExeType("testPlanTest");
 
+        //todo appScene结构更改后续调整
         //执行
-        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.execute(appSceneTestRequest);
+//        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.execute(appSceneTestRequest);
 
         //保存
-        AppSceneInstance appSceneInstance = appSceneTestResponse.getAppSceneInstance();
-        String appSceneInstanceId = appSceneInstanceService.saveAppSceneInstanceToSql(appSceneInstance, appSceneTestResponse);
+//        AppSceneInstance appSceneInstance = appSceneTestResponse.getAppSceneInstance();
+//        String appSceneInstanceId = appSceneInstanceService.saveAppSceneInstanceToSql(appSceneInstance, appSceneTestResponse);
 
         //测试计划历史 与 绑定用例的历史 公共历史表
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-        testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
-        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-        testPlanCaseInstanceBind.setName(name);
-        testPlanCaseInstanceBind.setCaseType(caseType);
-        testPlanCaseInstanceBind.setTestType(testType);
-        testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
-        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+//        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
+//        testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
+//        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
+//        testPlanCaseInstanceBind.setName(name);
+//        testPlanCaseInstanceBind.setCaseType(caseType);
+//        testPlanCaseInstanceBind.setTestType(testType);
+//        testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
+//        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
 
-        return testPlanCaseInstanceBind;
+//        return testPlanCaseInstanceBind;
+        return null;
 
     }
 

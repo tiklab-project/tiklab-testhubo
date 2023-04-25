@@ -68,7 +68,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     public String testPlanInstanceId;
 
     /**
-     * 执行的状态：0：未执行，1：正在进行，2：结束
+     * 执行的状态：0：未执行，1：正在进行
      */
     private Integer status=0;
 
@@ -121,7 +121,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             for(TestPlanCase testPlanCase : testPlanCaseList){
                 String testType = testPlanCase.getTestCase().getTestType();
                 //只有自动化测试和性能测试执行
-                if(Objects.equals(testType,"auto")||Objects.equals(testType,"perform")){
+                if(Objects.equals(testType,"api")||Objects.equals(testType,"perform")){
                     exeCount++;
                 }
             }
@@ -132,7 +132,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                 String caseType = testPlanCase.getTestCase().getCaseType();
 
                 //根据不同的测试类型进行测试
-                if(Objects.equals(testType,"auto")||Objects.equals(testType,"perform")){
+                if(Objects.equals(testType,"api")||Objects.equals(testType,"perform")){
 
                     switch (caseType) {
                         case "api-unit" -> {
@@ -210,7 +210,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         //如果用例个数 和 执行的总个数一样，证明执行了所有
         if(Objects.equals(testPlanCaseInstanceList.size(),exeCount)){
             //执行结束
-            status=2;
+            status=0;
             testPlanTestResponse.setStatus(status);
         }else {
             status=1;

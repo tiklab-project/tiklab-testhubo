@@ -71,24 +71,27 @@ public class TestPlanExecuteWebDispatch {
         webSceneTestRequest.setExeType("testType");
 
         //执行
-        WebSceneTestResponse webSceneTestResponse = webSceneTestDispatchService.execute(webSceneTestRequest);
+        webSceneTestDispatchService.execute(webSceneTestRequest);
 
+
+        //todo webScene结构更改后续调整
         //保存
-        WebSceneInstance webSceneInstance = webSceneTestResponse.getWebSceneInstance();
-        String webSceneInstanceId = webSceneInstanceService.saveWebSceneInstanceToSql(webSceneInstance, webSceneTestResponse);
+//        WebSceneInstance webSceneInstance = webSceneTestResponse.getWebSceneInstance();
+//        String webSceneInstanceId = webSceneInstanceService.saveWebSceneInstanceToSql(webSceneInstance, webSceneTestResponse);
+//
+//
+//        //测试计划历史 与 绑定用例的历史 公共历史表
+//        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
+//        testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
+//        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
+//        testPlanCaseInstanceBind.setName(name);
+//        testPlanCaseInstanceBind.setCaseType(caseType);
+//        testPlanCaseInstanceBind.setTestType(testType);
+//        testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
+//        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
 
-
-        //测试计划历史 与 绑定用例的历史 公共历史表
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-        testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
-        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-        testPlanCaseInstanceBind.setName(name);
-        testPlanCaseInstanceBind.setCaseType(caseType);
-        testPlanCaseInstanceBind.setTestType(testType);
-        testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
-        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-
-        return testPlanCaseInstanceBind;
+//        return testPlanCaseInstanceBind;
+        return null;
     }
 
     /**

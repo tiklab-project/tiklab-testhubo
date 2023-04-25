@@ -60,8 +60,12 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     }
 
 
+    private AgentConfig agentConfig = null;
+
+    private Integer status;
+
     @Override
-    public WebSceneTestResponse execute(WebSceneTestRequest webSceneTestRequest) {
+    public Integer execute(WebSceneTestRequest webSceneTestRequest) {
 
         String webSceneId = webSceneTestRequest.getWebSceneId();
 
@@ -73,30 +77,65 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         //设置步骤数据
         webSceneTestRequest.setWebSceneStepList(webSceneStepList);
 
-        WebSceneTestResponse webSceneTestResponse =null;
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         if(enable) {
             //调用执行方法返回结果数据
-            webSceneTestResponse = webSceneTestService.execute(webSceneTestRequest);
+             webSceneTestService.execute(webSceneTestRequest);
         }else {
             List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
             if(CollectionUtils.isNotEmpty(agentConfigList)){
-                AgentConfig agentConfig = agentConfigList.get(0);
+                agentConfig = agentConfigList.get(0);
 
-                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).execute(webSceneTestRequest);
+                webSceneTestServiceRPC(agentConfig.getUrl()).execute(webSceneTestRequest);
             }
         }
 
-        //测试计划中设置了执行类型，其他没设置
-        if(webSceneTestRequest.getExeType()==null){
-            //返回的数据存入数据库
-            saveToSql(webSceneTestResponse,webSceneId);
+        return status=1;
+    }
+
+    @Override
+    public Integer status() {
+
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable) {
+            //调用执行方法返回结果数据
+            status = webSceneTestService.status();
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)) {
+                agentConfig = agentConfigList.get(0);
+                status = webSceneTestServiceRPC(agentConfig.getUrl()).status();
+            }
+        }
+        return status;
+    }
+
+    @Override
+    public WebSceneTestResponse result(WebSceneTestRequest webSceneTestRequest) {
+
+        WebSceneTestResponse webSceneTestResponse;
+
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable) {
+            //调用执行方法返回结果数据
+            webSceneTestResponse = webSceneTestService.result();
+        }else {
+            webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result();
         }
 
+        //测试计划中设置了执行类型，其他没设置
+//        if(webSceneTestRequest.getExeType()==null){
+//            //返回的数据存入数据库
+            saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
+//        }
 
         return webSceneTestResponse;
     }
+
+
 
     /**
      * 历史记录 存入数据库

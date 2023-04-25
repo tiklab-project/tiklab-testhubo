@@ -30,10 +30,30 @@ public class WebSceneTestDispatchController {
     @RequestMapping(path="/execute",method = RequestMethod.POST)
     @ApiMethod(name = "execute",desc = "执行web测试用例")
     @ApiParam(name = "testWebCaseExec",desc = "testWebCaseExec",required = true)
-    public Result<WebSceneTestResponse> execute(@RequestBody @NotNull @Valid WebSceneTestRequest webSceneTestRequest) {
-        WebSceneTestResponse result = webSceneTestDispatchService.execute(webSceneTestRequest);
+    public Result<Void> execute(@RequestBody @NotNull @Valid WebSceneTestRequest webSceneTestRequest) {
+        Integer execute = webSceneTestDispatchService.execute(webSceneTestRequest);
+
+        return Result.ok(execute);
+    }
+
+
+    @RequestMapping(path="/status",method = RequestMethod.POST)
+    @ApiMethod(name = "status",desc = "当前执行的状态")
+    @ApiParam(name = "status",desc = "status",required = true)
+    public Result<Integer> execute() {
+        Integer status = webSceneTestDispatchService.status();
+
+        return Result.ok(status);
+    }
+
+    @RequestMapping(path="/result",method = RequestMethod.POST)
+    @ApiMethod(name = "result",desc = "当前执行的结果")
+    @ApiParam(name = "result",desc = "result",required = true)
+    public Result<WebSceneTestResponse> result(@RequestBody @NotNull @Valid WebSceneTestRequest webSceneTestRequest) {
+        WebSceneTestResponse result = webSceneTestDispatchService.result(webSceneTestRequest);
 
         return Result.ok(result);
     }
+
 
 }
