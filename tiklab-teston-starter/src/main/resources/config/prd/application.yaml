@@ -71,12 +71,12 @@ file:
   path: http://file.test.tiklab.net
 
 base:
-  url: http://teston-ce.tiklab.net
+  url: bac.teston.tiklab.net
 
 eas:
   embbed:
     enable: false
-  address: http://eas-ce.tiklab.net
+  address: bac.eas.tiklab.net
 
 mysql:
   database: tiklab_teston

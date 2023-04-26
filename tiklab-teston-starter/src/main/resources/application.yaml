@@ -73,7 +73,7 @@ file:
 eas:
   embbed:
     enable: false
-  address: http://eas-ce.tiklab.net
+  address: bac.eas.tiklab.net
 
 mysql:
   database: tiklab_teston
