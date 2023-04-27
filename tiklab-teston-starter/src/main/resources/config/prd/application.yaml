@@ -1,4 +1,4 @@
-#application io.tiklab.teston.config
+#application 
 app:
   name: tiklab-teston
 
@@ -8,11 +8,11 @@ spring:
 
 PROJECT_HOME: ${user.home}/tiklab/${app.name}
 
-#web io.tiklab.teston.config
+#web 
 server:
   port: 8080
 
-#dal io.tiklab.teston.config
+#dal 
 jdbc:
   driverClassName: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://172.12.1.16:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -20,7 +20,7 @@ jdbc:
   password: darth2020
 
 
-#dfs io.tiklab.teston.config
+#dfs 
 dfs:
   server:
     enable: false
@@ -31,7 +31,7 @@ dfs:
     url: 127.0.0.1:4010
     bucket: ${app.name}
 
-#dcs io.tiklab.teston.config
+#dcs 
 dcs:
   server:
     enable: false
@@ -42,7 +42,7 @@ dcs:
     url: 127.0.0.1:5010
     bucket: ${app.name}
 
-#dss io.tiklab.teston.config
+#dss 
 dss:
   server:
     enable: false
