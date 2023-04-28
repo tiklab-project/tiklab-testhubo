@@ -289,24 +289,26 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public List<Repository> findRepositoryJoinList(RepositoryQuery repositoryQuery) {
-        //查询dmuser list
-        DmUserQuery dmUserQuery = new DmUserQuery();
-        dmUserQuery.setUserId(repositoryQuery.getUserId());
-        List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
-
-        List<Repository> repositoryList = findRepositoryList(repositoryQuery);
+        RepositoryQuery processQuery = new RepositoryQuery();
+        processQuery.setOrderParams(repositoryQuery.getOrderParams());
+        List<Repository> repositoryList = findRepositoryList(processQuery);
 
         ArrayList<Repository> repositoryArrayList = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(dmUserList)){
+        for(Repository repository : repositoryList){
+            //查询dmuser list
+            DmUserQuery dmUserQuery = new DmUserQuery();
+            dmUserQuery.setUserId(repositoryQuery.getUserId());
+            dmUserQuery.setDomainId(repository.getId());
+            List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
+
             for(DmUser dmUser: dmUserList){
-                for(Repository repository : repositoryList){
-                    if(Objects.equals(dmUser.getDomainId(), repository.getId())){
-                        repositoryArrayList.add(repository);
-                    }
+                if(Objects.equals(dmUser.getDomainId(), repository.getId())){
+                    repositoryArrayList.add(repository);
                 }
             }
         }
+
         joinTemplate.joinQuery(repositoryArrayList);
 
         return repositoryArrayList;
