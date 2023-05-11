@@ -302,8 +302,12 @@ public class RepositoryServiceImpl implements RepositoryService {
             dmUserQuery.setDomainId(repository.getId());
             List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
 
+            if(dmUserList==null||dmUserList.size()==0){
+                continue;
+            }
+
             for(DmUser dmUser: dmUserList){
-                if(Objects.equals(dmUser.getDomainId(), repository.getId())){
+                if(Objects.equals(dmUser.getUser().getId(), repositoryQuery.getUserId())){
                     repositoryArrayList.add(repository);
                 }
             }

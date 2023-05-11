@@ -1,6 +1,6 @@
 package io.tiklab.teston;
 
-import io.tiklab.beans.starter.EnableBeans;
+//import io.tiklab.beans.starter.EnableBeans;
 import io.tiklab.dal.starter.annotation.EnableDal;
 import io.tiklab.dcs.starter.EnableDcs;
 import io.tiklab.dfs.starter.EnableDfs;
@@ -9,7 +9,8 @@ import io.tiklab.dss.starter.EnableDss;
 import io.tiklab.eam.starter.EnableEam;
 import io.tiklab.gateway.starter.EnableGateway;
 import io.tiklab.integration.starter.EnableIntegration;
-import io.tiklab.join.starter.EnableJoin;
+//import io.tiklab.join.starter.EnableJoin;
+import io.tiklab.join.starter.EnableToolkit;
 import io.tiklab.licence.starter.EnableLicenceServer;
 import io.tiklab.messsage.starter.EnableMessage;
 import io.tiklab.mysql.starter.EnableMysql;
@@ -21,7 +22,7 @@ import io.tiklab.security.stater.EnableSecurity;
 import io.tiklab.teston.agent.EnableTestOnAgent;
 import io.tiklab.todotask.stater.EnableTodoTask;
 import io.tiklab.user.starter.EnableUser;
-import io.tiklab.web.starter.annotation.EnableWeb;
+//import io.tiklab.web.starter.annotation.EnableWeb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -29,9 +30,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 //platform
-@EnableBeans
-@EnableJoin
-@EnableWeb
+@EnableToolkit
 @EnableMysql
 @EnableDal
 @EnableDsm
