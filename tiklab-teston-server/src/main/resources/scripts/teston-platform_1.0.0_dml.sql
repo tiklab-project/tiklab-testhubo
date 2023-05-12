@@ -17,87 +17,86 @@ INSERT INTO `pcs_prc_role` (`id`, `name`, `description`, `grouper`, `type`,  `sc
 
 -- 初始化admin角色平台的功能点关联数据
 -- 用户模块 和 admin用户
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('1de76c3f04a1c5b62b1bff44065b34f7', '1', '5fb7863b09a8d0c99cef173e18106fb3');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c88134f7af2c99626e62ca498d6c3216', '1', '57a3bcd1e5fedd77824359d06b06fe49');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('640892e368a7d9b05f1b1e88abcda964', '1', '428be660dea3db2a2c5a613420b3ead7');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('4d62ceac4ea82c6eb1a81d4b13c4d7d1', '1', 'dd81bdbb52bca933d1e7336f9c877f8e');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('6ae50d02d4ed17f971bc6c61c0bb67ea', '1', '9633d947588684a5881ccff9eaa3aba0');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('1de76c3f04a', '1', '5fb7863b09a8');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c88134f7af2', '1', '57a3bcd1e5fe');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('640892e368a', '1', '428be660dea3');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('4d62ceac4ea', '1', 'dd81bdbb52bc');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('6ae50d02d4e', '1', '9633d9475886');
 
 -- 部门模块 和 admin用户
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('35a204b61b65576b34a507fb5fab96f4', '1', '6b61fbe5091a8e04d2b016f15d598f1f');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('6d56ee9b2518fd0403ffcd5b0478c298', '1', '9c99b8a096c8788bc27be5122d0700e8');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('95418992b599c9fdedb92f22deb76d97', '1', 'cb954a7c0be3b37fcc96ec023924262c');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('0ca3c8625274a9a0fb0996a7b2ca40c8', '1', '325c2503007fd5127baca9d7618e8291');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('f8438284b4abb8cfcc01074e7c5c66b3', '1', 'e8bf9843bc9da8d3c4c33e31174496b3');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('35a204b61b6', '1', '6b61fbe5091a8');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('6d56ee9b251', '1', '9c99b8a096c87');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('95418992b59', '1', 'cb954a7c0be3b');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('0ca3c862527', '1', '325c2503007fd');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('f8438284b4a', '1', 'e8bf9843bc9da');
 
 -- 用户目录 和 admin用户
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('e64e932f43a121ffbc19f3846ec6de0d', '1', '585d26bcbdf3047e502e4aa51c816090');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('ae443de5001adc8d498cb02456d332bd', '1', '043e412151db118d27f2ab60d8ff73a0');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('d026551cfc33d036de61208a413a9607', '1', '925371be8ec674a06613bf8e37ec356c');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c5fe246887fa2115ec1cb8a07a77aef5', '1', '890e7d41decf71cfe3b0e80b0c4179cf');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('70978ef543639b3d373ac70071a16903', '1', '447d9998fc00fe64c96c6f09f0d41c32');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('e64e932f43a', '1', '585d26bcbdf3');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('ae443de5001', '1', '043e412151db');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('d026551cfc3', '1', '925371be8ec6');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c5fe246887f', '1', '890e7d41decf');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('70978ef5436', '1', '447d9998fc00');
 
 -- pcs ---end
 
 --功能点
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('03e4b44977b5403a8bc99b1492534e2d', '删除仓库', 'workspaceDelete', NULL, 31, '2');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('06efc60a2f96ef583637d0eccf44b6d7', '消息管理', 'MSG_Notice', '305864b7559f0a81b500dc93521cab07', 33, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('2a0018f77b4fc3a97a19a304d4bb5001', '发送方式', 'MSG_SendType', '305864b7559f0a81b500dc93521cab07', 32, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('305864b7559f0a81b500dc93521cab07', '消息中心', 'MessageCenter', NULL, 4, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('3ece7f7c704bf1117ff0126009f8cb11', '安全', 'security', NULL, 12, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('4372581c8396e0736acff5d268ea7267', '代办管理', 'TODO', NULL, 1, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('613e2055f04c59f9161d5b23abc39b0b', '插件管理', 'plugin', NULL, 8, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('6d584487ba058a0bf02713635a84807d', '系统权限中心', 'systemPrivilege', NULL, 9, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('957cb2bb99c30b504cefcc4dbaa0824d', '项目权限中心', 'projectPrivilege', NULL, 11, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('a70e6efaafb67d4182a205f27e4a8492', '日志', 'log', '3ece7f7c704bf1117ff0126009f8cb11', 13, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('c1fe847f5116a1c143ea96c15afefa4e', '我的待办', 'myTodo', '4372581c8396e0736acff5d268ea7267', 1, '1');
-INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('cced804414d6c10c26183c83a1a886bd', '代办列表', 'todoList', '4372581c8396e0736acff5d268ea7267', 1, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('03e4b44977b', '删除仓库', 'workspaceDelete', NULL, 31, '2');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('06efc60a2f9', '消息管理', 'MSG_Notice', '305864b7559', 33, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('2a0018f77b4', '发送方式', 'MSG_SendType', '305864b7559', 32, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('305864b7559', '消息中心', 'MessageCenter', NULL, 4, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('3ece7f7c704', '安全', 'security', NULL, 12, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('4372581c839', '代办管理', 'TODO', NULL, 1, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('613e2055f04', '插件管理', 'plugin', NULL, 8, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('6d584487ba0', '系统权限中心', 'systemPrivilege', NULL, 9, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('957cb2bb99c', '项目权限中心', 'projectPrivilege', NULL, 11, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('a70e6efaafb', '日志', 'log', '3ece7f7c704', 13, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('c1fe847f511', '我的待办', 'myTodo', '4372581c839', 1, '1');
+INSERT INTO `pcs_prc_function` (`id`, `name`, `code`, `parent_function_id`, `sort`, `type`) VALUES ('cced804414d', '代办列表', 'todoList', '4372581c839', 1, '1');
 
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('12a9d8f5a8a743517be67d54854cf2a1', '1', '3ece7f7c704bf1117ff0126009f8cb11');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('1ae8800b8d14f3e78615132b96a7fd35', '1', 'cced804414d6c10c26183c83a1a886bd');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('40c042bcc344338e30a1a5623d2e9ca6', '1', 'c1fe847f5116a1c143ea96c15afefa4e');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('44f04ef91694c31c8671cd4dc97b6875', '3', '03e4b44977b5403a8bc99b1492534e2d');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('543e535f14db21b4df542527c5cc0f9a', '1', '4372581c8396e0736acff5d268ea7267');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('5b56bc2527502eb3b825a6086282a6f5', '1', '305864b7559f0a81b500dc93521cab07');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('5c5c647d30289a278f9396a73c7a6524', '1', '06efc60a2f96ef583637d0eccf44b6d7');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('7a86c353f526b7c2cb5cb953fae86974', '1', '2a0018f77b4fc3a97a19a304d4bb5001');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('b9026e176ce8eac5236d7ea5c43e69b2', '1', '957cb2bb99c30b504cefcc4dbaa0824d');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c2a6385e01b6dc073b67b8c2260c3f26', '1', 'a70e6efaafb67d4182a205f27e4a8492');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c31825ad3cdd4babc3b552ec0897db98', '2', '03e4b44977b5403a8bc99b1492534e2d');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('cf517ede114bb1a1daddd8feca60108c', '1', '6d584487ba058a0bf02713635a84807d');
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('eebeab2837593efbaff611420e815f13', '1', '613e2055f04c59f9161d5b23abc39b0b');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('12a9d8f5a8a7', '1', '3ece7f7c704');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('1ae8800b8d14', '1', 'cced804414d');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('40c042bcc344', '1', 'c1fe847f511');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('543e535f14db', '1', '4372581c839');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('5b56bc252750', '1', '305864b7559');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('5c5c647d3028', '1', '06efc60a2f9');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('7a86c353f526', '1', '2a0018f77b4');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('b9026e176ce8', '1', '957cb2bb99c');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c2a6385e01b6', '1', 'a70e6efaafb');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('c31825ad3cdd', '2', '03e4b44977b');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('cf517ede114b', '1', '6d584487ba0');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('eebeab283759', '1', '613e2055f04');
 
 
 --日志--
-INSERT INTO `pcs_op_log_template` (`id`, `title`, `content`, `link`, `bgroup`, `abstract_content`) VALUES ('LOG_CODE', '日志通用模板', '<div>\n<span style=\"\n    color: #4581b7;\n\">${user}</span> <span>${actionType} </span><span>${mode}： </span><img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\"/><span style=\"\nmargin: 0 5px;\n    font-weight: 600;\n    color: #4b768a;\n\">${name}</span></div>', '/repositoryPage', 'postin','管理员创建了默认仓库');
+INSERT INTO `pcs_op_log_template` (`id`, `title`, `content`, `link`, `bgroup`, `abstract_content`) VALUES ('LOG_CODE', '日志通用模板', '<div>\n<span style=\"\n    color: #4581b7;\n\">${user}</span> <span>${actionType} </span><span>${mode}： </span><img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\"/><span style=\"\nmargin: 0 5px;\n    font-weight: 600;\n    color: #4b768a;\n\">${name}</span></div>', '/repositoryPage', 'teston','管理员创建了默认仓库');
 
 INSERT INTO `pcs_op_log_type` (`id`, `name`, `bgroup`) VALUES ('CREATE_TYPE', '新增', 'teston');
 INSERT INTO `pcs_op_log_type` (`id`, `name`, `bgroup`) VALUES ('DELETE_TYPE', '删除', 'teston');
 INSERT INTO `pcs_op_log_type` (`id`, `name`, `bgroup`) VALUES ('UPDATE_TYPE', '更新', 'teston');
 
 --消息--
-INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('7c8fb5b038cb5a1d8b3efc4ded140535', 'REPOSITORY_CREATE_TYPE', 'email', '邮箱仓库创建模板', '<div style=\"\n    display: flex;\n    align-items: center;\n\"> <span style=\"\n    color: #6c8ca0;\n    margin: 0 5px 0 0;\n\">${userName}</span>创建了:<img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\" style=\"\n    margin: 0 5px;\"/><span  style=\"font-weight:600;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;\">${name}</span></div>', NULL, 'teston');
-INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('REPOSITORY_CREATE', 'REPOSITORY_CREATE_TYPE', 'site', '创建通知', '<div style=\"\n    display: flex;\n    align-items: center;\n\"> <span style=\"\n    color: #6c8ca0;\n    margin: 0 5px 0 0;\n\">${userName}</span>创建了:<img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\" style=\"\n    margin: 0 5px;\"/><span  style=\"font-weight:600;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 120px;\">${name}</span></div>', '/repositoryPage', 'teston');
-INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('REPOSITORY_CREATE_DD', 'REPOSITORY_CREATE_TYPE', 'dingding', '钉钉仓库创建', '**仓库创建** \n\n**${userName}**  创建了   **${name}**\n\n![repositoryImg](${images})\n\n', NULL, 'teston');
-INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('REPOSITORY_CREATE_WX', 'REPOSITORY_CREATE_TYPE', 'qywechat', NULL, '**仓库创建**  \n\n**${userName}**  创建了   **${name}**\n', NULL, 'teston');
+INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('7c8fb5b0', 'RP_MS_TYPE', 'email', '邮箱仓库创建模板', '<div style=\"\n    display: flex;\n    align-items: center;\n\"> <span style=\"\n    color: #6c8ca0;\n    margin: 0 5px 0 0;\n\">${userName}</span>创建了:<img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\" style=\"\n    margin: 0 5px;\"/><span  style=\"font-weight:600;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;\">${name}</span></div>', NULL, 'teston');
+INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('RP_CREATE', 'RP_MS_TYPE', 'site', '仓库创建通知', '<div style=\"\n    display: flex;\n    align-items: center;\n\"> <span style=\"\n    color: #6c8ca0;\n    margin: 0 5px 0 0;\n\">${userName}</span>创建了:<img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\" style=\"\n    margin: 0 5px;\"/><span  style=\"font-weight:600;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;width: 120px;\">${name}</span></div>', '/workspacePage', 'teston');
+INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('RP_CREATE_DD', 'RP_MS_TYPE', 'dingding', '钉钉仓库创建', '**仓库创建** \n\n**${userName}**  创建了   **${name}**\n\n![workspaceImg](${images})\n\n', NULL, 'teston');
+INSERT INTO `pcs_mec_message_template` (`id`, `msg_type_id`, `msg_send_type_id`, `title`, `content`, `link`, `bgroup`) VALUES ('RP_CREATE_WX', 'RP_MS_TYPE', 'qywechat', NULL, '**仓库创建**  \n\n**${userName}**  创建了   **${name}**\n', NULL, 'teston');
 
-INSERT INTO `pcs_mec_message_notice` (`id`, `message_type_id`, `type`, `bgroup`, `message_send_type_id`) VALUES ('MESSAGE_NOTICE_ID', 'REPOSITORY_CREATE_TYPE', 1, 'teston', 'dingding,email,qywechat,site');
+INSERT INTO `pcs_mec_message_notice` (`id`, `message_type_id`, `type`, `bgroup`, `message_send_type_id`) VALUES ('MSG_NOTICEID', 'RP_MS_TYPE', 1, 'teston', 'dingding,email,qywechat,site');
 
-INSERT INTO `pcs_mec_message_notice_connect_user` (`id`, `message_notice_id`, `user_id`) VALUES ('afc42ebf4469a2e93f143f6bddea97d3', 'MESSAGE_NOTICE_ID', '111111');
-INSERT INTO `pcs_mec_message_notice_connect_role` (`id`, `message_notice_id`, `role_id`) VALUES ('df4d54143130adecbfac8a805307444c', 'MESSAGE_NOTICE_ID', '1');
+INSERT INTO `pcs_mec_message_notice_connect_user` (`id`, `message_notice_id`, `user_id`) VALUES ('afc42e5554', 'MSG_NOTICEID', '111111');
+INSERT INTO `pcs_mec_message_notice_connect_role` (`id`, `message_notice_id`, `role_id`) VALUES ('df4d545645', 'MSG_NOTICEID', '1');
 
-INSERT INTO `pcs_mec_message_type` (`id`, `name`, `description`, `bgroup`) VALUES ('REPOSITORY_CREATE_TYPE', '创建仓库通知', NULL, 'teston');
+INSERT INTO `pcs_mec_message_type` (`id`, `name`, `description`, `bgroup`) VALUES ('RP_MS_TYPE', '创建仓库通知', NULL, 'teston');
 
 
 
 --初始化的项目的角色
 INSERT INTO `pcs_prc_role` (`id`, `name`, `description`, `grouper`, `type`, `scope`, `business_type`, `default_role`) VALUES ('custom3', '项目管理员', NULL, 'system', '2', 2, 1, 0);
 INSERT INTO `pcs_prc_role` (`id`, `name`, `description`, `grouper`, `type`, `scope`, `business_type`, `default_role`) VALUES ('custom4', '项目普通角色', NULL, 'system', '2', 2, 0, 1);
-INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('7a06707984ca2d9eb793a5cc2cacc82c', 'custom3', '03e4b44977b5403a8bc99b1492534e2d');
+INSERT INTO `pcs_prc_role_function` (`id`, `role_id`, `function_id`) VALUES ('7a06707984c0', 'custom3', '03e4b44977b');
 
-INSERT INTO `pcs_ucc_dm_user`  (`id`, `domain_id`, `user_id`, `type`)  VALUES ('5c56ca9a24afaba76ceef3173348f2b8', 'bd26c6ec5c6e12fd1082772362e096a8', '111111', 0);
-INSERT INTO `pcs_prc_dm_role_user` (`id`, `dmRole_id`, `domain_id`, `user_id`) VALUES ('36388488b093804877508413a94aa8cd', '1bd0aa5c5f07932e2a23bb198e0efe7a', 'bd26c6ec5c6e12fd1082772362e096a8', '111111');
+INSERT INTO `pcs_ucc_dm_user`  (`id`, `domain_id`, `user_id`, `type`)  VALUES ('5c56ca9a24a', 'bd26c6ec5c6e', '111111', 0);
+INSERT INTO `pcs_prc_dm_role_user` (`id`, `dmRole_id`, `domain_id`, `user_id`) VALUES ('36388488b', '1bd0aa5c5f', 'bd26c6ec5c6e', '111111');
 
-INSERT INTO `pcs_prc_dm_role` (`id`, `domain_id`, `role_id`, `business_type`) VALUES ('1bd0aa5c5f07932e2a23bb198e0efe7a', 'bd26c6ec5c6e12fd1082772362e096a8', 'custom3', 1);
-INSERT INTO `pcs_prc_dm_role` (`id`, `domain_id`, `role_id`, `business_type`) VALUES ('adf4c4ca696d1bdea7b67a5666becc5e', 'bd26c6ec5c6e12fd1082772362e096a8', 'custom4', 0);
+INSERT INTO `pcs_prc_dm_role` (`id`, `domain_id`, `role_id`, `business_type`) VALUES ('1bd0aa5c5f', 'bd26c6ec5c6e', 'custom3', 1);
+INSERT INTO `pcs_prc_dm_role` (`id`, `domain_id`, `role_id`, `business_type`) VALUES ('adf4c4ca69', 'bd26c6ec5c6e', 'custom4', 0);
 

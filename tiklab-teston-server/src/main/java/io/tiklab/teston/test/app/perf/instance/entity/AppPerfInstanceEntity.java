@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Table(name="teston_app_perf_instance")
 public class AppPerfInstanceEntity implements Serializable {
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

@@ -295,10 +295,13 @@ public class RepositoryServiceImpl implements RepositoryService {
 
         ArrayList<Repository> repositoryArrayList = new ArrayList<>();
 
+        String userId = LoginContext.getLoginId();
+
         for(Repository repository : repositoryList){
+
             //查询dmuser list
             DmUserQuery dmUserQuery = new DmUserQuery();
-            dmUserQuery.setUserId(repositoryQuery.getUserId());
+            dmUserQuery.setUserId(userId);
             dmUserQuery.setDomainId(repository.getId());
             List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
 
@@ -307,7 +310,7 @@ public class RepositoryServiceImpl implements RepositoryService {
             }
 
             for(DmUser dmUser: dmUserList){
-                if(Objects.equals(dmUser.getUser().getId(), repositoryQuery.getUserId())){
+                if(Objects.equals(dmUser.getUser().getId(), userId)){
                     repositoryArrayList.add(repository);
                 }
             }

@@ -17,7 +17,7 @@ import java.util.Date;
 public class TestPlanEntity implements Serializable {
 
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

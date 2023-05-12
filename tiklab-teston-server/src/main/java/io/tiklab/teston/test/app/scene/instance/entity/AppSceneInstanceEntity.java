@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Table(name="teston_app_scene_instance")
 public class AppSceneInstanceEntity {
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

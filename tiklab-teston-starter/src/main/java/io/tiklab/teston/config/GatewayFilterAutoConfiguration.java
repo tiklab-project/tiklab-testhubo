@@ -125,7 +125,8 @@ public class GatewayFilterAutoConfiguration {
                         "/licence",
                         "/ws",
                         "/socket",
-                        "/images"
+                        "/images",
+                        "/sql"
                 })
                 .get();
     }

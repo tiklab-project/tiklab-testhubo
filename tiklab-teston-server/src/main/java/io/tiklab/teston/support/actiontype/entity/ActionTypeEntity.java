@@ -12,7 +12,7 @@ import io.tiklab.dal.jpa.annotation.Table;import io.tiklab.dal.jpa.annotation.En
 public class ActionTypeEntity {
     //编码
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

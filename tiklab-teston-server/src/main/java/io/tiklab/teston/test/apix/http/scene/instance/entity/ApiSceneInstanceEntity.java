@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class ApiSceneInstanceEntity {
 
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

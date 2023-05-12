@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Table(name="teston_web_perf_instance")
 public class WebPerfInstanceEntity implements Serializable {
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

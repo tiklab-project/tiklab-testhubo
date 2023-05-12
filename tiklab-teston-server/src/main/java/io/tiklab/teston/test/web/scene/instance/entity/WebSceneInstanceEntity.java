@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class WebSceneInstanceEntity {
 
     @Id
-    @GeneratorValue
+     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
