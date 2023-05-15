@@ -324,7 +324,7 @@ CREATE TABLE teston_api_unit_instance(
         result int,
         execute_number int,
         err_message varchar (2048),
-        elapsed_time double,
+        elapsed_time  double precision,
         create_user VARCHAR(32),
         create_time timestamp
 );
@@ -490,7 +490,7 @@ CREATE TABLE teston_web_scene_instance(
         pass_num integer,
         fail_num integer,
         pass_rate varchar(8),
-        total_duration double,
+        total_duration  double precision,
         create_time timestamp
 );
 
@@ -507,7 +507,7 @@ CREATE TABLE teston_web_scene_instance_step(
     parameter varchar (256),
     result VARCHAR (128),
     web_scene_instance_id varchar (32),
-    duration double,
+    duration  double precision,
     location  VARCHAR(32)
 );
 

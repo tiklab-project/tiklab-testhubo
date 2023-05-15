@@ -295,7 +295,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
         ArrayList<Repository> repositoryArrayList = new ArrayList<>();
 
-        String userId = LoginContext.getLoginId();
+        String userId = repositoryQuery.getUserId();
 
         for(Repository repository : repositoryList){
 

@@ -12,12 +12,16 @@ server:
   port: 8080
 
 #dal io.tiklab.teston.config
+#jdbc:
+#  driverClassName: com.mysql.cj.jdbc.Driver
+#  url: jdbc:mysql://172.10.1.10:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+#  username: root
+#  password: darth2020
 jdbc:
-  driverClassName: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://172.10.1.10:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-  username: root
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://172.10.1.10:5432/tiklab_teston?stringtype=unspecified
+  username: postgres
   password: darth2020
-
 
 #dfs io.tiklab.teston.config
 dfs:
