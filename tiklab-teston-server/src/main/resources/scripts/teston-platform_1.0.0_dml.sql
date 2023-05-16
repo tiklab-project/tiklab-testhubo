@@ -66,7 +66,6 @@ INSERT INTO  pcs_prc_role_function  ( id ,  role_id ,  function_id ) VALUES ('c3
 INSERT INTO  pcs_prc_role_function  ( id ,  role_id ,  function_id ) VALUES ('cf517ede114b', '1', '6d584487ba0');
 INSERT INTO  pcs_prc_role_function  ( id ,  role_id ,  function_id ) VALUES ('eebeab283759', '1', '613e2055f04');
 
-
 --日志--
 INSERT INTO  pcs_op_log_template  ( id ,  title ,  content ,  link ,  bgroup ,  abstract_content ) VALUES ('LOG_CODE', '日志通用模板', '<div>\n<span style=\"\n    color: #4581b7;\n\">${user}</span> <span>${actionType} </span><span>${mode}： </span><img src=\"${images}\" alt=\"\" width=\"16px\" height=\"16px\"/><span style=\"\nmargin: 0 5px;\n    font-weight: 600;\n    color: #4b768a;\n\">${name}</span></div>', '/repositoryPage', 'teston','管理员创建了默认仓库');
 
@@ -86,7 +85,6 @@ INSERT INTO  pcs_mec_message_notice_connect_user  ( id ,  message_notice_id ,  u
 INSERT INTO  pcs_mec_message_notice_connect_role  ( id ,  message_notice_id ,  role_id ) VALUES ('df4d545645', 'MSG_NOTICEID', '1');
 
 INSERT INTO  pcs_mec_message_type  ( id ,  name ,  description ,  bgroup ) VALUES ('RP_MS_TYPE', '创建仓库通知', NULL, 'teston');
-
 
 
 --初始化的项目的角色

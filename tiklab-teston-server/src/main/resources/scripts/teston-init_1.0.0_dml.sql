@@ -44,7 +44,6 @@ INSERT INTO  teston_func_unit_step  ( id ,  func_unit_id ,  expect ,  actual ,  
 INSERT INTO  teston_func_unit_step  ( id ,  func_unit_id ,  expect ,  actual ,  described ,  create_time ,  update_time ) VALUES ('a7e296fd3edde8ccf2f28eaa1ccb1c97', 'f11a97c27b8f2dcb8b3df308cb82fdae', '成功', '成功', '输入账号密码值', '2023-02-15 09:14:28', '2023-02-15 09:16:05');
 INSERT INTO  teston_func_unit_step  ( id ,  func_unit_id ,  expect ,  actual ,  described ,  create_time ,  update_time ) VALUES ('ddca612c477cc772d1eda0ac0eab4295', 'f11a97c27b8f2dcb8b3df308cb82fdae', '成功', '成功', '点击登录', '2023-02-15 09:16:18', NULL);
 
-
 INSERT INTO teston_action_type values   ('click1234567','click','WEB','点击对象'),
                                         ('clean1234567','clean','WEB','清除输入框'),
                                         ('inputkeys123','inputkeys','WEB','输入'),

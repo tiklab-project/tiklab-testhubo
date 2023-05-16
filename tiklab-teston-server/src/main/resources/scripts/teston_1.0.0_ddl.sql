@@ -16,10 +16,10 @@ CREATE TABLE teston_repository(
 -- @dsm.cmd.id="1002"
 -- ----------------------------
 CREATE TABLE teston_repository_recent(
-        id VARCHAR(32) PRIMARY KEY,
-        repository_id VARCHAR(32) NOT NULL,
-        user_id VARCHAR(32),
-        update_time TIMESTAMP
+    id VARCHAR(32) PRIMARY KEY,
+    repository_id VARCHAR(32) NOT NULL,
+    user_id VARCHAR(32),
+    update_time TIMESTAMP
 );
 
 -- ---------------------------
@@ -324,7 +324,7 @@ CREATE TABLE teston_api_unit_instance(
         result int,
         execute_number int,
         err_message varchar (2048),
-        elapsed_time  double precision,
+        elapsed_time double precision,
         create_user VARCHAR(32),
         create_time timestamp
 );
