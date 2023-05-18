@@ -490,7 +490,7 @@ CREATE TABLE teston_web_scene_instance(
         pass_num integer,
         fail_num integer,
         pass_rate varchar(8),
-        total_duration  double precision,
+        total_duration double precision,
         create_time timestamp
 );
 
@@ -507,7 +507,7 @@ CREATE TABLE teston_web_scene_instance_step(
     parameter varchar (256),
     result VARCHAR (128),
     web_scene_instance_id varchar (32),
-    duration  double precision,
+    duration double precision,
     location  VARCHAR(32)
 );
 
