@@ -5,8 +5,8 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
+import io.tiklab.teston.test.apix.http.unit.cases.entity.FormParamsEntity;
 import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamQuery;
-import io.tiklab.teston.test.apix.http.unit.cases.entity.FormParamEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +27,19 @@ public class FormParamDao{
 
     /**
      * 创建form-data
-     * @param formParamEntity
+     * @param formParamsEntity
      * @return
      */
-    public String createFormParam(FormParamEntity formParamEntity) {
-        return jpaTemplate.save(formParamEntity,String.class);
+    public String createFormParam(FormParamsEntity formParamsEntity) {
+        return jpaTemplate.save(formParamsEntity,String.class);
     }
 
     /**
      * 更新form-data
-     * @param formParamEntity
+     * @param formParamsEntity
      */
-    public void updateFormParam(FormParamEntity formParamEntity){
-        jpaTemplate.update(formParamEntity);
+    public void updateFormParam(FormParamsEntity formParamsEntity){
+        jpaTemplate.update(formParamsEntity);
     }
 
     /**
@@ -47,7 +47,7 @@ public class FormParamDao{
      * @param id
      */
     public void deleteFormParam(String id){
-        jpaTemplate.delete(FormParamEntity.class,id);
+        jpaTemplate.delete(FormParamsEntity.class,id);
     }
 
     public void deleteFormParam(DeleteCondition deleteCondition){
@@ -59,20 +59,20 @@ public class FormParamDao{
      * @param id
      * @return
      */
-    public FormParamEntity findFormParam(String id){
-        return jpaTemplate.findOne(FormParamEntity.class,id);
+    public FormParamsEntity findFormParam(String id){
+        return jpaTemplate.findOne(FormParamsEntity.class,id);
     }
 
     /**
     * 查找所有form-data
     * @return
     */
-    public List<FormParamEntity> findAllFormParam() {
-        return jpaTemplate.findAll(FormParamEntity.class);
+    public List<FormParamsEntity> findAllFormParam() {
+        return jpaTemplate.findAll(FormParamsEntity.class);
     }
 
-    public List<FormParamEntity> findFormParamList(List<String> idList) {
-        return jpaTemplate.findList(FormParamEntity.class,idList);
+    public List<FormParamsEntity> findFormParamList(List<String> idList) {
+        return jpaTemplate.findList(FormParamsEntity.class,idList);
     }
 
     /**
@@ -80,12 +80,12 @@ public class FormParamDao{
      * @param formParamQuery
      * @return
      */
-    public List<FormParamEntity> findFormParamList(FormParamQuery formParamQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(FormParamEntity.class)
+    public List<FormParamsEntity> findFormParamList(FormParamQuery formParamQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(FormParamsEntity.class)
                 .eq("apiUnitId",formParamQuery.getApiUnitId())
                 .orders(formParamQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findList(queryCondition, FormParamEntity.class);
+        return jpaTemplate.findList(queryCondition, FormParamsEntity.class);
     }
 
     /**
@@ -93,12 +93,12 @@ public class FormParamDao{
      * @param formParamQuery
      * @return
      */
-    public Pagination<FormParamEntity> findFormParamPage(FormParamQuery formParamQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(FormParamEntity.class)
+    public Pagination<FormParamsEntity> findFormParamPage(FormParamQuery formParamQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(FormParamsEntity.class)
                 .eq("apiUnitId",formParamQuery.getApiUnitId())
                 .orders(formParamQuery.getOrderParams())
                 .pagination(formParamQuery.getPageParam())
                 .get();
-        return jpaTemplate.findPage(queryCondition, FormParamEntity.class);
+        return jpaTemplate.findPage(queryCondition, FormParamsEntity.class);
     }
 }

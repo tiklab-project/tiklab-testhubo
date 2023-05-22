@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.entity;
 
 
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.dal.jpa.annotation.Column;
 import io.tiklab.dal.jpa.annotation.GeneratorValue;
 import io.tiklab.dal.jpa.annotation.Id;
@@ -45,7 +45,7 @@ public class ApiUnitCaseEntity implements Serializable {
         return testCaseId;
     }
 
-    public TestCase setTestCaseId(String testCaseId) {
+    public TestCases setTestCaseId(String testCaseId) {
         this.testCaseId = testCaseId;
         return null;
     }

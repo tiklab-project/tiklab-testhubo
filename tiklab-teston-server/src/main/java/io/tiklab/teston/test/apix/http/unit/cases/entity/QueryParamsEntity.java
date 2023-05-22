@@ -12,7 +12,7 @@ import java.io.Serializable;
  * query 实体
  */
 @Entity @Table(name="teston_api_query")
-public class QueryParamEntity implements Serializable {
+public class QueryParamsEntity implements Serializable {
 
     @Id
      @GeneratorValue(length = 12)

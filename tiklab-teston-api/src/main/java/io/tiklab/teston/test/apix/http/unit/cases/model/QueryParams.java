@@ -1,6 +1,5 @@
 package io.tiklab.teston.test.apix.http.unit.cases.model;
 
-
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.beans.annotation.Mapping;
 import io.tiklab.beans.annotation.Mappings;
@@ -13,12 +12,12 @@ import io.tiklab.postin.annotation.ApiProperty;
 import javax.validation.constraints.NotNull;
 
 /**
- * form-url 模型
+ * query参数 模型
  */
 @ApiModel
-@Mapper(targetAlias = "FormUrlencodedEntity")
+@Mapper(targetAlias = "QueryParamsEntity")
 @Join
-public class FormUrlencoded extends BaseModel{
+public class QueryParams extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
@@ -32,18 +31,18 @@ public class FormUrlencoded extends BaseModel{
     private ApiUnitCase apiUnit;
 
     @NotNull
-    @ApiProperty(name="paramName",desc="名称",required = true)
+    @ApiProperty(name="paramName",desc="参数名字",required = true)
     private String paramName;
 
-    @NotNull
-    @ApiProperty(name="dataType",desc="数据类型",required = true)
-    private String dataType;
-
 //    @NotNull
-//    @ApiProperty(name="required",desc="是否必选",required = true)
-//    private Integer required;
+//    @ApiProperty(name="dataType",desc="参数类型")
+//    private String dataType;
+//
+//    @NotNull
+//    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须")
+//    private Integer required=0;
 
-    @ApiProperty(name="desc",desc="说明描述")
+    @ApiProperty(name="desc",desc="参数说明")
     private String desc;
 
     @ApiProperty(name="value",desc="示例值")
@@ -71,15 +70,9 @@ public class FormUrlencoded extends BaseModel{
     public String getParamName() {
         return paramName;
     }
+
     public void setParamName(String paramName) {
         this.paramName = paramName;
-    }
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
     }
 
     public String getDesc() {
@@ -89,6 +82,7 @@ public class FormUrlencoded extends BaseModel{
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
     public String getValue() {
         return value;
     }
@@ -96,6 +90,7 @@ public class FormUrlencoded extends BaseModel{
     public void setValue(String value) {
         this.value = value;
     }
+
     public Integer getSort() {
         return sort;
     }

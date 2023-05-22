@@ -6,7 +6,6 @@ import io.tiklab.join.annotation.FindAll;
 import io.tiklab.join.annotation.FindList;
 import io.tiklab.join.annotation.FindOne;
 import io.tiklab.join.annotation.JoinProvider;
-import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseRecent;
 import io.tiklab.teston.test.test.model.TestCaseRecentQuery;
 

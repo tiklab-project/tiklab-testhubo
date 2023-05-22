@@ -1,6 +1,8 @@
 package io.tiklab.teston.repository.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.tiklab.rpc.annotation.Exporter;
+import io.tiklab.teston.category.model.Categorys;
 import io.tiklab.teston.common.LogUnit;
 import io.tiklab.teston.common.MessageTemplateConstant;
 import io.tiklab.teston.common.TestOnUnit;
@@ -16,10 +18,8 @@ import io.tiklab.message.message.service.SendMessageNoticeService;
 import io.tiklab.privilege.dmRole.service.DmRoleService;
 import io.tiklab.security.logging.model.LoggingType;
 import io.tiklab.security.logging.service.LoggingTypeService;
-import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.model.CategoryQuery;
 import io.tiklab.teston.category.service.CategoryService;
-import io.tiklab.teston.repository.model.*;
 import io.tiklab.teston.testplan.cases.service.TestPlanService;
 import io.tiklab.user.dmUser.model.DmUser;
 import io.tiklab.user.dmUser.model.DmUserQuery;
@@ -40,6 +40,7 @@ import java.util.*;
 * 仓库 服务
 */
 @Service
+@Exporter
 public class RepositoryServiceImpl implements RepositoryService {
 
     @Autowired
@@ -95,12 +96,12 @@ public class RepositoryServiceImpl implements RepositoryService {
         String repositoryId = repositoryDao.createRepository(repositoryEntity);
 
         //初始化分组（默认分组）
-        Category category = new Category();
+        Categorys categorys = new Categorys();
         Repository rep = new Repository();
         rep.setId(repositoryId);
-        category.setRepository(rep);
-        category.setName("默认分组");
-        categoryService.createCategory(category);
+        categorys.setRepository(rep);
+        categorys.setName("默认分组");
+        categoryService.createCategory(categorys);
 
         //初始化项目权限
         dmRoleService.initPatchDmRole(repositoryId,repository.getUserList(),"teston" );
@@ -175,10 +176,10 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public void deleteRepository(@NotNull String id) {
         repositoryDao.deleteRepository(id);
-        List<Category> categoryList = categoryService.findCategoryList(new CategoryQuery().setRepositoryId(id));
-        if(CollectionUtils.isNotEmpty(categoryList)){
-            for(Category category:categoryList){
-                categoryService.deleteCategory(category.getId());
+        List<Categorys> categorysList = categoryService.findCategoryList(new CategoryQuery().setRepositoryId(id));
+        if(CollectionUtils.isNotEmpty(categorysList)){
+            for(Categorys categorys : categorysList){
+                categoryService.deleteCategory(categorys.getId());
             }
         }
         String loginId = LoginContext.getLoginId();

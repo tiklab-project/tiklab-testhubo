@@ -2,6 +2,7 @@ package io.tiklab.teston.support.environment.service;
 
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.support.environment.dao.AppEnvDao;
 import io.tiklab.teston.support.environment.entity.AppEnvEntity;
 import io.tiklab.teston.support.environment.model.AppEnv;
@@ -21,6 +22,7 @@ import java.util.List;
 * app环境 服务
 */
 @Service
+@Exporter
 public class AppEnvServiceImpl implements AppEnvService {
 
     @Autowired

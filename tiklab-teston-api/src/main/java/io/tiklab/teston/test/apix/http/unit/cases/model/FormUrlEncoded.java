@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.apix.http.unit.cases.model;
 
+
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.beans.annotation.Mapping;
 import io.tiklab.beans.annotation.Mappings;
@@ -12,12 +13,12 @@ import io.tiklab.postin.annotation.ApiProperty;
 import javax.validation.constraints.NotNull;
 
 /**
- * form-data 模型
+ * form-url 模型
  */
 @ApiModel
-@Mapper(targetAlias = "FormParamEntity")
+@Mapper(targetAlias = "FormUrlEncodedEntity")
 @Join
-public class FormParam extends BaseModel{
+public class FormUrlEncoded extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
@@ -31,7 +32,7 @@ public class FormParam extends BaseModel{
     private ApiUnitCase apiUnit;
 
     @NotNull
-    @ApiProperty(name="paramName",desc="参数名字",required = true)
+    @ApiProperty(name="paramName",desc="名称",required = true)
     private String paramName;
 
     @NotNull
@@ -39,13 +40,13 @@ public class FormParam extends BaseModel{
     private String dataType;
 
 //    @NotNull
-//    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",required = true)
-//    private Integer required=0;
+//    @ApiProperty(name="required",desc="是否必选",required = true)
+//    private Integer required;
 
-    @ApiProperty(name="desc",desc="描述")
+    @ApiProperty(name="desc",desc="说明描述")
     private String desc;
 
-    @ApiProperty(name="value",desc="值")
+    @ApiProperty(name="value",desc="示例值")
     private String value;
 
     @ApiProperty(name="sort",desc="排序")
@@ -70,7 +71,6 @@ public class FormParam extends BaseModel{
     public String getParamName() {
         return paramName;
     }
-
     public void setParamName(String paramName) {
         this.paramName = paramName;
     }
@@ -89,7 +89,6 @@ public class FormParam extends BaseModel{
     public void setDesc(String desc) {
         this.desc = desc;
     }
-
     public String getValue() {
         return value;
     }
@@ -97,7 +96,6 @@ public class FormParam extends BaseModel{
     public void setValue(String value) {
         this.value = value;
     }
-
     public Integer getSort() {
         return sort;
     }

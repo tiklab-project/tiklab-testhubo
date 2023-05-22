@@ -1,7 +1,7 @@
 package io.tiklab.teston.category.model;
 
 import io.tiklab.teston.repository.model.Repository;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApiModel
-@Mapper(targetAlias = "CategoryEntity")
+@Mapper(targetAlias = "CategorysEntity")
 @Join
-public class Category extends BaseModel{
+public class Categorys extends BaseModel{
 
     private static final long serialVersionUID = 6590165929566174830L;
 
@@ -37,12 +37,8 @@ public class Category extends BaseModel{
     @JoinQuery(key = "id")
     private Repository repository;
 
-    @ApiProperty(name="parentCategory",desc="上级分类")
-    @Mappings({
-            @Mapping(source = "parentCategory.id",target = "parentCategoryId")
-    })
-    @JoinQuery(key = "id")
-    private Category parentCategory;
+    @ApiProperty(name="parentId",desc="上级分类")
+    private String parentId;
 
     @ApiProperty(name="sort",desc="排序")
     private java.lang.Integer sort;
@@ -51,10 +47,10 @@ public class Category extends BaseModel{
     private java.lang.String desc;
 
     @ApiProperty(name="children",desc="下级分类列表")
-    private List<Category> children;
+    private List<Categorys> children;
 
     @ApiProperty(name="nodeList",desc="分类用例")
-    private List<TestCase> nodeList=new ArrayList<>();
+    private List<TestCases> nodeList=new ArrayList<>();
 
     @ApiProperty(name="caseNum",desc="目录下的用例数")
     private java.lang.Integer caseNum;
@@ -82,14 +78,6 @@ public class Category extends BaseModel{
         this.repository = repository;
     }
 
-    public Category getParentCategory() {
-        return parentCategory;
-    }
-
-    public void setParentCategory(Category parentCategory) {
-        this.parentCategory = parentCategory;
-    }
-
     public java.lang.Integer getSort() {
         return sort;
     }
@@ -98,19 +86,19 @@ public class Category extends BaseModel{
         this.sort = sort;
     }
 
-    public List<Category> getChildren() {
+    public List<Categorys> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Category> children) {
+    public void setChildren(List<Categorys> children) {
         this.children = children;
     }
 
-    public List<TestCase> getNodeList() {
+    public List<TestCases> getNodeList() {
         return nodeList;
     }
 
-    public void setNodeList(List<TestCase> nodeList) {
+    public void setNodeList(List<TestCases> nodeList) {
         this.nodeList = nodeList;
     }
 
@@ -128,5 +116,13 @@ public class Category extends BaseModel{
 
     public void setCaseNum(Integer caseNum) {
         this.caseNum = caseNum;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

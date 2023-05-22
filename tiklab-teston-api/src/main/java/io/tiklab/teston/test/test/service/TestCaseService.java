@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.test.service;
 
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.join.annotation.FindAll;
@@ -15,21 +15,21 @@ import java.util.List;
 /**
 * 测试用例 服务接口
 */
-@JoinProvider(model = TestCase.class)
+@JoinProvider(model = TestCases.class)
 public interface TestCaseService {
 
     /**
     * 创建测试用例
-    * @param testCase
+    * @param testCases
     * @return
     */
-    String createTestCase(@NotNull @Valid TestCase testCase);
+    String createTestCase(@NotNull @Valid TestCases testCases);
 
     /**
     * 更新测试用例
-    * @param testCase
+    * @param testCases
     */
-    void updateTestCase(@NotNull @Valid TestCase testCase);
+    void updateTestCase(@NotNull @Valid TestCases testCases);
 
     /**
     * 删除测试用例
@@ -44,37 +44,37 @@ public interface TestCaseService {
     void deleteTestCaseByCategoryId(@NotNull String categoryId);
 
     @FindOne
-    TestCase findOne(@NotNull String id);
+    TestCases findOne(@NotNull String id);
 
     @FindList
-    List<TestCase> findList(List<String> idList);
+    List<TestCases> findList(List<String> idList);
 
     /**
     * 根据id查找测试用例
     * @param id
     * @return
     */
-    TestCase findTestCase(@NotNull String id);
+    TestCases findTestCase(@NotNull String id);
 
     /**
     * 查找所有测试用例
     * @return
     */
     @FindAll
-    List<TestCase> findAllTestCase();
+    List<TestCases> findAllTestCase();
 
     /**
     * 根据查询参数查询测试用例列表
     * @param testCaseQuery
     * @return
     */
-    List<TestCase> findTestCaseList(TestCaseQuery testCaseQuery);
+    List<TestCases> findTestCaseList(TestCaseQuery testCaseQuery);
 
     /**
     * 根据查询参数按分页查询测试用例
     * @param testCaseQuery
     * @return
     */
-    Pagination<TestCase> findTestCasePage(TestCaseQuery testCaseQuery);
+    Pagination<TestCases> findTestCasePage(TestCaseQuery testCaseQuery);
 
 }

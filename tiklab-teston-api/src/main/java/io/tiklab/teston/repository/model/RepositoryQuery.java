@@ -6,10 +6,11 @@ import io.tiklab.core.order.Order;
 import io.tiklab.core.order.OrderBuilders;
 import io.tiklab.core.page.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ApiModel
-public class RepositoryQuery {
+public class RepositoryQuery implements Serializable {
     @ApiProperty(name ="userId",desc = "用户ID，精确匹配")
     private String userId;
 

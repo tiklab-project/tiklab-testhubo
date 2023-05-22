@@ -1,5 +1,6 @@
 package io.tiklab.teston.support.environment.service;
 
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.support.environment.entity.WebEnvEntity;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
@@ -20,6 +21,7 @@ import java.util.List;
 * Web环境 服务
 */
 @Service
+@Exporter
 public class WebEnvServiceImpl implements WebEnvService {
 
     @Autowired

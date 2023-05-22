@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.JpaTemplate;
 import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
-import io.tiklab.teston.test.test.entity.TestCaseEntity;
+import io.tiklab.teston.test.test.entity.TestCasesEntity;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,19 +27,19 @@ public class TestCaseDao {
 
     /**
      * 创建测试用例
-     * @param testCaseEntity
+     * @param testCasesEntity
      * @return
      */
-    public String createTestCase(TestCaseEntity testCaseEntity) {
-        return jpaTemplate.save(testCaseEntity,String.class);
+    public String createTestCase(TestCasesEntity testCasesEntity) {
+        return jpaTemplate.save(testCasesEntity,String.class);
     }
 
     /**
      * 更新测试用例
-     * @param testCaseEntity
+     * @param testCasesEntity
      */
-    public void updateTestCase(TestCaseEntity testCaseEntity){
-        jpaTemplate.update(testCaseEntity);
+    public void updateTestCase(TestCasesEntity testCasesEntity){
+        jpaTemplate.update(testCasesEntity);
     }
 
     /**
@@ -47,7 +47,7 @@ public class TestCaseDao {
      * @param id
      */
     public void deleteTestCase(String id){
-        jpaTemplate.delete(TestCaseEntity.class,id);
+        jpaTemplate.delete(TestCasesEntity.class,id);
     }
 
     public void deleteTestCase(DeleteCondition deleteCondition){
@@ -59,20 +59,20 @@ public class TestCaseDao {
      * @param id
      * @return
      */
-    public TestCaseEntity findTestCase(String id){
-        return jpaTemplate.findOne(TestCaseEntity.class,id);
+    public TestCasesEntity findTestCase(String id){
+        return jpaTemplate.findOne(TestCasesEntity.class,id);
     }
 
     /**
     * 查找所有测试用例
     * @return
     */
-    public List<TestCaseEntity> findAllTestCase() {
-        return jpaTemplate.findAll(TestCaseEntity.class);
+    public List<TestCasesEntity> findAllTestCase() {
+        return jpaTemplate.findAll(TestCasesEntity.class);
     }
 
-    public List<TestCaseEntity> findTestCaseList(List<String> idList) {
-        return jpaTemplate.findList(TestCaseEntity.class,idList);
+    public List<TestCasesEntity> findTestCaseList(List<String> idList) {
+        return jpaTemplate.findList(TestCasesEntity.class,idList);
     }
 
     /**
@@ -80,8 +80,8 @@ public class TestCaseDao {
      * @param testCaseQuery
      * @return
      */
-    public List<TestCaseEntity> findTestCaseList(TestCaseQuery testCaseQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(TestCaseEntity.class)
+    public List<TestCasesEntity> findTestCaseList(TestCaseQuery testCaseQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(TestCasesEntity.class)
                 .eq("repositoryId",testCaseQuery.getRepositoryId())
                 .eq("categoryId", testCaseQuery.getCategoryId())
                 .eq("testType",testCaseQuery.getTestType())
@@ -89,7 +89,7 @@ public class TestCaseDao {
                 .like("name", testCaseQuery.getName())
                 .orders(testCaseQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findList(queryCondition, TestCaseEntity.class);
+        return jpaTemplate.findList(queryCondition, TestCasesEntity.class);
     }
 
     /**
@@ -97,8 +97,8 @@ public class TestCaseDao {
      * @param testCaseQuery
      * @return
      */
-    public Pagination<TestCaseEntity> findTestCasePage(TestCaseQuery testCaseQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(TestCaseEntity.class)
+    public Pagination<TestCasesEntity> findTestCasePage(TestCaseQuery testCaseQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(TestCasesEntity.class)
                 .eq("repositoryId",testCaseQuery.getRepositoryId())
                 .eq("categoryId", testCaseQuery.getCategoryId())
                 .eq("testType",testCaseQuery.getTestType())
@@ -107,7 +107,7 @@ public class TestCaseDao {
                 .pagination(testCaseQuery.getPageParam())
                 .orders(testCaseQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findPage(queryCondition, TestCaseEntity.class);
+        return jpaTemplate.findPage(queryCondition, TestCasesEntity.class);
     }
 
 }

@@ -4,7 +4,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
-import io.tiklab.teston.category.entity.CategoryEntity;
+import io.tiklab.teston.category.entity.CategorysEntity;
 
 import io.tiklab.dal.jpa.JpaTemplate;
 import io.tiklab.teston.category.model.CategoryQuery;
@@ -28,19 +28,19 @@ public class CategoryDao{
 
     /**
      * 创建目录
-     * @param categoryEntity
+     * @param categorysEntity
      * @return
      */
-    public String createCategory(CategoryEntity categoryEntity) {
-        return jpaTemplate.save(categoryEntity,String.class);
+    public String createCategory(CategorysEntity categorysEntity) {
+        return jpaTemplate.save(categorysEntity,String.class);
     }
 
     /**
      * 更新目录
-     * @param categoryEntity
+     * @param categorysEntity
      */
-    public void updateCategory(CategoryEntity categoryEntity){
-        jpaTemplate.update(categoryEntity);
+    public void updateCategory(CategorysEntity categorysEntity){
+        jpaTemplate.update(categorysEntity);
     }
 
     /**
@@ -48,7 +48,7 @@ public class CategoryDao{
      * @param id
      */
     public void deleteCategory(String id){
-        jpaTemplate.delete(CategoryEntity.class,id);
+        jpaTemplate.delete(CategorysEntity.class,id);
     }
 
     public void deleteCategory(DeleteCondition deleteCondition){
@@ -60,20 +60,20 @@ public class CategoryDao{
      * @param id
      * @return
      */
-    public CategoryEntity findCategory(String id){
-        return jpaTemplate.findOne(CategoryEntity.class,id);
+    public CategorysEntity findCategory(String id){
+        return jpaTemplate.findOne(CategorysEntity.class,id);
     }
 
     /**
     * 查找所有目录
     * @return
     */
-    public List<CategoryEntity> findAllCategory() {
-        return jpaTemplate.findAll(CategoryEntity.class);
+    public List<CategorysEntity> findAllCategory() {
+        return jpaTemplate.findAll(CategorysEntity.class);
     }
 
-    public List<CategoryEntity> findCategoryList(List<String> idList) {
-        return jpaTemplate.findList(CategoryEntity.class,idList);
+    public List<CategorysEntity> findCategoryList(List<String> idList) {
+        return jpaTemplate.findList(CategorysEntity.class,idList);
     }
 
     /**
@@ -81,13 +81,13 @@ public class CategoryDao{
      * @param categoryQuery
      * @return
      */
-    public List<CategoryEntity> findCategoryList(CategoryQuery categoryQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(CategoryEntity.class)
+    public List<CategorysEntity> findCategoryList(CategoryQuery categoryQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(CategorysEntity.class)
                 .eq("repositoryId", categoryQuery.getRepositoryId())
                 .like("name", categoryQuery.getName())
                 .orders(categoryQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findList(queryCondition, CategoryEntity.class);
+        return jpaTemplate.findList(queryCondition, CategorysEntity.class);
     }
 
     /**
@@ -95,14 +95,14 @@ public class CategoryDao{
      * @param categoryQuery
      * @return
      */
-    public Pagination<CategoryEntity> findCategoryPage(CategoryQuery categoryQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(CategoryEntity.class)
+    public Pagination<CategorysEntity> findCategoryPage(CategoryQuery categoryQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(CategorysEntity.class)
                 .eq("repositoryId", categoryQuery.getRepositoryId())
                 .like("name", categoryQuery.getName())
                 .pagination(categoryQuery.getPageParam())
                 .orders(categoryQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findPage(queryCondition, CategoryEntity.class);
+        return jpaTemplate.findPage(queryCondition, CategorysEntity.class);
     }
 
 

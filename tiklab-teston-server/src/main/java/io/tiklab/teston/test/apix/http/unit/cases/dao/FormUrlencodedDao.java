@@ -5,8 +5,8 @@ import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.dal.jpa.JpaTemplate;
 import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
+import io.tiklab.teston.test.apix.http.unit.cases.entity.FormUrlEncodedEntity;
 import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedQuery;
-import io.tiklab.teston.test.apix.http.unit.cases.entity.FormUrlencodedEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class FormUrlencodedDao{
      * @param formUrlencodedEntity
      * @return
      */
-    public String createFormUrlencoded(FormUrlencodedEntity formUrlencodedEntity) {
+    public String createFormUrlencoded(FormUrlEncodedEntity formUrlencodedEntity) {
         return jpaTemplate.save(formUrlencodedEntity,String.class);
     }
 
@@ -38,7 +38,7 @@ public class FormUrlencodedDao{
      * 更新form-urlencoded
      * @param formUrlencodedEntity
      */
-    public void updateFormUrlencoded(FormUrlencodedEntity formUrlencodedEntity){
+    public void updateFormUrlencoded(FormUrlEncodedEntity formUrlencodedEntity){
         jpaTemplate.update(formUrlencodedEntity);
     }
 
@@ -47,7 +47,7 @@ public class FormUrlencodedDao{
      * @param id
      */
     public void deleteFormUrlencoded(String id){
-        jpaTemplate.delete(FormUrlencodedEntity.class,id);
+        jpaTemplate.delete(FormUrlEncodedEntity.class,id);
     }
 
     public void deleteFormUrlencoded(DeleteCondition deleteCondition){
@@ -59,20 +59,20 @@ public class FormUrlencodedDao{
      * @param id
      * @return
      */
-    public FormUrlencodedEntity findFormUrlencoded(String id){
-        return jpaTemplate.findOne(FormUrlencodedEntity.class,id);
+    public FormUrlEncodedEntity findFormUrlencoded(String id){
+        return jpaTemplate.findOne(FormUrlEncodedEntity.class,id);
     }
 
     /**
     * 查找所有form-urlencoded
     * @return
     */
-    public List<FormUrlencodedEntity> findAllFormUrlencoded() {
-        return jpaTemplate.findAll(FormUrlencodedEntity.class);
+    public List<FormUrlEncodedEntity> findAllFormUrlencoded() {
+        return jpaTemplate.findAll(FormUrlEncodedEntity.class);
     }
 
-    public List<FormUrlencodedEntity> findFormUrlencodedList(List<String> idList) {
-        return jpaTemplate.findList(FormUrlencodedEntity.class,idList);
+    public List<FormUrlEncodedEntity> findFormUrlencodedList(List<String> idList) {
+        return jpaTemplate.findList(FormUrlEncodedEntity.class,idList);
     }
 
     /**
@@ -80,12 +80,12 @@ public class FormUrlencodedDao{
      * @param formUrlencodedQuery
      * @return
      */
-    public List<FormUrlencodedEntity> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlencodedEntity.class)
+    public List<FormUrlEncodedEntity> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlEncodedEntity.class)
                 .eq("apiUnitId", formUrlencodedQuery.getApiUnitId())
                 .orders(formUrlencodedQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findList(queryCondition,FormUrlencodedEntity.class);
+        return jpaTemplate.findList(queryCondition, FormUrlEncodedEntity.class);
     }
 
     /**
@@ -93,12 +93,12 @@ public class FormUrlencodedDao{
      * @param formUrlencodedQuery
      * @return
      */
-    public Pagination<FormUrlencodedEntity> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlencodedEntity.class)
+    public Pagination<FormUrlEncodedEntity> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlEncodedEntity.class)
                 .eq("apiUnitId", formUrlencodedQuery.getApiUnitId())
                 .orders(formUrlencodedQuery.getOrderParams())
                 .pagination(formUrlencodedQuery.getPageParam())
                 .get();
-        return jpaTemplate.findPage(queryCondition,FormUrlencodedEntity.class);
+        return jpaTemplate.findPage(queryCondition, FormUrlEncodedEntity.class);
     }
 }

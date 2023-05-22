@@ -6,7 +6,7 @@ import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamQuery;
-import io.tiklab.teston.test.apix.http.unit.cases.entity.QueryParamEntity;
+import io.tiklab.teston.test.apix.http.unit.cases.entity.QueryParamsEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +27,19 @@ public class QueryParamDao{
 
     /**
      * 创建query
-     * @param queryParamEntity
+     * @param queryParamsEntity
      * @return
      */
-    public String createQueryParam(QueryParamEntity queryParamEntity) {
-        return jpaTemplate.save(queryParamEntity,String.class);
+    public String createQueryParam(QueryParamsEntity queryParamsEntity) {
+        return jpaTemplate.save(queryParamsEntity,String.class);
     }
 
     /**
      * 更新query
-     * @param queryParamEntity
+     * @param queryParamsEntity
      */
-    public void updateQueryParam(QueryParamEntity queryParamEntity){
-        jpaTemplate.update(queryParamEntity);
+    public void updateQueryParam(QueryParamsEntity queryParamsEntity){
+        jpaTemplate.update(queryParamsEntity);
     }
 
     /**
@@ -47,7 +47,7 @@ public class QueryParamDao{
      * @param id
      */
     public void deleteQueryParam(String id){
-        jpaTemplate.delete(QueryParamEntity.class,id);
+        jpaTemplate.delete(QueryParamsEntity.class,id);
     }
 
     public void deleteQueryParam(DeleteCondition deleteCondition){
@@ -59,20 +59,20 @@ public class QueryParamDao{
      * @param id
      * @return
      */
-    public QueryParamEntity findQueryParam(String id){
-        return jpaTemplate.findOne(QueryParamEntity.class,id);
+    public QueryParamsEntity findQueryParam(String id){
+        return jpaTemplate.findOne(QueryParamsEntity.class,id);
     }
 
     /**
     * 查找所有query
     * @return
     */
-    public List<QueryParamEntity> findAllQueryParam() {
-        return jpaTemplate.findAll(QueryParamEntity.class);
+    public List<QueryParamsEntity> findAllQueryParam() {
+        return jpaTemplate.findAll(QueryParamsEntity.class);
     }
 
-    public List<QueryParamEntity> findQueryParamList(List<String> idList) {
-        return jpaTemplate.findList(QueryParamEntity.class,idList);
+    public List<QueryParamsEntity> findQueryParamList(List<String> idList) {
+        return jpaTemplate.findList(QueryParamsEntity.class,idList);
     }
 
     /**
@@ -80,12 +80,12 @@ public class QueryParamDao{
      * @param queryParamQuery
      * @return
      */
-    public List<QueryParamEntity> findQueryParamList(QueryParamQuery queryParamQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamEntity.class)
+    public List<QueryParamsEntity> findQueryParamList(QueryParamQuery queryParamQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamsEntity.class)
                 .eq("apiUnitId", queryParamQuery.getApiUnitId())
                 .orders(queryParamQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findList(queryCondition, QueryParamEntity.class);
+        return jpaTemplate.findList(queryCondition, QueryParamsEntity.class);
     }
 
     /**
@@ -93,12 +93,12 @@ public class QueryParamDao{
      * @param queryParamQuery
      * @return
      */
-    public Pagination<QueryParamEntity> findQueryParamPage(QueryParamQuery queryParamQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamEntity.class)
+    public Pagination<QueryParamsEntity> findQueryParamPage(QueryParamQuery queryParamQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamsEntity.class)
                 .eq("apiUnitId", queryParamQuery.getApiUnitId())
                 .pagination(queryParamQuery.getPageParam())
                 .orders(queryParamQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findPage(queryCondition, QueryParamEntity.class);
+        return jpaTemplate.findPage(queryCondition, QueryParamsEntity.class);
     }
 }

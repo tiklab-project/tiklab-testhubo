@@ -6,7 +6,7 @@ import io.tiklab.join.annotation.FindAll;
 import io.tiklab.join.annotation.FindList;
 import io.tiklab.join.annotation.FindOne;
 import io.tiklab.join.annotation.JoinProvider;
-import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.model.Categorys;
 import io.tiklab.teston.category.model.CategoryQuery;
 
 
@@ -17,21 +17,21 @@ import java.util.List;
 /**
 * 目录 服务接口
 */
-@JoinProvider(model = Category.class)
+@JoinProvider(model = Categorys.class)
 public interface CategoryService {
 
     /**
     * 创建目录
-    * @param category
+    * @param categorys
     * @return
     */
-    String createCategory(@NotNull @Valid Category category);
+    String createCategory(@NotNull @Valid Categorys categorys);
 
     /**
     * 更新目录
-    * @param category
+    * @param categorys
     */
-    void updateCategory(@NotNull @Valid Category category);
+    void updateCategory(@NotNull @Valid Categorys categorys);
 
     /**
     * 删除目录
@@ -39,44 +39,44 @@ public interface CategoryService {
     */
     void deleteCategory(@NotNull String id);
     @FindOne
-    Category findOne(@NotNull String id);
+    Categorys findOne(@NotNull String id);
     @FindList
-    List<Category> findList(List<String> idList);
+    List<Categorys> findList(List<String> idList);
 
     /**
     * 根据id查找目录
     * @param id
     * @return
     */
-    Category findCategory(@NotNull String id);
+    Categorys findCategory(@NotNull String id);
 
     /**
     * 查找所有目录
     * @return
     */
     @FindAll
-    List<Category> findAllCategory();
+    List<Categorys> findAllCategory();
 
     /**
     * 查询目录列表
     * @param categoryQuery
     * @return
     */
-    List<Category> findCategoryList(CategoryQuery categoryQuery);
+    List<Categorys> findCategoryList(CategoryQuery categoryQuery);
 
     /**
     * 按分页查询目录
     * @param categoryQuery
     * @return
     */
-    Pagination<Category> findCategoryPage(CategoryQuery categoryQuery);
+    Pagination<Categorys> findCategoryPage(CategoryQuery categoryQuery);
     /**
      * 通过查询对象查询分组树
      * 带用例
      * @param categoryQuery
      * @return
      */
-    List<Category> findCategoryListTree(CategoryQuery categoryQuery);
+    List<Categorys> findCategoryListTree(CategoryQuery categoryQuery);
 
     /**
      * 通过查询对象查询分组树
@@ -84,5 +84,5 @@ public interface CategoryService {
      * @param categoryQuery
      * @return
      */
-    List<Category> findCategoryListTreeTable(CategoryQuery categoryQuery);
+    List<Categorys> findCategoryListTreeTable(CategoryQuery categoryQuery);
 }

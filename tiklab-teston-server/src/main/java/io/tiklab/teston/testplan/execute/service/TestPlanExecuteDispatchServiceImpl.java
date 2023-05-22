@@ -1,5 +1,6 @@
 package io.tiklab.teston.testplan.execute.service;
 
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.common.TestUtil;
 import io.tiklab.teston.testplan.execute.model.TestPlanTestData;
 import io.tiklab.teston.testplan.execute.model.TestPlanTestResponse;
@@ -26,6 +27,7 @@ import java.util.Objects;
  * 测试计划测试调度
  */
 @Service
+@Exporter
 public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispatchService {
 
     static Logger logger = LoggerFactory.getLogger(TestPlanExecuteDispatchServiceImpl.class);

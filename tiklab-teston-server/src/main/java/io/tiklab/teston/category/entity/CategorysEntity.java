@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="teston_category")
-public class CategoryEntity implements Serializable {
+public class CategorysEntity implements Serializable {
 
     @Id
      @GeneratorValue(length = 12)
@@ -30,7 +30,7 @@ public class CategoryEntity implements Serializable {
 
     //上一层id
     @Column(name = "parent_category_id",length = 32,notNull = true)
-    private String parentCategoryId;
+    private String parentId;
 
     //排序
     @Column(name = "sort")
@@ -64,14 +64,13 @@ public class CategoryEntity implements Serializable {
         this.repositoryId = repositoryId;
     }
 
-    public String getParentCategoryId() {
-        return parentCategoryId;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setParentCategoryId(String parentCategoryId) {
-        this.parentCategoryId = parentCategoryId;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
-
 
     public Integer getSort() {
         return sort;

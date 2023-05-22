@@ -5,7 +5,7 @@ import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
 import io.tiklab.core.Result;
 import io.tiklab.core.page.Pagination;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.slf4j.Logger;
@@ -36,8 +36,8 @@ public class TestCaseController {
     @RequestMapping(path="/createTestCase",method = RequestMethod.POST)
     @ApiMethod(name = "createTestCase",desc = "创建测试用例")
     @ApiParam(name = "testCase",desc = "testCase",required = true)
-    public Result<String> createTestCase(@RequestBody @NotNull @Valid TestCase testCase){
-        String id = testCaseService.createTestCase(testCase);
+    public Result<String> createTestCase(@RequestBody @NotNull @Valid TestCases testCases){
+        String id = testCaseService.createTestCase(testCases);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class TestCaseController {
     @RequestMapping(path="/updateTestCase",method = RequestMethod.POST)
     @ApiMethod(name = "updateTestCase",desc = "更新测试用例")
     @ApiParam(name = "testCase",desc = "testCase",required = true)
-    public Result<Void> updateTestCase(@RequestBody @NotNull @Valid TestCase testCase){
-        testCaseService.updateTestCase(testCase);
+    public Result<Void> updateTestCase(@RequestBody @NotNull @Valid TestCases testCases){
+        testCaseService.updateTestCase(testCases);
 
         return Result.ok();
     }
@@ -63,35 +63,35 @@ public class TestCaseController {
     @RequestMapping(path="/findTestCase",method = RequestMethod.POST)
     @ApiMethod(name = "findTestCase",desc = "根据id查找测试用例")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<TestCase> findTestCase(@NotNull String id){
-        TestCase testCase = testCaseService.findTestCase(id);
+    public Result<TestCases> findTestCase(@NotNull String id){
+        TestCases testCases = testCaseService.findTestCase(id);
 
-        return Result.ok(testCase);
+        return Result.ok(testCases);
     }
 
     @RequestMapping(path="/findAllTestCase",method = RequestMethod.POST)
     @ApiMethod(name = "findAllTestCase",desc = "查找所有测试用例")
-    public Result<List<TestCase>> findAllTestCase(){
-        List<TestCase> testCaseList = testCaseService.findAllTestCase();
+    public Result<List<TestCases>> findAllTestCase(){
+        List<TestCases> testCasesList = testCaseService.findAllTestCase();
 
-        return Result.ok(testCaseList);
+        return Result.ok(testCasesList);
     }
 
     @RequestMapping(path = "/findTestCaseList",method = RequestMethod.POST)
     @ApiMethod(name = "findTestCaseList",desc = "根据查询参数查询测试用例列表")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
-    public Result<List<TestCase>> findTestCaseList(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
-        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
+    public Result<List<TestCases>> findTestCaseList(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
+        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
 
-        return Result.ok(testCaseList);
+        return Result.ok(testCasesList);
     }
 
 
     @RequestMapping(path = "/findTestCasePage",method = RequestMethod.POST)
     @ApiMethod(name = "findTestCasePage",desc = "根据查询参数按分页查询测试用例")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
-    public Result<Pagination<TestCase>> findTestCasePage(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
-        Pagination<TestCase> pagination = testCaseService.findTestCasePage(testCaseQuery);
+    public Result<Pagination<TestCases>> findTestCasePage(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
+        Pagination<TestCases> pagination = testCaseService.findTestCasePage(testCaseQuery);
 
         return Result.ok(pagination);
     }

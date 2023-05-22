@@ -1,29 +1,26 @@
 package io.tiklab.teston.test.apix.http.unit.cases.entity;
 
-
-import io.tiklab.dal.jpa.annotation.Column;
-import io.tiklab.dal.jpa.annotation.GeneratorValue;
-import io.tiklab.dal.jpa.annotation.Id;
-import io.tiklab.dal.jpa.annotation.Table;import io.tiklab.dal.jpa.annotation.Entity;
+import io.tiklab.dal.jpa.annotation.*;
 
 import java.io.Serializable;
 
 /**
- * form-data 实体
+ * form-url 实体
  */
-@Entity @Table(name="teston_api_form")
-public class FormParamEntity implements Serializable {
+@Entity
+@Table(name="teston_api_form_urlencoded")
+public class FormUrlEncodedEntity implements Serializable {
 
     @Id
      @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
-    //所属接口单元用例
+     // 所属接口
     @Column(name = "api_unit_id",length = 32,notNull = true)
     private String apiUnitId;
 
-    //参数名字
+    // 名称
     @Column(name = "param_name",length = 64,notNull = true)
     private String paramName;
 
@@ -31,21 +28,22 @@ public class FormParamEntity implements Serializable {
     @Column(name = "data_type",length = 32,notNull = true)
     private String dataType;
 
-//    // 是否必须,0:非必须;1:必须
+     // 是否必选
 //    @Column(name = "required",length = 2,notNull = true)
 //    private Integer required;
 
-    // 描述
+    // 说明描述
     @Column(name = "description",length = 128)
     private String desc;
 
-    // 值
+     // 示例值
     @Column(name = "value",length = 128)
     private String value;
 
     // 排序
     @Column(name = "sort",length = 4)
     private Integer sort;
+
 
     public String getId() {
         return id;
@@ -88,19 +86,19 @@ public class FormParamEntity implements Serializable {
         this.desc = desc;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public Integer getSort() {
         return sort;
     }
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

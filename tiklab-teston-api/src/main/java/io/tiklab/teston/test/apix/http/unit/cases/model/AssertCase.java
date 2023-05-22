@@ -28,7 +28,6 @@ public class AssertCase extends BaseModel{
     @Mappings({
             @Mapping(source = "apiUnit.id",target = "apiUnitId")
     })
-    @JoinQuery(key = "id")
     private ApiUnitCase apiUnit;
 
     @ApiProperty(name="source",desc="来源,1:状态码;2:请求头;3:请求体")

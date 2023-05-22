@@ -5,7 +5,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParam;
+import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParams;
 import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.QueryParamService;
 import org.slf4j.Logger;
@@ -36,8 +36,8 @@ public class QueryParamController {
     @RequestMapping(path="/createQueryParam",method = RequestMethod.POST)
     @ApiMethod(name = "createQueryParam",desc = "创建query")
     @ApiParam(name = "queryParam",desc = "queryParam",required = true)
-    public Result<String> createQueryParam(@RequestBody @NotNull @Valid QueryParam queryParam){
-        String id = queryParamService.createQueryParam(queryParam);
+    public Result<String> createQueryParam(@RequestBody @NotNull @Valid QueryParams queryParams){
+        String id = queryParamService.createQueryParam(queryParams);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class QueryParamController {
     @RequestMapping(path="/updateQueryParam",method = RequestMethod.POST)
     @ApiMethod(name = "updateQueryParam",desc = "更新query")
     @ApiParam(name = "queryParam",desc = "queryParam",required = true)
-    public Result<Void> updateQueryParam(@RequestBody @NotNull @Valid QueryParam queryParam){
-        queryParamService.updateQueryParam(queryParam);
+    public Result<Void> updateQueryParam(@RequestBody @NotNull @Valid QueryParams queryParams){
+        queryParamService.updateQueryParam(queryParams);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class QueryParamController {
     @RequestMapping(path="/findQueryParam",method = RequestMethod.POST)
     @ApiMethod(name = "findQueryParam",desc = "根据id查找query")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<QueryParam> findQueryParam(@NotNull String id){
-        QueryParam queryParam = queryParamService.findQueryParam(id);
+    public Result<QueryParams> findQueryParam(@NotNull String id){
+        QueryParams queryParams = queryParamService.findQueryParam(id);
 
-        return Result.ok(queryParam);
+        return Result.ok(queryParams);
     }
 
     @RequestMapping(path="/findAllQueryParam",method = RequestMethod.POST)
     @ApiMethod(name = "findAllQueryParam",desc = "查找所有query")
-    public Result<List<QueryParam>> findAllQueryParam(){
-        List<QueryParam> queryParamList = queryParamService.findAllQueryParam();
+    public Result<List<QueryParams>> findAllQueryParam(){
+        List<QueryParams> queryParamsList = queryParamService.findAllQueryParam();
 
-        return Result.ok(queryParamList);
+        return Result.ok(queryParamsList);
     }
 
     @RequestMapping(path = "/findQueryParamList",method = RequestMethod.POST)
     @ApiMethod(name = "findQueryParamList",desc = "根据查询参数查询query列表")
     @ApiParam(name = "queryParamQuery",desc = "queryParamQuery",required = true)
-    public Result<List<QueryParam>> findQueryParamList(@RequestBody @Valid @NotNull QueryParamQuery queryParamQuery){
-        List<QueryParam> queryParamList = queryParamService.findQueryParamList(queryParamQuery);
+    public Result<List<QueryParams>> findQueryParamList(@RequestBody @Valid @NotNull QueryParamQuery queryParamQuery){
+        List<QueryParams> queryParamsList = queryParamService.findQueryParamList(queryParamQuery);
 
-        return Result.ok(queryParamList);
+        return Result.ok(queryParamsList);
     }
 
     @RequestMapping(path = "/findQueryParamPage",method = RequestMethod.POST)
     @ApiMethod(name = "findQueryParamPage",desc = "根据查询参数按分页查询query")
     @ApiParam(name = "queryParamQuery",desc = "queryParamQuery",required = true)
-    public Result<Pagination<QueryParam>> findQueryParamPage(@RequestBody @Valid @NotNull QueryParamQuery queryParamQuery){
-        Pagination<QueryParam> pagination = queryParamService.findQueryParamPage(queryParamQuery);
+    public Result<Pagination<QueryParams>> findQueryParamPage(@RequestBody @Valid @NotNull QueryParamQuery queryParamQuery){
+        Pagination<QueryParams> pagination = queryParamService.findQueryParamPage(queryParamQuery);
 
         return Result.ok(pagination);
     }

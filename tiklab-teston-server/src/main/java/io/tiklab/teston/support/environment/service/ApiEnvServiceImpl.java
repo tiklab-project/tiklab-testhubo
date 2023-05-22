@@ -1,5 +1,6 @@
 package io.tiklab.teston.support.environment.service;
 
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.support.environment.dao.ApiEnvDao;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
@@ -19,6 +20,7 @@ import java.util.List;
 * 接口环境 服务
 */
 @Service
+@Exporter
 public class ApiEnvServiceImpl implements ApiEnvService {
 
     @Autowired

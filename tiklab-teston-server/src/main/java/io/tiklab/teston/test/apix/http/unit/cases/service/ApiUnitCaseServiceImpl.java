@@ -11,7 +11,7 @@ import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.ApiUnitCaseEntity;
 import io.tiklab.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.apache.commons.collections.CollectionUtils;
@@ -112,9 +112,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
 
         //添加testCase
-        TestCase testCase = apiUnitCase.getTestCase();
-        testCase.setId(id);
-        testCaseService.createTestCase(testCase);
+        TestCases testCases = apiUnitCase.getTestCase();
+        testCases.setId(id);
+        testCaseService.createTestCase(testCases);
 
         return id;
     }
@@ -161,8 +161,8 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
         joinTemplate.joinQuery(apiUnitCase);
 
-        TestCase testCase = testCaseService.findTestCase(id);
-        apiUnitCase.setTestCase(testCase);
+        TestCases testCases = testCaseService.findTestCase(id);
+        apiUnitCase.setTestCase(testCases);
 
         return apiUnitCase;
     }
@@ -193,13 +193,13 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     @Override
     public List<ApiUnitCase> findApiUnitCaseListByTestCase(TestCaseQuery testCaseQuery) {
 
-        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<ApiUnitCase> apiUnitCaseList=new ArrayList<>();
 
-        if(!ObjectUtils.isEmpty(testCaseList)){
-            for (TestCase testCase:testCaseList){
-                List<ApiUnitCase> caseList = findApiUnitCaseList(new ApiUnitCaseQuery().setTestCaseId(testCase.getId()));
+        if(!ObjectUtils.isEmpty(testCasesList)){
+            for (TestCases testCases : testCasesList){
+                List<ApiUnitCase> caseList = findApiUnitCaseList(new ApiUnitCaseQuery().setTestCaseId(testCases.getId()));
                if (!ObjectUtils.isEmpty(caseList)){
                    apiUnitCaseList.add(caseList.get(0));
                }
@@ -346,11 +346,11 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     private String getFormData (ApiUnitCase apiUnitCase,String bodyStr){
         FormParamQuery formParamQuery = new FormParamQuery();
         formParamQuery.setApiUnitId(apiUnitCase.getId());
-        List<FormParam> formParamList = formParamService.findFormParamList(formParamQuery);
+        List<FormParams> formParamsList = formParamService.findFormParamList(formParamQuery);
 
-        if (CollectionUtils.isNotEmpty(formParamList)){
-            for (FormParam formParam:formParamList){
-                bodyStr = bodyStr + formParam.getParamName() + "=" + formParam.getValue() + "&";
+        if (CollectionUtils.isNotEmpty(formParamsList)){
+            for (FormParams formParams : formParamsList){
+                bodyStr = bodyStr + formParams.getParamName() + "=" + formParams.getValue() + "&";
             }
         }
 
@@ -363,9 +363,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     private String getFormUrlencoded (ApiUnitCase apiUnitCase, String bodyStr){
         FormUrlencodedQuery formUrlencodedQuery = new FormUrlencodedQuery();
         formUrlencodedQuery.setApiUnitId(apiUnitCase.getId());
-        List<FormUrlencoded> formUrlencodedList = formUrlencodedService.findFormUrlencodedList(formUrlencodedQuery);
-        if (CollectionUtils.isNotEmpty(formUrlencodedList)){
-            for (FormUrlencoded formUrlencoded:formUrlencodedList){
+        List<FormUrlEncoded> formUrlEncodedList = formUrlencodedService.findFormUrlencodedList(formUrlencodedQuery);
+        if (CollectionUtils.isNotEmpty(formUrlEncodedList)){
+            for (FormUrlEncoded formUrlencoded: formUrlEncodedList){
                 bodyStr = bodyStr + formUrlencoded.getParamName() + "=" + formUrlencoded.getValue() + "&";
             }
         }

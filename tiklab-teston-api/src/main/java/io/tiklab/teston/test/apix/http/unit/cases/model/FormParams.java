@@ -12,12 +12,12 @@ import io.tiklab.postin.annotation.ApiProperty;
 import javax.validation.constraints.NotNull;
 
 /**
- * query参数 模型
+ * form-data 模型
  */
 @ApiModel
-@Mapper(targetAlias = "QueryParamEntity")
+@Mapper(targetAlias = "FormParamsEntity")
 @Join
-public class QueryParam extends BaseModel{
+public class FormParams extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
@@ -34,18 +34,18 @@ public class QueryParam extends BaseModel{
     @ApiProperty(name="paramName",desc="参数名字",required = true)
     private String paramName;
 
+    @NotNull
+    @ApiProperty(name="dataType",desc="数据类型",required = true)
+    private String dataType;
+
 //    @NotNull
-//    @ApiProperty(name="dataType",desc="参数类型")
-//    private String dataType;
-//
-//    @NotNull
-//    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须")
+//    @ApiProperty(name="required",desc="是否必须,0:非必须;1:必须",required = true)
 //    private Integer required=0;
 
-    @ApiProperty(name="desc",desc="参数说明")
+    @ApiProperty(name="desc",desc="描述")
     private String desc;
 
-    @ApiProperty(name="value",desc="示例值")
+    @ApiProperty(name="value",desc="值")
     private String value;
 
     @ApiProperty(name="sort",desc="排序")
@@ -73,6 +73,13 @@ public class QueryParam extends BaseModel{
 
     public void setParamName(String paramName) {
         this.paramName = paramName;
+    }
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
     public String getDesc() {

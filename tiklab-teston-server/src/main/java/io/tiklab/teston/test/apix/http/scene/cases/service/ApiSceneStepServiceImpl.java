@@ -11,7 +11,7 @@ import io.tiklab.join.JoinTemplate;
 
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,9 +107,9 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
         ArrayList<ApiSceneStep> arrayList = new ArrayList<>();
         if(apiSceneStepList.size()>0){
             for(ApiSceneStep apiSceneStep:apiSceneStepList){
-                TestCase testCase = testCaseService.findTestCase(apiSceneStep.getApiUnit().getId());
+                TestCases testCases = testCaseService.findTestCase(apiSceneStep.getApiUnit().getId());
 
-                apiSceneStep.getApiUnit().setTestCase(testCase);
+                apiSceneStep.getApiUnit().setTestCase(testCases);
 
                 arrayList.add(apiSceneStep);
             }

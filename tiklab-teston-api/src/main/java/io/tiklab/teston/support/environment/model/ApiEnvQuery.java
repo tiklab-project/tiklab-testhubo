@@ -6,10 +6,11 @@ import io.tiklab.core.order.Order;
 import io.tiklab.core.order.OrderBuilders;
 import io.tiklab.core.page.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ApiModel
-public class ApiEnvQuery {
+public class ApiEnvQuery implements Serializable {
     @ApiProperty(name = "orderParams", desc = "排序参数")
     private List<Order> orderParams = OrderBuilders.instance().asc("id").get();
 

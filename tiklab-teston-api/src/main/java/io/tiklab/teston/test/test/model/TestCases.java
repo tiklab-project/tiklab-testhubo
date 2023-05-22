@@ -8,7 +8,7 @@ import io.tiklab.beans.annotation.Mappings;
 import io.tiklab.core.BaseModel;
 import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
-import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.model.Categorys;
 import io.tiklab.user.user.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -20,9 +20,9 @@ import java.util.Map;
  * 测试用例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "TestCaseEntity")
+@Mapper(targetAlias = "TestCasesEntity")
 @Join
-public class TestCase extends BaseModel{
+public class TestCases extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
@@ -36,7 +36,7 @@ public class TestCase extends BaseModel{
             @Mapping(source = "category.id",target = "categoryId")
     })
     @JoinQuery(key = "id")
-    private Category category;
+    private Categorys category;
 
     @ApiProperty(name="仓库Id",desc="所属仓库")
     private String repositoryId;
@@ -83,7 +83,7 @@ public class TestCase extends BaseModel{
         return id;
     }
 
-    public TestCase setId(String id) {
+    public TestCases setId(String id) {
         this.id = id;
         return this;
     }
@@ -95,11 +95,11 @@ public class TestCase extends BaseModel{
         this.name = name;
     }
 
-    public Category getCategory() {
+    public Categorys getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Categorys category) {
         this.category = category;
     }
 

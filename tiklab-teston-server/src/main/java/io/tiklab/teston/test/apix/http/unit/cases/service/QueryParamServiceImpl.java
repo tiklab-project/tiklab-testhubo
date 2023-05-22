@@ -5,9 +5,9 @@ import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.entity.QueryParamEntity;
+import io.tiklab.teston.test.apix.http.unit.cases.entity.QueryParamsEntity;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParam;
+import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParams;
 import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamQuery;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +30,17 @@ public class QueryParamServiceImpl implements QueryParamService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createQueryParam(@NotNull @Valid QueryParam queryParam) {
-        QueryParamEntity queryParamEntity = BeanMapper.map(queryParam, QueryParamEntity.class);
+    public String createQueryParam(@NotNull @Valid QueryParams queryParams) {
+        QueryParamsEntity queryParamsEntity = BeanMapper.map(queryParams, QueryParamsEntity.class);
 
-        return queryParamDao.createQueryParam(queryParamEntity);
+        return queryParamDao.createQueryParam(queryParamsEntity);
     }
 
     @Override
-    public void updateQueryParam(@NotNull @Valid QueryParam queryParam) {
-        QueryParamEntity queryParamEntity = BeanMapper.map(queryParam, QueryParamEntity.class);
+    public void updateQueryParam(@NotNull @Valid QueryParams queryParams) {
+        QueryParamsEntity queryParamsEntity = BeanMapper.map(queryParams, QueryParamsEntity.class);
 
-        queryParamDao.updateQueryParam(queryParamEntity);
+        queryParamDao.updateQueryParam(queryParamsEntity);
     }
 
     @Override
@@ -49,60 +49,60 @@ public class QueryParamServiceImpl implements QueryParamService {
     }
 
     @Override
-    public QueryParam findOne(String id) {
-        QueryParamEntity queryParamEntity = queryParamDao.findQueryParam(id);
+    public QueryParams findOne(String id) {
+        QueryParamsEntity queryParamsEntity = queryParamDao.findQueryParam(id);
 
-        QueryParam queryParam = BeanMapper.map(queryParamEntity, QueryParam.class);
-        return queryParam;
+        QueryParams queryParams = BeanMapper.map(queryParamsEntity, QueryParams.class);
+        return queryParams;
     }
 
     @Override
-    public List<QueryParam> findList(List<String> idList) {
-        List<QueryParamEntity> queryParamEntityList =  queryParamDao.findQueryParamList(idList);
+    public List<QueryParams> findList(List<String> idList) {
+        List<QueryParamsEntity> queryParamsEntityList =  queryParamDao.findQueryParamList(idList);
 
-        List<QueryParam> queryParamList =  BeanMapper.mapList(queryParamEntityList,QueryParam.class);
-        return queryParamList;
+        List<QueryParams> queryParamsList =  BeanMapper.mapList(queryParamsEntityList, QueryParams.class);
+        return queryParamsList;
     }
 
     @Override
-    public QueryParam findQueryParam(@NotNull String id) {
-        QueryParam queryParam = findOne(id);
+    public QueryParams findQueryParam(@NotNull String id) {
+        QueryParams queryParams = findOne(id);
 
-        joinTemplate.joinQuery(queryParam);
-        return queryParam;
+        joinTemplate.joinQuery(queryParams);
+        return queryParams;
     }
 
     @Override
-    public List<QueryParam> findAllQueryParam() {
-        List<QueryParamEntity> queryParamEntityList =  queryParamDao.findAllQueryParam();
+    public List<QueryParams> findAllQueryParam() {
+        List<QueryParamsEntity> queryParamsEntityList =  queryParamDao.findAllQueryParam();
 
-        List<QueryParam> queryParamList =  BeanMapper.mapList(queryParamEntityList,QueryParam.class);
+        List<QueryParams> queryParamsList =  BeanMapper.mapList(queryParamsEntityList, QueryParams.class);
 
-        joinTemplate.joinQuery(queryParamList);
-        return queryParamList;
+        joinTemplate.joinQuery(queryParamsList);
+        return queryParamsList;
     }
 
     @Override
-    public List<QueryParam> findQueryParamList(QueryParamQuery queryParamQuery) {
-        List<QueryParamEntity> queryParamEntityList = queryParamDao.findQueryParamList(queryParamQuery);
+    public List<QueryParams> findQueryParamList(QueryParamQuery queryParamQuery) {
+        List<QueryParamsEntity> queryParamsEntityList = queryParamDao.findQueryParamList(queryParamQuery);
 
-        List<QueryParam> queryParamList = BeanMapper.mapList(queryParamEntityList,QueryParam.class);
+        List<QueryParams> queryParamsList = BeanMapper.mapList(queryParamsEntityList, QueryParams.class);
 
-        joinTemplate.joinQuery(queryParamList);
+        joinTemplate.joinQuery(queryParamsList);
 
-        return queryParamList;
+        return queryParamsList;
     }
 
     @Override
-    public Pagination<QueryParam> findQueryParamPage(QueryParamQuery queryParamQuery) {
+    public Pagination<QueryParams> findQueryParamPage(QueryParamQuery queryParamQuery) {
 
-        Pagination<QueryParamEntity>  pagination = queryParamDao.findQueryParamPage(queryParamQuery);
+        Pagination<QueryParamsEntity>  pagination = queryParamDao.findQueryParamPage(queryParamQuery);
 
-        List<QueryParam> queryParamList = BeanMapper.mapList(pagination.getDataList(),QueryParam.class);
+        List<QueryParams> queryParamsList = BeanMapper.mapList(pagination.getDataList(), QueryParams.class);
 
-        joinTemplate.joinQuery(queryParamList);
+        joinTemplate.joinQuery(queryParamsList);
 
-        return PaginationBuilder.build(pagination,queryParamList);
+        return PaginationBuilder.build(pagination, queryParamsList);
     }
 
     /**
@@ -114,10 +114,10 @@ public class QueryParamServiceImpl implements QueryParamService {
         String param = "";
         QueryParamQuery queryParamQuery = new QueryParamQuery();
         queryParamQuery.setApiUnitId(apiUnitCase.getId());
-        List<QueryParam> queryParamList = this.findQueryParamList(queryParamQuery);
-        if (CollectionUtils.isNotEmpty(queryParamList)){
-            for (QueryParam queryParam : queryParamList) {
-                param += queryParam.getParamName() + "=" + queryParam.getValue() + "&";
+        List<QueryParams> queryParamsList = this.findQueryParamList(queryParamQuery);
+        if (CollectionUtils.isNotEmpty(queryParamsList)){
+            for (QueryParams queryParams : queryParamsList) {
+                param += queryParams.getParamName() + "=" + queryParams.getValue() + "&";
             }
         }
 

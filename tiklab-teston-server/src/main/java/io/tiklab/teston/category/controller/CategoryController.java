@@ -6,7 +6,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.model.Categorys;
 import io.tiklab.teston.category.model.CategoryQuery;
 import io.tiklab.teston.category.service.CategoryService;
 import org.slf4j.Logger;
@@ -37,8 +37,8 @@ public class CategoryController {
     @RequestMapping(path="/createCategory",method = RequestMethod.POST)
     @ApiMethod(name = "createCategory",desc = "创建目录")
     @ApiParam(name = "category",desc = "category",required = true)
-    public Result<String> createCategory(@RequestBody @NotNull @Valid Category category){
-        String id = categoryService.createCategory(category);
+    public Result<String> createCategory(@RequestBody @NotNull @Valid Categorys categorys){
+        String id = categoryService.createCategory(categorys);
 
         return Result.ok(id);
     }
@@ -46,8 +46,8 @@ public class CategoryController {
     @RequestMapping(path="/updateCategory",method = RequestMethod.POST)
     @ApiMethod(name = "updateCategory",desc = "更新目录")
     @ApiParam(name = "category",desc = "category",required = true)
-    public Result<Void> updateCategory(@RequestBody @NotNull @Valid Category category){
-        categoryService.updateCategory(category);
+    public Result<Void> updateCategory(@RequestBody @NotNull @Valid Categorys categorys){
+        categoryService.updateCategory(categorys);
 
         return Result.ok();
     }
@@ -64,34 +64,34 @@ public class CategoryController {
     @RequestMapping(path="/findCategory",method = RequestMethod.POST)
     @ApiMethod(name = "findCategory",desc = "根据id查找目录")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<Category> findCategory(@NotNull String id){
-        Category category = categoryService.findCategory(id);
+    public Result<Categorys> findCategory(@NotNull String id){
+        Categorys categorys = categoryService.findCategory(id);
 
-        return Result.ok(category);
+        return Result.ok(categorys);
     }
 
     @RequestMapping(path="/findAllCategory",method = RequestMethod.POST)
     @ApiMethod(name = "findAllCategory",desc = "查找所有目录")
-    public Result<List<Category>> findAllCategory(){
-        List<Category> categoryList = categoryService.findAllCategory();
+    public Result<List<Categorys>> findAllCategory(){
+        List<Categorys> categorysList = categoryService.findAllCategory();
 
-        return Result.ok(categoryList);
+        return Result.ok(categorysList);
     }
 
     @RequestMapping(path = "/findCategoryList",method = RequestMethod.POST)
     @ApiMethod(name = "findCategoryList",desc = "查询目录列表")
     @ApiParam(name = "categoryQuery",desc = "categoryQuery",required = true)
-    public Result<List<Category>> findCategoryList(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
-        List<Category> categoryList = categoryService.findCategoryList(categoryQuery);
+    public Result<List<Categorys>> findCategoryList(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
+        List<Categorys> categorysList = categoryService.findCategoryList(categoryQuery);
 
-        return Result.ok(categoryList);
+        return Result.ok(categorysList);
     }
 
     @RequestMapping(path = "/findCategoryPage",method = RequestMethod.POST)
     @ApiMethod(name = "findCategoryPage",desc = "按分页查询目录")
     @ApiParam(name = "categoryQuery",desc = "categoryQuery",required = true)
-    public Result<Pagination<Category>> findCategoryPage(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
-        Pagination<Category> pagination = categoryService.findCategoryPage(categoryQuery);
+    public Result<Pagination<Categorys>> findCategoryPage(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
+        Pagination<Categorys> pagination = categoryService.findCategoryPage(categoryQuery);
 
         return Result.ok(pagination);
     }
@@ -99,19 +99,19 @@ public class CategoryController {
     @RequestMapping(path = "/findCategoryListTree",method = RequestMethod.POST)
     @ApiMethod(name = "findCategoryListTree",desc = "根据查询对象查找分类列表树（带用例）")
     @ApiParam(name = "categoryQuery",desc = "查询对象",required = true)
-    public Result<List<Category>> findCategoryListTree(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
-        List<Category> categoryList = categoryService.findCategoryListTree(categoryQuery);
+    public Result<List<Categorys>> findCategoryListTree(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
+        List<Categorys> categorysList = categoryService.findCategoryListTree(categoryQuery);
 
-        return Result.ok(categoryList);
+        return Result.ok(categorysList);
     }
 
     @RequestMapping(path = "/findCategoryListTreeTable",method = RequestMethod.POST)
     @ApiMethod(name = "findCategoryListTreeTable",desc = "根据查询对象查找分类列表树（不带用例）")
     @ApiParam(name = "categoryQuery",desc = "查询对象",required = true)
-    public Result<List<Category>> findCategoryListTreeTable(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
-        List<Category> categoryList = categoryService.findCategoryListTreeTable(categoryQuery);
+    public Result<List<Categorys>> findCategoryListTreeTable(@RequestBody @Valid @NotNull CategoryQuery categoryQuery){
+        List<Categorys> categorysList = categoryService.findCategoryListTreeTable(categoryQuery);
 
-        return Result.ok(categoryList);
+        return Result.ok(categorysList);
     }
 
 

@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencoded;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncoded;
 import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedQuery;
 import io.tiklab.core.page.Pagination;
 
@@ -18,13 +18,13 @@ public interface FormUrlencodedService {
     * @param formUrlencoded
     * @return
     */
-    String createFormUrlencoded(@NotNull @Valid FormUrlencoded formUrlencoded);
+    String createFormUrlencoded(@NotNull @Valid FormUrlEncoded formUrlencoded);
 
     /**
     * 更新form-urlencoded
     * @param formUrlencoded
     */
-    void updateFormUrlencoded(@NotNull @Valid FormUrlencoded formUrlencoded);
+    void updateFormUrlencoded(@NotNull @Valid FormUrlEncoded formUrlencoded);
 
     /**
     * 删除form-urlencoded
@@ -32,35 +32,35 @@ public interface FormUrlencodedService {
     */
     void deleteFormUrlencoded(@NotNull String id);
 
-    FormUrlencoded findOne(@NotNull String id);
+    FormUrlEncoded findOne(@NotNull String id);
 
-    List<FormUrlencoded> findList(List<String> idList);
+    List<FormUrlEncoded> findList(List<String> idList);
 
     /**
     * 根据id查找form-urlencoded
     * @param id
     * @return
     */
-    FormUrlencoded findFormUrlencoded(@NotNull String id);
+    FormUrlEncoded findFormUrlencoded(@NotNull String id);
 
     /**
     * 查找所有form-urlencoded
     * @return
     */
-    List<FormUrlencoded> findAllFormUrlencoded();
+    List<FormUrlEncoded> findAllFormUrlencoded();
 
     /**
     * 查询form-urlencoded 列表
     * @param formUrlencodedQuery
     * @return
     */
-    List<FormUrlencoded> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery);
+    List<FormUrlEncoded> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery);
 
     /**
     * 按分页查询form-urlencoded
     * @param formUrlencodedQuery
     * @return
     */
-    Pagination<FormUrlencoded> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery);
+    Pagination<FormUrlEncoded> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery);
 
 }

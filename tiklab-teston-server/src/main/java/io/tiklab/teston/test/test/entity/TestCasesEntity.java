@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="teston_testcase")
-public class TestCaseEntity implements Serializable {
+public class TestCasesEntity implements Serializable {
 
     @Id
     @Column(name = "id",length = 32)

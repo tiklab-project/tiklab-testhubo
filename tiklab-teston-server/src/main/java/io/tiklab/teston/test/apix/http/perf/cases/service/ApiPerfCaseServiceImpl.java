@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.apix.http.perf.cases.service;
 
-import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.model.Categorys;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.apix.http.perf.cases.dao.ApiPerfCaseDao;
 import io.tiklab.teston.test.apix.http.perf.cases.entity.ApiPerfCaseEntity;
@@ -10,7 +10,7 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfCase;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfCaseQuery;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.user.user.model.User;
@@ -59,9 +59,9 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
         apiPerfCaseEntity.setId(id);
         apiPerfCaseDao.updateApiPerfCase(apiPerfCaseEntity);
 
-        TestCase testCase =apiPerfCase.getTestCase();
-        testCase.setId(id);
-        testCaseService.createTestCase(testCase);
+        TestCases testCases =apiPerfCase.getTestCase();
+        testCases.setId(id);
+        testCaseService.createTestCase(testCases);
 
         return id;
     }
@@ -103,13 +103,13 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
         joinTemplate.joinQuery(apiPerfCase);
 
         //手动添加字段
-        TestCase testCase = apiPerfCase.getTestCase();
-        if(testCase.getCategory()!=null) {
-            Category category = categoryService.findCategory(testCase.getCategory().getId());
-            apiPerfCase.getTestCase().setCategory(category);
+        TestCases testCases = apiPerfCase.getTestCase();
+        if(testCases.getCategory()!=null) {
+            Categorys categorys = categoryService.findCategory(testCases.getCategory().getId());
+            apiPerfCase.getTestCase().setCategory(categorys);
         }
-        if(testCase.getUpdateUser()!=null) {
-            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
+        if(testCases.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
             apiPerfCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -150,15 +150,15 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
 
     @Override
     public List<ApiPerfCase> findApiPerfCaseListByTestCase(TestCaseQuery testCaseQuery) {
-        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<ApiPerfCase> apiPerfList = new ArrayList<>();
 
-        if(!ObjectUtils.isEmpty(testCaseList)){
-            for(TestCase testCase : testCaseList){
+        if(!ObjectUtils.isEmpty(testCasesList)){
+            for(TestCases testCases : testCasesList){
 
                 //因为一个testcase对应一个apiPerfCase，所以只需要取第一个即可
-                List<ApiPerfCase> apiPerfCaseList = findApiPerfCaseList(new ApiPerfCaseQuery().setTestCaseId(testCase.getId()));
+                List<ApiPerfCase> apiPerfCaseList = findApiPerfCaseList(new ApiPerfCaseQuery().setTestCaseId(testCases.getId()));
 
                 if(!ObjectUtils.isEmpty(apiPerfCaseList)){
                     apiPerfList.add(apiPerfCaseList.get(0));

@@ -1,16 +1,16 @@
 package io.tiklab.teston.category.service;
 
 import io.tiklab.teston.category.dao.CategoryDao;
-import io.tiklab.teston.category.entity.CategoryEntity;
+import io.tiklab.teston.category.entity.CategorysEntity;
 import io.tiklab.core.page.PaginationBuilder;
 
 
 import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.teston.category.model.Category;
+import io.tiklab.teston.category.model.Categorys;
 import io.tiklab.teston.category.model.CategoryQuery;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +39,17 @@ public class CategoryServiceImpl implements CategoryService {
     TestCaseService testCaseService;
 
     @Override
-    public String createCategory(@NotNull @Valid Category category) {
-        CategoryEntity categoryEntity = BeanMapper.map(category, CategoryEntity.class);
+    public String createCategory(@NotNull @Valid Categorys categorys) {
+        CategorysEntity categorysEntity = BeanMapper.map(categorys, CategorysEntity.class);
 
-        return categoryDao.createCategory(categoryEntity);
+        return categoryDao.createCategory(categorysEntity);
     }
 
     @Override
-    public void updateCategory(@NotNull @Valid Category category) {
-        CategoryEntity categoryEntity = BeanMapper.map(category, CategoryEntity.class);
+    public void updateCategory(@NotNull @Valid Categorys categorys) {
+        CategorysEntity categorysEntity = BeanMapper.map(categorys, CategorysEntity.class);
 
-        categoryDao.updateCategory(categoryEntity);
+        categoryDao.updateCategory(categorysEntity);
     }
 
     @Override
@@ -61,146 +61,146 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findOne(String id) {
-        CategoryEntity categoryEntity = categoryDao.findCategory(id);
+    public Categorys findOne(String id) {
+        CategorysEntity categorysEntity = categoryDao.findCategory(id);
 
-        Category category = BeanMapper.map(categoryEntity, Category.class);
-        return category;
+        Categorys categorys = BeanMapper.map(categorysEntity, Categorys.class);
+        return categorys;
     }
 
     @Override
-    public List<Category> findList(List<String> idList) {
-        List<CategoryEntity> categoryEntityList =  categoryDao.findCategoryList(idList);
+    public List<Categorys> findList(List<String> idList) {
+        List<CategorysEntity> categorysEntityList =  categoryDao.findCategoryList(idList);
 
-        List<Category> categoryList =  BeanMapper.mapList(categoryEntityList,Category.class);
-        return categoryList;
+        List<Categorys> categorysList =  BeanMapper.mapList(categorysEntityList, Categorys.class);
+        return categorysList;
     }
 
     @Override
-    public Category findCategory(@NotNull String id) {
-        Category category = findOne(id);
+    public Categorys findCategory(@NotNull String id) {
+        Categorys categorys = findOne(id);
 
-        joinTemplate.joinQuery(category);
-        return category;
+        joinTemplate.joinQuery(categorys);
+        return categorys;
     }
 
     @Override
-    public List<Category> findAllCategory() {
-        List<CategoryEntity> categoryEntityList =  categoryDao.findAllCategory();
+    public List<Categorys> findAllCategory() {
+        List<CategorysEntity> categorysEntityList =  categoryDao.findAllCategory();
 
-        List<Category> categoryList =  BeanMapper.mapList(categoryEntityList,Category.class);
+        List<Categorys> categorysList =  BeanMapper.mapList(categorysEntityList, Categorys.class);
 
-        joinTemplate.joinQuery(categoryList);
-        return categoryList;
+        joinTemplate.joinQuery(categorysList);
+        return categorysList;
     }
 
     @Override
-    public List<Category> findCategoryList(CategoryQuery categoryQuery) {
-        List<CategoryEntity> categoryEntityList = categoryDao.findCategoryList(categoryQuery);
+    public List<Categorys> findCategoryList(CategoryQuery categoryQuery) {
+        List<CategorysEntity> categorysEntityList = categoryDao.findCategoryList(categoryQuery);
 
-        List<Category> categoryList = BeanMapper.mapList(categoryEntityList,Category.class);
+        List<Categorys> categorysList = BeanMapper.mapList(categorysEntityList, Categorys.class);
 
-        joinTemplate.joinQuery(categoryList);
+        joinTemplate.joinQuery(categorysList);
 
-        return categoryList;
+        return categorysList;
     }
 
     @Override
-    public Pagination<Category> findCategoryPage(CategoryQuery categoryQuery) {
+    public Pagination<Categorys> findCategoryPage(CategoryQuery categoryQuery) {
 
-        Pagination<CategoryEntity>  pagination = categoryDao.findCategoryPage(categoryQuery);
+        Pagination<CategorysEntity>  pagination = categoryDao.findCategoryPage(categoryQuery);
 
-        List<Category> categoryList = BeanMapper.mapList(pagination.getDataList(),Category.class);
+        List<Categorys> categorysList = BeanMapper.mapList(pagination.getDataList(), Categorys.class);
 
-        joinTemplate.joinQuery(categoryList);
+        joinTemplate.joinQuery(categorysList);
 
-        return PaginationBuilder.build(pagination,categoryList);
+        return PaginationBuilder.build(pagination, categorysList);
     }
 
     @Override
-    public List<Category> findCategoryListTree(CategoryQuery categoryQuery) {
+    public List<Categorys> findCategoryListTree(CategoryQuery categoryQuery) {
         //查找所有符合条件列表
-        List<Category> matchCategoryList = findCategoryList(categoryQuery);
+        List<Categorys> matchCategorysList = findCategoryList(categoryQuery);
 
         //查找并设置分类下面的接口数
-        List<Category> categoryMethodList = findCategoryMethodList(matchCategoryList, categoryQuery);
+        List<Categorys> categorysMethodList = findCategoryMethodList(matchCategorysList, categoryQuery);
 
         //查找第一级分类列表
-        List<Category> topCategoryList = findTopCategoryList(categoryMethodList);
+        List<Categorys> topCategorysList = findTopCategoryList(categorysMethodList);
 
         //查找并设置子分类列表
-        if(topCategoryList != null){
-            for(Category topCategory:topCategoryList){
-                setChildren(matchCategoryList,topCategory);
+        if(topCategorysList != null){
+            for(Categorys topCategorys : topCategorysList){
+                setChildren(matchCategorysList, topCategorys);
             }
         }
-        return topCategoryList;
+        return topCategorysList;
     }
 
     @Override
-    public List<Category> findCategoryListTreeTable(CategoryQuery categoryQuery){
+    public List<Categorys> findCategoryListTreeTable(CategoryQuery categoryQuery){
         //查找所有符合条件列表
-        List<Category> matchCategoryList = findCategoryList(categoryQuery);
+        List<Categorys> matchCategorysList = findCategoryList(categoryQuery);
 
         //查找第一级分类列表
-        List<Category> topCategoryList = findTopCategoryList(matchCategoryList);
+        List<Categorys> topCategorysList = findTopCategoryList(matchCategorysList);
 
         //查找并设置子分类列表
-        if(topCategoryList != null){
-            for(Category topCategory:topCategoryList){
-                setChildren(matchCategoryList,topCategory);
+        if(topCategorysList != null){
+            for(Categorys topCategorys : topCategorysList){
+                setChildren(matchCategorysList, topCategorys);
             }
         }
-        return topCategoryList;
+        return topCategorysList;
     }
 
 
     /**
      * 查找分类列表下的接口
-     * @param matchCategoryList
+     * @param matchCategorysList
      * @return
      */
-    List<Category> findCategoryMethodList(List<Category> matchCategoryList,CategoryQuery categoryQuery){
-        List<Category> categoryList = matchCategoryList.stream().map(category -> {
+    List<Categorys> findCategoryMethodList(List<Categorys> matchCategorysList, CategoryQuery categoryQuery){
+        List<Categorys> categorysList = matchCategorysList.stream().map(category -> {
             TestCaseQuery testCaseQuery = new TestCaseQuery();
             testCaseQuery.setCategoryId(category.getId());
             testCaseQuery.setCaseType(categoryQuery.getCaseType());
             testCaseQuery.setTestType(categoryQuery.getTestType());
-            List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
-            category.setCaseNum(testCaseList.size());
+            List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+            category.setCaseNum(testCasesList.size());
             return category;
         }).collect(Collectors.toList());
 
 
-        return  categoryList;
+        return categorysList;
     }
 
     /**
      * 查找第一级分类列表
-     * @param matchCategoryList
+     * @param matchCategorysList
      * @return
      */
-    List<Category> findTopCategoryList(List<Category> matchCategoryList){
-        return matchCategoryList.stream()
-                .filter(category -> (category.getParentCategory() == null || ObjectUtils.isEmpty(category.getParentCategory().getId())))
+    List<Categorys> findTopCategoryList(List<Categorys> matchCategorysList){
+        return matchCategorysList.stream()
+                .filter(category -> (category.getParentId() == null || ObjectUtils.isEmpty(category.getParentId())))
                 .collect(Collectors.toList());
     }
 
     /**
      * 查找并设置下级分类列表
-     * @param matchCategoryList
+     * @param matchCategorysList
      * @param parentCaegory
      */
-    void setChildren(List<Category> matchCategoryList,Category parentCaegory){
-        List<Category> childCategoryList = matchCategoryList.stream()
-                .filter(category -> (category.getParentCategory() != null && category.getParentCategory().getId() != null && category.getParentCategory().getId().equals(parentCaegory.getId())))
+    void setChildren(List<Categorys> matchCategorysList, Categorys parentCaegory){
+        List<Categorys> childCategorysList = matchCategorysList.stream()
+                .filter(category -> (category.getParentId() != null  && category.getParentId().equals(parentCaegory.getId())))
                 .collect(Collectors.toList());
 
-        if(childCategoryList != null && childCategoryList.size() > 0){
-            parentCaegory.setChildren(childCategoryList);
+        if(childCategorysList != null && childCategorysList.size() > 0){
+            parentCaegory.setChildren(childCategorysList);
 
-            for(Category category:childCategoryList){
-                setChildren(matchCategoryList,category);
+            for(Categorys categorys : childCategorysList){
+                setChildren(matchCategorysList, categorys);
             }
         }
     }

@@ -8,7 +8,7 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 
 /**
  * web性能用例 模型
@@ -26,7 +26,7 @@ public class WebPerfCase extends BaseModel{
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
     @JoinQuery(key = "id")
-    private TestCase testCase;
+    private TestCases testCase;
 
     @ApiProperty(name="threadCount",desc="线程数")
     private Integer threadCount;
@@ -45,11 +45,11 @@ public class WebPerfCase extends BaseModel{
         this.id = id;
     }
 
-    public TestCase getTestCase() {
+    public TestCases getTestCase() {
         return testCase;
     }
 
-    public void setTestCase(TestCase testCase) {
+    public void setTestCase(TestCases testCase) {
         this.testCase = testCase;
     }
 

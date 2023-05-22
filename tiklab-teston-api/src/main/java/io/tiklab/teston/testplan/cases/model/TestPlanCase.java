@@ -1,6 +1,6 @@
 package io.tiklab.teston.testplan.cases.model;
 
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
@@ -36,7 +36,7 @@ public class TestPlanCase extends BaseModel{
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
     @JoinQuery(key = "id")
-    private TestCase testCase;
+    private TestCases testCase;
 
     @ApiProperty(name="status",desc="状态:0 失败  1 通过  2未执行")
     private java.lang.Integer status;
@@ -68,11 +68,11 @@ public class TestPlanCase extends BaseModel{
         this.testPlan = testPlan;
     }
 
-    public TestCase getTestCase() {
+    public TestCases getTestCase() {
         return testCase;
     }
 
-    public void setTestCase(TestCase testCase) {
+    public void setTestCase(TestCases testCase) {
         this.testCase = testCase;
     }
 

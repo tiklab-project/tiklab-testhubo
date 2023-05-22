@@ -1,7 +1,7 @@
 package io.tiklab.teston.testplan.cases.controller;
 
 import io.tiklab.postin.annotation.Api;
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.testplan.cases.model.TestPlanCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.tiklab.teston.testplan.cases.service.TestPlanCaseService;
@@ -100,8 +100,8 @@ public class TestPlanCaseController {
     @RequestMapping(path = "/findTesCaseList",method = RequestMethod.POST)
     @ApiMethod(name = "findTesCase",desc = "测试计划绑定的用例添加用例弹窗列表")
     @ApiParam(name = "testPlanDetailQuery",desc = "testPlanDetailQuery",required = true)
-    public Result<Pagination<TestCase>> findTesCaseList(@RequestBody @Valid @NotNull TestPlanCase testPlanCase){
-        Pagination<TestCase> pagination = testPlanCaseService.findTesCaseList(testPlanCase);
+    public Result<Pagination<TestCases>> findTesCaseList(@RequestBody @Valid @NotNull TestPlanCase testPlanCase){
+        Pagination<TestCases> pagination = testPlanCaseService.findTesCaseList(testPlanCase);
 
         return Result.ok(pagination);
     }

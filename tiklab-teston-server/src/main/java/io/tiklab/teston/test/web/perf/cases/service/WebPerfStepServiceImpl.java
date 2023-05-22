@@ -7,7 +7,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 
-import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.web.perf.cases.model.WebPerfStep;
 import io.tiklab.teston.test.web.perf.cases.model.WebPerfStepQuery;
@@ -106,9 +106,9 @@ public class WebPerfStepServiceImpl implements WebPerfStepService {
         ArrayList<WebPerfStep> arrayList = new ArrayList<>();
         if(webPerfStepList.size()>0){
             for(WebPerfStep webPerfStep:webPerfStepList){
-                TestCase testCase = testCaseService.findTestCase(webPerfStep.getWebScene().getId());
+                TestCases testCases = testCaseService.findTestCase(webPerfStep.getWebScene().getId());
 
-                webPerfStep.getWebScene().setTestCase(testCase);
+                webPerfStep.getWebScene().setTestCase(testCases);
 
                 arrayList.add(webPerfStep);
             }

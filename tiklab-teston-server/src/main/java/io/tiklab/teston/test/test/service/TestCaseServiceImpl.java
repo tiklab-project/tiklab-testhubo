@@ -6,6 +6,8 @@ import io.tiklab.teston.test.app.perf.instance.service.AppPerfInstanceService;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.tiklab.teston.test.app.scene.instance.service.AppSceneInstanceService;
+import io.tiklab.teston.test.test.entity.TestCasesEntity;
+import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.web.perf.instance.model.WebPerfInstance;
 import io.tiklab.teston.test.web.perf.instance.model.WebPerfInstanceQuery;
 import io.tiklab.teston.test.web.perf.instance.service.WebPerfInstanceService;
@@ -16,7 +18,6 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
-import io.tiklab.teston.test.test.entity.TestCaseEntity;
 import io.tiklab.teston.test.test.dao.TestCaseDao;
 import io.tiklab.teston.test.apix.http.perf.instance.model.ApiPerfInstanceQuery;
 import io.tiklab.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
@@ -27,7 +28,6 @@ import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBind;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBindQuery;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceBindService;
 
-import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstance;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
@@ -74,30 +74,30 @@ public class TestCaseServiceImpl implements TestCaseService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createTestCase(TestCase testCase) {
-        TestCaseEntity testCaseEntity = BeanMapper.map(testCase, TestCaseEntity.class);
+    public String createTestCase(TestCases testCases) {
+        TestCasesEntity testCasesEntity = BeanMapper.map(testCases, TestCasesEntity.class);
 
         //初始化项目成员
         String userId = LoginContext.getLoginId();
-        testCaseEntity.setCreateUser(userId);
-        testCaseEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        testCaseEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        testCasesEntity.setCreateUser(userId);
+        testCasesEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        testCasesEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 
-        String id = testCaseDao.createTestCase(testCaseEntity);
+        String id = testCaseDao.createTestCase(testCasesEntity);
 
         return id;
     }
 
     @Override
-    public void updateTestCase(TestCase testCase) {
-        TestCaseEntity testCaseEntity = BeanMapper.map(testCase, TestCaseEntity.class);
+    public void updateTestCase(TestCases testCases) {
+        TestCasesEntity testCasesEntity = BeanMapper.map(testCases, TestCasesEntity.class);
 
-        testCaseEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        testCasesEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 
         String userId = LoginContext.getLoginId();
-        testCaseEntity.setUpdateUser(userId);
+        testCasesEntity.setUpdateUser(userId);
 
-        testCaseDao.updateTestCase(testCaseEntity);
+        testCaseDao.updateTestCase(testCasesEntity);
     }
 
     @Override
@@ -108,95 +108,95 @@ public class TestCaseServiceImpl implements TestCaseService {
     @Override
     public void deleteTestCaseByCategoryId(String categoryId) {
         //删除相关联的子表
-        DeleteCondition deleteCondition = DeleteBuilders.createDelete(TestCaseEntity.class)
+        DeleteCondition deleteCondition = DeleteBuilders.createDelete(TestCasesEntity.class)
                 .eq("categoryId", categoryId)
                 .get();
         testCaseDao.deleteTestCase(deleteCondition);
     }
 
     @Override
-    public TestCase findOne(String id) {
-        TestCaseEntity testCaseEntity = testCaseDao.findTestCase(id);
+    public TestCases findOne(String id) {
+        TestCasesEntity testCasesEntity = testCaseDao.findTestCase(id);
 
-        TestCase testCase = BeanMapper.map(testCaseEntity, TestCase.class);
+        TestCases testCases = BeanMapper.map(testCasesEntity, TestCases.class);
 
-        return testCase;
+        return testCases;
     }
 
     @Override
-    public List<TestCase> findList(List<String> idList) {
-        List<TestCaseEntity> testCaseList = testCaseDao.findTestCaseList(idList);
+    public List<TestCases> findList(List<String> idList) {
+        List<TestCasesEntity> testCaseList = testCaseDao.findTestCaseList(idList);
 
-        List<TestCase> mapList = BeanMapper.mapList(testCaseList, TestCase.class);
+        List<TestCases> mapList = BeanMapper.mapList(testCaseList, TestCases.class);
 
         return mapList;
     }
 
     @Override
-    public TestCase findTestCase(@NotNull String id) {
-        TestCase testCase = findOne(id);
+    public TestCases findTestCase(@NotNull String id) {
+        TestCases testCases = findOne(id);
 
-        joinTemplate.joinQuery(testCase);
+        joinTemplate.joinQuery(testCases);
 
-        return testCase;
+        return testCases;
     }
 
     @Override
-    public List<TestCase> findAllTestCase() {
-        List<TestCaseEntity> testCaseEntityList = testCaseDao.findAllTestCase();
+    public List<TestCases> findAllTestCase() {
+        List<TestCasesEntity> testCasesEntityList = testCaseDao.findAllTestCase();
 
-        List<TestCase> testCaseList = BeanMapper.mapList(testCaseEntityList, TestCase.class);
+        List<TestCases> testCasesList = BeanMapper.mapList(testCasesEntityList, TestCases.class);
 
-        joinTemplate.joinQuery(testCaseList);
+        joinTemplate.joinQuery(testCasesList);
 
-        return testCaseList;
+        return testCasesList;
     }
 
     @Override
-    public List<TestCase> findTestCaseList(TestCaseQuery testCaseQuery) {
-        List<TestCaseEntity> testCaseEntityList = testCaseDao.findTestCaseList(testCaseQuery);
+    public List<TestCases> findTestCaseList(TestCaseQuery testCaseQuery) {
+        List<TestCasesEntity> testCasesEntityList = testCaseDao.findTestCaseList(testCaseQuery);
 
-        List<TestCase> testCaseList = BeanMapper.mapList(testCaseEntityList, TestCase.class);
+        List<TestCases> testCasesList = BeanMapper.mapList(testCasesEntityList, TestCases.class);
 
-        joinTemplate.joinQuery(testCaseList);
+        joinTemplate.joinQuery(testCasesList);
 
-        return testCaseList;
+        return testCasesList;
     }
 
     @Override
-    public Pagination<TestCase> findTestCasePage(TestCaseQuery testCaseQuery) {
-        Pagination<TestCaseEntity> pagination = testCaseDao.findTestCasePage(testCaseQuery);
+    public Pagination<TestCases> findTestCasePage(TestCaseQuery testCaseQuery) {
+        Pagination<TestCasesEntity> pagination = testCaseDao.findTestCasePage(testCaseQuery);
 
-        List<TestCase> testCaseList = BeanMapper.mapList(pagination.getDataList(), TestCase.class);
+        List<TestCases> testCasesList = BeanMapper.mapList(pagination.getDataList(), TestCases.class);
 
-        joinTemplate.joinQuery(testCaseList);
+        joinTemplate.joinQuery(testCasesList);
 
-        List<TestCase> newTestCaseList = recentInstance(testCaseList);
+        List<TestCases> newTestCasesList = recentInstance(testCasesList);
 
-        return PaginationBuilder.build(pagination,newTestCaseList);
+        return PaginationBuilder.build(pagination, newTestCasesList);
     }
 
     /**
      * 给用例设置最近一次执行结果
-     * @param testCaseList
+     * @param testCasesList
      * @return
      */
-    private List<TestCase> recentInstance(List<TestCase> testCaseList){
+    private List<TestCases> recentInstance(List<TestCases> testCasesList){
 
-        ArrayList<TestCase> newTestCaseList = new ArrayList<>();
+        ArrayList<TestCases> newTestCasesList = new ArrayList<>();
 
 
-        if(testCaseList!=null&&testCaseList.size()>0){
-            for(TestCase testCase:testCaseList){
+        if(testCasesList !=null&& testCasesList.size()>0){
+            for(TestCases testCases : testCasesList){
                 HashMap<Object, Object> recentInstance = new HashMap<>();
 
                 //根据不同的测试类型进行测试
-                if(Objects.equals(testCase.getTestType(),"auto")||Objects.equals(testCase.getTestType(),"perform")){
+                if(Objects.equals(testCases.getTestType(),"auto")||Objects.equals(testCases.getTestType(),"perform")){
 
-                    switch (testCase.getCaseType()) {
+                    switch (testCases.getCaseType()) {
                         case "api-unit":
                             ApiUnitInstanceBindQuery apiUnitInstanceBindQuery = new ApiUnitInstanceBindQuery();
-                            apiUnitInstanceBindQuery.setApiUnitId(testCase.getId());
+                            apiUnitInstanceBindQuery.setApiUnitId(testCases.getId());
 
                             List<ApiUnitInstanceBind> apiUnitInstanceBindList = apiUnitInstanceBindService.findApiUnitInstanceBindList(apiUnitInstanceBindQuery);
 
@@ -213,7 +213,7 @@ public class TestCaseServiceImpl implements TestCaseService {
                             break;
                         case "api-scene":
                             ApiSceneInstanceQuery apiSceneInstanceQuery = new ApiSceneInstanceQuery();
-                            apiSceneInstanceQuery.setApiSceneId(testCase.getId());
+                            apiSceneInstanceQuery.setApiSceneId(testCases.getId());
                             List<ApiSceneInstance> apiSceneInstanceList = apiSceneInstanceService.findApiSceneInstanceList(apiSceneInstanceQuery);
                             if(apiSceneInstanceList!=null&&apiSceneInstanceList.size()>0){
                                 ApiSceneInstance apiSceneInstance = apiSceneInstanceList.get(0);
@@ -228,7 +228,7 @@ public class TestCaseServiceImpl implements TestCaseService {
                             break;
                         case "api-perform":
                             ApiPerfInstanceQuery apiPerfInstanceQuery = new ApiPerfInstanceQuery();
-                            apiPerfInstanceQuery.setApiPerfId(testCase.getId());
+                            apiPerfInstanceQuery.setApiPerfId(testCases.getId());
                             List<ApiPerfInstance> apiPerfInstanceList = apiPerfInstanceService.findApiPerfInstanceList(apiPerfInstanceQuery);
                             if(apiPerfInstanceList!=null&&apiPerfInstanceList.size()>0){
                                 ApiPerfInstance apiPerfInstance = apiPerfInstanceList.get(0);
@@ -243,7 +243,7 @@ public class TestCaseServiceImpl implements TestCaseService {
                             break;
                         case "web-scene":
                             WebSceneInstanceQuery webSceneInstanceQuery = new WebSceneInstanceQuery();
-                            webSceneInstanceQuery.setWebSceneId(testCase.getId());
+                            webSceneInstanceQuery.setWebSceneId(testCases.getId());
                             List<WebSceneInstance> webSceneInstanceList = webSceneInstanceService.findWebSceneInstanceList(webSceneInstanceQuery);
                             if(webSceneInstanceList!=null&&webSceneInstanceList.size()>0){
                                 WebSceneInstance webSceneInstance = webSceneInstanceList.get(0);
@@ -258,7 +258,7 @@ public class TestCaseServiceImpl implements TestCaseService {
                             break;
                         case "web-perform":
                             WebPerfInstanceQuery webPerfInstanceQuery = new WebPerfInstanceQuery();
-                            webPerfInstanceQuery.setWebPerfId(testCase.getId());
+                            webPerfInstanceQuery.setWebPerfId(testCases.getId());
                             List<WebPerfInstance> webPerfInstanceList = webPerfInstanceService.findWebPerfInstanceList(webPerfInstanceQuery);
                             if(webPerfInstanceList!=null&&webPerfInstanceList.size()>0){
                                 WebPerfInstance webPerfInstance = webPerfInstanceList.get(0);
@@ -274,7 +274,7 @@ public class TestCaseServiceImpl implements TestCaseService {
 
                         case "app-scene":
                             AppSceneInstanceQuery appSceneInstanceQuery = new AppSceneInstanceQuery();
-                            appSceneInstanceQuery.setAppSceneId(testCase.getId());
+                            appSceneInstanceQuery.setAppSceneId(testCases.getId());
                             List<AppSceneInstance> appSceneInstanceList = appSceneInstanceService.findAppSceneInstanceList(appSceneInstanceQuery);
                             if(appSceneInstanceList!=null&&appSceneInstanceList.size()>0){
                                 AppSceneInstance appSceneInstance = appSceneInstanceList.get(0);
@@ -290,7 +290,7 @@ public class TestCaseServiceImpl implements TestCaseService {
 
                         case "app-perform":
                             AppPerfInstanceQuery appPerfInstanceQuery = new AppPerfInstanceQuery();
-                            appPerfInstanceQuery.setAppPerfId(testCase.getId());
+                            appPerfInstanceQuery.setAppPerfId(testCases.getId());
                             List<AppPerfInstance> appPerfInstanceList = appPerfInstanceService.findAppPerfInstanceList(appPerfInstanceQuery);
                             if(appPerfInstanceList!=null&&appPerfInstanceList.size()>0){
                                 AppPerfInstance appPerfInstance = appPerfInstanceList.get(0);
@@ -313,12 +313,12 @@ public class TestCaseServiceImpl implements TestCaseService {
                     recentInstance.put("executeNumber",null);
                 }
 
-                testCase.setRecentInstance(recentInstance);
-                newTestCaseList.add(testCase);
+                testCases.setRecentInstance(recentInstance);
+                newTestCasesList.add(testCases);
             }
         }
 
-        return newTestCaseList;
+        return newTestCasesList;
     }
 
 
