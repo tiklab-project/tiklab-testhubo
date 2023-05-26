@@ -6,6 +6,7 @@ import io.tiklab.postin.api.apix.model.Apix;
 import io.tiklab.postin.api.apix.model.ApixQuery;
 import io.tiklab.postin.api.apix.service.ApixService;
 import io.tiklab.postin.api.http.definition.model.*;
+import io.tiklab.postin.api.http.definition.model.RawParam;
 import io.tiklab.postin.api.http.definition.service.HttpApiService;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.integrated.postin.postinapi.model.PostInApiToCase;
@@ -315,8 +316,8 @@ public class PostInApiServiceImpl implements PostInApiService {
      */
     private void convertRaw(String apiUnitCaseId, HttpApi httpApi) {
         try {
-            RawParams postInRaw = httpApi.getRawParam();
-            RawParam testOnRaw = new RawParam();
+            RawParam postInRaw = httpApi.getRawParam();
+            io.tiklab.teston.test.apix.http.unit.cases.model.RawParam testOnRaw = new io.tiklab.teston.test.apix.http.unit.cases.model.RawParam();
             testOnRaw.setRaw(postInRaw.getRaw());
             testOnRaw.setType(postInRaw.getType());
             testOnRaw.setApiUnit(new ApiUnitCase().setId(apiUnitCaseId));
