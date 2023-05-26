@@ -61,6 +61,9 @@ public class TestCasesEntity implements Serializable {
     @Column(name = "description",length = 128)
     private String desc;
 
+    @Column(name = "workitem_id",length = 64)
+    private String workItemId ;
+
     public String getId() {
         return id;
     }
@@ -155,5 +158,13 @@ public class TestCasesEntity implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getWorkItemId() {
+        return workItemId;
+    }
+
+    public void setWorkItemId(String workItemId) {
+        this.workItemId = workItemId;
     }
 }

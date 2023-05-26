@@ -17,7 +17,7 @@ import java.util.List;
  *仓库模型
  */
 @ApiModel
-@Mapper(targetAlias = "RepositoryEntity")
+@Mapper(targetAlias = "TestOnRepositoryEntity")
 @Join
 public class Repository extends BaseModel{
 

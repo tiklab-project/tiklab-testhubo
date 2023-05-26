@@ -77,6 +77,10 @@ public class TestCases extends BaseModel{
     @ApiProperty(name="desc",desc="描述")
     private String desc;
 
+
+    @ApiProperty(name="workItemId",desc="需求")
+    private String workItemId;
+
     private Map<Object,Object> recentInstance;
 
     public String getId() {
@@ -181,5 +185,13 @@ public class TestCases extends BaseModel{
 
     public void setRecentInstance(Map<Object, Object> recentInstance) {
         this.recentInstance = recentInstance;
+    }
+
+    public String getWorkItemId() {
+        return workItemId;
+    }
+
+    public void setWorkItemId(String workItemId) {
+        this.workItemId = workItemId;
     }
 }

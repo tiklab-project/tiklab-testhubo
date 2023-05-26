@@ -1,5 +1,6 @@
 package io.tiklab.teston.testplan.instance.service;
 
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.testplan.instance.entity.TestPlanCaseInstanceBindEntity;
 import io.tiklab.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.tiklab.teston.testplan.instance.model.TestPlanCaseInstanceBindQuery;
@@ -21,6 +22,7 @@ import java.util.List;
 * 测试计划下用例的实例中间层 服务
 */
 @Service
+@Exporter
 public class TestPlanCaseInstanceBindServiceImpl implements TestPlanCaseInstanceBindService {
 
     @Autowired

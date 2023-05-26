@@ -1,6 +1,6 @@
 package io.tiklab.teston.repository.dao;
 
-import io.tiklab.teston.repository.entity.RepositoryEntity;
+import io.tiklab.teston.repository.entity.TestOnRepositoryEntity;
 import io.tiklab.teston.repository.model.RepositoryQuery;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
@@ -27,19 +27,19 @@ public class RepositoryDao{
 
     /**
      * 创建仓库
-     * @param repositoryEntity
+     * @param testOnRepositoryEntity
      * @return
      */
-    public String createRepository(RepositoryEntity repositoryEntity) {
-        return jpaTemplate.save(repositoryEntity,String.class);
+    public String createRepository(TestOnRepositoryEntity testOnRepositoryEntity) {
+        return jpaTemplate.save(testOnRepositoryEntity,String.class);
     }
 
     /**
      * 更新仓库
-     * @param repositoryEntity
+     * @param testOnRepositoryEntity
      */
-    public void updateRepository(RepositoryEntity repositoryEntity){
-        jpaTemplate.update(repositoryEntity);
+    public void updateRepository(TestOnRepositoryEntity testOnRepositoryEntity){
+        jpaTemplate.update(testOnRepositoryEntity);
     }
 
     /**
@@ -47,7 +47,7 @@ public class RepositoryDao{
      * @param id
      */
     public void deleteRepository(String id){
-        jpaTemplate.delete(RepositoryEntity.class,id);
+        jpaTemplate.delete(TestOnRepositoryEntity.class,id);
     }
 
     public void deleteRepository(DeleteCondition deleteCondition){
@@ -59,20 +59,20 @@ public class RepositoryDao{
      * @param id
      * @return
      */
-    public RepositoryEntity findRepository(String id){
-        return jpaTemplate.findOne(RepositoryEntity.class,id);
+    public TestOnRepositoryEntity findRepository(String id){
+        return jpaTemplate.findOne(TestOnRepositoryEntity.class,id);
     }
 
     /**
     * 查找所有仓库
     * @return
     */
-    public List<RepositoryEntity> findAllRepository() {
-        return jpaTemplate.findAll(RepositoryEntity.class);
+    public List<TestOnRepositoryEntity> findAllRepository() {
+        return jpaTemplate.findAll(TestOnRepositoryEntity.class);
     }
 
-    public List<RepositoryEntity> findRepositoryList(List<String> idList) {
-        return jpaTemplate.findList(RepositoryEntity.class,idList);
+    public List<TestOnRepositoryEntity> findRepositoryList(List<String> idList) {
+        return jpaTemplate.findList(TestOnRepositoryEntity.class,idList);
     }
 
     /**
@@ -80,13 +80,13 @@ public class RepositoryDao{
      * @param repositoryQuery
      * @return
      */
-    public List<RepositoryEntity> findRepositoryList(RepositoryQuery repositoryQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryEntity.class)
+    public List<TestOnRepositoryEntity> findRepositoryList(RepositoryQuery repositoryQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(TestOnRepositoryEntity.class)
                 .eq("userId",repositoryQuery.getUserId())
                 .like("name", repositoryQuery.getName())
                 .orders(repositoryQuery.getOrderParams())
                 .get();
-        return jpaTemplate.findList(queryCondition, RepositoryEntity.class);
+        return jpaTemplate.findList(queryCondition, TestOnRepositoryEntity.class);
     }
 
     /**
@@ -94,13 +94,13 @@ public class RepositoryDao{
      * @param repositoryQuery
      * @return
      */
-    public Pagination<RepositoryEntity> findRepositoryPage(RepositoryQuery repositoryQuery) {
-        QueryCondition queryCondition = QueryBuilders.createQuery(RepositoryEntity.class)
+    public Pagination<TestOnRepositoryEntity> findRepositoryPage(RepositoryQuery repositoryQuery) {
+        QueryCondition queryCondition = QueryBuilders.createQuery(TestOnRepositoryEntity.class)
                 .eq("userId",repositoryQuery.getUserId())
                 .like("name", repositoryQuery.getName())
                 .orders(repositoryQuery.getOrderParams())
                 .pagination(repositoryQuery.getPageParam())
                 .get();
-        return jpaTemplate.findPage(queryCondition, RepositoryEntity.class);
+        return jpaTemplate.findPage(queryCondition, TestOnRepositoryEntity.class);
     }
 }

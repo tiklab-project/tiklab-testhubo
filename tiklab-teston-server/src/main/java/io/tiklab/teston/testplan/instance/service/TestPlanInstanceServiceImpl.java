@@ -1,5 +1,6 @@
 package io.tiklab.teston.testplan.instance.service;
 
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.testplan.instance.dao.TestPlanInstanceDao;
 import io.tiklab.teston.testplan.instance.entity.TestPlanInstanceEntity;
 import io.tiklab.teston.testplan.instance.model.TestPlanCaseInstanceBind;
@@ -23,6 +24,7 @@ import java.util.List;
 * 测试计划实例 服务
 */
 @Service
+@Exporter
 public class TestPlanInstanceServiceImpl implements TestPlanInstanceService {
 
     @Autowired

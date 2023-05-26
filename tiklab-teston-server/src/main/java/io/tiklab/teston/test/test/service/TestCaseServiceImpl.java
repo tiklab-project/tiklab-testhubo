@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.test.service;
 
+import io.tiklab.rpc.annotation.Exporter;
 import io.tiklab.teston.test.app.perf.instance.mode.AppPerfInstance;
 import io.tiklab.teston.test.app.perf.instance.mode.AppPerfInstanceQuery;
 import io.tiklab.teston.test.app.perf.instance.service.AppPerfInstanceService;
@@ -7,6 +8,8 @@ import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.tiklab.teston.test.app.scene.instance.service.AppSceneInstanceService;
 import io.tiklab.teston.test.test.entity.TestCasesEntity;
+import io.tiklab.teston.test.test.model.TestCaseRecent;
+import io.tiklab.teston.test.test.model.TestCaseRecentQuery;
 import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.web.perf.instance.model.WebPerfInstance;
 import io.tiklab.teston.test.web.perf.instance.model.WebPerfInstanceQuery;
@@ -44,10 +47,14 @@ import java.util.*;
 * 测试用例 服务
 */
 @Service
+@Exporter
 public class TestCaseServiceImpl implements TestCaseService {
 
     @Autowired
     TestCaseDao testCaseDao;
+
+    @Autowired
+    TestCaseRecentService testCaseRecentService;
 
     @Autowired
     ApiUnitInstanceBindService apiUnitInstanceBindService;
@@ -102,6 +109,16 @@ public class TestCaseServiceImpl implements TestCaseService {
 
     @Override
     public void deleteTestCase(@NotNull String id) {
+        //删除最近访问的TestCase
+        //根据用例id 获取到最近访问id，删除
+        TestCaseRecentQuery testCaseRecent = new TestCaseRecentQuery();
+        testCaseRecent.setTestCaseId(id);
+        List<TestCaseRecent> testCaseRecentList = testCaseRecentService.findTestCaseRecentList(testCaseRecent);
+        if(testCaseRecentList!=null&&testCaseRecentList.size()>0){
+            testCaseRecentService.deleteTestCaseRecent(testCaseRecentList.get(0).getId());
+        }
+
+
         testCaseDao.deleteTestCase(id);
     }
 

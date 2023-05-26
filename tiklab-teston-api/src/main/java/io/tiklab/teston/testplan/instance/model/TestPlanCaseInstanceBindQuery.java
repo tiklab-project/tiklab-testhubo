@@ -7,10 +7,11 @@ import io.tiklab.core.page.Page;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ApiModel
-public class TestPlanCaseInstanceBindQuery {
+public class TestPlanCaseInstanceBindQuery implements Serializable {
 
     @ApiProperty(name ="caseInstanceId",desc = "历史id")
     private String caseInstanceId;

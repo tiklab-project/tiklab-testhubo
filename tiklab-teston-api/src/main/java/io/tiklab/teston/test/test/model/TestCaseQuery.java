@@ -6,10 +6,11 @@ import io.tiklab.core.order.Order;
 import io.tiklab.core.order.OrderBuilders;
 import io.tiklab.core.page.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ApiModel
-public class TestCaseQuery {
+public class TestCaseQuery implements Serializable {
 
     @ApiProperty(name = "categoryId", desc = "测试用例id")
     private String categoryId;

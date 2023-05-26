@@ -39,8 +39,9 @@ public class ApiUnitCase extends BaseModel{
         return id;
     }
 
-    public void setId(String id) {
+    public ApiUnitCase setId(String id) {
         this.id = id;
+        return this;
     }
 
     public TestCases getTestCase() {

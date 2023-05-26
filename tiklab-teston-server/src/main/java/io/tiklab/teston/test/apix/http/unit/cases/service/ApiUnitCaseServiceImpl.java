@@ -327,8 +327,8 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
                 case "formUrlencoded":
                     return getFormUrlencoded(apiUnitCase,bodyStr);
 
-                case "json":
-                    return getJson(apiUnitCase,bodyStr);
+//                case "json":
+//                    return getJson(apiUnitCase,bodyStr);
 
                 case "raw":
                     return getRaw(apiUnitCase,bodyStr);
@@ -413,18 +413,19 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         RawParam rawParam = rawParamService.findRawParam(apiUnitCase.getId());
         if(!ObjectUtils.isEmpty(rawParam)){
             String raw = rawParam.getRaw();
+            bodyStr = raw;
 
-            if(rawParam.getType().equals("json")){
-                bodyStr = raw;
-            }
-
-            if(rawParam.getType().equals("xml")){
-                //解析xml
-            }
-
-            if(rawParam.getType().equals("text")){
-                //解析text
-            }
+//            if(rawParam.getType().equals("application/json")){
+//                bodyStr = raw;
+//            }
+//
+//            if(rawParam.getType().equals("xml")){
+//                //解析xml
+//            }
+//
+//            if(rawParam.getType().equals("text")){
+//                //解析text
+//            }
 
 
         }

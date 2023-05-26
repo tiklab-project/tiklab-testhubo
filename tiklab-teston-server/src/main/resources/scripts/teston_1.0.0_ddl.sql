@@ -127,7 +127,7 @@ CREATE TABLE teston_api_query(
 -- @dsm.cmd.id="1010"
 -- ----------------------------
 CREATE TABLE teston_api_request_body(
-        id VARCHAR(32) PRIMARY KEY,
+        id VARCHAR(32),
         api_unit_id VARCHAR(32),
         body_type VARCHAR(32)
 );
