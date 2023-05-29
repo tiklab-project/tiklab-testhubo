@@ -39,6 +39,9 @@ public class WorkItemBind extends BaseModel {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
+    @ApiProperty(name="projectUrl",desc="teamwire服务端地址")
+    private String projectUrl;
+
     public String getId() {
         return id;
     }
@@ -69,5 +72,13 @@ public class WorkItemBind extends BaseModel {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public String getProjectUrl() {
+        return projectUrl;
+    }
+
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
     }
 }

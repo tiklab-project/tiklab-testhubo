@@ -128,6 +128,13 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
                 workItemTestOn.setProjectId(workItem.getProject().getId());
 
                 workItemBind.setWorkItem(workItemTestOn);
+
+                //获取服务端地址
+                IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
+                integratedUrlQuery.setProjectName("teamwire");
+                List<IntegratedUrl> postinUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
+                workItemBind.setProjectUrl(postinUrlList.get(0).getUrl());
+
             }
         }
 
