@@ -37,6 +37,22 @@ public class WorkItemTestOn extends BaseModel {
     @ApiProperty(name="caseId",desc="获取当前用例id")
     private String caseId;
 
+    @ApiProperty(name="projectName",desc="所属项目")
+    private String projectName;
+
+    @ApiProperty(name="director",desc="负责人")
+    private String director;
+
+    @ApiProperty(name="status",desc="状态")
+    private String status;
+
+    @ApiProperty(name="priority",desc="优先级")
+    private String priority;
+
+    @ApiProperty(name="projectUrl",desc="teamwire服务端地址")
+    private String projectUrl;
+
+
     public String getId() {
         return id;
     }
@@ -83,5 +99,45 @@ public class WorkItemTestOn extends BaseModel {
 
     public void setCaseId(String caseId) {
         this.caseId = caseId;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getProjectUrl() {
+        return projectUrl;
+    }
+
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
     }
 }

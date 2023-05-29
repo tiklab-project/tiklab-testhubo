@@ -86,6 +86,8 @@ public class TestCaseDao {
                 .eq("categoryId", testCaseQuery.getCategoryId())
                 .eq("testType",testCaseQuery.getTestType())
                 .eq("caseType",testCaseQuery.getCaseType())
+                .in("repositoryId",testCaseQuery.getInList())
+                .notIn("id",testCaseQuery.getNotInList())
                 .like("name", testCaseQuery.getName())
                 .orders(testCaseQuery.getOrderParams())
                 .get();
@@ -103,6 +105,8 @@ public class TestCaseDao {
                 .eq("categoryId", testCaseQuery.getCategoryId())
                 .eq("testType",testCaseQuery.getTestType())
                 .eq("caseType",testCaseQuery.getCaseType())
+                .notIn("id",testCaseQuery.getNotInList())
+                .in("repositoryId",testCaseQuery.getInList())
                 .like("name", testCaseQuery.getName())
                 .pagination(testCaseQuery.getPageParam())
                 .orders(testCaseQuery.getOrderParams())

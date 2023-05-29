@@ -126,6 +126,16 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
                 workItemTestOn.setId(workItem.getId());
                 workItemTestOn.setName(workItem.getTitle());
                 workItemTestOn.setProjectId(workItem.getProject().getId());
+                workItemTestOn.setProjectName(workItem.getProject().getProjectName());
+                if(workItem.getWorkStatusNode()!=null&&workItem.getWorkStatusNode().getName()!=null){
+                    workItemTestOn.setStatus(workItem.getWorkStatusNode().getName());
+                }
+                if(workItem.getAssigner()!=null&&workItem.getAssigner().getNickname()!=null){
+                    workItemTestOn.setDirector(workItem.getAssigner().getNickname());
+                }
+                if(workItem.getWorkPriority()!=null&&workItem.getWorkPriority().getName()!=null){
+                    workItemTestOn.setPriority(workItem.getWorkPriority().getName());
+                }
 
                 workItemBind.setWorkItem(workItemTestOn);
 

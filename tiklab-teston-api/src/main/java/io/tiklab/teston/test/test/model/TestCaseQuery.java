@@ -30,6 +30,13 @@ public class TestCaseQuery implements Serializable {
     @ApiProperty(name = "caseType", desc = "用例类型: unit,scene,perform,func")
     private String caseType;
 
+    @ApiProperty(name = "notInList", desc = "不包含")
+    private String[] notInList;
+
+    @ApiProperty(name = "inList", desc = "包含")
+    private String[] inList;
+
+
     @ApiProperty(name = "orderParams", desc = "排序参数")
     private List<Order> orderParams = OrderBuilders.instance().desc("createTime").get();
 
@@ -99,5 +106,21 @@ public class TestCaseQuery implements Serializable {
 
     public void setPageParam(Page pageParam) {
         this.pageParam = pageParam;
+    }
+
+    public String[] getNotInList() {
+        return notInList;
+    }
+
+    public void setNotInList(String[] notInList) {
+        this.notInList = notInList;
+    }
+
+    public String[] getInList() {
+        return inList;
+    }
+
+    public void setInList(String[] inList) {
+        this.inList = inList;
     }
 }
