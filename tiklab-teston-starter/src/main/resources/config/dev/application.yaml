@@ -85,10 +85,10 @@ teston-agent:
 
 eas:
   embbed:
-    enable: false
-  address: http://eas.dev.tiklab.net
-  web:
-    address: http://eas.local.tiklab.net
+    enable: true
+#  address: http://eas.dev.tiklab.net
+#  web:
+#    address: http://eas.local.tiklab.net
 
 mysql:
   database: tiklab_teston
