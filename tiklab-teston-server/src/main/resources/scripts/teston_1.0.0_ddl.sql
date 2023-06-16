@@ -76,6 +76,7 @@ CREATE TABLE teston_testcase(
         create_time timestamp,
         update_time timestamp,
         description VARCHAR(64),
+        workItem_id VARCHAR(32),
         sort int
 );
 
@@ -794,10 +795,40 @@ CREATE TABLE teston_test_plan_case_instance_bind(
         result int
 );
 
+--最近访问的用例
+CREATE TABLE teston_testcase_recent(
+        id VARCHAR(32) PRIMARY KEY,
+        repository_id VARCHAR(32),
+        testcase_id VARCHAR(32),
+        user_id VARCHAR (32),
+        update_time timestamp
+);
+
+--绑定的空间表
+CREATE TABLE teston_workspace_bind(
+        id VARCHAR(32) PRIMARY KEY,
+        workspace_id VARCHAR(32),
+        repository_id VARCHAR(32),
+        create_time TIMESTAMP
+);
+
+-- 配置postin 服务端地址
+CREATE TABLE teston_integrated_url(
+        id VARCHAR(32) PRIMARY KEY,
+        user_id VARCHAR(32),
+        url VARCHAR(256),
+        project_name VARCHAR(64),
+        create_time TIMESTAMP
+);
 
 
-
-
+-- 绑定的缺陷
+CREATE TABLE teston_workitem_bind(
+        id VARCHAR(32) PRIMARY KEY,
+        workitem_id VARCHAR(32),
+        case_id VARCHAR(32),
+        create_time TIMESTAMP
+);
 
 
 
