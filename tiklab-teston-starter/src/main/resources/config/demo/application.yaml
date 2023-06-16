@@ -1,0 +1,94 @@
+#application
+app:
+  name: tiklab-teston
+spring:
+  profiles:
+    active: test
+
+PROJECT_HOME: ${user.home}/tiklab/${app.name}
+
+#web
+server:
+  port: 8080
+
+#dal
+#jdbc:
+#  driverClassName: com.mysql.cj.jdbc.Driver
+#  url: jdbc:mysql://localhost:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+#  username: root
+#  password: darth2020
+jdbc:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://172.12.1.10:5432/tiklab_teston?stringtype=unspecified
+  username: postgres
+  password: darth2020
+
+#dfs
+dfs:
+  server:
+    enable: false
+    mode: server
+    port: 4010
+    datapath: ${PROJECT_HOME}/files
+  client:
+    url: 127.0.0.1:4010
+    bucket: ${app.name}
+
+#dcs
+dcs:
+  server:
+    enable: false
+    mode: server
+    port: 5010
+    datapath: ${PROJECT_HOME}/caches
+  client:
+    url: 127.0.0.1:5010
+    bucket: ${app.name}
+
+#dss
+dss:
+  server:
+    enable: false
+    mode: server
+    port: 6010
+    datapath: ${PROJECT_HOME}/index
+  client:
+    url: 127.0.0.1:6010
+    bucket: ${app.name}
+
+#name
+application: teston
+
+#homes
+homes:
+  address: http://172.11.1.11:8080
+
+#plugin
+plugin:
+  path: ${PROJECT_HOME}/plugin
+
+#licences
+licences:
+  path: ${PROJECT_HOME}/licences
+
+
+
+file:
+  path: http://file.demo.tiklab.net
+
+base:
+  url: bac.teston.demo.tiklab.net
+
+eas:
+  embbed:
+    enable: true
+  address: bac.eas.demo.tiklab.net
+
+mysql:
+  database: tiklab_teston
+  embbed:
+    enable: false
+
+teston-agent:
+  embbed:
+    enable: true
