@@ -3,7 +3,7 @@ app:
   name: tiklab-teston
 spring:
   profiles:
-    active: test
+    active: demo
 
 PROJECT_HOME: ${user.home}/tiklab/${app.name}
 
