@@ -19,7 +19,7 @@ server:
 #  password: darth2020
 jdbc:
   driverClassName: org.postgresql.Driver
-  url: jdbc:postgresql://172.11.1.10:5432/tiklab_teston?stringtype=unspecified
+  url: jdbc:postgresql://localhost:5432/tiklab_teston?stringtype=unspecified
   username: postgres
   password: darth2020
 
@@ -71,23 +71,21 @@ plugin:
 licences:
   path: ${PROJECT_HOME}/licences
 
-
-
 file:
   path: http://file.test.tiklab.net
 
 base:
-  url: bac.teston.test.tiklab.net
+  url: http://bac.teston.test.tiklab.net
 
 eas:
   embbed:
     enable: true
-  address: bac.eas.test.tiklab.net
+  address: http://bac.eas.test.tiklab.net
 
-mysql:
+postgresql:
   database: tiklab_teston
   embbed:
-    enable: false
+    enable: true
 
 teston-agent:
   embbed:

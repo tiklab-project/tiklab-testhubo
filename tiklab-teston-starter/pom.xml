@@ -90,12 +90,6 @@
 
         <dependency>
             <groupId>io.tiklab</groupId>
-            <artifactId>tiklab-mysql-starter</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-postin-client</artifactId>
         </dependency>
         <dependency>
@@ -110,6 +104,13 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postgresql-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <profiles>
@@ -119,38 +120,6 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>io.tiklab</groupId>
-                    <artifactId>tiklab-mysql-linux</artifactId>
-                    <version>${project.version}</version>
-                    <type>zip</type>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>io.tiklab</groupId>
-                    <artifactId>tiklab-jdk-linux</artifactId>
-                    <version>${project.version}</version>
-                    <type>zip</type>
-                    <scope>provided</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>io.tiklab</groupId>
-                    <artifactId>tiklab-teston-chrome-linux</artifactId>
-                    <version>1.0.0</version>
-                    <type>zip</type>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>io.tiklab</groupId>
-                    <artifactId>tiklab-teston-node-linux</artifactId>
-                    <version>1.0.0</version>
-                    <type>zip</type>
-                    <scope>provided</scope>
-                </dependency>
-
-            </dependencies>
             <properties>
                 <assembly>linux</assembly>
                 <systemType>linux</systemType>
@@ -179,7 +148,7 @@
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-mysql-linux</artifactId>
+                                            <artifactId>tiklab-postgresql-linux</artifactId>
                                             <version>${project.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
