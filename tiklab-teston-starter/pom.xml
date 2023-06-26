@@ -447,7 +447,7 @@
                         </artifactItem>
                         <artifactItem>
                             <groupId>io.tiklab</groupId>
-                            <artifactId>tiklab-user-plugin</artifactId>
+                            <artifactId>tiklab-user-plugin-all</artifactId>
                             <version>${project.version}</version>
                         </artifactItem>
                     </artifactItems>
