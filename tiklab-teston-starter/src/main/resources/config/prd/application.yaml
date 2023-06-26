@@ -1,6 +1,6 @@
 #application 
 app:
-  name: tiklab-teston
+  name: teston
 
 spring:
   profiles:

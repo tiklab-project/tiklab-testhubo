@@ -1,6 +1,6 @@
 #application io.tiklab.teston.config
 app:
-  name: tiklab-teston
+  name: teston
 spring:
   profiles:
     active: dev
@@ -90,7 +90,7 @@ eas:
 #  web:
 #    address: http://eas.local.tiklab.net
 
-mysql:
+postgresql:
   database: tiklab_teston
   embbed:
     enable: false

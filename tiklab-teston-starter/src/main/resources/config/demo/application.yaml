@@ -1,6 +1,6 @@
 #application
 app:
-  name: tiklab-teston
+  name: teston
 spring:
   profiles:
     active: demo
@@ -84,7 +84,7 @@ eas:
     enable: false
   address: http://eas-ce.demo.tiklab.net
 
-mysql:
+postgresql:
   database: tiklab_teston
   embbed:
     enable: false

@@ -1,6 +1,6 @@
 #application io.tiklab.teston.config
 app:
-  name: tiklab-teston
+  name: teston
 spring:
   profiles:
     active: test
