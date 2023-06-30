@@ -110,6 +110,11 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-upgrade-starter</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
     </dependencies>
 
