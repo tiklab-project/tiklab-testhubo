@@ -14,7 +14,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  * app性能测试用例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AppPerfCaseEntity")
+@Mapper
 @Join
 public class AppPerfCase extends BaseModel {
 

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * 后置脚本 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AfterScriptEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.AfterScriptEntity")
 @Join
 public class AfterScript extends BaseModel{
 

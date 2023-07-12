@@ -15,7 +15,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  * 接口场景 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiSceneCaseEntity")
+@Mapper
 @Join
 public class ApiSceneCase extends BaseModel{
 

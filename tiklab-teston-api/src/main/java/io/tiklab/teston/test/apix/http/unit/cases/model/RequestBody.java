@@ -10,7 +10,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * 请求体的 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RequestBodyEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.RequestBodyEntity")
 @Join
 public class RequestBody extends BaseModel{
 

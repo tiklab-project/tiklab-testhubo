@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * raw 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RawParamEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.RawParamEntity")
 @Join
 public class RawParam extends BaseModel{
 

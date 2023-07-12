@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  * form-url 模型
  */
 @ApiModel
-@Mapper(targetAlias = "FormUrlEncodedEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.FormUrlEncodedEntity")
 @Join
 public class FormUrlEncoded extends BaseModel{
 

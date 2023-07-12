@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * form-data 模型
  */
 @ApiModel
-@Mapper(targetAlias = "FormParamsEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.FormParamsEntity")
 @Join
 public class FormParams extends BaseModel{
 

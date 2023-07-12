@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.app.perf.cases.service;
 
-import io.tiklab.teston.category.model.Categorys;
+import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.app.perf.cases.dao.AppPerfCaseDao;
 import io.tiklab.beans.BeanMapper;
@@ -112,8 +112,8 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
         //手动添加字段
         TestCases testCases = appPerfCase.getTestCase();
         if(testCases.getCategory()!=null) {
-            Categorys categorys = categoryService.findCategory(testCases.getCategory().getId());
-            appPerfCase.getTestCase().setCategory(categorys);
+            Category category = categoryService.findCategory(testCases.getCategory().getId());
+            appPerfCase.getTestCase().setCategory(category);
         }
         if(testCases.getUpdateUser()!=null) {
             User updateUser = userService.findUser(testCases.getUpdateUser().getId());

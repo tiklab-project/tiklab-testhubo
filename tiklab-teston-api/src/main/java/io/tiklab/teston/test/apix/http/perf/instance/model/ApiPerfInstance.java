@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * 接口性能历史实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiPerfInstanceEntity")
+@Mapper
 public class ApiPerfInstance extends BaseModel{
 
     @ApiProperty(name="id",desc="id")

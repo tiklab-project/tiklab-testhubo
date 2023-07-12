@@ -14,7 +14,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * 最近访问仓库 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RepositoryRecentEntity")
+@Mapper
 @Join
 public class RepositoryRecent extends BaseModel {
 

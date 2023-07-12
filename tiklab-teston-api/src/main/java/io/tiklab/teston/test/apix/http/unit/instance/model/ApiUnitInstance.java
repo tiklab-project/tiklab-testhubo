@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  * 用例实例或用例步骤记录 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiUnitInstanceEntity")
+@Mapper
 @Join
 public class ApiUnitInstance extends BaseModel{
 

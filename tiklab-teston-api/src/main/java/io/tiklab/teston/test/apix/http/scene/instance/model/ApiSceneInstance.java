@@ -18,7 +18,7 @@ import java.util.List;
  * 场景历史实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiSceneInstanceEntity")
+@Mapper
 @Join
 public class ApiSceneInstance extends BaseModel{
 

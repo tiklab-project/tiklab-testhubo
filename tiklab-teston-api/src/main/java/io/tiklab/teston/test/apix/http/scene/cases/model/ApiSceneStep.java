@@ -17,7 +17,7 @@ import java.sql.Timestamp;
  * 接口场景下绑定的步骤 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiSceneStepEntity")
+@Mapper
 @Join
 public class ApiSceneStep extends BaseModel{
 

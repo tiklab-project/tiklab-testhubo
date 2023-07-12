@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * 请求头 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RequestHeaderEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.RequestHeaderEntity")
 @Join
 public class RequestHeader extends BaseModel{
 

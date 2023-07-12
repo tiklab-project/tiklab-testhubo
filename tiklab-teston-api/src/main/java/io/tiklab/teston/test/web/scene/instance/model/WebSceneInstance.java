@@ -13,7 +13,7 @@ import java.util.List;
  * web场景实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebSceneInstanceEntity")
+@Mapper
 public class WebSceneInstance extends BaseModel{
 
     @ApiProperty(name="id",desc="id")

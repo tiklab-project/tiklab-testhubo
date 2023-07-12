@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  * 响应数据实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ResponseInstanceEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.instance.entity.ResponseInstanceEntity")
 @Join
 public class ResponseInstance extends BaseModel{
 

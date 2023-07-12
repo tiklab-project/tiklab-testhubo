@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  */
 @ApiModel
 @Join
-@Mapper(targetAlias = "TestCaseRecentEntity")
+@Mapper
 public class TestCaseRecent extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

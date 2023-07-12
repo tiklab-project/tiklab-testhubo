@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * web性能测试实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebPerfInstanceEntity")
+@Mapper
 public class WebPerfInstance extends BaseModel{
 
     @ApiProperty(name="id",desc="id")

@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  * 请求参数实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RequestInstanceEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.instance.entity.RequestInstanceEntity")
 @Join
 public class RequestInstance extends BaseModel{
 

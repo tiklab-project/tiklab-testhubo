@@ -1,7 +1,7 @@
 package io.tiklab.teston.repository.service;
 
 import io.tiklab.teston.repository.model.RepositoryTotal;
-import io.tiklab.teston.category.model.Categorys;
+import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.model.CategoryQuery;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.testplan.cases.model.TestPlan;
@@ -45,8 +45,8 @@ public class RepositoryOverviewServiceImpl implements RepositoryOverviewService 
         repositoryTotal.setPlanTotal(testPlanList.size());
 
         //获取分组的总和
-        List<Categorys> categorysList = categoryService.findCategoryList(new CategoryQuery().setRepositoryId(id));
-        repositoryTotal.setCategoryTotal(categorysList.size());
+        List<Category> categoryList = categoryService.findCategoryList(new CategoryQuery().setRepositoryId(id));
+        repositoryTotal.setCategoryTotal(categoryList.size());
 
 
         //成员总和

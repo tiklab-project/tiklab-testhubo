@@ -15,7 +15,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  */
 @ApiModel
 @Join
-@Mapper(targetAlias = "ApiUnitCaseEntity")
+@Mapper
 public class ApiUnitCase extends BaseModel{
 
     @ApiProperty(name="id",desc="id")

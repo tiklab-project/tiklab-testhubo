@@ -14,7 +14,7 @@ import io.tiklab.teston.test.web.scene.cases.model.WebSceneCase;
  * web性能下绑定的场景 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebPerfStepEntity")
+@Mapper
 public class WebPerfStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

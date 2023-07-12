@@ -15,7 +15,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * 接口场景下步骤的实例公共表 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiSceneStepInstanceBindEntity")
+@Mapper
 @Join
 public class ApiSceneStepInstanceBind extends BaseModel {
 

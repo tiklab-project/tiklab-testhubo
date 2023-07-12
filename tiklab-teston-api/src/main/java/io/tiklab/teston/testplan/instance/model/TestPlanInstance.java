@@ -10,7 +10,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * 测试计划实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "TestPlanInstanceEntity")
+@Mapper
 public class TestPlanInstance extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

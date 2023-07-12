@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="teston_category")
-public class CategorysEntity implements Serializable {
+public class CategoryEntity implements Serializable {
 
     @Id
      @GeneratorValue(length = 12)

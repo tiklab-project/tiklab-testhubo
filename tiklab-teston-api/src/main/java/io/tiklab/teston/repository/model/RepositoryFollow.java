@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 仓库关注 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RepositoryFollowEntity")
+@Mapper
 public class RepositoryFollow extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

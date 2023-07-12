@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * query参数 模型
  */
 @ApiModel
-@Mapper(targetAlias = "QueryParamsEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.QueryParamsEntity")
 @Join
 public class QueryParams extends BaseModel{
 

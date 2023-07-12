@@ -14,7 +14,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  * web性能用例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebPerfCaseEntity")
+@Mapper
 @Join
 public class WebPerfCase extends BaseModel{
 

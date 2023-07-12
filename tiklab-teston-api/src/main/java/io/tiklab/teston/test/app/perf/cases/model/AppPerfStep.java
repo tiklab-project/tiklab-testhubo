@@ -17,7 +17,7 @@ import java.sql.Timestamp;
  * app性能测试用例下绑定的步骤 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AppPerfStepEntity")
+@Mapper
 @Join
 public class AppPerfStep extends BaseModel {
 

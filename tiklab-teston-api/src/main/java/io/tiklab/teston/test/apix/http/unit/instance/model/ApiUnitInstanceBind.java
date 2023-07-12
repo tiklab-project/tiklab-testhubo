@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  */
 @ApiModel
 @Join
-@Mapper(targetAlias = "ApiUnitInstanceBindEntity")
+@Mapper
 public class ApiUnitInstanceBind extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.app.scene.cases.service;
 
-import io.tiklab.teston.category.model.Categorys;
+import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.app.scene.cases.dao.AppSceneCaseDao;
 import io.tiklab.teston.test.app.scene.cases.entity.AppSceneCaseEntity;
@@ -103,8 +103,8 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
         //手动添加字段
         TestCases testCases = appSceneCase.getTestCase();
         if(testCases.getCategory()!=null) {
-            Categorys categorys = categoryService.findCategory(testCases.getCategory().getId());
-            appSceneCase.getTestCase().setCategory(categorys);
+            Category category = categoryService.findCategory(testCases.getCategory().getId());
+            appSceneCase.getTestCase().setCategory(category);
         }
         if(testCases.getUpdateUser()!=null) {
             User updateUser = userService.findUser(testCases.getUpdateUser().getId());

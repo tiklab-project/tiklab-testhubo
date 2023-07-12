@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.web.scene.cases.service;
 
-import io.tiklab.teston.category.model.Categorys;
+import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.web.scene.cases.dao.WebSceneCaseDao;
@@ -105,8 +105,8 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
         //手动添加字段
         TestCases testCases = webSceneCase.getTestCase();
         if(testCases.getCategory()!=null) {
-            Categorys categorys = categoryService.findCategory(testCases.getCategory().getId());
-            webSceneCase.getTestCase().setCategory(categorys);
+            Category category = categoryService.findCategory(testCases.getCategory().getId());
+            webSceneCase.getTestCase().setCategory(category);
         }
         if(testCases.getUpdateUser()!=null) {
             User updateUser = userService.findUser(testCases.getUpdateUser().getId());

@@ -17,7 +17,7 @@ import java.sql.Timestamp;
  * 接口性能场景步骤 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiPerfStepEntity")
+@Mapper
 @Join
 public class ApiPerfStep extends BaseModel{
 

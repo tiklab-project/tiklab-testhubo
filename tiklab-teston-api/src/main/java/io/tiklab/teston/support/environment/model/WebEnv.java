@@ -9,7 +9,7 @@ import io.tiklab.core.BaseModel;
  * web环境 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebEnvEntity")
+@Mapper
 public class WebEnv extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

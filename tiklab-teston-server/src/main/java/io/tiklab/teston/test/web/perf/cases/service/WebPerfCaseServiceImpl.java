@@ -1,6 +1,6 @@
 package io.tiklab.teston.test.web.perf.cases.service;
 
-import io.tiklab.teston.category.model.Categorys;
+import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.test.model.TestCases;
 import io.tiklab.teston.test.web.perf.cases.dao.WebPerfCaseDao;
@@ -112,8 +112,8 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
         //手动添加字段
         TestCases testCases = webPerfCase.getTestCase();
         if(testCases.getCategory()!=null) {
-            Categorys categorys = categoryService.findCategory(testCases.getCategory().getId());
-            webPerfCase.getTestCase().setCategory(categorys);
+            Category category = categoryService.findCategory(testCases.getCategory().getId());
+            webPerfCase.getTestCase().setCategory(category);
         }
         if(testCases.getUpdateUser()!=null) {
             User updateUser = userService.findUser(testCases.getUpdateUser().getId());

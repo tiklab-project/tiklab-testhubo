@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  * postinUrl配置 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WorkItemBindEntity")
+@Mapper
 @Join
 public class WorkItemBind extends BaseModel {
 

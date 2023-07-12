@@ -14,7 +14,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  * 接口性能 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ApiPerfCaseEntity")
+@Mapper
 @Join
 public class ApiPerfCase extends BaseModel{
 

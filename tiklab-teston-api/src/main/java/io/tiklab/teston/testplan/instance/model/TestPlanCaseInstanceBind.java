@@ -9,7 +9,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * 测试计划下用例的实例的中间层 模型
  */
 @ApiModel
-@Mapper(targetAlias = "TestPlanCaseInstanceBindEntity")
+@Mapper
 public class TestPlanCaseInstanceBind extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

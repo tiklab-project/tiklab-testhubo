@@ -10,7 +10,7 @@ import io.tiklab.core.BaseModel;
  * app、web中操作类型 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ActionTypeEntity")
+@Mapper
 public class ActionType extends BaseModel{
 
     @ApiProperty(name="id",desc="编码")

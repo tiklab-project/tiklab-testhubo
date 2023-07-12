@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  * app场景下步骤 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AppSceneStepEntity")
+@Mapper
 @Join
 public class AppSceneStep extends BaseModel {
 

@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 @ApiModel
 @Join
-@Mapper(targetAlias = "WebSceneStepEntity")
+@Mapper
 public class WebSceneStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

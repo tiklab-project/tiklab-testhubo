@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @ApiModel
-@Mapper(targetAlias = "PreScriptEntity")
+@Mapper
 @Join
 public class PreScript extends BaseModel{
 

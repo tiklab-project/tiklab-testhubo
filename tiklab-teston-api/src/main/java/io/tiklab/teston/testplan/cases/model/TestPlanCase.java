@@ -14,7 +14,7 @@ import io.tiklab.join.annotation.JoinQuery;
  * 测试计划绑定的用例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "TestPlanCaseEntity")
+@Mapper
 @Join
 public class TestPlanCase extends BaseModel{
 

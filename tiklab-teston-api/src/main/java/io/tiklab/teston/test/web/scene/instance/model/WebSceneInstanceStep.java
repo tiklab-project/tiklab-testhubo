@@ -9,7 +9,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * web场景下步骤 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebSceneInstanceStepEntity")
+@Mapper
 public class WebSceneInstanceStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

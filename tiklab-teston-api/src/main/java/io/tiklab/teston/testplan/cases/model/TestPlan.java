@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  * 测试计划 模型
  */
 @ApiModel
-@Mapper(targetAlias = "TestPlanEntity")
+@Mapper
 @Join
 public class TestPlan extends BaseModel{
 

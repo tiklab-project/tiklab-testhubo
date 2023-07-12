@@ -14,7 +14,7 @@ import io.tiklab.postin.workspace.model.Workspace;
 import java.sql.Timestamp;
 
 @ApiModel
-@Mapper(targetAlias = "WorkspaceBindEntity")
+@Mapper
 @Join
 public class WorkspaceBind extends BaseModel{
 

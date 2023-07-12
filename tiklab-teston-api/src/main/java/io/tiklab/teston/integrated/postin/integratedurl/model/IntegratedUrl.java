@@ -10,7 +10,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * postinUrl配置 模型
  */
 @ApiModel
-@Mapper(targetAlias = "IntegratedUrlEntity")
+@Mapper
 public class IntegratedUrl extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

@@ -14,7 +14,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  * web场景用例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "WebSceneCaseEntity")
+@Mapper
 @Join
 public class WebSceneCase extends BaseModel{
 

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * 响应raw 模型
  */
 @ApiModel
-@Mapper(targetAlias = "RawResponseEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.RawResponseEntity")
 @Join
 public class RawResponse extends BaseModel{
 

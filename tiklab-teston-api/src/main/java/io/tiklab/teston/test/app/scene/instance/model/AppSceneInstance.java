@@ -14,7 +14,7 @@ import java.util.List;
  * app场景实例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AppSceneInstanceEntity")
+@Mapper
 @Join
 public class AppSceneInstance extends BaseModel{
 

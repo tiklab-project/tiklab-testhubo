@@ -10,7 +10,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * agent配置 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AgentConfigEntity")
+@Mapper
 public class AgentConfig extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

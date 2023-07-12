@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  * 断言 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AssertCaseEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.AssertCaseEntity")
 @Join
 public class AssertCase extends BaseModel{
 

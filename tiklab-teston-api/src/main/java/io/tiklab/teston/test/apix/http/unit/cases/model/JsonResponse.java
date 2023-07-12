@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @ApiModel
-@Mapper(targetAlias = "JsonResponseEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.JsonResponseEntity")
 @Join
 public class JsonResponse extends BaseModel{
 

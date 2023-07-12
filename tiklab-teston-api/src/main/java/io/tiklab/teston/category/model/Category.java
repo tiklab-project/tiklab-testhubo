@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApiModel
-@Mapper(targetAlias = "CategorysEntity")
+@Mapper(targetName  = "io.tiklab.teston.category.entity.CategoryEntity")
 @Join
-public class Categorys extends BaseModel{
+public class Category extends BaseModel{
 
     private static final long serialVersionUID = 6590165929566174830L;
 
@@ -47,7 +47,7 @@ public class Categorys extends BaseModel{
     private java.lang.String desc;
 
     @ApiProperty(name="children",desc="下级分类列表")
-    private List<Categorys> children;
+    private List<Category> children;
 
     @ApiProperty(name="nodeList",desc="分类用例")
     private List<TestCases> nodeList=new ArrayList<>();
@@ -86,11 +86,11 @@ public class Categorys extends BaseModel{
         this.sort = sort;
     }
 
-    public List<Categorys> getChildren() {
+    public List<Category> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Categorys> children) {
+    public void setChildren(List<Category> children) {
         this.children = children;
     }
 

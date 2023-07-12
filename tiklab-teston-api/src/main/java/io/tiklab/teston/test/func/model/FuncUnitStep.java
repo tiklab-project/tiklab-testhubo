@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * 功能用例下步骤 模型
  */
 @ApiModel
-@Mapper(targetAlias = "FuncUnitStepEntity")
+@Mapper
 public class FuncUnitStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

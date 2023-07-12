@@ -9,7 +9,7 @@ import io.tiklab.core.BaseModel;
  * app环境 模型
  */
 @ApiModel
-@Mapper(targetAlias = "AppEnvEntity")
+@Mapper
 public class AppEnv extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

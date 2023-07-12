@@ -10,7 +10,7 @@ import io.tiklab.postin.annotation.ApiProperty;
  * 响应结果 模型
  */
 @ApiModel
-@Mapper(targetAlias = "ResponseResultEntity")
+@Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.ResponseResultEntity")
 @Join
 public class ResponseResult extends BaseModel{
 

@@ -14,7 +14,7 @@ import io.tiklab.teston.test.test.model.TestCases;
  * 功能用例 模型
  */
 @ApiModel
-@Mapper(targetAlias = "FuncUnitCaseEntity")
+@Mapper
 @Join
 public class FuncUnitCase extends BaseModel{
 
