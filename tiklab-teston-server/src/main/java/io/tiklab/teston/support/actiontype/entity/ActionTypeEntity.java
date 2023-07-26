@@ -3,7 +3,8 @@ package io.tiklab.teston.support.actiontype.entity;
 import io.tiklab.dal.jpa.annotation.Column;
 import io.tiklab.dal.jpa.annotation.GeneratorValue;
 import io.tiklab.dal.jpa.annotation.Id;
-import io.tiklab.dal.jpa.annotation.Table;import io.tiklab.dal.jpa.annotation.Entity;
+import io.tiklab.dal.jpa.annotation.Table;
+import io.tiklab.dal.jpa.annotation.Entity;
 
 /**
  *app、web中操作类型 实体

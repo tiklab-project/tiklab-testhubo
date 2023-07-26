@@ -5,7 +5,7 @@ spring:
   profiles:
     active: test
 
-PROJECT_HOME: ${user.home}/tiklab/${app.name}
+DATA_HOME: ${user.home}/tiklab/${app.name}
 
 #web io.tiklab.teston.config
 server:
@@ -29,7 +29,7 @@ dfs:
     enable: false
     mode: server
     port: 4010
-    datapath: ${PROJECT_HOME}/files
+    datapath: ${DATA_HOME}/files
   client:
     url: 127.0.0.1:4010
     bucket: ${app.name}
@@ -40,7 +40,7 @@ dcs:
     enable: false
     mode: server
     port: 5010
-    datapath: ${PROJECT_HOME}/caches
+    datapath: ${DATA_HOME}/caches
   client:
     url: 127.0.0.1:5010
     bucket: ${app.name}
@@ -51,7 +51,7 @@ dss:
     enable: false
     mode: server
     port: 6010
-    datapath: ${PROJECT_HOME}/index
+    datapath: ${DATA_HOME}/index
   client:
     url: 127.0.0.1:6010
     bucket: ${app.name}
@@ -65,11 +65,11 @@ homes:
 
 #plugin
 plugin:
-  path: ${PROJECT_HOME}/plugin
+  path: ${DATA_HOME}/plugin
 
 #licences
 licences:
-  path: ${PROJECT_HOME}/licences
+  path: ${DATA_HOME}/licences
 
 file:
   path: http://file.test.tiklab.net

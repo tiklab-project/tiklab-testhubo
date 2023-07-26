@@ -1,6 +1,7 @@
 package io.tiklab.teston;
 
 import io.tiklab.core.property.PropertyAndYamlSourceFactory;
+import io.tiklab.teston.annotation.EnableTestOn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

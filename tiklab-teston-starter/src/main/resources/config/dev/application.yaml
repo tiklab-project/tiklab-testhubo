@@ -5,7 +5,7 @@ spring:
   profiles:
     active: dev
 
-PROJECT_HOME: ${user.home}/tiklab/${app.name}
+DATA_HOME: ${user.home}/tiklab/${app.name}
 
 #web io.tiklab.teston.config
 server:
@@ -29,7 +29,7 @@ dfs:
     enable: false
     mode: server
     port: 4010
-    datapath: ${PROJECT_HOME}/files
+    datapath: ${DATA_HOME}/files
   client:
     url: 127.0.0.1:4010
     bucket: ${app.name}
@@ -37,13 +37,14 @@ dfs:
 #dcs io.tiklab.teston.config
 dcs:
   server:
-    enable: false
-    mode: server
-    port: 5010
-    datapath: ${PROJECT_HOME}/caches
+    enabled: true
+    port: 5000
+    datapath: ${DATA_HOME}/data
   client:
-    url: 127.0.0.1:5010
-    bucket: ${app.name}
+    url: 127.0.0.1:5000
+    group: g1
+    database: dcs1
+    expire: 7200
 
 #dss io.tiklab.teston.config
 dss:
@@ -51,7 +52,7 @@ dss:
     enable: false
     mode: server
     port: 6010
-    datapath: ${PROJECT_HOME}/index
+    datapath: ${DATA_HOME}/index
   client:
     url: 127.0.0.1:6010
     bucket: ${app.name}
@@ -65,11 +66,11 @@ homes:
 
 #plugin io.tiklab.teston.config
 plugin:
-  path: ${PROJECT_HOME}/plugin
+  path: ${DATA_HOME}/plugin
 
 #licences io.tiklab.teston.config
 licences:
-  path: ${PROJECT_HOME}/licences
+  path: ${DATA_HOME}/licences
 
 application: teston
 

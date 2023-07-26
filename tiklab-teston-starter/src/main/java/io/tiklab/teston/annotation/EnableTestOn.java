@@ -1,5 +1,6 @@
-package io.tiklab.teston;
+package io.tiklab.teston.annotation;
 
+import io.tiklab.teston.config.TestOnAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

@@ -1,12 +1,13 @@
 package io.tiklab.teston.config;
 
-import io.tiklab.dsm.config.model.DsmConfig;
-import io.tiklab.dsm.support.DsmConfigBuilder;
+
+import io.tiklab.dal.dsm.config.model.DsmConfig;
+import io.tiklab.dal.dsm.support.DsmConfigBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class TestOnDsmAutoConfiguration {
+public class TestOnDalAutoConfiguration {
     /**
      * 初始化dsm
      */

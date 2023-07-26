@@ -22,7 +22,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 目录 控制器
+ * @pi.protocol: http
+ * @pi.groupName: 目录模块管理
  */
 @RestController
 @RequestMapping("/category")
@@ -34,6 +35,13 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * @pi.name:创建目录
+     * @pi.path:/category/createCategory
+     * @pi.method:post
+     * @pi.request-type:json
+     * @pi.param: io.tiklab.postin.test.model=Category
+     */
     @RequestMapping(path="/createCategory",method = RequestMethod.POST)
     @ApiMethod(name = "createCategory",desc = "创建目录")
     @ApiParam(name = "category",desc = "category",required = true)
@@ -42,6 +50,7 @@ public class CategoryController {
 
         return Result.ok(id);
     }
+
 
     @RequestMapping(path="/updateCategory",method = RequestMethod.POST)
     @ApiMethod(name = "updateCategory",desc = "更新目录")
@@ -52,6 +61,13 @@ public class CategoryController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:删除目录
+     * @pi.path:/category/deleteCategory
+     * @pi.method:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=workspaceId;
+     */
     @RequestMapping(path="/deleteCategory",method = RequestMethod.POST)
     @ApiMethod(name = "deleteCategory",desc = "删除目录")
     @ApiParam(name = "id",desc = "id",required = true)
