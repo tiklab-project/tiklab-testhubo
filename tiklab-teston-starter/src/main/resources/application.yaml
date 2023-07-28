@@ -5,7 +5,7 @@ spring:
   config:
     import: optional:classpath:/config/${env:dev}/application.yaml
 
-DATA_HOME: /opt/tiklab/postin/teston
+DATA_HOME: /opt/tiklab/teston
 
 #web 
 server:

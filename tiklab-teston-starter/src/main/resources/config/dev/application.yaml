@@ -21,10 +21,10 @@ jdbc:
 dcs:
   server:
     enabled: true
-    port: 5000
+    port: 5010
     datapath: ${DATA_HOME}/data
   client:
-    url: 127.0.0.1:5000
+    url: 127.0.0.1:5010
     group: g1
     database: dcs1
     expire: 7200

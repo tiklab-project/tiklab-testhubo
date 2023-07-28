@@ -5,7 +5,7 @@ spring:
   profiles:
     active: demo
 
-DATA_HOME:  /opt/tiklab/postin/teston
+DATA_HOME:  /opt/tiklab/teston
 
 #web
 server:
