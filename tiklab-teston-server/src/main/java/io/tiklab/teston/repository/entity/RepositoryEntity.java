@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name="teston_repository")
-public class TestOnRepositoryEntity implements Serializable {
+public class RepositoryEntity implements Serializable {
 
     @Id
      @GeneratorValue(length = 12)

@@ -7,7 +7,7 @@ import io.tiklab.teston.common.LogUnit;
 import io.tiklab.teston.common.MessageTemplateConstant;
 import io.tiklab.teston.common.TestOnUnit;
 import io.tiklab.teston.repository.dao.RepositoryDao;
-import io.tiklab.teston.repository.entity.TestOnRepositoryEntity;
+import io.tiklab.teston.repository.entity.RepositoryEntity;
 import io.tiklab.teston.repository.model.*;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
@@ -91,9 +91,9 @@ public class RepositoryServiceImpl implements RepositoryService {
         User userInfo = userService.findUser(userId);
 
         //创建项目
-        TestOnRepositoryEntity testOnRepositoryEntity = BeanMapper.map(repository, TestOnRepositoryEntity.class);
-        testOnRepositoryEntity.setUserId(userId);
-        String repositoryId = repositoryDao.createRepository(testOnRepositoryEntity);
+        RepositoryEntity repositoryEntity = BeanMapper.map(repository, RepositoryEntity.class);
+        repositoryEntity.setUserId(userId);
+        String repositoryId = repositoryDao.createRepository(repositoryEntity);
 
         //初始化分组（默认分组）
         Category category = new Category();
@@ -156,9 +156,9 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public void updateRepository(@NotNull @Valid Repository repository) {
-        TestOnRepositoryEntity testOnRepositoryEntity = BeanMapper.map(repository, TestOnRepositoryEntity.class);
+        RepositoryEntity repositoryEntity = BeanMapper.map(repository, RepositoryEntity.class);
 
-        repositoryDao.updateRepository(testOnRepositoryEntity);
+        repositoryDao.updateRepository(repositoryEntity);
 
         //日志
         Map<String,String> map = new HashMap<>();
@@ -214,17 +214,17 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Repository findOne(String id) {
-        TestOnRepositoryEntity testOnRepositoryEntity = repositoryDao.findRepository(id);
+        RepositoryEntity repositoryEntity = repositoryDao.findRepository(id);
 
-        Repository repository = BeanMapper.map(testOnRepositoryEntity, Repository.class);
+        Repository repository = BeanMapper.map(repositoryEntity, Repository.class);
         return repository;
     }
 
     @Override
     public List<Repository> findList(List<String> idList) {
-        List<TestOnRepositoryEntity> testOnRepositoryEntityList =  repositoryDao.findRepositoryList(idList);
+        List<RepositoryEntity> repositoryEntityList =  repositoryDao.findRepositoryList(idList);
 
-        List<Repository> repositoryList =  BeanMapper.mapList(testOnRepositoryEntityList,Repository.class);
+        List<Repository> repositoryList =  BeanMapper.mapList(repositoryEntityList,Repository.class);
         return repositoryList;
     }
 
@@ -238,9 +238,9 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public List<Repository> findAllRepository() {
-        List<TestOnRepositoryEntity> testOnRepositoryEntityList =  repositoryDao.findAllRepository();
+        List<RepositoryEntity> repositoryEntityList =  repositoryDao.findAllRepository();
 
-        List<Repository> repositoryList =  BeanMapper.mapList(testOnRepositoryEntityList,Repository.class);
+        List<Repository> repositoryList =  BeanMapper.mapList(repositoryEntityList,Repository.class);
 
         joinTemplate.joinQuery(repositoryList);
         return repositoryList;
@@ -248,8 +248,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public List<Repository> findRepositoryList(RepositoryQuery repositoryQuery) {
-        List<TestOnRepositoryEntity> testOnRepositoryEntityList = repositoryDao.findRepositoryList(repositoryQuery);
-        List<Repository> repositoryList = BeanMapper.mapList(testOnRepositoryEntityList,Repository.class);
+        List<RepositoryEntity> repositoryEntityList = repositoryDao.findRepositoryList(repositoryQuery);
+        List<Repository> repositoryList = BeanMapper.mapList(repositoryEntityList,Repository.class);
 
         //关注
         RepositoryFollowQuery repositoryFollowQuery = new RepositoryFollowQuery();
@@ -279,7 +279,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Override
     public Pagination<Repository> findRepositoryPage(RepositoryQuery repositoryQuery) {
-        Pagination<TestOnRepositoryEntity>  pagination = repositoryDao.findRepositoryPage(repositoryQuery);
+        Pagination<RepositoryEntity>  pagination = repositoryDao.findRepositoryPage(repositoryQuery);
 
         List<Repository> repositoryList = BeanMapper.mapList(pagination.getDataList(),Repository.class);
 
