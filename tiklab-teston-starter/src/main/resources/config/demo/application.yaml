@@ -5,7 +5,7 @@ spring:
   profiles:
     active: demo
 
-DATA_HOME: ${user.home}/tiklab/${app.name}
+DATA_HOME:  opt/tiklab/teston
 
 #web
 server:
@@ -18,38 +18,18 @@ jdbc:
   username: postgres
   password: darth2020
 
-#dfs
-dfs:
-  server:
-    enable: false
-    mode: server
-    port: 4010
-    datapath: ${DATA_HOME}/files
-  client:
-    url: 127.0.0.1:4010
-    bucket: ${app.name}
 
 #dcs
 dcs:
   server:
     enable: false
-    mode: server
     port: 5010
     datapath: ${DATA_HOME}/caches
   client:
     url: 127.0.0.1:5010
-    bucket: ${app.name}
-
-#dss
-dss:
-  server:
-    enable: false
-    mode: server
-    port: 6010
-    datapath: ${DATA_HOME}/index
-  client:
-    url: 127.0.0.1:6010
-    bucket: ${app.name}
+    group: g1
+    database: dcs1
+    expire: 7200
 
 #name
 application: teston
@@ -66,8 +46,6 @@ plugin:
 licences:
   path: ${DATA_HOME}/licences
 
-
-
 file:
   path: http://file.demo.tiklab.net
 
@@ -83,6 +61,11 @@ postgresql:
   database: tiklab_teston
   embbed:
     enable: false
+#  db:
+#    port: 5432
+#    username: postgres
+#    password: darth2020
+#    address: ${DATA_HOME}/postgresql
 
 teston-agent:
   embbed:

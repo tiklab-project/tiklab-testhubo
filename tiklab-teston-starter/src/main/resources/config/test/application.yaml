@@ -5,63 +5,33 @@ spring:
   profiles:
     active: test
 
-DATA_HOME: ${user.home}/tiklab/${app.name}
+DATA_HOME: opt/tiklab/teston
 
-#web io.tiklab.teston.config
+#web
 server:
   port: 8080
 
-#dal io.tiklab.teston.config
-#jdbc:
-#  driverClassName: com.mysql.cj.jdbc.Driver
-#  url: jdbc:mysql://localhost:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-#  username: root
-#  password: darth2020
 jdbc:
   driverClassName: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/tiklab_teston?stringtype=unspecified
+  url: jdbc:postgresql://localhost:5432/teston?stringtype=unspecified
   username: postgres
   password: darth2020
-
-#dfs
-dfs:
-  server:
-    enable: false
-    mode: server
-    port: 4010
-    datapath: ${DATA_HOME}/files
-  client:
-    url: 127.0.0.1:4010
-    bucket: ${app.name}
 
 #dcs
 dcs:
   server:
     enable: false
-    mode: server
     port: 5010
     datapath: ${DATA_HOME}/caches
   client:
     url: 127.0.0.1:5010
-    bucket: ${app.name}
-
-#dss
-dss:
-  server:
-    enable: false
-    mode: server
-    port: 6010
-    datapath: ${DATA_HOME}/index
-  client:
-    url: 127.0.0.1:6010
-    bucket: ${app.name}
+    group: g1
+    database: dcs1
+    expire: 7200
 
 #name
 application: teston
 
-#homes
-homes:
-  address: http://172.11.1.11:8080
 
 #plugin
 plugin:
@@ -77,15 +47,24 @@ file:
 base:
   url: http://teston-ce.test.tiklab.net
 
+#homes
+homes:
+  address: http://172.11.1.11:8080
+
 eas:
   embbed:
     enable: true
   address: http://eas-ce.test.tiklab.net
 
 postgresql:
-  database: tiklab_teston
+  database: teston
   embbed:
-    enable: true
+    enable: false
+  db:
+    port: 5432
+    username: postgres
+    password: darth2020
+    address: ${DATA_HOME}/postgresql
 
 teston-agent:
   embbed:
