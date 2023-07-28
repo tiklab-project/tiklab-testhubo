@@ -5,7 +5,7 @@ spring:
   profiles:
     active: test
 
-DATA_HOME: /opt/tiklab/postin/teston
+DATA_HOME: /opt/tiklab/teston
 
 #web
 server:
@@ -59,7 +59,7 @@ eas:
 postgresql:
   database: teston
   embbed:
-    enable: false
+    enable: true
   db:
     port: 5432
     username: postgres
