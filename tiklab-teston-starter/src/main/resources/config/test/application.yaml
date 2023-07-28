@@ -20,7 +20,7 @@ jdbc:
 #dcs
 dcs:
   server:
-    enable: false
+    enabled: true
     port: 5010
     datapath: ${DATA_HOME}/caches
   client:

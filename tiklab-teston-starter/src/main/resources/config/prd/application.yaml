@@ -28,7 +28,7 @@ jdbc:
 #dfs 
 dfs:
   server:
-    enable: false
+    enable: true
     mode: server
     port: 4010
     datapath: ${DATA_HOME}/files
@@ -39,7 +39,7 @@ dfs:
 #dcs 
 dcs:
   server:
-    enable: false
+    enabled: false
     mode: server
     port: 5010
     datapath: ${DATA_HOME}/caches
