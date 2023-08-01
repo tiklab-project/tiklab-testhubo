@@ -12,12 +12,7 @@ DATA_HOME: /opt/tiklab/teston
 server:
   port: 8080
 
-#dal 
-#jdbc:
-#  driverClassName: com.mysql.cj.jdbc.Driver
-#  url: jdbc:mysql://172.12.1.16:3306/tiklab_teston?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-#  username: root
-#  password: darth2020
+#dal
 jdbc:
   driverClassName: org.postgresql.Driver
   url: jdbc:postgresql://172.13.1.13:5432/tiklab_teston?stringtype=unspecified
@@ -39,28 +34,14 @@ dfs:
 #dcs 
 dcs:
   server:
-    enabled: false
-    mode: server
+    enabled: true
     port: 5010
-    datapath: ${DATA_HOME}/caches
+    datapath: ${DATA_HOME}/data
   client:
     url: 127.0.0.1:5010
-    bucket: ${app.name}
-
-#dss 
-dss:
-  server:
-    enable: false
-    mode: server
-    port: 6010
-    datapath: ${DATA_HOME}/index
-  client:
-    url: 127.0.0.1:6010
-    bucket: ${app.name}
-
-#integration
-homes:
-  address: http://172.11.1.11:8080
+    group: g1
+    database: dcs1
+    expire: 7200
 
 #plugin
 plugin:
@@ -69,11 +50,6 @@ plugin:
 #licences
 licences:
   path: ${DATA_HOME}/licences
-
-application: teston
-
-file:
-  path: http://file.test.tiklab.net
 
 base:
   url:  http://bac.teston.tiklab.net

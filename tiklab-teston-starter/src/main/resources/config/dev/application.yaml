@@ -17,7 +17,7 @@ jdbc:
   password: darth2020
 
 
-#dcs io.tiklab.teston.config
+#dcs
 dcs:
   server:
     enabled: true
@@ -36,10 +36,6 @@ eas:
 #  web:
 #    address: http://eas.local.tiklab.net
 
-#integration
-homes:
-  address: http://192.168.10.19:8080
-
 #plugin
 plugin:
   path: ${DATA_HOME}/plugin
@@ -47,11 +43,6 @@ plugin:
 #licences
 licences:
   path: ${DATA_HOME}/licences
-
-application: teston
-
-file:
-  path: http://file.dev.tiklab.net
 
 base:
   url: http://192.168.10.16:3000
