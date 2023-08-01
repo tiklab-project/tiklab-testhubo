@@ -14,7 +14,7 @@ server:
 #dal
 jdbc:
   driverClassName: org.postgresql.Driver
-  url: jdbc:postgresql://172.12.1.10:5432/tiklab_teston?stringtype=unspecified
+  url: jdbc:postgresql://localhost:5432/teston?stringtype=unspecified
   username: postgres
   password: darth2020
 
@@ -22,7 +22,7 @@ jdbc:
 #dcs
 dcs:
   server:
-    enabled: true
+    enabled: false
     port: 5010
     datapath: ${DATA_HOME}/caches
   client:
@@ -58,14 +58,14 @@ eas:
   address: http://eas-ce.demo.tiklab.net
 
 postgresql:
-  database: tiklab_teston
+  database: teston
   embbed:
-    enable: false
-#  db:
-#    port: 5432
-#    username: postgres
-#    password: darth2020
-#    address: ${DATA_HOME}/postgresql
+    enable: true
+  db:
+    port: 5432
+    username: postgres
+    password: darth2020
+    address: ${DATA_HOME}/postgresql
 
 teston-agent:
   embbed:
