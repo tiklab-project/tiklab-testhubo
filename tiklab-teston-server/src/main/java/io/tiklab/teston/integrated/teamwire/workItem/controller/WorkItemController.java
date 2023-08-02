@@ -37,7 +37,7 @@ public class WorkItemController {
 
     @RequestMapping(path="/createWorkItem",method = RequestMethod.POST)
     @ApiMethod(name = "createWorkItem",desc = "创建缺陷")
-    @ApiParam(name = "WorkItemTestOn",desc = "WorkItemTestOn",required = true)
+    @ApiParam(name = "workItemTestOn",desc = "workItemTestOn",required = true)
     public Result<String> createWorkItemBind(@RequestBody @NotNull @Valid WorkItemTestOn workItemTestOn){
         String id = workItemTestOnService.createWorkItem(workItemTestOn);
 
@@ -46,7 +46,7 @@ public class WorkItemController {
 
     @RequestMapping(path = "/findProjectList",method = RequestMethod.POST)
     @ApiMethod(name = "findProjectList",desc = "根据查询teamwire 项目列表")
-    @ApiParam(name = "projectQuery",desc = "projectQuery")
+    @ApiParam(name = "projectTestOnQuery",desc = "projectTestOnQuery")
     public Result<List<ProjectTestOn>> findProjectList(@RequestBody @Valid @NotNull ProjectTestOnQuery projectTestOnQuery){
         List<ProjectTestOn> projectTestOnList = workItemTestOnService.findProjectList(projectTestOnQuery);
 
@@ -55,7 +55,7 @@ public class WorkItemController {
 
     @RequestMapping(path = "/findWorkItemList",method = RequestMethod.POST)
     @ApiMethod(name = "findWorkItemList",desc = "查询teamwire 需求缺陷列表")
-    @ApiParam(name = "workItemQuery",desc = "workItemQuery")
+    @ApiParam(name = "workItemTestOnQuery",desc = "workItemTestOnQuery")
     public Result<List<WorkItemTestOn>> findWorkItemList(@RequestBody @Valid @NotNull WorkItemTestOnQuery workItemTestOnQuery){
         List<WorkItemTestOn> workItemTestOnList = workItemTestOnService.findWorkItemList(workItemTestOnQuery);
 

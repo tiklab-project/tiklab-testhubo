@@ -2,7 +2,7 @@ package io.tiklab.teston.test.web.perf.cases.service;
 
 import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.web.perf.cases.dao.WebPerfCaseDao;
 import io.tiklab.teston.test.web.perf.cases.entity.WebPerfCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -63,9 +63,9 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
         webPerfCaseEntity.setId(id);
         webPerfCaseDao.updateWebPerfCase(webPerfCaseEntity);
 
-        TestCases testCases = webPerfCase.getTestCase();
-        testCases.setId(id);
-        testCaseService.createTestCase(testCases);
+        TestCase testCase = webPerfCase.getTestCase();
+        testCase.setId(id);
+        testCaseService.createTestCase(testCase);
 
         return id;
     }
@@ -110,13 +110,13 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
         joinTemplate.joinQuery(webPerfCase);
 
         //手动添加字段
-        TestCases testCases = webPerfCase.getTestCase();
-        if(testCases.getCategory()!=null) {
-            Category category = categoryService.findCategory(testCases.getCategory().getId());
+        TestCase testCase = webPerfCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
             webPerfCase.getTestCase().setCategory(category);
         }
-        if(testCases.getUpdateUser()!=null) {
-            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             webPerfCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -157,14 +157,14 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
 
     @Override
     public List<WebPerfCase> findWebPerfCaseListByTestCase(TestCaseQuery testCaseQuery) {
-        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<WebPerfCase> webPerfCaseList = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(testCasesList)){
-            for (TestCases testCases : testCasesList){
+        if(CollectionUtils.isNotEmpty(testCaseList)){
+            for (TestCase testCase : testCaseList){
                 //因为中间层testcase与 跟在下面的场景id相同，所有直接通过id查询出一个
-                WebPerfCase webPerfCase = findWebPerfCase(testCases.getId());
+                WebPerfCase webPerfCase = findWebPerfCase(testCase.getId());
 
                 webPerfCaseList.add(webPerfCase);
             }

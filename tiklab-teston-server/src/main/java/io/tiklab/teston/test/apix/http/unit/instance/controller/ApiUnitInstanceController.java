@@ -35,27 +35,27 @@ public class ApiUnitInstanceController {
 
     @RequestMapping(path="/createApiUnitInstance",method = RequestMethod.POST)
     @ApiMethod(name = "createApiUnitInstance",desc = "创建步骤实例")
-    @ApiParam(name = "testStepInstance",desc = "对象",required = true)
-    public Result<String> createApiUnitInstance(@RequestBody @NotNull @Valid ApiUnitInstance testStepInstance){
-        String id = apiUnitInstanceService.createApiUnitInstance(testStepInstance);
+    @ApiParam(name = "apiUnitInstance",desc = "对象",required = true)
+    public Result<String> createApiUnitInstance(@RequestBody @NotNull @Valid ApiUnitInstance apiUnitInstance){
+        String id = apiUnitInstanceService.createApiUnitInstance(apiUnitInstance);
 
         return Result.ok(id);
     }
 
     @RequestMapping(path="/createApiUnitInstanceList",method = RequestMethod.POST)
     @ApiMethod(name = "createApiUnitInstanceList",desc = "创建步骤用例实例")
-    @ApiParam(name = "testStepInstances",desc = "传list",required = true)
-    public Result<String> createApiUnitInstanceList(@NotNull @Valid List<ApiUnitInstance> testStepInstances){
-        String id = apiUnitInstanceService.createApiUnitInstanceWithNest(testStepInstances);
+    @ApiParam(name = "apiUnitInstances",desc = "传list",required = true)
+    public Result<String> createApiUnitInstanceList(@NotNull @Valid List<ApiUnitInstance> apiUnitInstances){
+        String id = apiUnitInstanceService.createApiUnitInstanceWithNest(apiUnitInstances);
 
         return Result.ok(id);
     }
 
     @RequestMapping(path="/updateApiUnitInstance",method = RequestMethod.POST)
     @ApiMethod(name = "updateApiUnitInstance",desc = "更新测试用例实例")
-    @ApiParam(name = "testStepInstance",desc = "testStepInstance",required = true)
-    public Result<Void> updateApiUnitInstance(@RequestBody @NotNull @Valid ApiUnitInstance testStepInstance){
-        apiUnitInstanceService.updateApiUnitInstance(testStepInstance);
+    @ApiParam(name = "apiUnitInstance",desc = "apiUnitInstance",required = true)
+    public Result<Void> updateApiUnitInstance(@RequestBody @NotNull @Valid ApiUnitInstance apiUnitInstance){
+        apiUnitInstanceService.updateApiUnitInstance(apiUnitInstance);
 
         return Result.ok();
     }
@@ -73,9 +73,9 @@ public class ApiUnitInstanceController {
     @ApiMethod(name = "findApiUnitInstance",desc = "通过id查询测试用例实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiUnitInstance> findApiUnitInstance(@NotNull String id){
-        ApiUnitInstance testStepInstance = apiUnitInstanceService.findApiUnitInstanceWithNest(id);
+        ApiUnitInstance apiUnitInstance = apiUnitInstanceService.findApiUnitInstanceWithNest(id);
 
-        return Result.ok(testStepInstance);
+        return Result.ok(apiUnitInstance);
     }
 
     @RequestMapping(path="/findAllApiUnitInstance",method = RequestMethod.POST)
@@ -88,18 +88,18 @@ public class ApiUnitInstanceController {
 
     @RequestMapping(path = "/findApiUnitInstanceList",method = RequestMethod.POST)
     @ApiMethod(name = "findApiUnitInstanceList",desc = "通过查询对象查询测试用例实例")
-    @ApiParam(name = "testStepInstanceQuery",desc = "testStepInstanceQuery",required = true)
-    public Result<List<ApiUnitInstance>> findApiUnitInstanceList(@RequestBody @Valid @NotNull ApiUnitInstanceQuery testStepInstanceQuery){
-        List<ApiUnitInstance> testStepInstanceList = apiUnitInstanceService.findApiUnitInstanceList(testStepInstanceQuery);
+    @ApiParam(name = "apiUnitInstanceQuery",desc = "apiUnitInstanceQuery",required = true)
+    public Result<List<ApiUnitInstance>> findApiUnitInstanceList(@RequestBody @Valid @NotNull ApiUnitInstanceQuery apiUnitInstanceQuery){
+        List<ApiUnitInstance> apiUnitInstanceList = apiUnitInstanceService.findApiUnitInstanceList(apiUnitInstanceQuery);
 
-        return Result.ok(testStepInstanceList);
+        return Result.ok(apiUnitInstanceList);
     }
 
     @RequestMapping(path = "/findApiUnitInstancePage",method = RequestMethod.POST)
     @ApiMethod(name = "findApiUnitInstancePage",desc = "通过查询对象分页查询测试用例实例")
     @ApiParam(name = "apiUnitInstanceQuery",desc = "apiUnitInstanceQuery",required = true)
-    public Result<Pagination<ApiUnitInstance>> findApiUnitInstancePage(@RequestBody @Valid @NotNull ApiUnitInstanceQuery testStepInstanceQuery){
-        Pagination<ApiUnitInstance> pagination = apiUnitInstanceService.findApiUnitInstancePage(testStepInstanceQuery);
+    public Result<Pagination<ApiUnitInstance>> findApiUnitInstancePage(@RequestBody @Valid @NotNull ApiUnitInstanceQuery apiUnitInstanceQuery){
+        Pagination<ApiUnitInstance> pagination = apiUnitInstanceService.findApiUnitInstancePage(apiUnitInstanceQuery);
 
         return Result.ok(pagination);
     }

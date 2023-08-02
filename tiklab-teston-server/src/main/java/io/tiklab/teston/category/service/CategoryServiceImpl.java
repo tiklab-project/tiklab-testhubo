@@ -10,7 +10,7 @@ import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.model.CategoryQuery;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,8 +166,8 @@ public class CategoryServiceImpl implements CategoryService {
             testCaseQuery.setCategoryId(category.getId());
             testCaseQuery.setCaseType(categoryQuery.getCaseType());
             testCaseQuery.setTestType(categoryQuery.getTestType());
-            List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
-            category.setCaseNum(testCasesList.size());
+            List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
+            category.setCaseNum(testCaseList.size());
             return category;
         }).collect(Collectors.toList());
 

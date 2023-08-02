@@ -35,7 +35,7 @@ public class PostinUrlController {
 
     @RequestMapping(path="/createPostinUrl",method = RequestMethod.POST)
     @ApiMethod(name = "createPostinUrl",desc = "创建PostinUrl配置")
-    @ApiParam(name = "postinUrl",desc = "postinUrl",required = true)
+    @ApiParam(name = "integratedUrl",desc = "integratedUrl",required = true)
     public Result<String> createPostinUrl(@RequestBody @NotNull @Valid IntegratedUrl integratedUrl){
         String id = postinUrlService.createPostinUrl(integratedUrl);
 
@@ -44,7 +44,7 @@ public class PostinUrlController {
 
     @RequestMapping(path="/updatePostinUrl",method = RequestMethod.POST)
     @ApiMethod(name = "updatePostinUrl",desc = "更新PostinUrl配置")
-    @ApiParam(name = "postinUrl",desc = "postinUrl",required = true)
+    @ApiParam(name = "integratedUrl",desc = "integratedUrl",required = true)
     public Result<Void> updatePostinUrl(@RequestBody @NotNull @Valid IntegratedUrl integratedUrl){
         postinUrlService.updatePostinUrl(integratedUrl);
 
@@ -79,7 +79,7 @@ public class PostinUrlController {
 
     @RequestMapping(path = "/findPostinUrlList",method = RequestMethod.POST)
     @ApiMethod(name = "findPostinUrlList",desc = "根据查询参数查询PostinUrl配置列表")
-    @ApiParam(name = "postinUrlQuery",desc = "postinUrlQuery",required = true)
+    @ApiParam(name = "integratedUrlQuery",desc = "integratedUrlQuery",required = true)
     public Result<List<IntegratedUrl>> findPostinUrlList(@RequestBody @Valid @NotNull IntegratedUrlQuery integratedUrlQuery){
         List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
 
@@ -88,7 +88,7 @@ public class PostinUrlController {
 
     @RequestMapping(path = "/findPostinUrlPage",method = RequestMethod.POST)
     @ApiMethod(name = "findPostinUrlPage",desc = "根据查询参数按分页查询PostinUrl配置")
-    @ApiParam(name = "postinUrlQuery",desc = "postinUrlQuery",required = true)
+    @ApiParam(name = "integratedUrlQuery",desc = "integratedUrlQuery",required = true)
     public Result<Pagination<IntegratedUrl>> findPostinUrlPage(@RequestBody @Valid @NotNull IntegratedUrlQuery integratedUrlQuery){
         Pagination<IntegratedUrl> pagination = postinUrlService.findPostinUrlPage(integratedUrlQuery);
 

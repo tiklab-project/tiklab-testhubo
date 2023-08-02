@@ -35,7 +35,7 @@ public class QueryParamController {
 
     @RequestMapping(path="/createQueryParam",method = RequestMethod.POST)
     @ApiMethod(name = "createQueryParam",desc = "创建query")
-    @ApiParam(name = "queryParam",desc = "queryParam",required = true)
+    @ApiParam(name = "queryParams",desc = "queryParams",required = true)
     public Result<String> createQueryParam(@RequestBody @NotNull @Valid QueryParams queryParams){
         String id = queryParamService.createQueryParam(queryParams);
 
@@ -44,7 +44,7 @@ public class QueryParamController {
 
     @RequestMapping(path="/updateQueryParam",method = RequestMethod.POST)
     @ApiMethod(name = "updateQueryParam",desc = "更新query")
-    @ApiParam(name = "queryParam",desc = "queryParam",required = true)
+    @ApiParam(name = "queryParams",desc = "queryParams",required = true)
     public Result<Void> updateQueryParam(@RequestBody @NotNull @Valid QueryParams queryParams){
         queryParamService.updateQueryParam(queryParams);
 

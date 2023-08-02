@@ -19,8 +19,9 @@ import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBindQuery
 import io.tiklab.teston.integrated.postin.workspaceBind.service.WorkspaceBindService;
 import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import io.tiklab.teston.test.apix.http.unit.cases.model.*;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParam;
 import io.tiklab.teston.test.apix.http.unit.cases.service.*;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,13 +142,13 @@ public class PostInApiServiceImpl implements PostInApiService {
                 try {
                     //apix -> testcase  中间公共表
                     Apix apix = apixServiceRpc().findApix(apiId);
-                    TestCases testCases = new TestCases();
-                    testCases.setName(apix.getName());
-                    testCases.setCaseType("api-unit");
-                    testCases.setTestType("api");
-                    testCases.setDesc(apix.getDesc());
-                    testCases.setRepositoryId(postInApiToCase.getRepositoryId());
-                    apiUnitCase.setTestCase(testCases);
+                    TestCase testCase = new TestCase();
+                    testCase.setName(apix.getName());
+                    testCase.setCaseType("api-unit");
+                    testCase.setTestType("api");
+                    testCase.setDesc(apix.getDesc());
+                    testCase.setRepositoryId(postInApiToCase.getRepositoryId());
+                    apiUnitCase.setTestCase(testCase);
 
                     apiUnitCase.setPath(httpApi.getPath());
                     apiUnitCase.setMethodType(httpApi.getMethodType());
@@ -274,8 +275,8 @@ public class PostInApiServiceImpl implements PostInApiService {
      */
     private void convertFormData(String apiUnitCaseId, HttpApi httpApi) {
         try {
-            for(FormParam postInFormParam:httpApi.getFormList()){
-                FormParams testOnFormParam = new FormParams();
+            for(io.tiklab.postin.api.http.definition.model.FormParam postInFormParam:httpApi.getFormList()){
+                FormParam testOnFormParam = new FormParam();
                 testOnFormParam.setParamName(postInFormParam.getParamName());
                 testOnFormParam.setValue(postInFormParam.getValue());
                 testOnFormParam.setDesc((postInFormParam.getDesc()));

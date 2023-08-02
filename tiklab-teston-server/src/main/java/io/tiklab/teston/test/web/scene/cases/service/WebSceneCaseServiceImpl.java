@@ -2,7 +2,7 @@ package io.tiklab.teston.test.web.scene.cases.service;
 
 import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.web.scene.cases.dao.WebSceneCaseDao;
 import io.tiklab.teston.test.web.scene.cases.entity.WebSceneCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -56,9 +56,9 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
         webSceneCaseEntity.setId(id);
         webSceneCaseDao.updateWebSceneCase(webSceneCaseEntity);
 
-        TestCases testCases = webSceneCase.getTestCase();
-        testCases.setId(id);
-        testCaseService.createTestCase(testCases);
+        TestCase testCase = webSceneCase.getTestCase();
+        testCase.setId(id);
+        testCaseService.createTestCase(testCase);
         
         return id;
     }
@@ -103,13 +103,13 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
         joinTemplate.joinQuery(webSceneCase);
 
         //手动添加字段
-        TestCases testCases = webSceneCase.getTestCase();
-        if(testCases.getCategory()!=null) {
-            Category category = categoryService.findCategory(testCases.getCategory().getId());
+        TestCase testCase = webSceneCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
             webSceneCase.getTestCase().setCategory(category);
         }
-        if(testCases.getUpdateUser()!=null) {
-            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             webSceneCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -152,14 +152,14 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
 
     @Override
     public List<WebSceneCase> findWebSceneCaseListByTestCase(TestCaseQuery testCaseQuery) {
-        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<WebSceneCase> webSceneCaseList = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(testCasesList)){
-            for(TestCases testCases : testCasesList){
+        if(CollectionUtils.isNotEmpty(testCaseList)){
+            for(TestCase testCase : testCaseList){
                 //因为中间层testcase与 跟在下面的场景id相同，所有直接通过id查询出一个
-                WebSceneCase webSceneCase = findWebSceneCase(testCases.getId());
+                WebSceneCase webSceneCase = findWebSceneCase(testCase.getId());
 
                 if(!ObjectUtils.isEmpty(webSceneCase)){
                     webSceneCaseList.add(webSceneCase);

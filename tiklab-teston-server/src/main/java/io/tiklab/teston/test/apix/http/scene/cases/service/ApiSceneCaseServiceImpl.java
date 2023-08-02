@@ -11,7 +11,7 @@ import io.tiklab.join.JoinTemplate;
 
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneCase;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneCaseQuery;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.user.user.model.User;
@@ -58,9 +58,9 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
         apiSceneCaseDao.updateApiSceneCase(apiSceneCaseEntity);
 
         //添加testCase
-        TestCases testCases = apiSceneCase.getTestCase();
-        testCases.setId(id);
-        testCaseService.createTestCase(testCases);
+        TestCase testCase = apiSceneCase.getTestCase();
+        testCase.setId(id);
+        testCaseService.createTestCase(testCase);
 
         return id;
     }
@@ -119,13 +119,13 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
         joinTemplate.joinQuery(apiSceneCase);
 
         //手动添加字段
-        TestCases testCases = apiSceneCase.getTestCase();
-        if(testCases.getCategory()!=null) {
-            Category category = categoryService.findCategory(testCases.getCategory().getId());
+        TestCase testCase = apiSceneCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
             apiSceneCase.getTestCase().setCategory(category);
         }
-        if(testCases.getUpdateUser()!=null){
-            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
+        if(testCase.getUpdateUser()!=null){
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             apiSceneCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -156,12 +156,12 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
     @Override
     public List<ApiSceneCase> findApiSceneCaseListByTestCase(TestCaseQuery testCaseQuery){
 
-        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<ApiSceneCase> apiSceneCaseList = new ArrayList<>();
 
-        if(!ObjectUtils.isEmpty(testCasesList)){
-            for (TestCases testcase: testCasesList){
+        if(!ObjectUtils.isEmpty(testCaseList)){
+            for (TestCase testcase: testCaseList){
                 //因为中间层testcase与 跟在下面的场景id相同，所有直接通过id查询出一个
                 ApiSceneCase apiSceneCase = findApiSceneCase(testcase.getId());
 

@@ -9,7 +9,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneCase;
@@ -55,9 +55,9 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
         appSceneCaseEntity.setId(id);
         appSceneCaseDao.updateAppSceneCase(appSceneCaseEntity);
 
-        TestCases testCases = appSceneCase.getTestCase();
-        testCases.setId(id);
-        testCaseService.createTestCase(testCases);
+        TestCase testCase = appSceneCase.getTestCase();
+        testCase.setId(id);
+        testCaseService.createTestCase(testCase);
 
         return id;
     }
@@ -101,13 +101,13 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
         joinTemplate.joinQuery(appSceneCase);
 
         //手动添加字段
-        TestCases testCases = appSceneCase.getTestCase();
-        if(testCases.getCategory()!=null) {
-            Category category = categoryService.findCategory(testCases.getCategory().getId());
+        TestCase testCase = appSceneCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
             appSceneCase.getTestCase().setCategory(category);
         }
-        if(testCases.getUpdateUser()!=null) {
-            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             appSceneCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -149,14 +149,14 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
 
     @Override
     public List<AppSceneCase> findAppSceneCaseListByTestCase(TestCaseQuery testCaseQuery) {
-        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<AppSceneCase> appSceneCaseList = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(testCasesList)){
-            for(TestCases testCases : testCasesList){
+        if(CollectionUtils.isNotEmpty(testCaseList)){
+            for(TestCase testCase : testCaseList){
                 //因为中间层testcase与 跟在下面的场景id相同，所有直接通过id查询出一个
-                AppSceneCase appSceneCase = findAppSceneCase(testCases.getId());
+                AppSceneCase appSceneCase = findAppSceneCase(testCase.getId());
 
                 appSceneCaseList.add(appSceneCase);
 

@@ -50,7 +50,7 @@ public class AppSceneTestDispatchController {
 
     @RequestMapping(path="/result",method = RequestMethod.POST)
     @ApiMethod(name = "result",desc = "当前执行的结果")
-    @ApiParam(name = "result",desc = "result",required = true)
+    @ApiParam(name = "appSceneTestRequest",desc = "appSceneTestRequest",required = true)
     public Result<AppSceneTestResponse> result(@RequestBody @NotNull @Valid AppSceneTestRequest appSceneTestRequest) {
         AppSceneTestResponse result = appSceneTestDispatchService.result(appSceneTestRequest);
 

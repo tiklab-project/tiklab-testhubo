@@ -29,7 +29,7 @@ public class ApiUnitTestDispatchController {
 
     @RequestMapping(path="/execute",method = RequestMethod.POST)
     @ApiMethod(name = "execute",desc = "执行api接口的测试用例")
-    @ApiParam(name = "ApiUnitTestDispatch",desc = "ApiUnitTestDispatch",required = true)
+    @ApiParam(name = "apiUnitTestRequest",desc = "apiUnitTestRequest",required = true)
     public Result<ApiUnitInstance> execute(@RequestBody @NotNull @Valid ApiUnitTestRequest apiUnitTestRequest){
         ApiUnitInstance execute = apiUnitExecuteDispatchService.execute(apiUnitTestRequest);
 

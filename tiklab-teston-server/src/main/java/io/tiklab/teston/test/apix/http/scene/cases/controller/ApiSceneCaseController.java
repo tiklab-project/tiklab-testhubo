@@ -36,7 +36,7 @@ public class ApiSceneCaseController {
 
     @RequestMapping(path="/createApiSceneCase",method = RequestMethod.POST)
     @ApiMethod(name = "createApiSceneCase",desc = "添加测试用例")
-    @ApiParam(name = "testCase",desc = "testCase",required = true)
+    @ApiParam(name = "apiSceneCase",desc = "apiSceneCase",required = true)
     public Result<String> createApiSceneCase(@RequestBody @NotNull @Valid ApiSceneCase apiSceneCase){
         String id = apiSceneCaseService.createApiSceneCase(apiSceneCase);
 
@@ -45,7 +45,7 @@ public class ApiSceneCaseController {
 
     @RequestMapping(path="/updateApiSceneCase",method = RequestMethod.POST)
     @ApiMethod(name = "updateApiSceneCase",desc = "更新测试用例")
-    @ApiParam(name = "testCase",desc = "testCase",required = true)
+    @ApiParam(name = "apiSceneCase",desc = "apiSceneCase",required = true)
     public Result<Void> updateApiSceneCase(@RequestBody @NotNull @Valid ApiSceneCase apiSceneCase){
         apiSceneCaseService.updateApiSceneCase(apiSceneCase);
 

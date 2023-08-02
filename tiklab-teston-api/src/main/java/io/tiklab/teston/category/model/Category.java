@@ -1,7 +1,7 @@
 package io.tiklab.teston.category.model;
 
 import io.tiklab.teston.repository.model.Repository;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
@@ -86,7 +86,7 @@ public class Category extends BaseModel{
      * @pi.value: []
      */
     @ApiProperty(name="nodeList",desc="分类用例")
-    private List<TestCases> nodeList=new ArrayList<>();
+    private List<TestCase> nodeList=new ArrayList<>();
 
     /**
      * @pi.name: caseNum
@@ -134,11 +134,11 @@ public class Category extends BaseModel{
         this.children = children;
     }
 
-    public List<TestCases> getNodeList() {
+    public List<TestCase> getNodeList() {
         return nodeList;
     }
 
-    public void setNodeList(List<TestCases> nodeList) {
+    public void setNodeList(List<TestCase> nodeList) {
         this.nodeList = nodeList;
     }
 

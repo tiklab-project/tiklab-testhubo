@@ -36,7 +36,7 @@ public class WebPerfStepController {
 
     @RequestMapping(path="/bindWebScene",method = RequestMethod.POST)
     @ApiMethod(name = "bindWebScene",desc = "绑定web场景")
-    @ApiParam(name = "webPerfStep",desc = "webPerfStep",required = true)
+    @ApiParam(name = "webPerfStepList",desc = "webPerfStepList",required = true)
     public Result<String> bindWebScene(@RequestBody @NotNull @Valid List<WebPerfStep> webPerfStepList){
         webPerfStepService.bindWebScene(webPerfStepList);
 

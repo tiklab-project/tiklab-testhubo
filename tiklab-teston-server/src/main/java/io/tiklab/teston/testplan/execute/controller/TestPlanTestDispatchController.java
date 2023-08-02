@@ -33,7 +33,7 @@ public class TestPlanTestDispatchController {
 
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
     @ApiMethod(name = "execute", desc = "执行测试")
-    @ApiParam(name = "performCaseExec", desc = "执行需要传的参数", required = true)
+    @ApiParam(name = "testPlanTestData", desc = "执行需要传的参数", required = true)
     public Result<Void> execute(@RequestBody @Valid @NotNull TestPlanTestData testPlanTestData) {
          testPlanExecuteDispatchService.execute(testPlanTestData);
 
@@ -42,7 +42,6 @@ public class TestPlanTestDispatchController {
 
     @RequestMapping(path = "/exeResult", method = RequestMethod.POST)
     @ApiMethod(name = "exeResult", desc = "获取测试结果")
-    @ApiParam(name = "testPlanTestRequest", desc = "执行需要传的参数", required = true)
     public Result<TestPlanTestResponse> exeResult() {
         TestPlanTestResponse testPlanTestResponse = testPlanExecuteDispatchService.exeResult();
         return Result.ok(testPlanTestResponse);

@@ -1,7 +1,7 @@
 package io.tiklab.teston.testplan.cases.service;
 
 import io.tiklab.join.annotation.JoinProvider;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.tiklab.core.page.Pagination;
@@ -70,7 +70,7 @@ public interface TestPlanCaseService {
      * @param testPlanCase
      * @return
      */
-    Pagination<TestCases> findTesCaseList(TestPlanCase testPlanCase);
+    Pagination<TestCase> findTesCaseList(TestPlanCase testPlanCase);
 
     /**
      * 查询已经关联的用例

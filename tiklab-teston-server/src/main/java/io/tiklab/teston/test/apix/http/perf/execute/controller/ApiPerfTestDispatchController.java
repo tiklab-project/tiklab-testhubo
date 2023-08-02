@@ -33,7 +33,7 @@ public class ApiPerfTestDispatchController {
 
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
     @ApiMethod(name = "execute", desc = "执行性能测试")
-    @ApiParam(name = "performCaseExec", desc = "执行需要传的参数", required = true)
+    @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数", required = true)
     public Result<Void> execute(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
          apiPerfExecuteDispatchService.execute(apiPerfTestRequest);
 
@@ -51,7 +51,7 @@ public class ApiPerfTestDispatchController {
 
     @RequestMapping(path = "/endOrPause", method = RequestMethod.POST)
     @ApiMethod(name = "endOrPause", desc = "停止或暂停性能测试")
-    @ApiParam(name = "performCaseExec", desc = "执行需要传的参数 testCaseId  executeType ", required = true)
+    @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数 testCaseId  executeType ", required = true)
     public Result<Void> endOrPause(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
         apiPerfExecuteDispatchService.stop(apiPerfTestRequest);
 

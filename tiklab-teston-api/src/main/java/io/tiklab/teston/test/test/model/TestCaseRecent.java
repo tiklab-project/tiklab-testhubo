@@ -40,7 +40,7 @@ public class TestCaseRecent extends BaseModel {
     @Mappings({
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
-    private TestCases testCase;
+    private TestCase testCase;
 
 
     @ApiProperty(name="updateTime",desc="updateTime")
@@ -71,11 +71,11 @@ public class TestCaseRecent extends BaseModel {
         this.user = user;
     }
 
-    public TestCases getTestCase() {
+    public TestCase getTestCase() {
         return testCase;
     }
 
-    public void setTestCase(TestCases testCase) {
+    public void setTestCase(TestCase testCase) {
         this.testCase = testCase;
     }
 

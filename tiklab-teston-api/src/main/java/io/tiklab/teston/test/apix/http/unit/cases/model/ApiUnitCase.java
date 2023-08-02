@@ -8,7 +8,7 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 
 /**
  * 接口单元用例 模型
@@ -26,7 +26,7 @@ public class ApiUnitCase extends BaseModel{
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
     @JoinQuery(key = "id")
-    private TestCases testCase;
+    private TestCase testCase;
 
     @ApiProperty(name="path",desc="路径")
     private String path;
@@ -44,11 +44,11 @@ public class ApiUnitCase extends BaseModel{
         return this;
     }
 
-    public TestCases getTestCase() {
+    public TestCase getTestCase() {
         return testCase;
     }
 
-    public void setTestCase(TestCases testCase) {
+    public void setTestCase(TestCase testCase) {
         this.testCase = testCase;
     }
 

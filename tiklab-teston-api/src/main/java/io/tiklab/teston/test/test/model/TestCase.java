@@ -22,7 +22,7 @@ import java.util.Map;
 @ApiModel
 @Mapper(targetName  = "io.tiklab.teston.test.test.entity.TestCasesEntity")
 @Join
-public class TestCases extends BaseModel{
+public class TestCase extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
@@ -87,7 +87,7 @@ public class TestCases extends BaseModel{
         return id;
     }
 
-    public TestCases setId(String id) {
+    public TestCase setId(String id) {
         this.id = id;
         return this;
     }

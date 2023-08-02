@@ -35,18 +35,18 @@ public class ApiSceneInstanceController {
 
     @RequestMapping(path="/createApiSceneInstance",method = RequestMethod.POST)
     @ApiMethod(name = "createApiSceneInstance",desc = "创建接口场景历史实例")
-    @ApiParam(name = "testInstance",desc = "testInstance",required = true)
-    public Result<String> createApiSceneInstance(@RequestBody @NotNull @Valid ApiSceneInstance testInstance){
-        String id = apiSceneInstanceService.createApiSceneInstance(testInstance);
+    @ApiParam(name = "apiSceneInstance",desc = "apiSceneInstance",required = true)
+    public Result<String> createApiSceneInstance(@RequestBody @NotNull @Valid ApiSceneInstance apiSceneInstance){
+        String id = apiSceneInstanceService.createApiSceneInstance(apiSceneInstance);
 
         return Result.ok(id);
     }
 
     @RequestMapping(path="/updateApiSceneInstance",method = RequestMethod.POST)
     @ApiMethod(name = "updateApiSceneInstance",desc = "更新接口场景历史实例")
-    @ApiParam(name = "testInstance",desc = "testInstance",required = true)
-    public Result<Void> updateApiSceneInstance(@RequestBody @NotNull @Valid ApiSceneInstance testInstance){
-        apiSceneInstanceService.updateApiSceneInstance(testInstance);
+    @ApiParam(name = "apiSceneInstance",desc = "apiSceneInstance",required = true)
+    public Result<Void> updateApiSceneInstance(@RequestBody @NotNull @Valid ApiSceneInstance apiSceneInstance){
+        apiSceneInstanceService.updateApiSceneInstance(apiSceneInstance);
 
         return Result.ok();
     }
@@ -64,9 +64,9 @@ public class ApiSceneInstanceController {
     @ApiMethod(name = "findApiSceneInstance",desc = "通过id查找接口场景历史实例")
     @ApiParam(name = "id",desc = "id",required = true)
     public Result<ApiSceneInstance> findApiSceneInstance(@NotNull String id){
-        ApiSceneInstance testInstance = apiSceneInstanceService.findApiSceneInstance(id);
+        ApiSceneInstance apiSceneInstance = apiSceneInstanceService.findApiSceneInstance(id);
 
-        return Result.ok(testInstance);
+        return Result.ok(apiSceneInstance);
     }
 
     @RequestMapping(path="/findAllApiSceneInstance",method = RequestMethod.POST)
@@ -79,7 +79,7 @@ public class ApiSceneInstanceController {
 
     @RequestMapping(path = "/findApiSceneInstanceList",method = RequestMethod.POST)
     @ApiMethod(name = "findApiSceneInstanceList",desc = "根据查询参数查询接口场景历史实例列表")
-    @ApiParam(name = "testInstanceQuery",desc = "testInstanceQuery",required = true)
+    @ApiParam(name = "apiSceneInstanceQuery",desc = "apiSceneInstanceQuery",required = true)
     public Result<List<ApiSceneInstance>> findApiSceneInstanceList(@RequestBody @Valid @NotNull ApiSceneInstanceQuery apiSceneInstanceQuery){
         List<ApiSceneInstance> apiSceneInstanceList = apiSceneInstanceService.findApiSceneInstanceList(apiSceneInstanceQuery);
 
@@ -88,9 +88,9 @@ public class ApiSceneInstanceController {
 
     @RequestMapping(path = "/findApiSceneInstancePage",method = RequestMethod.POST)
     @ApiMethod(name = "findApiSceneInstancePage",desc = "根据查询按分页查询接口场景历史实例")
-    @ApiParam(name = "testInstanceQuery",desc = "testInstanceQuery",required = true)
-    public Result<Pagination<ApiSceneInstance>> findApiSceneInstancePage(@RequestBody @Valid @NotNull ApiSceneInstanceQuery testInstanceQuery){
-        Pagination<ApiSceneInstance> pagination = apiSceneInstanceService.findApiSceneInstancePage(testInstanceQuery);
+    @ApiParam(name = "apiSceneInstanceQuery",desc = "apiSceneInstanceQuery",required = true)
+    public Result<Pagination<ApiSceneInstance>> findApiSceneInstancePage(@RequestBody @Valid @NotNull ApiSceneInstanceQuery apiSceneInstanceQuery){
+        Pagination<ApiSceneInstance> pagination = apiSceneInstanceService.findApiSceneInstancePage(apiSceneInstanceQuery);
 
         return Result.ok(pagination);
     }

@@ -29,7 +29,7 @@ public class WebSceneTestDispatchController {
 
     @RequestMapping(path="/execute",method = RequestMethod.POST)
     @ApiMethod(name = "execute",desc = "执行web测试用例")
-    @ApiParam(name = "testWebCaseExec",desc = "testWebCaseExec",required = true)
+    @ApiParam(name = "webSceneTestRequest",desc = "webSceneTestRequest",required = true)
     public Result<Void> execute(@RequestBody @NotNull @Valid WebSceneTestRequest webSceneTestRequest) {
         Integer execute = webSceneTestDispatchService.execute(webSceneTestRequest);
 
@@ -48,7 +48,7 @@ public class WebSceneTestDispatchController {
 
     @RequestMapping(path="/result",method = RequestMethod.POST)
     @ApiMethod(name = "result",desc = "当前执行的结果")
-    @ApiParam(name = "result",desc = "result",required = true)
+    @ApiParam(name = "webSceneTestRequest",desc = "webSceneTestRequest",required = true)
     public Result<WebSceneTestResponse> result(@RequestBody @NotNull @Valid WebSceneTestRequest webSceneTestRequest) {
         WebSceneTestResponse result = webSceneTestDispatchService.result(webSceneTestRequest);
 

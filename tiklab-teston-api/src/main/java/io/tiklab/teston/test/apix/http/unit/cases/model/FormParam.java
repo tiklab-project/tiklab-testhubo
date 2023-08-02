@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel
 @Mapper(targetName  = "io.tiklab.teston.test.apix.http.unit.cases.entity.FormParamsEntity")
 @Join
-public class FormParams extends BaseModel{
+public class FormParam extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;

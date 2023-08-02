@@ -1,7 +1,7 @@
 package io.tiklab.teston.testplan.cases.controller;
 
 import io.tiklab.postin.annotation.Api;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCase;
 import io.tiklab.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.tiklab.teston.testplan.cases.service.TestPlanCaseService;
@@ -36,7 +36,7 @@ public class TestPlanCaseController {
 
     @RequestMapping(path="/createTestPlanCase",method = RequestMethod.POST)
     @ApiMethod(name = "createTestPlanCase",desc = "创建测试计划绑定的用例")
-    @ApiParam(name = "testPlanDetail",desc = "testPlanDetail",required = true)
+    @ApiParam(name = "testPlanCase",desc = "testPlanCase",required = true)
     public Result<String> createTestPlanCase(@RequestBody @NotNull @Valid TestPlanCase testPlanCase){
         String id = testPlanCaseService.createTestPlanCase(testPlanCase);
 
@@ -45,7 +45,7 @@ public class TestPlanCaseController {
 
     @RequestMapping(path="/updateTestPlanCase",method = RequestMethod.POST)
     @ApiMethod(name = "updateTestPlanCase",desc = "修改测试计划绑定的用例")
-    @ApiParam(name = "testPlanDetail",desc = "testPlanDetail",required = true)
+    @ApiParam(name = "testPlanCase",desc = "testPlanCase",required = true)
     public Result<Void> updateTestPlanCase(@RequestBody @NotNull @Valid TestPlanCase testPlanCase){
         testPlanCaseService.updateTestPlanCase(testPlanCase);
 
@@ -80,7 +80,7 @@ public class TestPlanCaseController {
 
     @RequestMapping(path = "/findTestPlanCaseList",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanCaseList",desc = "通过查询对象查询")
-    @ApiParam(name = "testPlanDetailQuery",desc = "testPlanDetailQuery",required = true)
+    @ApiParam(name = "testPlanCaseQuery",desc = "testPlanCaseQuery",required = true)
     public Result<List<TestPlanCase>> findTestPlanCaseList(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
         List<TestPlanCase> testPlanCaseList = testPlanCaseService.findTestPlanCaseList(testPlanCaseQuery);
 
@@ -89,7 +89,7 @@ public class TestPlanCaseController {
 
     @RequestMapping(path = "/findTestPlanCasePage",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanCasePage",desc = "通过查询对象分页查询")
-    @ApiParam(name = "testPlanDetailQuery",desc = "testPlanDetailQuery",required = true)
+    @ApiParam(name = "testPlanCaseQuery",desc = "testPlanCaseQuery",required = true)
     public Result<Pagination<TestPlanCase>> findTestPlanCasePage(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
         Pagination<TestPlanCase> pagination = testPlanCaseService.findTestPlanCasePage(testPlanCaseQuery);
 
@@ -99,16 +99,16 @@ public class TestPlanCaseController {
 
     @RequestMapping(path = "/findTesCaseList",method = RequestMethod.POST)
     @ApiMethod(name = "findTesCase",desc = "测试计划绑定的用例添加用例弹窗列表")
-    @ApiParam(name = "testPlanDetailQuery",desc = "testPlanDetailQuery",required = true)
-    public Result<Pagination<TestCases>> findTesCaseList(@RequestBody @Valid @NotNull TestPlanCase testPlanCase){
-        Pagination<TestCases> pagination = testPlanCaseService.findTesCaseList(testPlanCase);
+    @ApiParam(name = "testPlanCase",desc = "testPlanCase",required = true)
+    public Result<Pagination<TestCase>> findTesCaseList(@RequestBody @Valid @NotNull TestPlanCase testPlanCase){
+        Pagination<TestCase> pagination = testPlanCaseService.findTesCaseList(testPlanCase);
 
         return Result.ok(pagination);
     }
 
     @RequestMapping(path = "/findBindTestCaseList",method = RequestMethod.POST)
     @ApiMethod(name = "findReleTesCase",desc = "查询测试计划关联的用例列表")
-    @ApiParam(name = "testPlanDetailQuery",desc = "testPlanDetailQuery",required = true)
+    @ApiParam(name = "testPlanCaseQuery",desc = "testPlanCaseQuery",required = true)
     public Result<Pagination<TestPlanCase>> findBindTestCaseList(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
         Pagination<TestPlanCase> pagination = testPlanCaseService.findBindTestCaseList(testPlanCaseQuery);
 
@@ -117,7 +117,7 @@ public class TestPlanCaseController {
 
     @RequestMapping(path="/planBindCase",method = RequestMethod.POST)
     @ApiMethod(name = "createTestPlanCaseList",desc = "给测试计划关联测试用例")
-    @ApiParam(name = "testPlanDetailList",desc = "testPlanDetailList",required = true)
+    @ApiParam(name = "testPlanCaseList",desc = "testPlanCaseList",required = true)
     public Result<String> createTestPlanCaseList( @RequestBody @NotNull @Valid List<TestPlanCase> testPlanCaseList){
             testPlanCaseService.planBindCase(testPlanCaseList);
 

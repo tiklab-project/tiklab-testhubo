@@ -8,7 +8,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.app.perf.cases.entity.AppPerfCaseEntity;
@@ -64,9 +64,9 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
         appPerfCaseEntity.setId(id);
         appPerfCaseDao.updateAppPerfCase(appPerfCaseEntity);
 
-        TestCases testCases = appPerfCase.getTestCase();
-        testCases.setId(id);
-        testCaseService.createTestCase(testCases);
+        TestCase testCase = appPerfCase.getTestCase();
+        testCase.setId(id);
+        testCaseService.createTestCase(testCase);
 
         return id;
     }
@@ -110,13 +110,13 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
         joinTemplate.joinQuery(appPerfCase);
 
         //手动添加字段
-        TestCases testCases = appPerfCase.getTestCase();
-        if(testCases.getCategory()!=null) {
-            Category category = categoryService.findCategory(testCases.getCategory().getId());
+        TestCase testCase = appPerfCase.getTestCase();
+        if(testCase.getCategory()!=null) {
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
             appPerfCase.getTestCase().setCategory(category);
         }
-        if(testCases.getUpdateUser()!=null) {
-            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
+        if(testCase.getUpdateUser()!=null) {
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             appPerfCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -158,14 +158,14 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
 
     @Override
     public List<AppPerfCase> findAppPerfCaseListByTestCase(TestCaseQuery testCaseQuery) {
-        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<AppPerfCase> appPerfCaseList = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(testCasesList)){
-            for(TestCases testCases : testCasesList){
+        if(CollectionUtils.isNotEmpty(testCaseList)){
+            for(TestCase testCase : testCaseList){
                 //因为中间层testcase与 跟在下面的场景id相同，所有直接通过id查询出一个
-                AppPerfCase appPerfCase = findAppPerfCase(testCases.getId());
+                AppPerfCase appPerfCase = findAppPerfCase(testCase.getId());
 
                 if(ObjectUtils.isEmpty(appPerfCase)){
                     continue;

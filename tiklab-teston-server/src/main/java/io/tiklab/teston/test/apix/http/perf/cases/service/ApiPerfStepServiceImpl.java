@@ -9,7 +9,7 @@ import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfStep;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfStepQuery;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,9 +105,9 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
         ArrayList<ApiPerfStep> arrayList = new ArrayList<>();
         if(apiPerfStepList.size()>0){
             for(ApiPerfStep apiPerfStep:apiPerfStepList){
-                TestCases testCases = testCaseService.findTestCase(apiPerfStep.getApiScene().getId());
+                TestCase testCase = testCaseService.findTestCase(apiPerfStep.getApiScene().getId());
 
-                apiPerfStep.getApiScene().setTestCase(testCases);
+                apiPerfStep.getApiScene().setTestCase(testCase);
 
                 arrayList.add(apiPerfStep);
             }

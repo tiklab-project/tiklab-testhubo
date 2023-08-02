@@ -36,7 +36,7 @@ public class AppPerfStepController {
 
     @RequestMapping(path="/bindAppScene",method = RequestMethod.POST)
     @ApiMethod(name = "bindAppScene",desc = "绑定app场景")
-    @ApiParam(name = "appPerfStep",desc = "appPerfStep",required = true)
+    @ApiParam(name = "appPerfStepList",desc = "appPerfStepList",required = true)
     public Result<String> bindWebScene(@RequestBody @NotNull @Valid List<AppPerfStep> appPerfStepList){
         appPerfStepService.bindAppScene(appPerfStepList);
 

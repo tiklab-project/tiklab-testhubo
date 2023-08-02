@@ -34,7 +34,7 @@ public class PostInApiController {
 
     @RequestMapping(path="/createPostInApiToCase",method = RequestMethod.POST)
     @ApiMethod(name = "createPostInApiToCase",desc = "postin接口转用例")
-    @ApiParam(name = "postInApi",desc = "postInApi",required = true)
+    @ApiParam(name = "postInApiToCase",desc = "postInApiToCase",required = true)
     public Result<Void> createPostInApiToCase(@RequestBody @NotNull @Valid PostInApiToCase postInApiToCase){
          postInApiService.createPostInApiToCase(postInApiToCase);
 

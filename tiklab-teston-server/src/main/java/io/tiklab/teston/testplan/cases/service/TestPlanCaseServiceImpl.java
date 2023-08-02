@@ -1,6 +1,6 @@
 package io.tiklab.teston.testplan.cases.service;
 
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.testplan.cases.dao.TestPlanCaseDao;
 import io.tiklab.teston.testplan.cases.entity.TestPlanCaseEntity;
 import io.tiklab.beans.BeanMapper;
@@ -116,12 +116,12 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     }
 
     @Override
-    public Pagination<TestCases> findTesCaseList(TestPlanCase testPlanCase) {
+    public Pagination<TestCase> findTesCaseList(TestPlanCase testPlanCase) {
 
         //查询所有用例
         TestCaseQuery testCaseQuery = new TestCaseQuery();
         testCaseQuery.setRepositoryId(testPlanCase.getRepositoryId());
-        Pagination<TestCases> testCasePage = testCaseService.findTestCasePage(testCaseQuery);
+        Pagination<TestCase> testCasePage = testCaseService.findTestCasePage(testCaseQuery);
 
         return testCasePage;
     }

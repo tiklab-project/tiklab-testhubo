@@ -8,7 +8,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.FormParamsEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParams;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParam;
 import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,15 +30,15 @@ public class FormParamServiceImpl implements FormParamService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createFormParam(@NotNull @Valid FormParams formParams) {
-        FormParamsEntity formParamsEntity = BeanMapper.map(formParams, FormParamsEntity.class);
+    public String createFormParam(@NotNull @Valid FormParam formParam) {
+        FormParamsEntity formParamsEntity = BeanMapper.map(formParam, FormParamsEntity.class);
 
         return formParamDao.createFormParam(formParamsEntity);
     }
 
     @Override
-    public void updateFormParam(@NotNull @Valid FormParams formParams) {
-        FormParamsEntity formParamsEntity = BeanMapper.map(formParams, FormParamsEntity.class);
+    public void updateFormParam(@NotNull @Valid FormParam formParam) {
+        FormParamsEntity formParamsEntity = BeanMapper.map(formParam, FormParamsEntity.class);
 
         formParamDao.updateFormParam(formParamsEntity);
     }
@@ -49,59 +49,59 @@ public class FormParamServiceImpl implements FormParamService {
     }
 
     @Override
-    public FormParams findOne(String id) {
+    public FormParam findOne(String id) {
         FormParamsEntity formParamsEntity = formParamDao.findFormParam(id);
 
-        FormParams formParams = BeanMapper.map(formParamsEntity, FormParams.class);
-        return formParams;
+        FormParam formParam = BeanMapper.map(formParamsEntity, FormParam.class);
+        return formParam;
     }
 
     @Override
-    public List<FormParams> findList(List<String> idList) {
+    public List<FormParam> findList(List<String> idList) {
         List<FormParamsEntity> formParamsEntityList =  formParamDao.findFormParamList(idList);
 
-        List<FormParams> formParamsList =  BeanMapper.mapList(formParamsEntityList, FormParams.class);
-        return formParamsList;
+        List<FormParam> formParamList =  BeanMapper.mapList(formParamsEntityList, FormParam.class);
+        return formParamList;
     }
 
     @Override
-    public FormParams findFormParam(@NotNull String id) {
-        FormParams formParams = findOne(id);
+    public FormParam findFormParam(@NotNull String id) {
+        FormParam formParam = findOne(id);
 
-        joinTemplate.joinQuery(formParams);
-        return formParams;
+        joinTemplate.joinQuery(formParam);
+        return formParam;
     }
 
     @Override
-    public List<FormParams> findAllFormParam() {
+    public List<FormParam> findAllFormParam() {
         List<FormParamsEntity> formParamsEntityList =  formParamDao.findAllFormParam();
 
-        List<FormParams> formParamsList =  BeanMapper.mapList(formParamsEntityList, FormParams.class);
+        List<FormParam> formParamList =  BeanMapper.mapList(formParamsEntityList, FormParam.class);
 
-        joinTemplate.joinQuery(formParamsList);
-        return formParamsList;
+        joinTemplate.joinQuery(formParamList);
+        return formParamList;
     }
 
     @Override
-    public List<FormParams> findFormParamList(FormParamQuery formParamQuery) {
+    public List<FormParam> findFormParamList(FormParamQuery formParamQuery) {
         List<FormParamsEntity> formParamsEntityList = formParamDao.findFormParamList(formParamQuery);
 
-        List<FormParams> formParamsList = BeanMapper.mapList(formParamsEntityList, FormParams.class);
+        List<FormParam> formParamList = BeanMapper.mapList(formParamsEntityList, FormParam.class);
 
-        joinTemplate.joinQuery(formParamsList);
+        joinTemplate.joinQuery(formParamList);
 
-        return formParamsList;
+        return formParamList;
     }
 
     @Override
-    public Pagination<FormParams> findFormParamPage(FormParamQuery formParamQuery) {
+    public Pagination<FormParam> findFormParamPage(FormParamQuery formParamQuery) {
 
         Pagination<FormParamsEntity>  pagination = formParamDao.findFormParamPage(formParamQuery);
 
-        List<FormParams> formParamsList = BeanMapper.mapList(pagination.getDataList(), FormParams.class);
+        List<FormParam> formParamList = BeanMapper.mapList(pagination.getDataList(), FormParam.class);
 
-        joinTemplate.joinQuery(formParamsList);
+        joinTemplate.joinQuery(formParamList);
 
-        return PaginationBuilder.build(pagination, formParamsList);
+        return PaginationBuilder.build(pagination, formParamList);
     }
 }

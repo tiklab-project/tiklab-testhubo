@@ -29,7 +29,7 @@ public class ApiSceneTestDispatchController {
 
     @RequestMapping(path="/execute",method = RequestMethod.POST)
     @ApiMethod(name = "execute",desc = "执行api接口的测试用例")
-    @ApiParam(name = "ApiSceneCase",desc = "ApiSceneCase",required = true)
+    @ApiParam(name = "apiSceneTestRequest",desc = "apiSceneTestRequest",required = true)
     public Result<ApiSceneTestResponse> execute(@RequestBody @NotNull @Valid ApiSceneTestRequest apiSceneTestRequest){
         ApiSceneTestResponse apiSceneTestResponse = apiSceneExecuteDispatchService.execute(apiSceneTestRequest);
 

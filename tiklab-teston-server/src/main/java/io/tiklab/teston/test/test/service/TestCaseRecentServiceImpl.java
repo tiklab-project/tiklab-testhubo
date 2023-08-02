@@ -8,7 +8,7 @@ import io.tiklab.teston.repository.model.Repository;
 import io.tiklab.teston.repository.service.RepositoryService;
 import io.tiklab.teston.test.test.dao.TestCaseRecentDao;
 import io.tiklab.teston.test.test.entity.TestCaseRecentEntity;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseRecent;
 import io.tiklab.teston.test.test.model.TestCaseRecentQuery;
 import org.apache.commons.collections.CollectionUtils;
@@ -104,8 +104,8 @@ public class TestCaseRecentServiceImpl implements TestCaseRecentService {
         //第三层获取不到值，手动设置值
         if(testCaseRecentList!=null&&testCaseRecentList.size()>0){
             for(TestCaseRecent testCaseRecent:testCaseRecentList){
-                TestCases testCases = testCaseService.findTestCase(testCaseRecent.getTestCase().getId());
-                testCaseRecent.setTestCase(testCases);
+                TestCase testCase = testCaseService.findTestCase(testCaseRecent.getTestCase().getId());
+                testCaseRecent.setTestCase(testCase);
 
                 Repository repository = repositoryService.findRepository(testCaseRecent.getRepository().getId());
                 testCaseRecent.setRepository(repository);

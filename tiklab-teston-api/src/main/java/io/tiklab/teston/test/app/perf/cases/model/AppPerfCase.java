@@ -8,7 +8,7 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 
 /**
  * app性能测试用例 模型
@@ -35,7 +35,7 @@ public class AppPerfCase extends BaseModel {
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
     @JoinQuery(key = "id")
-    private TestCases testCase;
+    private TestCase testCase;
 
     public String getId() {
         return id;
@@ -67,11 +67,11 @@ public class AppPerfCase extends BaseModel {
         this.executeType = executeType;
     }
 
-    public TestCases getTestCase() {
+    public TestCase getTestCase() {
         return testCase;
     }
 
-    public void setTestCase(TestCases testCase) {
+    public void setTestCase(TestCase testCase) {
         this.testCase = testCase;
     }
 }

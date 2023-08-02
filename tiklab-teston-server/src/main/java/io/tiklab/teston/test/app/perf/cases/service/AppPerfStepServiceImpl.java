@@ -8,7 +8,7 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.app.perf.cases.model.AppPerfStep;
 import io.tiklab.teston.test.app.perf.cases.model.AppPerfStepQuery;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,9 +105,9 @@ public class AppPerfStepServiceImpl implements AppPerfStepService {
         ArrayList<AppPerfStep> arrayList = new ArrayList<>();
         if(appPerfStepList.size()>0){
             for(AppPerfStep appPerfStep:appPerfStepList){
-                TestCases testCases = testCaseService.findTestCase(appPerfStep.getAppScene().getId());
+                TestCase testCase = testCaseService.findTestCase(appPerfStep.getAppScene().getId());
 
-                appPerfStep.getAppScene().setTestCase(testCases);
+                appPerfStep.getAppScene().setTestCase(testCase);
 
 
                 arrayList.add(appPerfStep);

@@ -36,7 +36,7 @@ public class ApiUnitCaseController {
 
     @RequestMapping(path="/createApiUnitCase",method = RequestMethod.POST)
     @ApiMethod(name = "createApiUnitCase",desc = "创建接口单元用例")
-    @ApiParam(name = "path",desc = "path",required = true)
+    @ApiParam(name = "apiUnitCase",desc = "apiUnitCase",required = true)
     public Result<String> createApiUnitCase(@RequestBody @NotNull @Valid ApiUnitCase apiUnitCase){
         String id = apiUnitCaseService.createApiUnitCase(apiUnitCase);
 

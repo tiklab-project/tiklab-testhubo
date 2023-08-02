@@ -8,7 +8,7 @@ import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.func.dao.FuncUnitCaseDao;
 import io.tiklab.teston.test.func.entity.FuncUnitCaseEntity;
-import io.tiklab.teston.test.test.model.TestCases;
+import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.func.model.FuncUnitCase;
@@ -55,9 +55,9 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
         funcUnitCaseEntity.setId(id);
         funcUnitCaseDao.updateFuncUnitCase(funcUnitCaseEntity);
 
-        TestCases testCases = funcUnitCase.getTestCase();
-        testCases.setId(id);
-        testCaseService.createTestCase(testCases);
+        TestCase testCase = funcUnitCase.getTestCase();
+        testCase.setId(id);
+        testCaseService.createTestCase(testCase);
         
         return id;
     }
@@ -101,13 +101,13 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
         joinTemplate.joinQuery(funcUnitCase);
 
         //手动添加字段
-        TestCases testCases = funcUnitCase.getTestCase();
-        if(testCases.getCategory()!=null){
-            Category category = categoryService.findCategory(testCases.getCategory().getId());
+        TestCase testCase = funcUnitCase.getTestCase();
+        if(testCase.getCategory()!=null){
+            Category category = categoryService.findCategory(testCase.getCategory().getId());
             funcUnitCase.getTestCase().setCategory(category);
         }
-        if(testCases.getUpdateUser()!=null){
-            User updateUser = userService.findUser(testCases.getUpdateUser().getId());
+        if(testCase.getUpdateUser()!=null){
+            User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             funcUnitCase.getTestCase().setUpdateUser(updateUser);
         }
 
@@ -149,13 +149,13 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
 
     @Override
     public List<FuncUnitCase> findFuncUnitCaseListByTestCase(TestCaseQuery testCaseQuery) {
-        List<TestCases> testCasesList = testCaseService.findTestCaseList(testCaseQuery);
+        List<TestCase> testCaseList = testCaseService.findTestCaseList(testCaseQuery);
 
         List<FuncUnitCase> funcUnitCaseList = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(testCasesList)){
-            for(TestCases testCases : testCasesList){
-                FuncUnitCase funcUnitCase = findFuncUnitCase(testCases.getId());
+        if(CollectionUtils.isNotEmpty(testCaseList)){
+            for(TestCase testCase : testCaseList){
+                FuncUnitCase funcUnitCase = findFuncUnitCase(testCase.getId());
 
                 if(!ObjectUtils.isEmpty(funcUnitCase)){
                     funcUnitCaseList.add(funcUnitCase);
