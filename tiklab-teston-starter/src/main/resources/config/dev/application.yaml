@@ -59,9 +59,8 @@ postin:
     workspaceId: f5b82a695903
     server: http://192.168.10.3:8090
 
-
+file:
+  path:
 homes:
   address: http://192.168.10.7
 
-file:
-  path:

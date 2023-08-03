@@ -67,3 +67,13 @@ mysql:
 teston-agent:
   embbed:
     enable: true
+
+
+file:
+  path:
+homes:
+  address: http://192.168.10.7
+
+
+
+
