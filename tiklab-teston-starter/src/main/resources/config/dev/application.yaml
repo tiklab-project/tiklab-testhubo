@@ -16,7 +16,6 @@ jdbc:
   username: postgres
   password: darth2020
 
-
 #dcs
 dcs:
   server:
@@ -52,7 +51,7 @@ teston-agent:
     enable: false
 
 postin:
-  enable: true
+  enable: false
   scan:
     package: io.tiklab.teston
   report:
