@@ -55,12 +55,6 @@
             </dependency>
             <dependency>
                 <groupId>io.tiklab</groupId>
-                <artifactId>tiklab-utils</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.tiklab</groupId>
                 <artifactId>tiklab-tks-core</artifactId>
                 <version>${project.version}</version>
             </dependency>

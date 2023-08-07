@@ -51,7 +51,7 @@ teston-agent:
     enable: false
 
 postin:
-  enable: false
+  enable: true
   scan:
     package: io.tiklab.teston
   report:
