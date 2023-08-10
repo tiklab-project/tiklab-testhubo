@@ -6,12 +6,13 @@
     <parent>
         <groupId>io.tiklab</groupId>
         <artifactId>tiklab-teston</artifactId>
-        <version>1.0.0.2</version>
+        <version>1.0.0.3</version>
     </parent>
     <artifactId>tiklab-teston-starter</artifactId>
     <name>${project.artifactId}</name>
 
     <dependencies>
+        <!--平台-->
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-dal-spring-boot-starter</artifactId>
@@ -35,17 +36,14 @@
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-user-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-plugin-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-toolkit-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
@@ -56,71 +54,52 @@
                     <artifactId>dysmsapi20170525</artifactId>
                 </exclusion>
             </exclusions>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-licence-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-gateway-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-eam-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-security-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-todotask-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-privilege-spring-boot-starter</artifactId>
-            <version>${project.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.tiklab</groupId>-->
-<!--            <artifactId>tiklab-core</artifactId>-->
-<!--            <version>1.0.0.2</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postgresql-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-upgrade-starter</artifactId>
+        </dependency>
 
+        <!--业务-->
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-postin-client</artifactId>
         </dependency>
         <dependency>
             <groupId>io.tiklab</groupId>
-            <artifactId>tiklab-teston-server</artifactId>
-            <version>1.0.0.2</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-teston-agent-starter</artifactId>
-            <version>1.0.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>io.tiklab</groupId>
-            <artifactId>tiklab-postgresql-starter</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.tiklab</groupId>
-            <artifactId>tiklab-upgrade-starter</artifactId>
-            <version>${project.version}</version>
+            <artifactId>tiklab-teston-server</artifactId>
         </dependency>
 
 
@@ -169,14 +148,14 @@
 <!--                                        <dependency>-->
 <!--                                            <groupId>io.tiklab</groupId>-->
 <!--                                            <artifactId>tiklab-teston-chrome-linux</artifactId>-->
-<!--                                            <version>1.0.0.2</version>-->
+<!--                                            <version>1.0.0.3</version>-->
 <!--                                            <type>zip</type>-->
 <!--                                            <outputDirectory>embbed</outputDirectory>-->
 <!--                                        </dependency>-->
 <!--                                        <dependency>-->
 <!--                                            <groupId>io.tiklab</groupId>-->
 <!--                                            <artifactId>tiklab-teston-node-linux</artifactId>-->
-<!--                                            <version>1.0.0.2</version>-->
+<!--                                            <version>1.0.0.3</version>-->
 <!--                                            <type>zip</type>-->
 <!--                                            <outputDirectory>embbed</outputDirectory>-->
 <!--                                        </dependency>-->
