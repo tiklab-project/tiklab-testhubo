@@ -116,6 +116,35 @@
                 <assembly>linux</assembly>
                 <systemType>linux</systemType>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-jdk-linux</artifactId>
+                    <version>${tiklab-jdk.version}</version>
+                    <type>zip</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-postgresql-linux</artifactId>
+                    <version>${tiklab-postgresql.version}</version>
+                    <type>zip</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-teston-chrome-linux</artifactId>
+                    <version>${tiklab-teston-chrome.version}</version>
+                    <type>zip</type>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-teston-node-linux</artifactId>
+                    <version>${tiklab-teston-node.version}</version>
+                    <type>zip</type>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -134,28 +163,28 @@
                                         <artifactItem>
                                             <groupId>io.tiklab</groupId>
                                             <artifactId>tiklab-jdk-linux</artifactId>
-                                            <version>${project.version}</version>
+                                            <version>${tiklab-jdk.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>io.tiklab</groupId>
                                             <artifactId>tiklab-postgresql-linux</artifactId>
-                                            <version>${project.version}</version>
+                                            <version>${tiklab-postgresql.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
                                         <dependency>
                                             <groupId>io.tiklab</groupId>
                                             <artifactId>tiklab-teston-chrome-linux</artifactId>
-                                            <version>1.0.0.3</version>
+                                            <version>${tiklab-teston-chrome.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </dependency>
                                         <dependency>
                                             <groupId>io.tiklab</groupId>
                                             <artifactId>tiklab-teston-node-linux</artifactId>
-                                            <version>1.0.0.3</version>
+                                            <version>${tiklab-teston-node.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </dependency>
