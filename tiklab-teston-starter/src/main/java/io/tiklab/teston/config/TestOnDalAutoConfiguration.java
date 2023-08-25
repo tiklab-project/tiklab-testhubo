@@ -1,6 +1,5 @@
 package io.tiklab.teston.config;
 
-
 import io.tiklab.dal.dsm.config.model.DsmConfig;
 import io.tiklab.dal.dsm.support.DsmConfigBuilder;
 import org.springframework.context.annotation.Bean;
@@ -40,9 +39,9 @@ public class TestOnDalAutoConfiguration {
                 "teston-platform_1.0.0",
 
         });
-//        dsmConfig.newVersion("1.0.1", new String[]{
-//
-//        });
+        dsmConfig.newVersion("1.0.1", new String[]{
+                "teston_1.0.1",
+        });
 
         return dsmConfig;
     }

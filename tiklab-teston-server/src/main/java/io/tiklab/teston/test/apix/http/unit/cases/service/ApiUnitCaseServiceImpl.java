@@ -104,10 +104,14 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         requestBody.setBodyType("none");
         requestBodyService.createRequestBody(requestBody);
 
+        //初始化响应结果
         ResponseResult responseResult = new ResponseResult();
         responseResult.setId(id);
         responseResult.setApiUnitId(id);
-        responseResult.setResultType("json");
+        responseResult.setHttpCode(200);
+        responseResult.setName("成功");
+        responseResult.setDataType("json");
+        responseResult.setJsonText("{\"type\": \"object\",\"properties\": {}}");
         responseResultService.createResponseResult(responseResult);
 
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ResponseResultServiceImpl implements ResponseResultService {
     @Override
     public String createResponseResult(@NotNull @Valid ResponseResult responseResult) {
         ResponseResultEntity responseResultEntity = BeanMapper.map(responseResult, ResponseResultEntity.class);
-
+        responseResultEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
         return responseResultDao.createResponseResult(responseResultEntity);
     }
 
