@@ -48,7 +48,7 @@ base:
 
 teston-agent:
   embbed:
-    enable: false
+    enable: true
 
 postin:
   enable: false
