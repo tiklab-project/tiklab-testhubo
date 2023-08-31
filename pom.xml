@@ -13,7 +13,7 @@
     <artifactId>tiklab-teston</artifactId>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
-    <version>1.0.0.4</version>
+    <version>1.0.0.5</version>
 
     <modules>
         <module>tiklab-teston-api</module>
@@ -48,7 +48,8 @@
         <!--业务-->
         <tiklab-teston-agent.version>1.0.0.3</tiklab-teston-agent.version>
         <tiklab-postin.version>1.0.0.4</tiklab-postin.version>
-        <tiklab-teamwire.version>1.0.0.3</tiklab-teamwire.version>
+        <tiklab-teamwire.version>1.0.0.4</tiklab-teamwire.version>
+<!--        <tiklab-teamwire.version>1.0.0.3-SNAPSHOT</tiklab-teamwire.version>-->
         <tiklab-teston-chrome.version>1.0.0.3</tiklab-teston-chrome.version>
         <tiklab-teston-node.version>1.0.0.3</tiklab-teston-node.version>
         <!--第三方-->

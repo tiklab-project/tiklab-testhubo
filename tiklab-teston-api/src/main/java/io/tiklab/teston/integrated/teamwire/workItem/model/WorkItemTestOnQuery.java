@@ -23,6 +23,9 @@ public class WorkItemTestOnQuery {
     @ApiProperty(name ="projectId",desc = "projectId")
     private String projectId;
 
+    @ApiProperty(name ="name",desc = "name")
+    private String name;
+
     public List<Order> getOrderParams() {
         return orderParams;
     }
@@ -53,5 +56,13 @@ public class WorkItemTestOnQuery {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

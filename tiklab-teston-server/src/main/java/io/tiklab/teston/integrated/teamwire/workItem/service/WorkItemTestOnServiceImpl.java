@@ -44,7 +44,7 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
     /**
      * rpc 调用
      */
-    ProjectService projectService(){
+    ProjectService projectServiceRpc(){
         IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
         integratedUrlQuery.setUserId(LoginContext.getLoginId());
         integratedUrlQuery.setProjectName("teamwire");
@@ -78,7 +78,7 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
     @Override
     public List<ProjectTestOn> findProjectList(ProjectTestOnQuery projectTestOnQuery) {
         //查询所有项目
-        List<Project> projectList = projectService().findAllProject();
+        List<Project> projectList = projectServiceRpc().findAllProject();
         
         //存储处理过的项目
         ArrayList<ProjectTestOn> arrayList = new ArrayList<>();
@@ -99,6 +99,7 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
         WorkItemQuery workItemQuery = new WorkItemQuery();
         workItemQuery.setWorkTypeCode(workItemTestOnQuery.getWorkTypeCode());
         workItemQuery.setProjectId(workItemTestOnQuery.getProjectId());
+        workItemQuery.setTitle(workItemTestOnQuery.getName());
         List<WorkItem> workItemList = workItemServiceRpc().findWorkItemList(workItemQuery);
 
         //存储处理过的事项
