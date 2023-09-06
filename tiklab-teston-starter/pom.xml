@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.tiklab</groupId>
         <artifactId>tiklab-teston</artifactId>
-        <version>1.0.0.6</version>
+        <version>1.0.0.7</version>
     </parent>
     <artifactId>tiklab-teston-starter</artifactId>
     <name>${project.artifactId}</name>
@@ -174,20 +174,20 @@
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
-                                        <dependency>
-                                            <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-teston-chrome-linux</artifactId>
-                                            <version>${tiklab-teston-chrome.version}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>embbed</outputDirectory>
-                                        </dependency>
-                                        <dependency>
-                                            <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-teston-node-linux</artifactId>
-                                            <version>${tiklab-teston-node.version}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>embbed</outputDirectory>
-                                        </dependency>
+<!--                                        <dependency>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-teston-chrome-linux</artifactId>-->
+<!--                                            <version>${tiklab-teston-chrome.version}</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </dependency>-->
+<!--                                        <dependency>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-teston-node-linux</artifactId>-->
+<!--                                            <version>${tiklab-teston-node.version}</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </dependency>-->
                                     </artifactItems>
                                 </configuration>
                             </execution>

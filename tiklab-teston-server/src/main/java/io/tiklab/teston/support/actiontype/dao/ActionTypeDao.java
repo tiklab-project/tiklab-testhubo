@@ -82,6 +82,7 @@ public class ActionTypeDao{
      */
     public List<ActionTypeEntity> findActionTypeList(ActionTypeQuery actionTypeQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ActionTypeEntity.class)
+                .eq("type",actionTypeQuery.getType())
                 .orders(actionTypeQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, ActionTypeEntity.class);
@@ -94,9 +95,10 @@ public class ActionTypeDao{
      */
     public Pagination<ActionTypeEntity> findActionTypePage(ActionTypeQuery actionTypeQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ActionTypeEntity.class)
+                .eq("type",actionTypeQuery.getType())
                 .orders(actionTypeQuery.getOrderParams())
                 .pagination(actionTypeQuery.getPageParam())
                 .get();
-        return jpaTemplate.findPage(actionTypeQuery, ActionTypeEntity.class);
+        return jpaTemplate.findPage(queryCondition, ActionTypeEntity.class);
     }
 }

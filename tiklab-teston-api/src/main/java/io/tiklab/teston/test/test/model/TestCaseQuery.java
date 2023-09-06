@@ -36,6 +36,8 @@ public class TestCaseQuery implements Serializable {
     @ApiProperty(name = "inList", desc = "包含")
     private String[] inList;
 
+    @ApiProperty(name = "createUser", desc = "创建人")
+    private String createUser;
 
     @ApiProperty(name = "orderParams", desc = "排序参数")
     private List<Order> orderParams = OrderBuilders.instance().desc("createTime").get();
@@ -122,5 +124,13 @@ public class TestCaseQuery implements Serializable {
 
     public void setInList(String[] inList) {
         this.inList = inList;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 }

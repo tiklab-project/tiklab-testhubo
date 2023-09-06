@@ -13,7 +13,7 @@
     <artifactId>tiklab-teston</artifactId>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
-    <version>1.0.0.6</version>
+    <version>1.0.0.7</version>
 
     <modules>
         <module>tiklab-teston-api</module>
