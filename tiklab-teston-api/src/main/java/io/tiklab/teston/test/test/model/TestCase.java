@@ -77,6 +77,18 @@ public class TestCase extends BaseModel{
     @ApiProperty(name="desc",desc="描述")
     private String desc;
 
+    @ApiProperty(name="director",desc="负责人")
+    @Mappings({
+            @Mapping(source = "director.id",target = "director")
+    })
+    @JoinQuery(key = "id")
+    private User director;
+
+    @ApiProperty(name="status",desc="状态")
+    private Integer status;
+
+    @ApiProperty(name="priorityLevel",desc="优先级")
+    private Integer priorityLevel;
 
     @ApiProperty(name="workItemId",desc="需求")
     private String workItemId;
@@ -193,5 +205,29 @@ public class TestCase extends BaseModel{
 
     public void setWorkItemId(String workItemId) {
         this.workItemId = workItemId;
+    }
+
+    public User getDirector() {
+        return director;
+    }
+
+    public void setDirector(User director) {
+        this.director = director;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public void setPriorityLevel(Integer priorityLevel) {
+        this.priorityLevel = priorityLevel;
     }
 }

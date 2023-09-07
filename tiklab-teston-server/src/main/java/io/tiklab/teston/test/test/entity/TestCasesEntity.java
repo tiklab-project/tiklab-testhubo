@@ -64,6 +64,18 @@ public class TestCasesEntity implements Serializable {
     @Column(name = "workitem_id",length = 64)
     private String workItemId ;
 
+    // 负责人
+    @Column(name = "director",length = 32)
+    private String director;
+
+    // 状态
+    @Column(name = "status",length = 8)
+    private Integer status;
+
+    // 优先级
+    @Column(name = "priority_level",length = 8)
+    private Integer priorityLevel;
+
     public String getId() {
         return id;
     }
@@ -166,5 +178,29 @@ public class TestCasesEntity implements Serializable {
 
     public void setWorkItemId(String workItemId) {
         this.workItemId = workItemId;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public void setPriorityLevel(Integer priorityLevel) {
+        this.priorityLevel = priorityLevel;
     }
 }
