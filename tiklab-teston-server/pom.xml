@@ -84,6 +84,14 @@
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-upgrade-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-teston-api</artifactId>
+        </dependency>
 
 
     </dependencies>
