@@ -30,7 +30,7 @@ public class TestOnDalAutoConfiguration {
                 "oplog_1.0.0",
                 //TodoTaskDsm
                 "todotask_1.0.0",
-
+                "backups_1.0.0",
 
                 //TestOn
                 "teston_1.0.0",
