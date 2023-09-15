@@ -80,5 +80,5 @@ homes:
 
 
 backups:
-  dir:  /data/eas
+  dir:  /data/teston
   time: 0 0 2 * * ?
