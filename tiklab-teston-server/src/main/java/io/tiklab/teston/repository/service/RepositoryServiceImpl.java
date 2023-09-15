@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
 * 仓库 服务
@@ -252,25 +253,17 @@ public class RepositoryServiceImpl implements RepositoryService {
         List<Repository> repositoryList = BeanMapper.mapList(repositoryEntityList,Repository.class);
 
         //关注
-        RepositoryFollowQuery repositoryFollowQuery = new RepositoryFollowQuery();
-        List<Repository> repositoryFollowList = repositoryFollowService.findRepositoryFollowList(repositoryFollowQuery);
-
-        //设置是否关注
-        if(CollectionUtils.isNotEmpty(repositoryList)&&CollectionUtils.isNotEmpty(repositoryFollowList)){
-            for(Repository repository : repositoryList){
-                for(Repository repositoryFollow: repositoryFollowList){
-                    if(Objects.equals(repository.getId(), repositoryFollow.getId())){
-                        repository.setIsFollow(1);
-                    }else {
-                        repository.setIsFollow(0);
-                    }
-                }
-            }
-        }else {
-            for(Repository repository : repositoryList){
+        // 获取所有关注的 Repository 的 ID 列表
+        List<String> followRepositoryIds = getFollowRepositoryIds();
+        // 设置是否关注
+        for(Repository repository: repositoryList){
+            if(followRepositoryIds.contains(repository.getId())){
+                repository.setIsFollow(1);
+            } else {
                 repository.setIsFollow(0);
             }
         }
+
 
         joinTemplate.joinQuery(repositoryList);
 
@@ -292,6 +285,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     public List<Repository> findRepositoryJoinList(RepositoryQuery repositoryQuery) {
         RepositoryQuery processQuery = new RepositoryQuery();
         processQuery.setOrderParams(repositoryQuery.getOrderParams());
+        processQuery.setName(repositoryQuery.getName());
         List<Repository> repositoryList = findRepositoryList(processQuery);
 
         ArrayList<Repository> repositoryArrayList = new ArrayList<>();
@@ -317,12 +311,34 @@ public class RepositoryServiceImpl implements RepositoryService {
             }
         }
 
+        // 获取所有关注的 Repository 的 ID 列表
+        List<String> followRepositoryIds = getFollowRepositoryIds();
+        // 设置是否关注
+        for(Repository repository: repositoryArrayList){
+            if(followRepositoryIds.contains(repository.getId())){
+                repository.setIsFollow(1);
+            } else {
+                repository.setIsFollow(0);
+            }
+        }
+
         joinTemplate.joinQuery(repositoryArrayList);
 
         return repositoryArrayList;
     }
 
 
+
+    private List<String> getFollowRepositoryIds(){
+        RepositoryFollowQuery repositoryFollowQuery = new RepositoryFollowQuery();
+        repositoryFollowQuery.setUserId(LoginContext.getLoginId());
+        List<Repository> repositoryFollowList = repositoryFollowService.findRepositoryFollowList(repositoryFollowQuery);
+
+        return repositoryFollowList.stream()
+                .map(repository -> repository.getId())
+                .collect(Collectors.toList());
+
+    }
 
 
 }
