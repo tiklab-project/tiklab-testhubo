@@ -16,9 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.util.ObjectUtils;
 
 /**
 * 请求中json  服务
@@ -108,52 +105,6 @@ public class JsonParamServiceImpl implements JsonParamService {
         return PaginationBuilder.build(pagination,jsonParamList);
     }
 
-    @Override
-    public List<JsonParam> findJsonParamListTree(JsonParamQuery jsonParamQuery) {
-        List<JsonParam> matchJsonParamList = this.findJsonParamList(jsonParamQuery);
 
-        //查找第一级参数列表
-        List<JsonParam> topJsonParamList = findTopJsonParamList(matchJsonParamList);
 
-        //设置下级节点列表
-        if(topJsonParamList != null && topJsonParamList.size() > 0){
-            for(JsonParam topJsonParam:topJsonParamList){
-                setChildren(matchJsonParamList,topJsonParam);
-            }
-        }
-
-        return topJsonParamList;
-    }
-
-    /**
-     * 查找第一级参数列表
-     * @param matchJsonParamList
-     * @return
-     */
-    List<JsonParam> findTopJsonParamList(List<JsonParam> matchJsonParamList) {
-        List<JsonParam> jsonParamList = matchJsonParamList.stream()
-                .filter(jsonParam -> (jsonParam.getParent() == null || jsonParam.getParent().getId() == null))
-                .collect(Collectors.toList());
-        return jsonParamList;
-    }
-
-    /**
-     * 设置下级节点列表
-     * @param matchJsonParamList
-     * @param parentJsonParam
-     */
-    void setChildren(List<JsonParam> matchJsonParamList,JsonParam parentJsonParam){
-        List<JsonParam> childList = matchJsonParamList.stream()
-                .filter(jsonParam -> (jsonParam.getParent() != null && !ObjectUtils.isEmpty(jsonParam.getParent().getId()) && jsonParam.getParent().getId().equals(parentJsonParam.getId())))
-                .collect(Collectors.toList());
-
-        if(childList != null && childList.size() > 0){
-            parentJsonParam.setChildren(childList);
-
-            //设置下级节点列表
-            for(JsonParam childJsonParam:childList){
-                setChildren(matchJsonParamList,childJsonParam);
-            }
-        }
-    }
 }

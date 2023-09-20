@@ -41,6 +41,10 @@ public class ResponseResultServiceImpl implements ResponseResultService {
     public void updateResponseResult(@NotNull @Valid ResponseResult responseResult) {
         ResponseResultEntity responseResultEntity = BeanMapper.map(responseResult, ResponseResultEntity.class);
 
+        ResponseResult isExist = findResponseResult(responseResult.getId());
+        if(isExist==null){
+            createResponseResult(responseResult);
+        }
         responseResultDao.updateResponseResult(responseResultEntity);
     }
 

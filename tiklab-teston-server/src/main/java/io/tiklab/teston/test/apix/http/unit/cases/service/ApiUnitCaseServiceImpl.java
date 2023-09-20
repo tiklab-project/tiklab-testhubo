@@ -305,7 +305,26 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
             if(bodyType.getBodyType().equals("raw")){
                 mediaType.put("mediaType",rawMediaType);
             }else {
-                mediaType.put("mediaType",bodyType.getBodyType());
+                switch (bodyType.getBodyType()){
+                    case "formdata":
+                        mediaType.put("mediaType","application/form-data");
+                        break;
+                    case "formUrlencoded":
+                        mediaType.put("mediaType","application/x-www-form-urlencoded");
+                        break;
+                    case "json":
+                        mediaType.put("mediaType","application/json");
+                        break;
+                    case "text":
+                        mediaType.put("mediaType","text/plain");
+                        break;
+                    case "xml":
+                        mediaType.put("mediaType","application/xml");
+                        break;
+                    default:
+                        mediaType.put("mediaType","application/octet-stream");
+                        break;
+                }
             }
         }
         return mediaType;
@@ -381,34 +400,10 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * 获取JsonDataMap
      */
     private String getJson(ApiUnitCase apiUnitCase, String bodyStr){
-        JsonParamQuery jsonParamQuery = new JsonParamQuery();
-        jsonParamQuery.setApiUnitId(apiUnitCase.getId());
-        List<JsonParam> jsonParamListTree = jsonParamService.findJsonParamListTree(jsonParamQuery);
-
-        if (CollectionUtils.isNotEmpty(jsonParamListTree)){
-            JSONObject jsonObject = new JSONObject();
-            for (JsonParam jsonParam:jsonParamListTree){
-                //第一级的
-                getJsonTree(jsonParam,jsonObject);
-            }
-
-            bodyStr=jsonObject.toJSONString();
-        }
 
         return bodyStr;
     }
 
-    //递归json
-    private void getJsonTree(JsonParam jsonParam, JSONObject jsonObject){
-        if (ObjectUtils.isEmpty(jsonParam.getParent())){
-            String key = jsonParam.getParamName();
-            String value = jsonParam.getValue();
-
-            jsonObject.put(key,value);
-        }else {
-            getJsonTree(jsonParam.getParent(),jsonObject);
-        }
-    }
 
     //获取RawDataMap
     private String getRaw(ApiUnitCase apiUnitCase, String bodyStr){

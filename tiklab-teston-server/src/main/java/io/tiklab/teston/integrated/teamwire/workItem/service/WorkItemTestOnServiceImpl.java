@@ -183,8 +183,8 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
         //设置名称
         workItem.setTitle(workItemTestOn.getName());
         //设置开始结束时间
-        workItem.setPlanBeginTime(workItemTestOn.getPlanBeginTime());
-        workItem.setPlanEndTime(workItemTestOn.getPlanEndTime());
+//        workItem.setPlanBeginTime(workItemTestOn.getPlanBeginTime());
+//        workItem.setPlanEndTime(workItemTestOn.getPlanEndTime());
         //创建缺陷获取id
         String defectId = workItemServiceRpc().createWorkItem(workItem);
 

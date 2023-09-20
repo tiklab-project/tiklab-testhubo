@@ -85,14 +85,7 @@ public class JsonParamController {
 
         return Result.ok(jsonParamList);
     }
-    @RequestMapping(path = "/findJsonParamListTree",method = RequestMethod.POST)
-    @ApiMethod(name = "findJsonParamListTree",desc = "根据查询参数查询json列表")
-    @ApiParam(name = "jsonParamQuery",desc = "查询对象",required = true)
-    public Result<List<JsonParam>> findJsonParamListTree(@RequestBody @Valid @NotNull JsonParamQuery jsonParamQuery){
-        List<JsonParam> jsonParamList = jsonParamService.findJsonParamListTree(jsonParamQuery);
 
-        return Result.ok(jsonParamList);
-    }
 
     @RequestMapping(path = "/findJsonParamPage",method = RequestMethod.POST)
     @ApiMethod(name = "findJsonParamPage",desc = "根据查询参数按分页查询json")

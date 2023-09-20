@@ -17,7 +17,7 @@ public class RequestBody extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="apiUnit",desc="所属接口")
+    @ApiProperty(name="apiUnitId",desc="所属接口")
     private String apiUnitId;
 
     @ApiProperty(name="bodyType",desc="请求体类型，form/json/raw/binary")

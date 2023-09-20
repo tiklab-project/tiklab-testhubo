@@ -68,10 +68,4 @@ public interface JsonParamService {
     */
     Pagination<JsonParam> findJsonParamPage(JsonParamQuery jsonParamQuery);
 
-    /**
-     * 查询json树
-     * @param jsonParamQuery
-     * @return
-     */
-    List<JsonParam> findJsonParamListTree(JsonParamQuery jsonParamQuery);
 }

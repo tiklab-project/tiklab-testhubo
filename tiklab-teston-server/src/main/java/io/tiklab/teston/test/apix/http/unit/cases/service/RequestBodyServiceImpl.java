@@ -8,8 +8,7 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBody;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,12 @@ public class RequestBodyServiceImpl implements RequestBodyService {
     RequestBodyDao requestBodyDao;
 
     @Autowired
+    JsonParamService jsonParamService;
+
+    @Autowired
+    RawParamService rawParamService;
+
+    @Autowired
     JoinTemplate joinTemplate;
 
     @Override
@@ -39,6 +44,33 @@ public class RequestBodyServiceImpl implements RequestBodyService {
     @Override
     public void updateRequestBody(@NotNull @Valid RequestBody requestBody) {
         RequestBodyEntity requestBodyEntity = BeanMapper.map(requestBody, RequestBodyEntity.class);
+
+        if("json".equals(requestBody.getBodyType())){
+            //切换请求体，如果是json，没有找到，就会自动生成一个。
+            String apiUnitId = requestBody.getApiUnitId();
+            JsonParam isExsit = jsonParamService.findJsonParam(apiUnitId);
+            if(isExsit==null){
+                JsonParam jsonParam = new JsonParam();
+                jsonParam.setId(apiUnitId);
+                jsonParam.setApiUnitId(apiUnitId);
+                jsonParam.setSchemaText("{\"type\": \"object\",\"properties\": {}}");
+                jsonParamService.createJsonParam(jsonParam);
+            }
+        }
+
+        if("raw".equals(requestBody.getBodyType())){
+            String apiUnitId = requestBody.getApiUnitId();
+            RawParam rawParamIsExist = rawParamService.findRawParam(apiUnitId);
+            if(rawParamIsExist==null){
+                RawParam rawParam = new RawParam();
+                rawParam.setApiUnit(new ApiUnitCase().setId(apiUnitId));
+                rawParam.setId(apiUnitId);
+                rawParam.setType("application/json");
+                rawParam.setRaw("");
+                rawParamService.createRawParam(rawParam);
+            }
+        }
+
 
         requestBodyDao.updateRequestBody(requestBodyEntity);
     }
