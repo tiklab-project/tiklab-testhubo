@@ -24,6 +24,7 @@ import io.tiklab.toolkit.boot.starter.annotation.EnableToolkit;
 import io.tiklab.user.boot.starter.annotation.EnableUserClient;
 import io.tiklab.user.boot.starter.annotation.EnableUserServer;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @Configuration
 @EnableToolkit

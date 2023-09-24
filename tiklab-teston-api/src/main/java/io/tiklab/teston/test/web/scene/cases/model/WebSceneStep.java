@@ -51,6 +51,11 @@ public class WebSceneStep extends BaseModel {
     @ApiProperty(name="sort",desc="排序")
     private Integer sort;
 
+    @ApiProperty(name="preScript",desc="前置脚本")
+    private String preScript;
+
+    @ApiProperty(name="afterScript",desc="后置脚本")
+    private String afterScript;
 
     public String getId() {
         return id;
@@ -138,5 +143,21 @@ public class WebSceneStep extends BaseModel {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public String getPreScript() {
+        return preScript;
+    }
+
+    public void setPreScript(String preScript) {
+        this.preScript = preScript;
+    }
+
+    public String getAfterScript() {
+        return afterScript;
+    }
+
+    public void setAfterScript(String afterScript) {
+        this.afterScript = afterScript;
     }
 }

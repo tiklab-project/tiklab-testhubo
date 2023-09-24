@@ -1,9 +1,11 @@
 package io.tiklab.teston.test.apix.http.scene.execute.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 
 import io.tiklab.teston.agent.api.http.scene.ApiSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
+import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
 import io.tiklab.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
@@ -56,6 +58,9 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
     @Autowired
     ApiSceneTestService apiSceneTestService;
 
+    @Autowired
+    VariableService variableService;
+
     /**
      *  环境中获取是否是内嵌agent
      */
@@ -81,6 +86,8 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         List<ApiUnitTestRequest> apiUnitTestRequestList = processApiSceneTestData(apiSceneTestRequest);
         apiSceneTestRequest.setApiUnitTestRequestList(apiUnitTestRequestList);
 
+        JSONObject variable = variableService.getVariable(apiSceneTestRequest.getRepositoryId());
+        apiSceneTestRequest.setVariableJson(variable);
 
         ApiSceneTestResponse apiSceneTestResponse = null;
         //根据环境配置是否为内嵌
@@ -96,6 +103,7 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
                 apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
             }
         }
+
 
         //测试计划中设置了执行类型，其他没设置
         if(apiSceneTestRequest.getExeType()==null){

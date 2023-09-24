@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.apix.http.unit.instance.model;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
 import io.tiklab.beans.annotation.Mapper;
@@ -67,6 +68,9 @@ public class ApiUnitInstance extends BaseModel{
     @ApiProperty(name="afterScript",desc="后置脚本执行后返回的数据")
     private String afterScript;
 
+
+    @ApiProperty(name="variableJson",desc="返回环境变量")
+    private JSONObject variableJson;
 
     public String getId() {
         return id;
@@ -163,5 +167,13 @@ public class ApiUnitInstance extends BaseModel{
 
     public void setAfterScript(String afterScript) {
         this.afterScript = afterScript;
+    }
+
+    public JSONObject getVariableJson() {
+        return variableJson;
+    }
+
+    public void setVariableJson(JSONObject variableJson) {
+        this.variableJson = variableJson;
     }
 }

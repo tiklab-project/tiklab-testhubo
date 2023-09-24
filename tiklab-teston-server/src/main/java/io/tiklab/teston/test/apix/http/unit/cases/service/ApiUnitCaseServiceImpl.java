@@ -1,7 +1,13 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tiklab.core.exception.ApplicationException;
+import io.tiklab.teston.support.variable.model.Variable;
+import io.tiklab.teston.support.variable.model.VariableQuery;
+import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.tiklab.teston.test.apix.http.unit.cases.model.*;
 import io.tiklab.beans.BeanMapper;
@@ -15,6 +21,7 @@ import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.apache.commons.collections.CollectionUtils;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -69,6 +76,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
     @Autowired
     JsonParamService jsonParamService;
+
+    @Autowired
+    VariableService variableService;
 
     @Autowired
     PreScriptService preScriptService;
@@ -262,23 +272,18 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         Map mediaType = jointMediaType(apiUnitCase);
         //封装请求体数据
         String body = bodyConstruction(apiUnitCase);
-        //调用前置脚本
-        Map preScript = processPreScript(apiUnitCase.getId());
+        //获取前置脚本
+        String preScript = getPreScript(apiUnitCase);
+        //获取后置脚本
+        String afterScript = getAfterScript(apiUnitCase.getId());
 
-        String afterScript = processAfterScript(apiUnitCase.getId());
-
-        //前置脚本添加header
-        if(preScript!=null&&preScript.get("header")!=null){
-            Object header = preScript.get("header");
-
-            headerMap.putAll((Map) header);
-        }
 
         ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = new ApiUnitCaseDataConstruction();
         apiUnitCaseDataConstruction.setHeaderMap(headerMap);
         apiUnitCaseDataConstruction.setQuery(query);
         apiUnitCaseDataConstruction.setMediaTypeMap(mediaType);
         apiUnitCaseDataConstruction.setBody(body);
+        apiUnitCaseDataConstruction.setPreScript(preScript);
         apiUnitCaseDataConstruction.setAfterScript(afterScript);
 
 
@@ -436,67 +441,28 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
 
     /**
-     * 前置脚本处理
-     * @param caseId
-     * @return
+     * 获取前置脚本
      */
-    private Map<String,Object> processPreScript(String caseId)   {
-
-        PreScript preScript = preScriptService.findPreScript(caseId);
-
-        if (preScript!=null){
-            String script = preScript.getScriptex();
-
-            ScriptEngineManager manager = new ScriptEngineManager();
-            ScriptEngine engine = manager.getEngineByName("JavaScript");
-
-            URL resourceUrl = getClass().getClassLoader().getResource("static/script.js");
-            String path = resourceUrl.getPath();
-            try (FileInputStream fip = new FileInputStream(path);
-                 InputStreamReader reader = new InputStreamReader(fip, StandardCharsets.UTF_8)) {
-
-                // 读取 JavaScript 文件中的代码
-                engine.eval(reader);
-
-                // 在解释器中添加一个名为"dk"的全局对象
-                engine.put("to", engine.get("to"));
-
-                // 执行 JavaScript 函数
-                engine.eval(script);
-
-                // 调用 getData 方法
-                Invocable invocable = (Invocable) engine;
-                Object result = invocable.invokeMethod(engine.get("to"), "getData");
-                // 将 JavaScript 对象转换为 Java Map
-                Bindings bindings = engine.createBindings();
-                bindings.put("result", result);
-                Map<String, Object> resultMap = (Map<String, Object>) engine.eval("JSON.parse(JSON.stringify(result))", bindings);
-
-                return resultMap;
-
-            } catch (Exception e) {
-                throw new ApplicationException(e);
-            }
+    private String getPreScript(ApiUnitCase apiUnitCase){
+        PreScript preScript = preScriptService.findPreScript(apiUnitCase.getId());
+        if (preScript == null||preScript.getScriptex()==null) {
+            return null;
         }
-
-        return null;
+        return preScript.getScriptex();
     }
 
 
     /**
-     * 后置脚本获取
-     * @param caseId
+     * 获取脚本
      */
-
-    private String processAfterScript(String caseId){
-        String script = null;
-
+    private String getAfterScript(String caseId) {
         AfterScript afterScript = afterScriptService.findAfterScript(caseId);
-
-        if(afterScript!=null){
-            script=afterScript.getScriptex();
+        if (afterScript == null||afterScript.getScriptex()==null) {
+            return null;
         }
 
-        return script;
+        return afterScript.getScriptex();
     }
+
+
 }

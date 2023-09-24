@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.apix.http.unit.execute.model;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.tiklab.core.BaseModel;
@@ -18,8 +19,11 @@ public class ApiUnitTestRequest extends BaseModel {
     @ApiProperty(name="apiEnv",desc="测试基准地址")
     private String apiEnv;
 
-    @ApiProperty(name="apiUnitCaseExt",desc="测试用例")
+    @ApiProperty(name="apiUnitCaseDataConstruction",desc="接口数据")
     private ApiUnitCaseDataConstruction apiUnitCaseDataConstruction;
+
+    @ApiProperty(name="variableJson",desc="环境变量")
+    private JSONObject variableJson;
 
     @ApiProperty(name="exeType",desc="当前执行的类型，用于测试计划中")
     private String exeType;
@@ -46,6 +50,14 @@ public class ApiUnitTestRequest extends BaseModel {
 
     public void setApiUnitCaseExt(ApiUnitCaseDataConstruction apiUnitCaseDataConstruction) {
         this.apiUnitCaseDataConstruction = apiUnitCaseDataConstruction;
+    }
+
+    public JSONObject getVariableJson() {
+        return variableJson;
+    }
+
+    public void setVariableJson(JSONObject variableJson) {
+        this.variableJson = variableJson;
     }
 
     public String getExeType() {

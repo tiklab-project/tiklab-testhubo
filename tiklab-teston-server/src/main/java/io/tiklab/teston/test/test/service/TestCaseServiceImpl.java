@@ -208,7 +208,7 @@ public class TestCaseServiceImpl implements TestCaseService {
                 HashMap<Object, Object> recentInstance = new HashMap<>();
 
                 //根据不同的测试类型进行测试
-                if(Objects.equals(testCase.getTestType(),"auto")||Objects.equals(testCase.getTestType(),"perform")){
+                if(Objects.equals(testCase.getTestType(),"api")||Objects.equals(testCase.getTestType(),"ui")||Objects.equals(testCase.getTestType(),"perform")){
 
                     switch (testCase.getCaseType()) {
                         case "api-unit":

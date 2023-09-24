@@ -1,5 +1,6 @@
 package io.tiklab.teston.support.variable.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
@@ -107,4 +108,24 @@ public class VariableServiceImpl implements VariableService {
 
         return PaginationBuilder.build(pagination,variableList);
     }
+
+
+
+    /**
+     * 获取变量
+     */
+    @Override
+    public JSONObject getVariable (String belongId){
+        VariableQuery variableQuery = new VariableQuery();
+        variableQuery.setBelongId(belongId);
+        List<Variable> variableList = findVariableList(variableQuery);
+
+        JSONObject variableJson = new JSONObject();
+        for(Variable variable:variableList){
+            variableJson.put(variable.getName(),variable.getValue());
+        }
+        return variableJson;
+    }
+
+
 }

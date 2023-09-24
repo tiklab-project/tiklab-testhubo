@@ -1,10 +1,12 @@
 package io.tiklab.teston.test.web.scene.execute.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.web.scene.WebSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
+import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStepQuery;
@@ -18,6 +20,7 @@ import io.tiklab.teston.test.web.utils.RpcClientWebUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,9 +38,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     WebSceneInstanceService webSceneInstanceService;
 
     @Autowired
-    WebSceneInstanceStepService webSceneInstanceStepService;
-
-    @Autowired
     AgentConfigService agentConfigService;
 
     @Autowired
@@ -45,6 +45,9 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
 
     @Autowired
     WebSceneTestService webSceneTestService;
+
+    @Autowired
+    VariableService variableService;
 
     /**
      *  环境中获取是否是内嵌agent
@@ -62,17 +65,30 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
 
     private AgentConfig agentConfig = null;
 
+    //状态  0未开始，1进行中
     private Integer status;
 
     @Override
     public Integer execute(WebSceneTestRequest webSceneTestRequest) {
+        status=1;
 
+        //异步执行
+        executeStart(webSceneTestRequest);
+
+        return 1;
+    }
+
+    private void executeStart(WebSceneTestRequest webSceneTestRequest){
         String webSceneId = webSceneTestRequest.getWebSceneId();
 
         //先查询所有的场景步骤
         WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
         webSceneStepQuery.setWebSceneId(webSceneId);
         List<WebSceneStep> webSceneStepList = webSceneStepService.findWebSceneStepList(webSceneStepQuery);
+
+        JSONObject variable = variableService.getVariable(webSceneId);
+        webSceneTestRequest.setVariableJson(variable);
+
 
         //设置步骤数据
         webSceneTestRequest.setWebSceneStepList(webSceneStepList);
@@ -81,7 +97,7 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         //如果不是内嵌走rpc
         if(enable) {
             //调用执行方法返回结果数据
-             webSceneTestService.execute(webSceneTestRequest);
+            webSceneTestService.execute(webSceneTestRequest);
         }else {
             List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
             if(CollectionUtils.isNotEmpty(agentConfigList)){
@@ -90,9 +106,8 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 webSceneTestServiceRPC(agentConfig.getUrl()).execute(webSceneTestRequest);
             }
         }
-
-        return status=1;
     }
+
 
     @Override
     public Integer status() {
@@ -109,6 +124,8 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 status = webSceneTestServiceRPC(agentConfig.getUrl()).status();
             }
         }
+
+
         return status;
     }
 
@@ -129,7 +146,11 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         //测试计划中设置了执行类型，其他没设置
 //        if(webSceneTestRequest.getExeType()==null){
 //            //返回的数据存入数据库
+        //status为0执行结束，存入历史
+        if(status==0){
             saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
+        }
+
 //        }
 
         return webSceneTestResponse;

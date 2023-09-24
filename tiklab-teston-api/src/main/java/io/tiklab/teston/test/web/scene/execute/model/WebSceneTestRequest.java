@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.web.scene.execute.model;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @ApiModel
 public class WebSceneTestRequest extends BaseModel {
+
+    @ApiProperty(name="repositoryId",desc="repositoryId")
+    private String repositoryId;
 
     @ApiProperty(name="webSceneId",desc="web场景id")
     private String webSceneId;
@@ -23,12 +27,24 @@ public class WebSceneTestRequest extends BaseModel {
     @ApiProperty(name="exeType",desc="当前执行的类型，用于测试计划中")
     private String exeType;
 
+    @ApiProperty(name="variableJson",desc="环境变量")
+    private JSONObject variableJson;
+
+
     //web场景用例测试配置
 //    private WebSceneTestConfig testConfig;
 
 
     @ApiProperty(name="webSceneStepList",desc="web场景中步骤测试数据")
     private List<WebSceneStep> webSceneStepList;
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
 
     private String webDriver;
 
@@ -79,5 +95,13 @@ public class WebSceneTestRequest extends BaseModel {
 
     public void setExeType(String exeType) {
         this.exeType = exeType;
+    }
+
+    public JSONObject getVariableJson() {
+        return variableJson;
+    }
+
+    public void setVariableJson(JSONObject variableJson) {
+        this.variableJson = variableJson;
     }
 }

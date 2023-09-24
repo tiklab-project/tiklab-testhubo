@@ -1,5 +1,6 @@
 package io.tiklab.teston.support.variable.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.join.annotation.FindAll;
 import io.tiklab.join.annotation.FindList;
@@ -69,4 +70,10 @@ public interface VariableService {
     */
     Pagination<Variable> findVariablePage(VariableQuery variableQuery);
 
+    /**
+     * 获取变量存为JSONObject
+     * @param belongId
+     * @return
+     */
+    public JSONObject getVariable (String belongId);
 }

@@ -54,6 +54,14 @@ public class WebSceneStepEntity implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    //前置脚本
+    @Column(name = "pre_script")
+    private String preScript;
+
+    //后置脚本
+    @Column(name = "after_script")
+    private String afterScript;
+
     // 排序
     @Column(name = "sort")
     private Integer sort;
@@ -144,5 +152,21 @@ public class WebSceneStepEntity implements Serializable {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public String getPreScript() {
+        return preScript;
+    }
+
+    public void setPreScript(String preScript) {
+        this.preScript = preScript;
+    }
+
+    public String getAfterScript() {
+        return afterScript;
+    }
+
+    public void setAfterScript(String afterScript) {
+        this.afterScript = afterScript;
     }
 }

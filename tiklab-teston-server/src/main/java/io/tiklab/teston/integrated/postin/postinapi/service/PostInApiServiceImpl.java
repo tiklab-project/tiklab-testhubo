@@ -340,7 +340,7 @@ public class PostInApiServiceImpl implements PostInApiService {
             String postInPre = requestData.getPreScript();
             PreScript testOnPre = new PreScript();
             testOnPre.setScriptex(postInPre);
-            testOnPre.setApiUnit(new ApiUnitCase().setId(apiUnitCaseId));
+            testOnPre.setApiUnitId(apiUnitCaseId);
             testOnPre.setId(apiUnitCaseId);
             testOnPreScriptService.createPreScript(testOnPre);
         }catch (Exception e){
@@ -359,7 +359,7 @@ public class PostInApiServiceImpl implements PostInApiService {
             String postInAfter = requestData.getAfterScript();
             AfterScript testOnAfter = new AfterScript();
             testOnAfter.setScriptex(postInAfter);
-            testOnAfter.setApiUnit(new ApiUnitCase().setId(apiUnitCaseId));
+            testOnAfter.setApiUnitId(apiUnitCaseId);
             testOnAfter.setId(apiUnitCaseId);
             testOnAfterScriptService.createAfterScript(testOnAfter);
         }catch (Exception e){

@@ -166,7 +166,7 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
             ApiUnitInstance apiUnitInstance1 = new ApiUnitInstance();
             apiUnitInstance1.setId(apiUnitInstanceId);
             apiSceneStepInstanceBind.setApiUnitInstance(apiUnitInstance1);
-            apiSceneStepInstanceBind.setId(apiSceneInstanceId);
+            apiSceneStepInstanceBind.setId(apiUnitInstanceId);
             apiSceneStepInstanceBindService.createApiSceneStepInstanceBind(apiSceneStepInstanceBind);
 
         });

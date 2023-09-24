@@ -29,8 +29,8 @@ public class Variable extends BaseModel{
     @ApiProperty(name="desc",desc="描述")
     private String desc;
 
-    @ApiProperty(name="caseId",desc="所属用例")
-    private String caseId;
+    @ApiProperty(name = "belongId", desc = "所属ID,接口放在项目下，ui放在场景下")
+    private String belongId;
 
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -71,12 +71,12 @@ public class Variable extends BaseModel{
         this.desc = desc;
     }
 
-    public String getCaseId() {
-        return caseId;
+    public String getBelongId() {
+        return belongId;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setBelongId(String belongId) {
+        this.belongId = belongId;
     }
 
     public Timestamp getCreateTime() {

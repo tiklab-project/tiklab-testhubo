@@ -1,11 +1,13 @@
 package io.tiklab.teston.test.app.scene.execute.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.app.scene.AppSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 import io.tiklab.teston.support.environment.service.AppEnvService;
+import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStepQuery;
 import io.tiklab.teston.test.app.scene.cases.service.AppSceneStepService;
@@ -15,6 +17,7 @@ import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.tiklab.teston.test.app.scene.instance.service.AppSceneInstanceService;
 import io.tiklab.teston.test.app.utils.RpcClientAppUtil;
+import io.tiklab.teston.test.web.scene.execute.model.WebSceneTestRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +55,8 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     @Autowired
     AppSceneTestService appSceneTestService;
 
+    @Autowired
+    VariableService variableService;
     /**
      *  环境中获取是否是内嵌agent
      */
@@ -71,6 +76,14 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Override
     public Integer execute(AppSceneTestRequest appSceneTestRequest) {
+        status=1;
+
+        executeStart(appSceneTestRequest);
+
+        return 1;
+    }
+
+    private void executeStart(AppSceneTestRequest appSceneTestRequest){
         String appSceneId = appSceneTestRequest.getAppSceneId();
 
         //先查询所有场景步骤
@@ -79,11 +92,13 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         List<AppSceneStep> appSceneStepList = appSceneStepService.findAppSceneStepList(appSceneStepQuery);
 
         appSceneTestRequest.setAppSceneStepList(appSceneStepList);
+        JSONObject variable = variableService.getVariable(appSceneId);
+        appSceneTestRequest.setVariableJson(variable);
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         if(enable) {
-             appSceneTestService.execute(appSceneTestRequest);
+            appSceneTestService.execute(appSceneTestRequest);
         }else {
             List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
             if(CollectionUtils.isNotEmpty(agentConfigList)){
@@ -92,10 +107,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
                 appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
             }
         }
-
-
-        return status=1;
     }
+
+
 
     @Override
     public Integer status() {
@@ -133,7 +147,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 //        if(appSceneTestRequest.getExeType()==null){
 //            //errorMessage 是启动系统失败
 //            if(appSceneTestResponse!=null&&ObjectUtils.isEmpty(appSceneTestResponse.getErrMsg())){
-                saveToSQL(appSceneTestResponse,appSceneId);
+        if(status==0) {
+            saveToSQL(appSceneTestResponse, appSceneId);
+        }
 //            }
 //        }
 

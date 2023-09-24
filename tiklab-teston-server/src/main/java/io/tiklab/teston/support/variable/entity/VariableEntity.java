@@ -19,8 +19,8 @@ public class VariableEntity implements Serializable {
     private String id;
 
     // 用例
-    @Column(name = "case_id",length = 32)
-    private String caseId;
+    @Column(name = "belong_id",length = 32)
+    private String belongId;
 
     // 名称
     @Column(name = "name",length = 64)
@@ -50,12 +50,12 @@ public class VariableEntity implements Serializable {
     }
 
 
-    public String getCaseId() {
-        return caseId;
+    public String getBelongId() {
+        return belongId;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setBelongId(String belongId) {
+        this.belongId = belongId;
     }
 
     public String getName() {

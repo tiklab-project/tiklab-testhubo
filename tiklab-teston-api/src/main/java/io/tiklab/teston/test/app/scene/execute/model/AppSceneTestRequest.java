@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.app.scene.execute.model;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
@@ -13,6 +14,7 @@ import java.util.List;
 @ApiModel
 public class AppSceneTestRequest extends BaseModel {
 
+    @ApiProperty(name="appSceneId",desc="appSceneId")
     private String appSceneId;
 
     @ApiProperty(name = "appSceneStep", desc = "app场景用例")
@@ -32,6 +34,10 @@ public class AppSceneTestRequest extends BaseModel {
 
     @ApiProperty(name="exeType",desc="当前执行的类型，用于测试计划中")
     private String exeType;
+
+    @ApiProperty(name="variableJson",desc="环境变量")
+    private JSONObject variableJson;
+
 
     public String getCurrentAgentId() {
         return currentAgentId;
@@ -87,5 +93,13 @@ public class AppSceneTestRequest extends BaseModel {
 
     public void setExeType(String exeType) {
         this.exeType = exeType;
+    }
+
+    public JSONObject getVariableJson() {
+        return variableJson;
+    }
+
+    public void setVariableJson(JSONObject variableJson) {
+        this.variableJson = variableJson;
     }
 }

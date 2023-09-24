@@ -1,8 +1,10 @@
 package io.tiklab.teston.test.apix.http.unit.cases.model;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,11 +26,10 @@ public class ApiUnitCaseDataConstruction extends BaseModel{
     private String body;
 
     //调用前置脚本
-    private Object preScript;
+    private String preScript;
 
     //调用后置脚本
     private String afterScript;
-
 
     public Map getHeaderMap() {
         return headerMap;
@@ -70,11 +71,12 @@ public class ApiUnitCaseDataConstruction extends BaseModel{
         this.body = body;
     }
 
-    public Object getPreScript() {
+    public String getPreScript() {
         return preScript;
     }
 
-    public void setPreScript(Object preScript) {
+    public void setPreScript(String preScript) {
         this.preScript = preScript;
     }
+
 }

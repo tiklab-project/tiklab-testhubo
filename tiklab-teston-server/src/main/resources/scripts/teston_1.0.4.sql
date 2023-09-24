@@ -1,6 +1,6 @@
 CREATE TABLE teston_variable (
     id VARCHAR(32) PRIMARY KEY,
-    case_id VARCHAR(32),
+    belong_id VARCHAR(32),
     name VARCHAR(32),
     value VARCHAR(256),
     create_time TIMESTAMP,
@@ -16,3 +16,11 @@ CREATE TABLE teston_api_json (
   schema_text VARCHAR(2048)
 );
 
+
+ALTER TABLE teston_web_scene_step
+ADD COLUMN pre_script text,
+ADD COLUMN after_script text;
+
+ALTER TABLE teston_app_scene_step
+ADD COLUMN pre_script text,
+ADD COLUMN after_script text;

@@ -17,8 +17,8 @@ public class VariableQuery implements Serializable {
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
 
-    @ApiProperty(name = "caseId", desc = "所属用例")
-    private String caseId;
+    @ApiProperty(name = "belongId", desc = "所属ID,接口放在项目下，ui放在场景下")
+    private String belongId;
 
     @ApiProperty(name = "name", desc = "名称")
     private String name;
@@ -39,12 +39,12 @@ public class VariableQuery implements Serializable {
         this.pageParam = pageParam;
     }
 
-    public String getCaseId() {
-        return caseId;
+    public String getBelongId() {
+        return belongId;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setBelongId(String belongId) {
+        this.belongId = belongId;
     }
 
     public String getName() {

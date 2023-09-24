@@ -82,7 +82,8 @@ public class VariableDao {
      */
     public List<VariableEntity> findVariableList(VariableQuery variableQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(VariableEntity.class)
-                .eq("caseId", variableQuery.getCaseId())
+                .eq("belongId", variableQuery.getBelongId())
+                .eq("name",variableQuery.getName())
                 .orders(variableQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition,VariableEntity.class);
@@ -95,7 +96,8 @@ public class VariableDao {
      */
     public Pagination<VariableEntity> findVariablePage(VariableQuery variableQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(VariableEntity.class)
-                .eq("caseId", variableQuery.getCaseId())
+                .eq("belongId", variableQuery.getBelongId())
+                .eq("name",variableQuery.getName())
                 .orders(variableQuery.getOrderParams())
                 .pagination(variableQuery.getPageParam())
                 .get();

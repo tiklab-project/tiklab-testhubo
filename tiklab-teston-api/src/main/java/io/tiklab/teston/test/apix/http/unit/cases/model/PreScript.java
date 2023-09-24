@@ -23,12 +23,8 @@ public class PreScript extends BaseModel{
     private String id;
 
     @NotNull
-    @ApiProperty(name="apiUnit",desc="所属接口",required = true)
-    @Mappings({
-            @Mapping(source = "apiUnit.id",target = "apiUnitId")
-    })
-    @JoinQuery(key = "id")
-    private ApiUnitCase apiUnit;
+    @ApiProperty(name="apiUnitId",desc="所属接口",required = true)
+    private String apiUnitId;
 
     @NotNull
     @ApiProperty(name="scriptex",desc="脚本定义",required = true)
@@ -42,12 +38,12 @@ public class PreScript extends BaseModel{
         this.id = id;
     }
 
-    public ApiUnitCase getApiUnit() {
-        return apiUnit;
+    public String getApiUnitId() {
+        return apiUnitId;
     }
 
-    public void setApiUnit(ApiUnitCase apiUnit) {
-        this.apiUnit = apiUnit;
+    public void setApiUnitId(String apiUnitId) {
+        this.apiUnitId = apiUnitId;
     }
 
     public String getScriptex() {

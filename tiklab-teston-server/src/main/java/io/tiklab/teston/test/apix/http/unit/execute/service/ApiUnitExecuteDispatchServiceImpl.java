@@ -1,9 +1,17 @@
 package io.tiklab.teston.test.apix.http.unit.execute.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.api.http.unit.ApiUnitTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
+import io.tiklab.teston.support.variable.model.Variable;
+import io.tiklab.teston.support.variable.model.VariableQuery;
+import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.tiklab.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
@@ -46,6 +54,8 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
     @Autowired
     ApiUnitInstanceService apiUnitInstanceService;
 
+    @Autowired
+    VariableService variableService;
 
     @Autowired
     AssertService assertService;
@@ -85,7 +95,9 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
         //数据准备
         ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
+        JSONObject variable = variableService.getVariable(apiUnitCase.getTestCase().getRepositoryId());
 
+        apiUnitTestRequest.setVariableJson(variable);
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
         apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
 
@@ -104,23 +116,8 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
                 }
             }
         }catch (Exception e){
-            throw new ApplicationException("agent错误");
+            throw new ApplicationException(e);
         }
-
-
-        //后置
-        if(apiUnitTestRequest.getApiUnitCaseExt().getAfterScript()!=null){
-            Map afterScript = actionAfterScript(apiUnitTestRequest.getApiUnitCaseExt().getAfterScript());
-
-            if(afterScript!=null&&afterScript.get("preUrl")!=null){
-                Object preUrl = afterScript.get("preUrl");
-
-                if((Boolean) preUrl){
-                    apiUnitInstance.setAfterScript(apiUnitTestRequest.getApiEnv());
-                }
-            }
-        }
-
 
 
         //测试计划中设置了执行类型，其他没设置
@@ -159,48 +156,8 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         apiUnitInstanceBind.setApiUnitInstance(new ApiUnitInstance().setId(apiUnitInstanceId));
         apiUnitInstanceBind.setApiUnitId(apiUnitId);
         apiUnitInstanceBindService.createApiUnitInstanceBind(apiUnitInstanceBind);
-
     }
 
-
-
-    private Map<String, Object> actionAfterScript(String script){
-
-        if (script!=null){
-
-            ScriptEngineManager manager = new ScriptEngineManager();
-            ScriptEngine engine = manager.getEngineByName("JavaScript");
-
-            URL resourceUrl = getClass().getClassLoader().getResource("static/script.js");
-            String path = resourceUrl.getPath();
-            try (FileInputStream fip = new FileInputStream(path);
-                 InputStreamReader reader = new InputStreamReader(fip, StandardCharsets.UTF_8)) {
-
-                // 读取 JavaScript 文件中的代码
-                engine.eval(reader);
-
-                // 在解释器中添加一个名为"dk"的全局对象
-                engine.put("to", engine.get("to"));
-
-                // 执行 JavaScript 函数
-                engine.eval(script);
-
-                // 调用 getData 方法
-                Invocable invocable = (Invocable) engine;
-                Object result = invocable.invokeMethod(engine.get("to"), "getPreUrl");
-                // 将 JavaScript 对象转换为 Java Map
-                Bindings bindings = engine.createBindings();
-                bindings.put("result", result);
-                Map<String, Object> resultMap = (Map<String, Object>) engine.eval("JSON.parse(JSON.stringify(result))", bindings);
-
-                return resultMap;
-
-            } catch (Exception e) {
-                throw new ApplicationException(e);
-            }
-        }
-        return null;
-    }
 
 
 }
