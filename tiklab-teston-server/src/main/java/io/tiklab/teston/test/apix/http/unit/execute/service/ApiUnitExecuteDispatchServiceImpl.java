@@ -21,6 +21,8 @@ import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ import java.util.List;
  */
 @Service
 public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatchService {
+
+    private static Logger logger = LoggerFactory.getLogger(ApiUnitExecuteDispatchServiceImpl.class);
+
 
     @Autowired
     ApiUnitCaseService apiUnitCaseService;
@@ -93,15 +98,20 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         //如果不是内嵌走rpc
         try {
             if(enable){
+                logger.info("api-enable----");
                 apiUnitInstance = apiUnitTestService.execute(apiUnitTestRequest);
+                logger.info("api-enable----end");
             }else {
+                logger.info("api-not-enable----");
                 List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
                 if( CollectionUtils.isNotEmpty(agentConfigList)){
                     AgentConfig agentConfig = agentConfigList.get(0);
                     apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(apiUnitTestRequest);
                 }
+                logger.info("api-not-enable----end");
             }
         }catch (Exception e){
+            logger.info("api-enable----error");
             throw new ApplicationException(e);
         }
 
