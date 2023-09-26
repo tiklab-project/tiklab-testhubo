@@ -93,7 +93,7 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
 
         ApiUnitInstance apiUnitInstance = null;
-
+        logger.info("api-----");
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try {
