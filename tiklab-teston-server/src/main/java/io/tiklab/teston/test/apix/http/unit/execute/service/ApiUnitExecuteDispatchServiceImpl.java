@@ -1,16 +1,10 @@
 package io.tiklab.teston.test.apix.http.unit.execute.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.api.http.unit.ApiUnitTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
-import io.tiklab.teston.support.variable.model.Variable;
-import io.tiklab.teston.support.variable.model.VariableQuery;
 import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
@@ -31,16 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * 接口单元测试调度 服务
@@ -119,6 +105,9 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
             throw new ApplicationException(e);
         }
 
+        if(apiUnitInstance==null){
+            return null;
+        }
 
         //测试计划中设置了执行类型，其他没设置
         if(apiUnitTestRequest.getExeType()==null){
