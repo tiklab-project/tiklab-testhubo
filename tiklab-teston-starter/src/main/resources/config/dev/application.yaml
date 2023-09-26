@@ -60,6 +60,8 @@ base:
 teston-agent:
   embbed:
     enable: true
+  chromedriver:
+    path: C:\Users\JacksonSun\.cache\selenium\chromedriver\win32\114.0.5735.90\chromedriver
 
 postin:
   enable: false

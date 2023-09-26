@@ -1,6 +1,7 @@
 package io.tiklab.teston.test.web.scene.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.web.scene.WebSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
@@ -136,12 +137,17 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        if(enable) {
-            //调用执行方法返回结果数据
-            webSceneTestResponse = webSceneTestService.result();
-        }else {
-            webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result();
+        try{
+            if(enable) {
+                //调用执行方法返回结果数据
+                webSceneTestResponse = webSceneTestService.result();
+            }else {
+                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result();
+            }
+        }catch (Exception e){
+            throw new ApplicationException(e);
         }
+
 
         //测试计划中设置了执行类型，其他没设置
 //        if(webSceneTestRequest.getExeType()==null){
