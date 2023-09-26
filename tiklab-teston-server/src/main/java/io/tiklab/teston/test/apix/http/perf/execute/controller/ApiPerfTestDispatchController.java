@@ -40,14 +40,20 @@ public class ApiPerfTestDispatchController {
         return Result.ok();
     }
 
-    @RequestMapping(path = "/exeResult", method = RequestMethod.POST)
-    @ApiMethod(name = "exeResult", desc = "获取性能测试结果")
+    @RequestMapping(path = "/result", method = RequestMethod.POST)
+    @ApiMethod(name = "result", desc = "获取性能测试结果")
     @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数", required = true)
     public Result<ApiPerfTestResponse> exeResult(@RequestBody @Valid ApiPerfTestRequest apiPerfTestRequest) {
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.exeResult(apiPerfTestRequest);
+        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.result(apiPerfTestRequest);
         return Result.ok(apiPerfTestResponse);
     }
 
+    @RequestMapping(path = "/status", method = RequestMethod.POST)
+    @ApiMethod(name = "status", desc = "获取性能测试状态")
+    public Result<Integer> status() {
+        Integer status = apiPerfExecuteDispatchService.status();
+        return Result.ok(status);
+    }
 
     @RequestMapping(path = "/endOrPause", method = RequestMethod.POST)
     @ApiMethod(name = "endOrPause", desc = "停止或暂停性能测试")

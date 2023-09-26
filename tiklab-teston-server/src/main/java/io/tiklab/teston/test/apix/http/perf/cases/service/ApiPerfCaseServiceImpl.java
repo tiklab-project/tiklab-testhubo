@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.apix.http.perf.cases.service;
 
+import com.alibaba.fastjson.JSONObject;
+import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.service.CategoryService;
 import io.tiklab.teston.test.apix.http.perf.cases.dao.ApiPerfCaseDao;
@@ -15,12 +17,17 @@ import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.user.user.model.User;
 import io.tiklab.user.user.service.UserService;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +51,8 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
 
     @Autowired
     UserService userService;
+
+    public List<JSONObject> testDataList = new ArrayList<>();
 
     @Override
     public String createApiPerfCase(@NotNull @Valid ApiPerfCase apiPerfCase) {
@@ -168,6 +177,41 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
 
 
         return apiPerfList;
+    }
+
+    @Override
+    public Integer importTestData(InputStream stream) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            // 读取首行作为标题
+            String headerLine = reader.readLine();
+            String[] headers = headerLine.split(",");
+
+            String line;
+            while((line = reader.readLine()) != null) {
+
+                // 分割每一行
+                String[] values = line.split(",");
+
+                // 封装为JSONObject
+                JSONObject jsonObject = new JSONObject();
+                for(int i=0; i<values.length; i++) {
+                    jsonObject.put(headers[i], values[i]);
+                }
+
+                //放入数组
+                testDataList.add(jsonObject);
+            }
+
+            return 1;
+        }catch (Exception e){
+            throw new ApplicationException(e);
+        }
+    }
+
+    @Override
+    public List<JSONObject> getTestData() {
+        return testDataList;
     }
 
 

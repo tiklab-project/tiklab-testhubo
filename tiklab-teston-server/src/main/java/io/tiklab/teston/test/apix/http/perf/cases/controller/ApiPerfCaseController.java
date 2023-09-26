@@ -1,5 +1,7 @@
 package io.tiklab.teston.test.apix.http.perf.cases.controller;
 
+import io.tiklab.core.exception.ApplicationException;
+import io.tiklab.core.exception.SystemException;
 import io.tiklab.postin.annotation.Api;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
@@ -12,13 +14,13 @@ import io.tiklab.teston.test.test.model.TestCaseQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -103,6 +105,24 @@ public class ApiPerfCaseController {
         List<ApiPerfCase> apiPerfCaseList = apiPerfCaseService.findApiPerfCaseListByTestCase(testCaseQuery);
 
         return Result.ok(apiPerfCaseList);
+    }
+
+    @RequestMapping(path = "/importTestData",method = RequestMethod.POST)
+    @ApiMethod(name = "importPostman",desc = "导入数据")
+    @ApiParam(name = "workspaceId")
+    public Result<Integer> importPostman(@RequestParam("file") MultipartFile file ){
+
+        Integer result=0;
+        try {
+            if(file!=null){
+                InputStream inputStream = file.getInputStream();
+                result=apiPerfCaseService.importTestData(inputStream);
+            }
+        } catch (IOException e) {
+            throw new ApplicationException("导入失败");
+        }
+
+        return Result.ok(result);
     }
 
 

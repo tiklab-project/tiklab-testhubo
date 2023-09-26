@@ -177,7 +177,7 @@ public class TestPlanExecuteApiDispatch {
 
 
     public TestPlanCaseInstanceBind apiPerfResult(){
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.exeResult(apiPerfTestRequest);
+        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.result(apiPerfTestRequest);
 
         //测试计划历史 与 绑定用例的历史 公共历史表
         TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();

@@ -23,8 +23,14 @@ public interface ApiPerfExecuteDispatchService {
      * @param
      * @return
      */
-    ApiPerfTestResponse exeResult(ApiPerfTestRequest apiPerfAgentTestRequest);
+    ApiPerfTestResponse result(ApiPerfTestRequest apiPerfAgentTestRequest);
 
+
+    /**
+     * 获取当前执行的状态 0：未开始，1：进行中
+     * @return
+     */
+    Integer status();
 
 
     /**

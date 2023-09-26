@@ -41,7 +41,6 @@ public class AppSceneTestDispatchController {
 
     @RequestMapping(path="/status",method = RequestMethod.POST)
     @ApiMethod(name = "status",desc = "当前执行的状态")
-    @ApiParam(name = "status",desc = "status",required = true)
     public Result<Integer> execute() {
         Integer status = appSceneTestDispatchService.status();
 

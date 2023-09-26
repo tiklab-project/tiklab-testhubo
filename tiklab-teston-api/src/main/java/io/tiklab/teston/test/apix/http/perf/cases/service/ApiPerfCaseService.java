@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.apix.http.perf.cases.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfCase;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfCaseQuery;
 import io.tiklab.core.page.Pagination;
@@ -8,9 +9,11 @@ import io.tiklab.join.annotation.FindList;
 import io.tiklab.join.annotation.FindOne;
 import io.tiklab.join.annotation.JoinProvider;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
+import netscape.javascript.JSObject;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -80,5 +83,17 @@ public interface ApiPerfCaseService {
      */
     List<ApiPerfCase> findApiPerfCaseListByTestCase(TestCaseQuery testCaseQuery);
 
+
+    /**
+     * 导入测试数据
+     * @param inputStream
+     */
+    Integer importTestData(InputStream inputStream);
+
+    /**
+     * 获取处理好的导入的测试数据
+     * @return
+     */
+    List<JSONObject> getTestData();
 
 }
