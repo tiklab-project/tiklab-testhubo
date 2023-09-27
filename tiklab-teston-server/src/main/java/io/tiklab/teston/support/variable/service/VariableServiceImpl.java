@@ -116,16 +116,17 @@ public class VariableServiceImpl implements VariableService {
      */
     @Override
     public JSONObject getVariable (String belongId){
+        JSONObject variableJson = new JSONObject();
+
         VariableQuery variableQuery = new VariableQuery();
         variableQuery.setBelongId(belongId);
         List<Variable> variableList = findVariableList(variableQuery);
-
-        JSONObject variableJson = new JSONObject();
-        for(Variable variable:variableList){
-            variableJson.put(variable.getName(),variable.getValue());
+        if(variableList!=null&&variableList.size()>0){
+            for(Variable variable:variableList){
+                variableJson.put(variable.getName(),variable.getValue());
+            }
         }
+
         return variableJson;
     }
-
-
 }

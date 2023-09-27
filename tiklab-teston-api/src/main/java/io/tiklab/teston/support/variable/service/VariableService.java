@@ -75,5 +75,5 @@ public interface VariableService {
      * @param belongId
      * @return
      */
-    public JSONObject getVariable (String belongId);
+     JSONObject getVariable (String belongId);
 }
