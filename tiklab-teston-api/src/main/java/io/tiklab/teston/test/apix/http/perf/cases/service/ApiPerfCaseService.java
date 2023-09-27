@@ -84,16 +84,4 @@ public interface ApiPerfCaseService {
     List<ApiPerfCase> findApiPerfCaseListByTestCase(TestCaseQuery testCaseQuery);
 
 
-    /**
-     * 导入测试数据
-     * @param inputStream
-     */
-    Integer importTestData(InputStream inputStream);
-
-    /**
-     * 获取处理好的导入的测试数据
-     * @return
-     */
-    List<JSONObject> getTestData();
-
 }

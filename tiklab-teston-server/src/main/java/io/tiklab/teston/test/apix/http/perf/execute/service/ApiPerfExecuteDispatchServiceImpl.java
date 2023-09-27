@@ -9,6 +9,7 @@ import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfStep;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfStepQuery;
 import io.tiklab.teston.test.apix.http.perf.cases.service.ApiPerfCaseService;
 import io.tiklab.teston.test.apix.http.perf.cases.service.ApiPerfStepService;
+import io.tiklab.teston.test.apix.http.perf.cases.service.ApiPerfTestDataService;
 import io.tiklab.teston.test.apix.http.perf.execute.model.ApiPerfTestRequest;
 import io.tiklab.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
 import io.tiklab.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
@@ -46,6 +47,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Autowired
     ApiPerfCaseService apiPerfCaseService;
+
+    @Autowired
+    ApiPerfTestDataService apiPerfTestDataService;
 
     @Autowired
     ApiPerfStepService apiPerfStepService;
@@ -267,7 +271,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             // 测试数据索引
             int dataIndex = 0;
             //获取测试数据
-            List<JSONObject> testDataList = apiPerfCaseService.getTestData();
+            List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfId);
 
             for(ApiPerfStep apiPerfStep:apiPerfStepList){
                 ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
@@ -280,6 +284,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
                 if (dataIndex >= testDataList.size()) {
                     dataIndex = 0;
                 }
+
+                logger.info("variable --- - - - -{}",variable.toString());
 
                 ApiSceneCase apiSceneCase = new ApiSceneCase();
                 apiSceneCase.setId(apiPerfStep.getApiScene().getId());

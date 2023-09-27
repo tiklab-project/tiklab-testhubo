@@ -29,7 +29,7 @@ CREATE TABLE teston_api_perf_testdata (
   id VARCHAR(32) PRIMARY KEY,
   name VARCHAR(64),
   case_id VARCHAR(32),
-  testData text,
+  test_data text,
   create_time TIMESTAMP,
   type VARCHAR(8)
 );

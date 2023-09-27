@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.apix.http.perf.cases.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.join.annotation.FindAll;
 import io.tiklab.join.annotation.FindList;
@@ -71,6 +72,12 @@ public interface ApiPerfTestDataService {
     * @return
     */
     Pagination<ApiPerfTestData> findApiPerfTestDataPage(ApiPerfTestDataQuery performanceTestQuery);
-    
+
+
+    /**
+     * 获取测试数据
+     * @return
+     */
+    List<JSONObject> getTestData(String caseId);
 
 }

@@ -2,6 +2,7 @@ package io.tiklab.teston.test.apix.http.perf.cases.service;
 
 import com.alibaba.fastjson.JSONObject;
 import io.tiklab.beans.BeanMapper;
+import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
@@ -108,5 +109,47 @@ public class ApiPerfTestDataServiceImpl implements ApiPerfTestDataService {
 
         return PaginationBuilder.build(pagination,apiPerfTestDataList);
     }
-    
+
+    @Override
+    public List<JSONObject> getTestData(String caseId) {
+
+        ApiPerfTestDataQuery apiPerfTestDataQuery = new ApiPerfTestDataQuery();
+        apiPerfTestDataQuery.setCaseId(caseId);
+        List<ApiPerfTestData> apiPerfTestDataList = findApiPerfTestDataList(apiPerfTestDataQuery);
+
+        List<JSONObject> testDataList = new ArrayList<>();
+
+        if (apiPerfTestDataList == null) {
+            return testDataList;
+        }
+
+        for (ApiPerfTestData apiPerfTestData : apiPerfTestDataList) {
+            try {
+                // 读取首行作为标题
+                String csvString = apiPerfTestData.getTestData();
+
+                String[] lines = csvString.split("\n");
+
+                // 解析第一行为标题
+                String[] headers = lines[0].split(",");
+
+                // 解析后续每行为数据
+                for(int i=1; i<lines.length; i++) {
+
+                    String[] values = lines[i].split(",");
+
+                    JSONObject obj = new JSONObject();
+                    for (int j=0; j<values.length; j++) {
+                        obj.put(headers[j], values[j]);
+                    }
+
+                    testDataList.add(obj);
+                }
+            } catch (Exception e) {
+                throw new ApplicationException(e);
+            }
+        }
+        return testDataList;
+    }
+
 }

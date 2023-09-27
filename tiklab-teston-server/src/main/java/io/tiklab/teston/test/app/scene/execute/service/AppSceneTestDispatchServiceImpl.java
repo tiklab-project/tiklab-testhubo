@@ -1,6 +1,7 @@
 package io.tiklab.teston.test.app.scene.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.app.scene.AppSceneTestService;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
@@ -77,8 +78,12 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     @Override
     public Integer execute(AppSceneTestRequest appSceneTestRequest) {
         status=1;
-
-        executeStart(appSceneTestRequest);
+        try {
+            executeStart(appSceneTestRequest);
+        }catch (Exception e){
+            status = 0;
+            throw new ApplicationException(e);
+        }
 
         return 1;
     }
@@ -115,17 +120,21 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     public Integer status() {
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        if(enable) {
-            //调用执行方法返回结果数据
-            status = appSceneTestService.status();
-        }else {
-            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-            if(CollectionUtils.isNotEmpty(agentConfigList)) {
-                agentConfig = agentConfigList.get(0);
-                status = appSceneTestServiceRPC(agentConfig.getUrl()).status();
+        try {
+            if(enable) {
+                //调用执行方法返回结果数据
+                status = appSceneTestService.status();
+            }else {
+                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+                if(CollectionUtils.isNotEmpty(agentConfigList)) {
+                    agentConfig = agentConfigList.get(0);
+                    status = appSceneTestServiceRPC(agentConfig.getUrl()).status();
+                }
             }
+        }catch (Exception e){
+            status = 0;
+            throw new ApplicationException(e);
         }
-
 
         return status;
     }

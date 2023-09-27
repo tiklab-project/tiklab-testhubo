@@ -107,23 +107,4 @@ public class ApiPerfCaseController {
         return Result.ok(apiPerfCaseList);
     }
 
-    @RequestMapping(path = "/importTestData",method = RequestMethod.POST)
-    @ApiMethod(name = "importPostman",desc = "导入数据")
-    @ApiParam(name = "workspaceId")
-    public Result<Integer> importPostman(@RequestParam("file") MultipartFile file ){
-
-        Integer result=0;
-        try {
-            if(file!=null){
-                InputStream inputStream = file.getInputStream();
-                result=apiPerfCaseService.importTestData(inputStream);
-            }
-        } catch (IOException e) {
-            throw new ApplicationException("导入失败");
-        }
-
-        return Result.ok(result);
-    }
-
-
 }

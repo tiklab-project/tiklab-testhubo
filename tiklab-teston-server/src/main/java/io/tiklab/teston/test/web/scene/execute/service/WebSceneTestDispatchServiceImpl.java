@@ -73,9 +73,13 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     public Integer execute(WebSceneTestRequest webSceneTestRequest) {
         status=1;
 
-        //异步执行
-        executeStart(webSceneTestRequest);
-
+        //执行
+        try {
+            executeStart(webSceneTestRequest);
+        } catch (Exception e){
+            status = 0;
+            throw new ApplicationException(e);
+        }
         return 1;
     }
 
@@ -145,6 +149,7 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result();
             }
         }catch (Exception e){
+            status=0;
             throw new ApplicationException(e);
         }
 
