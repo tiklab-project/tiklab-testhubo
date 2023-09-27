@@ -62,6 +62,8 @@ teston-agent:
     enable: true
   chromedriver:
     path: C:\Users\JacksonSun\.cache\selenium\chromedriver\win32\chromedriver_win32\chromedriver.exe
+  chrome:
+    path: C:\Users\JacksonSun\AppData\Local\Chromium\Application\chrome.exe
 
 postin:
   enable: false
