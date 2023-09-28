@@ -151,6 +151,10 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             appSceneTestResponse = appSceneTestServiceRPC(agentConfig.getUrl()).result();
         }
 
+        if(appSceneTestResponse==null){
+            return null;
+        }
+
         String appSceneId = appSceneTestRequest.getAppSceneId();
         //测试计划中设置了值
 //        if(appSceneTestRequest.getExeType()==null){
