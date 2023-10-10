@@ -23,6 +23,9 @@ public class ApiUnitCaseQuery {
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
 
+    @ApiProperty(name="path",desc="路径")
+    private String path;
+
     public String getId() {
         return id;
     }
@@ -54,5 +57,13 @@ public class ApiUnitCaseQuery {
 
     public void setPageParam(Page pageParam) {
         this.pageParam = pageParam;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

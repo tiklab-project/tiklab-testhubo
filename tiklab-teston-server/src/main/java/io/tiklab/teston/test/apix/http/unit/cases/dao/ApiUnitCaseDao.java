@@ -83,6 +83,7 @@ public class ApiUnitCaseDao {
     public List<ApiUnitCaseEntity> findApiUnitCaseList(ApiUnitCaseQuery apiUnitCaseQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiUnitCaseEntity.class)
                 .eq("testCaseId",apiUnitCaseQuery.getTestCaseId())
+                .eq("path",apiUnitCaseQuery.getPath())
                 .orders(apiUnitCaseQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, ApiUnitCaseEntity.class);

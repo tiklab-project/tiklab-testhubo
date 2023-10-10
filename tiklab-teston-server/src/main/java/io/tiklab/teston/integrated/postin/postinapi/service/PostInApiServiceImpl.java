@@ -150,7 +150,7 @@ public class PostInApiServiceImpl implements PostInApiService {
                     testCase.setRepositoryId(postInApiToCase.getRepositoryId());
                     apiUnitCase.setTestCase(testCase);
 
-                    apiUnitCase.setPath(httpApi.getPath());
+                    apiUnitCase.setPath(apix.getPath());
                     apiUnitCase.setMethodType(httpApi.getMethodType());
 
                      apiUnitCaseId = apiUnitCaseService.createApiUnitCase(apiUnitCase);

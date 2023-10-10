@@ -20,6 +20,8 @@ import io.tiklab.security.logging.model.LoggingType;
 import io.tiklab.security.logging.service.LoggingTypeService;
 import io.tiklab.teston.category.model.CategoryQuery;
 import io.tiklab.teston.category.service.CategoryService;
+import io.tiklab.teston.support.environment.model.ApiEnv;
+import io.tiklab.teston.support.environment.service.ApiEnvService;
 import io.tiklab.teston.testplan.cases.service.TestPlanService;
 import io.tiklab.user.dmUser.model.DmUser;
 import io.tiklab.user.dmUser.model.DmUserQuery;
@@ -83,6 +85,9 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Autowired
     TestPlanService testPlanService;
 
+    @Autowired
+    ApiEnvService apiEnvService;
+
     @Value("${base.url:null}")
     String baseUrl;
 
@@ -107,6 +112,14 @@ public class RepositoryServiceImpl implements RepositoryService {
         //初始化项目权限
         dmRoleService.initPatchDmRole(repositoryId,repository.getUserList(),"teston" );
 
+        //初始化一个mock
+        ApiEnv apiEnv = new ApiEnv();
+        apiEnv.setRepositoryId(repositoryId);
+        apiEnv.setName("Mock");
+        String mockUrl = baseUrl+"/mockx/"+repositoryId;
+        apiEnv.setPreUrl(mockUrl);
+        apiEnvService.createApiEnv(apiEnv);
+
         //日志
         Map<String,String> map = new HashMap<>();
         map.put("name",repository.getName());
@@ -116,7 +129,6 @@ public class RepositoryServiceImpl implements RepositoryService {
         map.put("images",repository.getIconUrl());
         LoggingType oplogTypeOne = loggingTypeService.findOplogTypeOne(MessageTemplateConstant.LOG_TYPE_CREATE_ID);
         map.put("actionType",oplogTypeOne.getName());
-
         logUnit.log(MessageTemplateConstant.LOG_TYPE_CREATE_ID,"repository",map);
 
         //消息
