@@ -2,12 +2,11 @@ package io.tiklab.teston.integrated.postin.postinapi.service;
 
 import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.eam.common.context.LoginContext;
-import io.tiklab.postin.api.apix.model.Apix;
-import io.tiklab.postin.api.apix.model.ApixQuery;
+import io.tiklab.postin.api.apix.model.*;
+import io.tiklab.postin.api.apix.model.RawParam;
+import io.tiklab.postin.api.apix.model.RequestHeader;
 import io.tiklab.postin.api.apix.service.ApixService;
 import io.tiklab.postin.api.http.definition.model.*;
-import io.tiklab.postin.api.http.definition.model.RawParam;
-import io.tiklab.postin.api.http.definition.model.RequestHeader;
 import io.tiklab.postin.api.http.definition.service.HttpApiService;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.integrated.postin.postinapi.model.PostInApiToCase;
