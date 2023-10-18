@@ -15,7 +15,7 @@ INSERT INTO  teston_env_api  VALUES ('8b0829b48e51', 'bd26c6ec5c6e', 'test', 'ht
 
 INSERT INTO  teston_api_unit  ( id ,  testcase_id ,  path ,  method_type ) VALUES ('1614d5d7027b', '1614d5d7027b', '/eam/auth/login', 'post');
 INSERT INTO  teston_api_request_body  ( id ,  api_unit_id ,  body_type ) VALUES ('1614d5d7027b', '1614d5d7027b', 'raw');
-INSERT INTO  teston_api_raw   ( id ,  api_unit_id ,  raw ,  type )  VALUES ('1614d5d7027b', '1614d5d7027b', '{\n	\"account\": \"admin\",\n	\"password\": \"123456\",\n	\"userType\": \"1\"\n}', 'json');
+INSERT INTO  teston_api_raw   ( id ,  api_unit_id ,  raw ,  type )  VALUES ('1614d5d7027b', '1614d5d7027b', '{"account": "admin","password": "123456","userType":"1"}', 'json');
 
 INSERT INTO  teston_api_scene  VALUES ('aea59c50c968', 'aea59c50c968');
 INSERT INTO  teston_api_scene_step  VALUES ('771c6a4c212e', 'aea59c50c968', '1614d5d7027b', '2022-7-21 00:59:28');
