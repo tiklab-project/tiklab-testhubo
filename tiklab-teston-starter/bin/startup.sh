@@ -13,10 +13,7 @@ fi
 
 #-------chrome----------------
 if [ ! -d "/opt/chrome" ]; then
-  mv ${DIRS}/embbed/chrome-linux/chrome /opt
-  mv ${DIRS}/embbed/chrome-linux/lib64/* /usr/lib64
-
-  ln -s /opt/chrome/google-chrome /usr/bin/google-chrome
+  mv ${DIRS}/embbed/chrome-linux /opt/chrome
 fi
 
 #-------node-----
