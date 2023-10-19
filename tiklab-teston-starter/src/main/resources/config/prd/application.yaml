@@ -67,6 +67,10 @@ mysql:
 teston-agent:
   embbed:
     enable: true
+  chromedriver:
+    path: /opt/chrome/chromedriver/chromedriver
+  chrome:
+    path: /opt/chrome/chrome/chrome
 
 
 file:
