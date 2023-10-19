@@ -174,20 +174,20 @@
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
-                                        <dependency>
-                                            <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-teston-chrome</artifactId>
-                                            <version>${tiklab-teston-chrome.version}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>embbed</outputDirectory>
-                                        </dependency>
-                                        <dependency>
-                                            <groupId>io.tiklab</groupId>
-                                            <artifactId>tiklab-teston-node</artifactId>
-                                            <version>${tiklab-teston-node.version}</version>
-                                            <type>zip</type>
-                                            <outputDirectory>embbed</outputDirectory>
-                                        </dependency>
+<!--                                        <dependency>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-teston-chrome</artifactId>-->
+<!--                                            <version>${tiklab-teston-chrome.version}</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </dependency>-->
+<!--                                        <dependency>-->
+<!--                                            <groupId>io.tiklab</groupId>-->
+<!--                                            <artifactId>tiklab-teston-node</artifactId>-->
+<!--                                            <version>${tiklab-teston-node.version}</version>-->
+<!--                                            <type>zip</type>-->
+<!--                                            <outputDirectory>embbed</outputDirectory>-->
+<!--                                        </dependency>-->
                                     </artifactItems>
                                 </configuration>
                             </execution>
