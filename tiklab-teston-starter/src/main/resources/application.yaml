@@ -22,18 +22,24 @@ jdbc:
 dcs:
   server:
     enabled: false
-    port: 5010
+    port: 5001
     datapath: ${DATA_HOME}/caches
   client:
-    url: 127.0.0.1:5010
+    url: 127.0.0.1:5001
     group: g1
     database: dcs1
     expire: 7200
 
-eas:
-  embbed:
-    enable: true
-#  address:
+#dfs config
+dfs:
+  server:
+    #    enabled: true
+    #    mode:server
+    port: 4000
+    datapath: ${DATA_HOME}/files
+  client:
+    url: 172.10.1.11:4000
+    bucket: ${app.name}
 
 #plugin
 plugin:
@@ -46,9 +52,34 @@ licences:
 base:
   url: http://
 
+eas:
+  embbed:
+    enable: true
+#  address:
+
+postgresql:
+  database: tiklab_teston
+  embbed:
+    enable: false
+#  db:
+#    port: 5432
+#    username: postgres
+#    password: darth2020
+#    address: ${DATA_HOME}/postgresql
+
+teston-agent:
+  embbed:
+    enable: true
+  chromedriver:
+    path: /opt/chrome/chromedriver/chromedriver
+  chrome:
+    path: /opt/chrome/chrome/chrome
 
 file:
   path:
 homes:
-  address: http://192.168.10.7
+  address:
 
+backups:
+  dir:  /data/teston
+  time: 0 0 2 * * ?
