@@ -31,7 +31,6 @@
         <tiklab-dcs.version>1.0.0</tiklab-dcs.version>
         <tiklab-toolkit.version>1.0.0</tiklab-toolkit.version>
         <tiklab-gateway.version>1.0.0</tiklab-gateway.version>
-        <tiklab-plugin.version>1.0.0</tiklab-plugin.version>
         <tiklab-user.version>1.0.0</tiklab-user.version>
         <tiklab-privilege.version>1.0.0</tiklab-privilege.version>
         <tiklab-eam.version>1.0.0</tiklab-eam.version>
@@ -42,6 +41,8 @@
         <tiklab-postgresql.version>1.0.0</tiklab-postgresql.version>
         <tiklab-upgrade.version>1.0.0</tiklab-upgrade.version>
         <tiklab-jdk.version>1.0.0</tiklab-jdk.version>
+        <tiklab-plugin.version>1.0.1-SNAPSHOT</tiklab-plugin.version>
+
 
         <!--业务-->
         <tiklab-teston-agent.version>1.0.0</tiklab-teston-agent.version>
