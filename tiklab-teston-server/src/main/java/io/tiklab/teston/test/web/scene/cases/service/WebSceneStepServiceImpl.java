@@ -32,22 +32,77 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
     @Override
     public String createWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep) {
         WebSceneStepEntity webSceneStepEntity = BeanMapper.map(webSceneStep, WebSceneStepEntity.class);
-
         webSceneStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+
+        WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
+        webSceneStepQuery.setWebSceneId(webSceneStep.getWebSceneId());
+        List<WebSceneStepEntity> webSceneStepList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
+        if(webSceneStepList!=null && webSceneStepList.size()>0){
+            webSceneStepEntity.setSort(webSceneStepList.size());
+        }else {
+            webSceneStepEntity.setSort(0);
+        }
 
         return webSceneStepDao.createWebSceneStep(webSceneStepEntity);
     }
 
     @Override
     public void updateWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep) {
+
+        if(webSceneStep.getOldSort()!=null){
+            Integer curSort = webSceneStep.getSort();
+            Integer oldSort = webSceneStep.getOldSort();
+
+            WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
+            webSceneStepQuery.setWebSceneId(webSceneStep.getWebSceneId());
+            List<WebSceneStepEntity> webSceneStepList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
+            //如果当前排序大于源排序，中间项的排序都得减1
+            if(curSort > oldSort){
+                for(int i=oldSort+1;i<=curSort;i++){
+                    WebSceneStepEntity webSceneStepEntity = webSceneStepList.get(i);
+                    webSceneStepEntity.setSort(webSceneStepEntity.getSort()-1);
+                    webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
+                }
+            }
+
+            //如果当前排序小于源排序，中间项的排序都得加1
+            if(curSort < oldSort){
+                for (int i=oldSort-1;i>=curSort;i--){
+                    WebSceneStepEntity webSceneStepEntity = webSceneStepList.get(i);
+                    webSceneStepEntity.setSort(webSceneStepEntity.getSort()+1);
+                    webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
+                }
+            }
+
+        }
+
+
         WebSceneStepEntity webSceneStepEntity = BeanMapper.map(webSceneStep, WebSceneStepEntity.class);
+
+
 
         webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
     }
 
     @Override
     public void deleteWebSceneStep(@NotNull String id) {
-        webSceneStepDao.deleteWebSceneStep(id);
+        WebSceneStepEntity webSceneStep = webSceneStepDao.findWebSceneStep(id);
+        if(webSceneStep== null){return;}
+        Integer sort = webSceneStep.getSort();
+
+        WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
+        webSceneStepQuery.setWebSceneId(webSceneStep.getWebSceneId());
+        List<WebSceneStepEntity> webSceneStepList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
+        for(WebSceneStepEntity webSceneStepEntity:webSceneStepList){
+            if(webSceneStepEntity.getSort() > sort){
+                webSceneStepEntity.setSort(webSceneStepEntity.getSort()-1);
+                webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
+            }
+
+            if(webSceneStepEntity.getSort().equals(sort)){
+                webSceneStepDao.deleteWebSceneStep(id);
+            }
+        }
     }
 
     @Override

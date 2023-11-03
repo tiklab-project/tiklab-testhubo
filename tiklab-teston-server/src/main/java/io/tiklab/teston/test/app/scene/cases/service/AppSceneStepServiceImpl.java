@@ -31,14 +31,43 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
     @Override
     public String createAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep) {
         AppSceneStepEntity appSceneStepEntity = BeanMapper.map(appSceneStep, AppSceneStepEntity.class);
-
         appSceneStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+
+        List<AppSceneStepEntity> appSceneStepEntityList = findAppSceneStepEntity(appSceneStep.getAppSceneId());
+        if(appSceneStepEntityList!=null && appSceneStepEntityList.size()>0){
+            appSceneStepEntity.setSort(appSceneStepEntityList.size());
+        }else {
+            appSceneStepEntity.setSort(0);
+        }
 
         return appSceneStepDao.createAppSceneStep(appSceneStepEntity);
     }
 
     @Override
     public void updateAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep) {
+        if(appSceneStep.getOldSort()!=null){
+            Integer curSort = appSceneStep.getSort();
+            Integer oldSort = appSceneStep.getOldSort();
+
+            List<AppSceneStepEntity> appSceneStepEntityList = findAppSceneStepEntity(appSceneStep.getAppSceneId());
+            if(curSort>oldSort){
+                for(int i=oldSort+1;i<=curSort;i++){
+                    AppSceneStepEntity appSceneStepEntity = appSceneStepEntityList.get(i);
+                    appSceneStepEntity.setSort(appSceneStepEntity.getSort()-1);
+                    appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
+                }
+            }
+
+            if(curSort<oldSort){
+                for(int i=oldSort-1;i>=curSort;i--){
+                    AppSceneStepEntity appSceneStepEntity = appSceneStepEntityList.get(i);
+                    appSceneStepEntity.setSort(appSceneStepEntity.getSort()+1);
+                    appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
+                }
+            }
+        }
+
+
         AppSceneStepEntity appSceneStepEntity = BeanMapper.map(appSceneStep, AppSceneStepEntity.class);
 
         appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
@@ -46,7 +75,20 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
 
     @Override
     public void deleteAppSceneStep(@NotNull String id) {
-        appSceneStepDao.deleteAppSceneStep(id);
+        AppSceneStepEntity appSceneStep = appSceneStepDao.findAppSceneStep(id);
+        if(appSceneStep== null){return;}
+        Integer sort = appSceneStep.getSort();
+        List<AppSceneStepEntity> appSceneStepEntityList = findAppSceneStepEntity(appSceneStep.getAppSceneId());
+        for(AppSceneStepEntity appSceneStepEntity: appSceneStepEntityList){
+            if(appSceneStepEntity.getSort()>sort){
+                appSceneStepEntity.setSort(appSceneStepEntity.getSort()-1);
+                appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
+            }
+
+            if(appSceneStepEntity.getSort().equals(sort)){
+                appSceneStepDao.deleteAppSceneStep(id);
+            }
+        }
     }
 
     @Override
@@ -107,4 +149,12 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
         return PaginationBuilder.build(pagination,appSceneStepList);
     }
 
+
+    private List<AppSceneStepEntity> findAppSceneStepEntity(String appSceneId) {
+        AppSceneStepQuery appSceneStepQuery = new AppSceneStepQuery();
+        appSceneStepQuery.setAppSceneId(appSceneId);
+        List<AppSceneStepEntity> appSceneStepList = appSceneStepDao.findAppSceneStepList(appSceneStepQuery);
+
+        return appSceneStepList;
+    }
 }

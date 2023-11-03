@@ -38,6 +38,12 @@ public class FuncUnitStep extends BaseModel {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp updateTime;
 
+    @ApiProperty(name="sort",desc="排序")
+    private Integer sort;
+
+    @ApiProperty(name="oldSort",desc="原排序")
+    private Integer oldSort;
+
     public String getId() {
         return id;
     }
@@ -90,5 +96,21 @@ public class FuncUnitStep extends BaseModel {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getOldSort() {
+        return oldSort;
+    }
+
+    public void setOldSort(Integer oldSort) {
+        this.oldSort = oldSort;
     }
 }

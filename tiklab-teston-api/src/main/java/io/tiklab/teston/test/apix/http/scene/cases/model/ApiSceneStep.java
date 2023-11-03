@@ -43,6 +43,12 @@ public class ApiSceneStep extends BaseModel{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
+    @ApiProperty(name="sort",desc="排序")
+    private Integer sort;
+
+    @ApiProperty(name="oldSort",desc="原排序")
+    private Integer oldSort;
+
     public String getId() {
         return id;
     }
@@ -73,5 +79,21 @@ public class ApiSceneStep extends BaseModel{
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getOldSort() {
+        return oldSort;
+    }
+
+    public void setOldSort(Integer oldSort) {
+        this.oldSort = oldSort;
     }
 }

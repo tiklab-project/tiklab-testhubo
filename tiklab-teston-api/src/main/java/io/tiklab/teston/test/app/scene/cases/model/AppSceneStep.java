@@ -52,6 +52,9 @@ public class AppSceneStep extends BaseModel {
     @ApiProperty(name="sort",desc="排序")
     private Integer sort;
 
+    @ApiProperty(name="oldSort",desc="原排序")
+    private Integer oldSort;
+
     @ApiProperty(name="preScript",desc="前置脚本")
     private String preScript;
 
@@ -160,5 +163,13 @@ public class AppSceneStep extends BaseModel {
 
     public void setAfterScript(String afterScript) {
         this.afterScript = afterScript;
+    }
+
+    public Integer getOldSort() {
+        return oldSort;
+    }
+
+    public void setOldSort(Integer oldSort) {
+        this.oldSort = oldSort;
     }
 }

@@ -30,6 +30,10 @@ public class ApiSceneStepEntity implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 排序
+    @Column(name = "sort")
+    private Integer sort;
+
     public String getId() {
         return id;
     }
@@ -60,5 +64,13 @@ public class ApiSceneStepEntity implements Serializable {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

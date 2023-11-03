@@ -11,8 +11,9 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="teston_func_unit_step")
 public class FuncUnitStepEntity implements Serializable {
+
     @Id
-     @GeneratorValue(length = 12)
+    @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
@@ -39,6 +40,10 @@ public class FuncUnitStepEntity implements Serializable {
     // 更新时间
     @Column(name = "update_time")
     private Timestamp updateTime;
+
+    // 排序
+    @Column(name = "sort")
+    private Integer sort;
 
     public String getId() {
         return id;
@@ -94,5 +99,13 @@ public class FuncUnitStepEntity implements Serializable {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

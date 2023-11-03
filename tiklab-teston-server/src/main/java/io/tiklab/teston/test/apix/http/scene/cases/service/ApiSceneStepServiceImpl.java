@@ -41,22 +41,63 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
     @Override
     public String createApiSceneStep(@NotNull @Valid ApiSceneStep apiSceneStep) {
         ApiSceneStepEntity apiSceneStepEntity = BeanMapper.map(apiSceneStep, ApiSceneStepEntity.class);
-
         apiSceneStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+
+        List<ApiSceneStepEntity> apiSceneStepEntityList = findApiSceneStepEntityList(apiSceneStep.getApiScene().getId());
+        if (apiSceneStepEntityList!=null && apiSceneStepEntityList.size() > 0) {
+            apiSceneStepEntity.setSort(apiSceneStepEntityList.size());
+        }else {
+            apiSceneStepEntity.setSort(0);
+        }
 
         return apiSceneStepDao.createApiSceneStep(apiSceneStepEntity);
     }
 
     @Override
     public void updateApiSceneStep(@NotNull @Valid ApiSceneStep apiSceneStep) {
-        ApiSceneStepEntity apiSceneStepEntity = BeanMapper.map(apiSceneStep, ApiSceneStepEntity.class);
+        if(apiSceneStep.getOldSort()!=null){
+            Integer curSort = apiSceneStep.getSort();
+            Integer oldSort = apiSceneStep.getOldSort();
 
+            List<ApiSceneStepEntity> apiSceneStepEntityList = findApiSceneStepEntityList(apiSceneStep.getApiScene().getId());
+            if(curSort>oldSort){
+                for(int i=oldSort+1;i<=curSort;i++){
+                    ApiSceneStepEntity apiSceneStepEntity = apiSceneStepEntityList.get(i);
+                    apiSceneStepEntity.setSort(apiSceneStepEntity.getSort()-1);
+                    apiSceneStepDao.updateApiSceneStep(apiSceneStepEntity);
+                }
+            }
+            if(curSort<oldSort){
+                for(int i=oldSort-1;i>=curSort;i--){
+                    ApiSceneStepEntity apiSceneStepEntity = apiSceneStepEntityList.get(i);
+                    apiSceneStepEntity.setSort(apiSceneStepEntity.getSort()+1);
+                    apiSceneStepDao.updateApiSceneStep(apiSceneStepEntity);
+                }
+            }
+        }
+
+
+        ApiSceneStepEntity apiSceneStepEntity = BeanMapper.map(apiSceneStep, ApiSceneStepEntity.class);
         apiSceneStepDao.updateApiSceneStep(apiSceneStepEntity);
     }
 
     @Override
     public void deleteApiSceneStep(@NotNull String id) {
-        apiSceneStepDao.deleteApiSceneStep(id);
+        ApiSceneStepEntity apiSceneStep = apiSceneStepDao.findApiSceneStep(id);
+        if(apiSceneStep== null){return;}
+        Integer sort = apiSceneStep.getSort();
+
+        List<ApiSceneStepEntity> apiSceneStepEntityList = findApiSceneStepEntityList(apiSceneStep.getApiSceneId());
+        for(ApiSceneStepEntity apiSceneStepEntity:apiSceneStepEntityList){
+            if(apiSceneStepEntity.getSort()>sort){
+                apiSceneStepEntity.setSort(apiSceneStepEntity.getSort()-1);
+                apiSceneStepDao.updateApiSceneStep(apiSceneStepEntity);
+            }
+
+            if(apiSceneStepEntity.getSort().equals(sort)){
+                apiSceneStepDao.deleteApiSceneStep(id);
+            }
+        }
     }
 
     @Override
@@ -134,5 +175,13 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
         for (ApiSceneStep apiSceneStep : apiSceneStepList) {
             createApiSceneStep(apiSceneStep);
         }
+    }
+
+    private List<ApiSceneStepEntity> findApiSceneStepEntityList(String apiSceneId){
+        ApiSceneStepQuery apiSceneStepQuery = new ApiSceneStepQuery();
+        apiSceneStepQuery.setApiSceneId(apiSceneId);
+        List<ApiSceneStepEntity> apiSceneStepList = apiSceneStepDao.findApiSceneStepList(apiSceneStepQuery);
+
+        return apiSceneStepList;
     }
 }
