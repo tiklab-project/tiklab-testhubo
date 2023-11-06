@@ -1,5 +1,6 @@
 package io.tiklab.teston.testplan.cases.service;
 
+import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.testplan.cases.dao.TestPlanCaseDao;
 import io.tiklab.teston.testplan.cases.entity.TestPlanCaseEntity;
@@ -13,6 +14,8 @@ import io.tiklab.teston.testplan.cases.model.TestPlanCaseQuery;
 
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
+import io.tiklab.user.user.model.User;
+import io.tiklab.user.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,9 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    UserService userService;
 
 
     @Override
@@ -107,11 +113,26 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     @Override
     public Pagination<TestPlanCase> findTestPlanCasePage(TestPlanCaseQuery testPlanCaseQuery) {
         Pagination<TestPlanCaseEntity>  pagination = testPlanDetailDao.findTestPlanCasePage(testPlanCaseQuery);
-
         List<TestPlanCase> testPlanCaseList = BeanMapper.mapList(pagination.getDataList(), TestPlanCase.class);
 
         joinTemplate.joinQuery(testPlanCaseList);
 
+        if(testPlanCaseList!=null){
+            for(TestPlanCase testPlanCase:testPlanCaseList){
+                Category category = null;
+                if(testPlanCase.getTestCase().getCategory()!=null){
+                    category = categoryService.findCategory(testPlanCase.getTestCase().getCategory().getId());
+                }
+
+                User user = null;
+                if(testPlanCase.getTestCase().getCreateUser()!=null){
+                    user = userService.findUser(testPlanCase.getTestCase().getCreateUser().getId());
+                }
+
+                testPlanCase.getTestCase().setCategory(category);
+                testPlanCase.getTestCase().setCreateUser(user);
+            }
+        }
         return PaginationBuilder.build(pagination, testPlanCaseList);
     }
 
