@@ -19,4 +19,6 @@ public class MessageTemplateConstant {
     public static final String LOG_TYPE_UPDATE_ID = "UPDATE_TYPE";
     public static final String LOG_TYPE_DELETE_ID = "DELETE_TYPE";
 
+
+
 }
