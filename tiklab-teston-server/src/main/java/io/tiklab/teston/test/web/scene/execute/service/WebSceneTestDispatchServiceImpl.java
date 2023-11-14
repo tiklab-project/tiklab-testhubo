@@ -94,7 +94,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         JSONObject variable = variableService.getVariable(webSceneId);
         webSceneTestRequest.setVariableJson(variable);
 
-
         //设置步骤数据
         webSceneTestRequest.setWebSceneStepList(webSceneStepList);
 

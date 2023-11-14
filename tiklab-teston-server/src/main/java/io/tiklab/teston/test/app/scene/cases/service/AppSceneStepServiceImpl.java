@@ -8,6 +8,9 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStepQuery;
+import io.tiklab.teston.test.common.model.StepAssertCommon;
+import io.tiklab.teston.test.common.model.StepAssertCommonQuery;
+import io.tiklab.teston.test.common.service.StepAssertCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,9 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
 
     @Autowired
     JoinTemplate joinTemplate;
+
+    @Autowired
+    StepAssertCommonService stepAssertCommonService;
 
     @Override
     public String createAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep) {
@@ -130,10 +136,15 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
     @Override
     public List<AppSceneStep> findAppSceneStepList(AppSceneStepQuery appSceneStepQuery) {
         List<AppSceneStepEntity> appSceneStepEntityList = appSceneStepDao.findAppSceneStepList(appSceneStepQuery);
-
         List<AppSceneStep> appSceneStepList = BeanMapper.mapList(appSceneStepEntityList,AppSceneStep.class);
-
         joinTemplate.joinQuery(appSceneStepList);
+
+        for(AppSceneStep appSceneStep: appSceneStepList){
+            StepAssertCommonQuery stepAssertCommonQuery = new StepAssertCommonQuery();
+            stepAssertCommonQuery.setStepId(appSceneStep.getId());
+            List<StepAssertCommon> stepAssertCommonList = stepAssertCommonService.findStepAssertCommonList(stepAssertCommonQuery);
+            appSceneStep.setStepAssertCommonList(stepAssertCommonList);
+        }
 
         return appSceneStepList;
     }

@@ -1,5 +1,8 @@
 package io.tiklab.teston.test.web.scene.cases.service;
 
+import io.tiklab.teston.test.common.model.StepAssertCommon;
+import io.tiklab.teston.test.common.model.StepAssertCommonQuery;
+import io.tiklab.teston.test.common.service.StepAssertCommonService;
 import io.tiklab.teston.test.web.scene.cases.dao.WebSceneStepDao;
 import io.tiklab.teston.test.web.scene.cases.entity.WebSceneStepEntity;
 import io.tiklab.beans.BeanMapper;
@@ -28,6 +31,10 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
 
     @Autowired
     JoinTemplate joinTemplate;
+
+    @Autowired
+    StepAssertCommonService stepAssertCommonService;
+
 
     @Override
     public String createWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep) {
@@ -144,10 +151,15 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
     @Override
     public List<WebSceneStep> findWebSceneStepList(WebSceneStepQuery webSceneStepQuery) {
         List<WebSceneStepEntity> webSceneStepEntityList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
-
         List<WebSceneStep> webSceneStepList = BeanMapper.mapList(webSceneStepEntityList,WebSceneStep.class);
-
         joinTemplate.joinQuery(webSceneStepList);
+
+        for(WebSceneStep webSceneStep:webSceneStepList){
+            StepAssertCommonQuery stepAssertCommonQuery = new StepAssertCommonQuery();
+            stepAssertCommonQuery.setStepId(webSceneStep.getId());
+            List<StepAssertCommon> stepAssertCommonList = stepAssertCommonService.findStepAssertCommonList(stepAssertCommonQuery);
+            webSceneStep.setStepAssertCommonList(stepAssertCommonList);
+        }
 
         return webSceneStepList;
     }

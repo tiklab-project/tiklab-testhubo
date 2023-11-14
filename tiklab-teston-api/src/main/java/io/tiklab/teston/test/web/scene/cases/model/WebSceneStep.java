@@ -6,8 +6,10 @@ import io.tiklab.core.BaseModel;
 import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.model.StepAssertCommon;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * web场景步骤 模型
@@ -59,6 +61,9 @@ public class WebSceneStep extends BaseModel {
 
     @ApiProperty(name="afterScript",desc="后置脚本")
     private String afterScript;
+
+    @ApiProperty(name="stepAssertCommon",desc="断言")
+    private List<StepAssertCommon> stepAssertCommonList;
 
     public String getId() {
         return id;
@@ -170,5 +175,13 @@ public class WebSceneStep extends BaseModel {
 
     public void setOldSort(Integer oldSort) {
         this.oldSort = oldSort;
+    }
+
+    public List<StepAssertCommon> getStepAssertCommonList() {
+        return stepAssertCommonList;
+    }
+
+    public void setStepAssertCommonList(List<StepAssertCommon> stepAssertCommonList) {
+        this.stepAssertCommonList = stepAssertCommonList;
     }
 }

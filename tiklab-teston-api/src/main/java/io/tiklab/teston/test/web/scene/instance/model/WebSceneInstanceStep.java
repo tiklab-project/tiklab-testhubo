@@ -4,6 +4,9 @@ import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.model.StepAssertCommon;
+
+import java.util.List;
 
 /**
  * web场景下步骤 模型
@@ -38,6 +41,10 @@ public class WebSceneInstanceStep extends BaseModel {
 
     @ApiProperty(name="duration",desc="耗时")
     private Double duration;
+
+    private String preScript;
+    private String afterScript;
+    private List<StepAssertCommon> stepAssertCommonList;
 
     public String getId() {
         return id;
@@ -104,5 +111,29 @@ public class WebSceneInstanceStep extends BaseModel {
 
     public void setDuration(Double duration) {
         this.duration = duration;
+    }
+
+    public String getPreScript() {
+        return preScript;
+    }
+
+    public void setPreScript(String preScript) {
+        this.preScript = preScript;
+    }
+
+    public String getAfterScript() {
+        return afterScript;
+    }
+
+    public void setAfterScript(String afterScript) {
+        this.afterScript = afterScript;
+    }
+
+    public List<StepAssertCommon> getStepAssertCommonList() {
+        return stepAssertCommonList;
+    }
+
+    public void setStepAssertCommonList(List<StepAssertCommon> stepAssertCommonList) {
+        this.stepAssertCommonList = stepAssertCommonList;
     }
 }

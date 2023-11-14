@@ -34,9 +34,6 @@ public class StepAssertCommonServiceImpl implements StepAssertCommonService {
     JoinTemplate joinTemplate;
 
     @Autowired
-    MagicValue magicValue;
-
-    @Autowired
     VariableAssertService variableAssertService;
 
     @Autowired
@@ -49,14 +46,14 @@ public class StepAssertCommonServiceImpl implements StepAssertCommonService {
         stepAssertCommonEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
         String id = stepAssertCommonDao.createStepAssertCommon(stepAssertCommonEntity);
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_VARIABLE)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_VARIABLE)){
             VariableAssert variableAssert = stepAssertCommon.getVariableAssert();
             variableAssert.setAssertId(id);
             variableAssert.setId(id);
             variableAssertService.createVariableAssert(variableAssert);
         }
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_ELEMENT)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_ELEMENT)){
             ElementAssert elementAssert = stepAssertCommon.getElementAssert();
             elementAssert.setAssertId(id);
             elementAssert.setId(id);
@@ -71,12 +68,12 @@ public class StepAssertCommonServiceImpl implements StepAssertCommonService {
         StepAssertCommonEntity stepAssertCommonEntity = BeanMapper.map(stepAssertCommon, StepAssertCommonEntity.class);
         stepAssertCommonDao.updateStepAssertCommon(stepAssertCommonEntity);
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_VARIABLE)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_VARIABLE)){
             VariableAssert variableAssert = stepAssertCommon.getVariableAssert();
             variableAssertService.updateVariableAssert(variableAssert);
         }
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_ELEMENT)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_ELEMENT)){
             ElementAssert elementAssert = stepAssertCommon.getElementAssert();
             elementAssertService.updateElementAssert(elementAssert);
         }
@@ -87,11 +84,11 @@ public class StepAssertCommonServiceImpl implements StepAssertCommonService {
     public void deleteStepAssertCommon(@NotNull String id) {
         StepAssertCommonEntity stepAssertCommon = stepAssertCommonDao.findStepAssertCommon(id);
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_VARIABLE)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_VARIABLE)){
             variableAssertService.deleteVariableAssert(id);
         }
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_ELEMENT)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_ELEMENT)){
             elementAssertService.deleteElementAssert(id);
         }
 
@@ -111,12 +108,12 @@ public class StepAssertCommonServiceImpl implements StepAssertCommonService {
         StepAssertCommon stepAssertCommon = findOne(id);
         joinTemplate.joinQuery(stepAssertCommon);
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_VARIABLE)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_VARIABLE)){
             VariableAssert variableAssert = variableAssertService.findVariableAssert(id);
             stepAssertCommon.setVariableAssert(variableAssert);
         }
 
-        if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_ELEMENT)){
+        if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_ELEMENT)){
             ElementAssert elementAssert = elementAssertService.findElementAssert(id);
             stepAssertCommon.setElementAssert(elementAssert);
         }
@@ -131,12 +128,12 @@ public class StepAssertCommonServiceImpl implements StepAssertCommonService {
         joinTemplate.joinQuery(stepAssertCommonList);
 
         for (StepAssertCommon stepAssertCommon:stepAssertCommonList){
-            if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_VARIABLE)){
+            if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_VARIABLE)){
                 VariableAssert variableAssert = variableAssertService.findVariableAssert(stepAssertCommon.getId());
                 stepAssertCommon.setVariableAssert(variableAssert);
             }
 
-            if(Objects.equals(stepAssertCommon.getType(), magicValue.ASSERT_TYPE_ELEMENT)){
+            if(Objects.equals(stepAssertCommon.getType(), MagicValue.ASSERT_TYPE_ELEMENT)){
                 ElementAssert elementAssert = elementAssertService.findElementAssert(stepAssertCommon.getId());
                 stepAssertCommon.setElementAssert(elementAssert);
             }

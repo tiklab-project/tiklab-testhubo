@@ -4,6 +4,9 @@ import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.model.StepAssertCommon;
+
+import java.util.List;
 
 /**
  * app场景步骤实例 模型
@@ -35,6 +38,10 @@ public class AppSceneInstanceStep extends BaseModel {
 
     @ApiProperty(name="result",desc="结果")
     private Integer result;
+
+    private String preScript;
+    private String afterScript;
+    private List<StepAssertCommon> stepAssertCommonList;
 
     public String getId() {
         return id;
@@ -91,5 +98,29 @@ public class AppSceneInstanceStep extends BaseModel {
 
     public void setResult(Integer result) {
         this.result = result;
+    }
+
+    public String getPreScript() {
+        return preScript;
+    }
+
+    public void setPreScript(String preScript) {
+        this.preScript = preScript;
+    }
+
+    public String getAfterScript() {
+        return afterScript;
+    }
+
+    public void setAfterScript(String afterScript) {
+        this.afterScript = afterScript;
+    }
+
+    public List<StepAssertCommon> getStepAssertCommonList() {
+        return stepAssertCommonList;
+    }
+
+    public void setStepAssertCommonList(List<StepAssertCommon> stepAssertCommonList) {
+        this.stepAssertCommonList = stepAssertCommonList;
     }
 }
