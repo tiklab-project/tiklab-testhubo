@@ -4,10 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.web.scene.WebSceneTestService;
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 import io.tiklab.teston.support.variable.service.VariableService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStepQuery;
@@ -24,6 +28,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +54,9 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
 
     @Autowired
     VariableService variableService;
+
+    @Autowired
+    StepCommonService stepCommonService;
 
     /**
      *  环境中获取是否是内嵌agent
@@ -87,9 +95,15 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         String webSceneId = webSceneTestRequest.getWebSceneId();
 
         //先查询所有的场景步骤
-        WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
-        webSceneStepQuery.setWebSceneId(webSceneId);
-        List<WebSceneStep> webSceneStepList = webSceneStepService.findWebSceneStepList(webSceneStepQuery);
+        StepCommonQuery stepCommonQuery = new StepCommonQuery();
+        stepCommonQuery.setCaseId(webSceneId);
+        stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_WEB);
+        List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+
+        List<WebSceneStep> webSceneStepList = new ArrayList<>();
+        for(StepCommon stepCommon : stepCommonList){
+            webSceneStepList.add(stepCommon.getWebSceneStep());
+        }
 
         JSONObject variable = variableService.getVariable(webSceneId);
         webSceneTestRequest.setVariableJson(variable);

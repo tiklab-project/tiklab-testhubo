@@ -1,14 +1,12 @@
 package io.tiklab.teston.test.app.scene.cases.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
 import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
-import io.tiklab.teston.test.common.model.StepAssertCommon;
+import io.tiklab.teston.test.common.stepassert.model.StepAssertCommon;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -21,7 +19,6 @@ public class AppSceneStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")
     private String id;
-
 
     @ApiProperty(name="appSceneId",desc="场景")
     private String appSceneId;
@@ -46,16 +43,6 @@ public class AppSceneStep extends BaseModel {
 
     @ApiProperty(name="expectedResult",desc="预期值")
     private String expectedResult;
-
-    @ApiProperty(name="createTime",desc="创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Timestamp createTime;
-
-    @ApiProperty(name="sort",desc="排序")
-    private Integer sort;
-
-    @ApiProperty(name="oldSort",desc="原排序")
-    private Integer oldSort;
 
     @ApiProperty(name="preScript",desc="前置脚本")
     private String preScript;
@@ -138,22 +125,6 @@ public class AppSceneStep extends BaseModel {
         this.expectedResult = expectedResult;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
     public String getPreScript() {
         return preScript;
     }
@@ -170,14 +141,6 @@ public class AppSceneStep extends BaseModel {
         this.afterScript = afterScript;
     }
 
-    public Integer getOldSort() {
-        return oldSort;
-    }
-
-    public void setOldSort(Integer oldSort) {
-        this.oldSort = oldSort;
-    }
-
     public List<StepAssertCommon> getStepAssertCommonList() {
         return stepAssertCommonList;
     }
@@ -185,4 +148,5 @@ public class AppSceneStep extends BaseModel {
     public void setStepAssertCommonList(List<StepAssertCommon> stepAssertCommonList) {
         this.stepAssertCommonList = stepAssertCommonList;
     }
+
 }

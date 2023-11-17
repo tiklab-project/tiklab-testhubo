@@ -8,9 +8,11 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStepQuery;
-import io.tiklab.teston.test.common.model.StepAssertCommon;
-import io.tiklab.teston.test.common.model.StepAssertCommonQuery;
-import io.tiklab.teston.test.common.service.StepAssertCommonService;
+import io.tiklab.teston.test.common.stepassert.model.StepAssertCommon;
+import io.tiklab.teston.test.common.stepassert.model.StepAssertCommonQuery;
+import io.tiklab.teston.test.common.stepassert.service.StepAssertCommonService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,46 +36,25 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
     @Autowired
     StepAssertCommonService stepAssertCommonService;
 
+    @Autowired
+    StepCommonService stepCommonService;
+
     @Override
     public String createAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep) {
+        //公共步骤 创建
+        StepCommon stepCommon = new StepCommon();
+        stepCommon.setCaseId(appSceneStep.getAppSceneId());
+        String stepId = stepCommonService.createStepCommon(stepCommon);
+
         AppSceneStepEntity appSceneStepEntity = BeanMapper.map(appSceneStep, AppSceneStepEntity.class);
-        appSceneStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        appSceneStepEntity.setId(stepId);
+        appSceneStepDao.createAppSceneStep(appSceneStepEntity);
 
-        List<AppSceneStepEntity> appSceneStepEntityList = findAppSceneStepEntity(appSceneStep.getAppSceneId());
-        if(appSceneStepEntityList!=null && appSceneStepEntityList.size()>0){
-            appSceneStepEntity.setSort(appSceneStepEntityList.size());
-        }else {
-            appSceneStepEntity.setSort(0);
-        }
-
-        return appSceneStepDao.createAppSceneStep(appSceneStepEntity);
+        return stepId;
     }
 
     @Override
     public void updateAppSceneStep(@NotNull @Valid AppSceneStep appSceneStep) {
-        if(appSceneStep.getOldSort()!=null){
-            Integer curSort = appSceneStep.getSort();
-            Integer oldSort = appSceneStep.getOldSort();
-
-            List<AppSceneStepEntity> appSceneStepEntityList = findAppSceneStepEntity(appSceneStep.getAppSceneId());
-            if(curSort>oldSort){
-                for(int i=oldSort+1;i<=curSort;i++){
-                    AppSceneStepEntity appSceneStepEntity = appSceneStepEntityList.get(i);
-                    appSceneStepEntity.setSort(appSceneStepEntity.getSort()-1);
-                    appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
-                }
-            }
-
-            if(curSort<oldSort){
-                for(int i=oldSort-1;i>=curSort;i--){
-                    AppSceneStepEntity appSceneStepEntity = appSceneStepEntityList.get(i);
-                    appSceneStepEntity.setSort(appSceneStepEntity.getSort()+1);
-                    appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
-                }
-            }
-        }
-
-
         AppSceneStepEntity appSceneStepEntity = BeanMapper.map(appSceneStep, AppSceneStepEntity.class);
 
         appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
@@ -81,20 +62,7 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
 
     @Override
     public void deleteAppSceneStep(@NotNull String id) {
-        AppSceneStepEntity appSceneStep = appSceneStepDao.findAppSceneStep(id);
-        if(appSceneStep== null){return;}
-        Integer sort = appSceneStep.getSort();
-        List<AppSceneStepEntity> appSceneStepEntityList = findAppSceneStepEntity(appSceneStep.getAppSceneId());
-        for(AppSceneStepEntity appSceneStepEntity: appSceneStepEntityList){
-            if(appSceneStepEntity.getSort()>sort){
-                appSceneStepEntity.setSort(appSceneStepEntity.getSort()-1);
-                appSceneStepDao.updateAppSceneStep(appSceneStepEntity);
-            }
-
-            if(appSceneStepEntity.getSort().equals(sort)){
-                appSceneStepDao.deleteAppSceneStep(id);
-            }
-        }
+        appSceneStepDao.deleteAppSceneStep(id);
     }
 
     @Override
@@ -160,12 +128,4 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
         return PaginationBuilder.build(pagination,appSceneStepList);
     }
 
-
-    private List<AppSceneStepEntity> findAppSceneStepEntity(String appSceneId) {
-        AppSceneStepQuery appSceneStepQuery = new AppSceneStepQuery();
-        appSceneStepQuery.setAppSceneId(appSceneId);
-        List<AppSceneStepEntity> appSceneStepList = appSceneStepDao.findAppSceneStepList(appSceneStepQuery);
-
-        return appSceneStepList;
-    }
 }

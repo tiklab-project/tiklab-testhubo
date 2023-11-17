@@ -12,7 +12,7 @@ import java.util.List;
 public class AppSceneStepQuery {
 
     @ApiProperty(name ="orderParams",desc = "排序参数")
-    private List<Order> orderParams = OrderBuilders.instance().asc("sort").get();
+    private List<Order> orderParams = OrderBuilders.instance().asc("id").get();
 
     @ApiProperty(name ="pageParam",desc = "分页参数")
     private Page pageParam = new Page();

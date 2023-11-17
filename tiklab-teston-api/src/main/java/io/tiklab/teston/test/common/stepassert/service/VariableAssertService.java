@@ -1,8 +1,8 @@
-package io.tiklab.teston.test.common.service;
+package io.tiklab.teston.test.common.stepassert.service;
 
 import io.tiklab.join.annotation.FindOne;
 import io.tiklab.join.annotation.JoinProvider;
-import io.tiklab.teston.test.common.model.VariableAssert;
+import io.tiklab.teston.test.common.stepassert.model.VariableAssert;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

@@ -4,7 +4,7 @@ import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
-import io.tiklab.teston.test.common.model.StepAssertCommon;
+import io.tiklab.teston.test.common.stepassert.model.StepAssertCommon;
 
 import java.util.List;
 

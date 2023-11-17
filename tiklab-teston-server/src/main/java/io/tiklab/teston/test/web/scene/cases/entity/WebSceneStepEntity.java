@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class WebSceneStepEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
+//     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
@@ -50,10 +50,6 @@ public class WebSceneStepEntity implements Serializable {
     @Column(name = "expected_result",length = 128)
     private String expectedResult;
 
-    // 创建时间
-    @Column(name = "create_time")
-    private Timestamp createTime;
-
     //前置脚本
     @Column(name = "pre_script")
     private String preScript;
@@ -61,10 +57,6 @@ public class WebSceneStepEntity implements Serializable {
     //后置脚本
     @Column(name = "after_script")
     private String afterScript;
-
-    // 排序
-    @Column(name = "sort")
-    private Integer sort;
 
     public String getId() {
         return id;
@@ -80,14 +72,6 @@ public class WebSceneStepEntity implements Serializable {
 
     public void setWebSceneId(String webSceneId) {
         this.webSceneId = webSceneId;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
     }
 
     public String getName() {
@@ -144,14 +128,6 @@ public class WebSceneStepEntity implements Serializable {
 
     public void setExpectedResult(String expectedResult) {
         this.expectedResult = expectedResult;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
     }
 
     public String getPreScript() {

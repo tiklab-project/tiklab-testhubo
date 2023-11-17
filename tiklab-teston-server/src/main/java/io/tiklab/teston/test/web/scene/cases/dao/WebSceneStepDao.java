@@ -83,7 +83,7 @@ public class WebSceneStepDao{
     public List<WebSceneStepEntity> findWebSceneStepList(WebSceneStepQuery webSceneStepQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WebSceneStepEntity.class)
                 .eq("webSceneId",webSceneStepQuery.getWebSceneId())
-                .orders(webSceneStepQuery.getOrderParams())
+//                .orders(webSceneStepQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition,WebSceneStepEntity.class);
     }

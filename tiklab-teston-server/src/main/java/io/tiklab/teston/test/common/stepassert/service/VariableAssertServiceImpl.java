@@ -2,8 +2,7 @@ package io.tiklab.teston.test.common.stepassert.service;
 
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.teston.test.common.model.VariableAssert;
-import io.tiklab.teston.test.common.service.VariableAssertService;
+import io.tiklab.teston.test.common.stepassert.model.VariableAssert;
 import io.tiklab.teston.test.common.stepassert.dao.VariableAssertDao;
 import io.tiklab.teston.test.common.stepassert.entity.VariableAssertEntity;
 import org.springframework.beans.factory.annotation.Autowired;

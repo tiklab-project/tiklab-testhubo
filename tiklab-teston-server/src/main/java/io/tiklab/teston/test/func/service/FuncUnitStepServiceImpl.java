@@ -4,6 +4,8 @@ import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import io.tiklab.teston.test.func.dao.FuncUnitStepDao;
 import io.tiklab.teston.test.func.entity.FuncUnitStepEntity;
 import io.tiklab.teston.test.func.model.FuncUnitStep;
@@ -28,79 +30,33 @@ public class FuncUnitStepServiceImpl implements FuncUnitStepService {
     @Autowired
     JoinTemplate joinTemplate;
 
+    @Autowired
+    StepCommonService stepCommonService;
+
     @Override
     public String createFuncUnitStep(@NotNull @Valid FuncUnitStep funcUnitStep) {
+
+        //公共步骤 创建
+        StepCommon stepCommon = new StepCommon();
+        stepCommon.setCaseId(funcUnitStep.getFuncUnitId());
+        String stepId = stepCommonService.createStepCommon(stepCommon);
+
         FuncUnitStepEntity funcUnitStepEntity = BeanMapper.map(funcUnitStep, FuncUnitStepEntity.class);
-        funcUnitStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        funcUnitStepEntity.setId(stepId);
+        funcUnitStepDao.createFuncUnitStep(funcUnitStepEntity);
 
-        FuncUnitStepQuery funcUnitStepQuery = new FuncUnitStepQuery();
-        funcUnitStepQuery.setFuncUnitId(funcUnitStep.getFuncUnitId());
-        List<FuncUnitStepEntity> funcUnitStepList = funcUnitStepDao.findFuncUnitStepList(funcUnitStepQuery);
-        if(funcUnitStepList!= null && funcUnitStepList.size() > 0){
-            funcUnitStepEntity.setSort(funcUnitStepList.size());
-        }else {
-            funcUnitStepEntity.setSort(0);
-        }
-
-        return funcUnitStepDao.createFuncUnitStep(funcUnitStepEntity);
+        return stepId;
     }
 
     @Override
     public void updateFuncUnitStep(@NotNull @Valid FuncUnitStep funcUnitStep) {
-
-        // 如果oldSort为空，则不是改变位置
-        if(funcUnitStep.getOldSort()!=null){
-            Integer curSort = funcUnitStep.getSort();
-            Integer oldSort = funcUnitStep.getOldSort();
-
-            FuncUnitStepQuery funcUnitStepQuery = new FuncUnitStepQuery();
-            funcUnitStepQuery.setFuncUnitId(funcUnitStep.getFuncUnitId());
-            List<FuncUnitStepEntity> funcUnitStepList = funcUnitStepDao.findFuncUnitStepList(funcUnitStepQuery);
-
-            //如果当前排序大于源排序，中间项的排序都得减1
-            if(curSort > oldSort){
-                for(int i=oldSort+1;i<=curSort;i++){
-                    FuncUnitStepEntity funcUnitStepEntity1 = funcUnitStepList.get(i);
-                    funcUnitStepEntity1.setSort(funcUnitStepEntity1.getSort()-1);
-                    funcUnitStepDao.updateFuncUnitStep(funcUnitStepEntity1);
-                }
-            }
-
-            //如果当前排序小于源排序，中间项的排序都得加1
-            if(curSort < oldSort){
-                for (int i=oldSort-1;i>=curSort;i--){
-                    FuncUnitStepEntity funcUnitStepEntity1 = funcUnitStepList.get(i);
-                    funcUnitStepEntity1.setSort(funcUnitStepEntity1.getSort()+1);
-                    funcUnitStepDao.updateFuncUnitStep(funcUnitStepEntity1);
-                }
-            }
-        }
-
         FuncUnitStepEntity funcUnitStepEntity = BeanMapper.map(funcUnitStep, FuncUnitStepEntity.class);
-        funcUnitStepEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         funcUnitStepDao.updateFuncUnitStep(funcUnitStepEntity);
     }
 
     @Override
     public void deleteFuncUnitStep(@NotNull String id) {
-
-        FuncUnitStepEntity funcUnitStep = funcUnitStepDao.findFuncUnitStep(id);
-        if(funcUnitStep== null){return;}
-        Integer sort = funcUnitStep.getSort();
-
-        FuncUnitStepQuery funcUnitStepQuery = new FuncUnitStepQuery();
-        funcUnitStepQuery.setFuncUnitId(funcUnitStep.getFuncUnitId());
-        List<FuncUnitStepEntity> funcUnitStepList = funcUnitStepDao.findFuncUnitStepList(funcUnitStepQuery);
-        for(FuncUnitStepEntity funcUnitStepEntity:funcUnitStepList){
-            if(funcUnitStepEntity.getSort() > sort){
-                funcUnitStepEntity.setSort(funcUnitStepEntity.getSort()-1);
-                funcUnitStepDao.updateFuncUnitStep(funcUnitStepEntity);
-            }
-
-            if(funcUnitStepEntity.getSort().equals(sort)){
-                funcUnitStepDao.deleteFuncUnitStep(id);
-            }
-        }
+        funcUnitStepDao.deleteFuncUnitStep(id);
     }
 
     @Override

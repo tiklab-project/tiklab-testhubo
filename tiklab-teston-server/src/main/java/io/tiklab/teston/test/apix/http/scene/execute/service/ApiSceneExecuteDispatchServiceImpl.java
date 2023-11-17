@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 
 import io.tiklab.teston.agent.api.http.scene.ApiSceneTestService;
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStep;
@@ -22,6 +23,9 @@ import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +64,9 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
 
     @Autowired
     VariableService variableService;
+
+    @Autowired
+    StepCommonService stepCommonService;
 
     /**
      *  环境中获取是否是内嵌agent
@@ -123,12 +130,18 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
     public List<ApiUnitTestRequest> processApiSceneTestData(ApiSceneTestRequest apiSceneTestRequest){
         String apiSceneId = apiSceneTestRequest.getApiSceneCase().getId();
         //查询测试步骤
-        ApiSceneStepQuery apiSceneStepQuery = new ApiSceneStepQuery();
-        apiSceneStepQuery.setApiSceneId(apiSceneId);
-        List<ApiSceneStep> apiSceneStepList = apiSceneStepService.findApiSceneStepList(apiSceneStepQuery);
+        StepCommonQuery stepCommonQuery = new StepCommonQuery();
+        stepCommonQuery.setCaseId(apiSceneId);
+        stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API);
+        List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+
+        List<ApiSceneStep> apiSceneStepList = new ArrayList<>();
+        for(StepCommon stepCommon : stepCommonList){
+            apiSceneStepList.add(stepCommon.getApiSceneStep());
+        }
+
 
         List<ApiUnitTestRequest> apiUnitTestRequestList = new ArrayList<>();
-
         if(CollectionUtils.isNotEmpty(apiSceneStepList)){
             for(ApiSceneStep apiSceneStep :apiSceneStepList){
                 //设置apiUnitTestRequest参数

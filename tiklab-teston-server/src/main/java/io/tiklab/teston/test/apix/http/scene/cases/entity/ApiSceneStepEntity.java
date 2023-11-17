@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class ApiSceneStepEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
+//   @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
@@ -25,14 +25,6 @@ public class ApiSceneStepEntity implements Serializable {
     // 绑定的单元用例
     @Column(name = "api_unit_id",length = 32)
     private String apiUnitId;
-
-    // 创建时间
-    @Column(name = "create_time")
-    private Timestamp createTime;
-
-    // 排序
-    @Column(name = "sort")
-    private Integer sort;
 
     public String getId() {
         return id;
@@ -58,19 +50,4 @@ public class ApiSceneStepEntity implements Serializable {
         this.apiUnitId = apiUnitId;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
 }

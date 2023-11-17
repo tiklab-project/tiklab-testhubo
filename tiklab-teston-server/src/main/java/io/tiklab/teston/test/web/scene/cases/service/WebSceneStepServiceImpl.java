@@ -1,8 +1,10 @@
 package io.tiklab.teston.test.web.scene.cases.service;
 
-import io.tiklab.teston.test.common.model.StepAssertCommon;
-import io.tiklab.teston.test.common.model.StepAssertCommonQuery;
-import io.tiklab.teston.test.common.service.StepAssertCommonService;
+import io.tiklab.teston.test.common.stepassert.model.StepAssertCommon;
+import io.tiklab.teston.test.common.stepassert.model.StepAssertCommonQuery;
+import io.tiklab.teston.test.common.stepassert.service.StepAssertCommonService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import io.tiklab.teston.test.web.scene.cases.dao.WebSceneStepDao;
 import io.tiklab.teston.test.web.scene.cases.entity.WebSceneStepEntity;
 import io.tiklab.beans.BeanMapper;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -35,81 +36,35 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
     @Autowired
     StepAssertCommonService stepAssertCommonService;
 
+    @Autowired
+    StepCommonService stepCommonService;
+
 
     @Override
     public String createWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep) {
+
+        //公共步骤 创建
+        StepCommon stepCommon = new StepCommon();
+        stepCommon.setCaseId(webSceneStep.getWebSceneId());
+        String stepId = stepCommonService.createStepCommon(stepCommon);
+
+        // 创建 webSceneStep
         WebSceneStepEntity webSceneStepEntity = BeanMapper.map(webSceneStep, WebSceneStepEntity.class);
-        webSceneStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        webSceneStepEntity.setId(stepId);
+        webSceneStepDao.createWebSceneStep(webSceneStepEntity);
 
-        WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
-        webSceneStepQuery.setWebSceneId(webSceneStep.getWebSceneId());
-        List<WebSceneStepEntity> webSceneStepList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
-        if(webSceneStepList!=null && webSceneStepList.size()>0){
-            webSceneStepEntity.setSort(webSceneStepList.size());
-        }else {
-            webSceneStepEntity.setSort(0);
-        }
-
-        return webSceneStepDao.createWebSceneStep(webSceneStepEntity);
+        return stepId;
     }
 
     @Override
     public void updateWebSceneStep(@NotNull @Valid WebSceneStep webSceneStep) {
-
-        if(webSceneStep.getOldSort()!=null){
-            Integer curSort = webSceneStep.getSort();
-            Integer oldSort = webSceneStep.getOldSort();
-
-            WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
-            webSceneStepQuery.setWebSceneId(webSceneStep.getWebSceneId());
-            List<WebSceneStepEntity> webSceneStepList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
-            //如果当前排序大于源排序，中间项的排序都得减1
-            if(curSort > oldSort){
-                for(int i=oldSort+1;i<=curSort;i++){
-                    WebSceneStepEntity webSceneStepEntity = webSceneStepList.get(i);
-                    webSceneStepEntity.setSort(webSceneStepEntity.getSort()-1);
-                    webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
-                }
-            }
-
-            //如果当前排序小于源排序，中间项的排序都得加1
-            if(curSort < oldSort){
-                for (int i=oldSort-1;i>=curSort;i--){
-                    WebSceneStepEntity webSceneStepEntity = webSceneStepList.get(i);
-                    webSceneStepEntity.setSort(webSceneStepEntity.getSort()+1);
-                    webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
-                }
-            }
-
-        }
-
-
         WebSceneStepEntity webSceneStepEntity = BeanMapper.map(webSceneStep, WebSceneStepEntity.class);
-
-
-
         webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
     }
 
     @Override
     public void deleteWebSceneStep(@NotNull String id) {
-        WebSceneStepEntity webSceneStep = webSceneStepDao.findWebSceneStep(id);
-        if(webSceneStep== null){return;}
-        Integer sort = webSceneStep.getSort();
-
-        WebSceneStepQuery webSceneStepQuery = new WebSceneStepQuery();
-        webSceneStepQuery.setWebSceneId(webSceneStep.getWebSceneId());
-        List<WebSceneStepEntity> webSceneStepList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
-        for(WebSceneStepEntity webSceneStepEntity:webSceneStepList){
-            if(webSceneStepEntity.getSort() > sort){
-                webSceneStepEntity.setSort(webSceneStepEntity.getSort()-1);
-                webSceneStepDao.updateWebSceneStep(webSceneStepEntity);
-            }
-
-            if(webSceneStepEntity.getSort().equals(sort)){
-                webSceneStepDao.deleteWebSceneStep(id);
-            }
-        }
+        webSceneStepDao.deleteWebSceneStep(id);
     }
 
     @Override
@@ -152,7 +107,6 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
     public List<WebSceneStep> findWebSceneStepList(WebSceneStepQuery webSceneStepQuery) {
         List<WebSceneStepEntity> webSceneStepEntityList = webSceneStepDao.findWebSceneStepList(webSceneStepQuery);
         List<WebSceneStep> webSceneStepList = BeanMapper.mapList(webSceneStepEntityList,WebSceneStep.class);
-        joinTemplate.joinQuery(webSceneStepList);
 
         for(WebSceneStep webSceneStep:webSceneStepList){
             StepAssertCommonQuery stepAssertCommonQuery = new StepAssertCommonQuery();

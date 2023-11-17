@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class FuncUnitStepEntity implements Serializable {
 
     @Id
-    @GeneratorValue(length = 12)
+//    @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
@@ -33,17 +33,6 @@ public class FuncUnitStepEntity implements Serializable {
     @Column(name = "actual",length = 512)
     private String actual;
 
-    // 创建时间
-    @Column(name = "create_time")
-    private Timestamp createTime;
-
-    // 更新时间
-    @Column(name = "update_time")
-    private Timestamp updateTime;
-
-    // 排序
-    @Column(name = "sort")
-    private Integer sort;
 
     public String getId() {
         return id;
@@ -85,27 +74,4 @@ public class FuncUnitStepEntity implements Serializable {
         this.actual = actual;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
 }

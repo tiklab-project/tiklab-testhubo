@@ -1,4 +1,4 @@
-package io.tiklab.teston.test.common.model;
+package io.tiklab.teston.test.common.stepassert.model;
 
 import io.tiklab.core.order.Order;
 import io.tiklab.core.order.OrderBuilders;

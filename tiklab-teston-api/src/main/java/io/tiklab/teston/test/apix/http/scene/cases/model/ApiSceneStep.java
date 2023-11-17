@@ -24,13 +24,8 @@ public class ApiSceneStep extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-
-    @ApiProperty(name="apiScene",desc="场景")
-    @Mappings({
-            @Mapping(source = "apiScene.id",target = "apiSceneId")
-    })
-    @JoinQuery(key = "id")
-    private ApiSceneCase apiScene;
+    @ApiProperty(name="apiSceneId",desc="场景")
+    private String apiSceneId;
 
     @ApiProperty(name="apiUnit",desc="绑定的单元用例")
     @Mappings({
@@ -39,15 +34,6 @@ public class ApiSceneStep extends BaseModel{
     @JoinQuery(key = "id")
     private ApiUnitCase apiUnit;
 
-    @ApiProperty(name="createTime",desc="创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Timestamp createTime;
-
-    @ApiProperty(name="sort",desc="排序")
-    private Integer sort;
-
-    @ApiProperty(name="oldSort",desc="原排序")
-    private Integer oldSort;
 
     public String getId() {
         return id;
@@ -57,12 +43,12 @@ public class ApiSceneStep extends BaseModel{
         this.id = id;
     }
 
-    public ApiSceneCase getApiScene() {
-        return apiScene;
+    public String getApiSceneId() {
+        return apiSceneId;
     }
 
-    public void setApiScene(ApiSceneCase apiScene) {
-        this.apiScene = apiScene;
+    public void setApiSceneId(String apiSceneId) {
+        this.apiSceneId = apiSceneId;
     }
 
     public ApiUnitCase getApiUnit() {
@@ -73,27 +59,4 @@ public class ApiSceneStep extends BaseModel{
         this.apiUnit = apiUnit;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public Integer getOldSort() {
-        return oldSort;
-    }
-
-    public void setOldSort(Integer oldSort) {
-        this.oldSort = oldSort;
-    }
 }

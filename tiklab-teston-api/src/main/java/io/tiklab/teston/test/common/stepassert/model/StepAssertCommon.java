@@ -1,4 +1,4 @@
-package io.tiklab.teston.test.common.model;
+package io.tiklab.teston.test.common.stepassert.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.tiklab.beans.annotation.Mapper;

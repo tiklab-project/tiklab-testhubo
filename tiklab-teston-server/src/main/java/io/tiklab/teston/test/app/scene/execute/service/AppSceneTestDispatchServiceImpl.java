@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.tiklab.core.exception.ApplicationException;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.app.scene.AppSceneTestService;
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
@@ -18,6 +19,9 @@ import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.tiklab.teston.test.app.scene.instance.service.AppSceneInstanceService;
 import io.tiklab.teston.test.app.utils.RpcClientAppUtil;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import io.tiklab.teston.test.web.scene.execute.model.WebSceneTestRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -27,6 +31,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +63,11 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Autowired
     VariableService variableService;
+
+
+    @Autowired
+    StepCommonService stepCommonService;
+
     /**
      *  环境中获取是否是内嵌agent
      */
@@ -92,9 +102,15 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         String appSceneId = appSceneTestRequest.getAppSceneId();
 
         //先查询所有场景步骤
-        AppSceneStepQuery appSceneStepQuery = new AppSceneStepQuery();
-        appSceneStepQuery.setAppSceneId(appSceneId);
-        List<AppSceneStep> appSceneStepList = appSceneStepService.findAppSceneStepList(appSceneStepQuery);
+        StepCommonQuery stepCommonQuery = new StepCommonQuery();
+        stepCommonQuery.setCaseId(appSceneId);
+        stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_APP);
+        List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+
+        ArrayList<AppSceneStep> appSceneStepList = new ArrayList<>();
+        for (StepCommon stepCommon : stepCommonList) {
+            appSceneStepList.add(stepCommon.getAppSceneStep());
+        }
 
         appSceneTestRequest.setAppSceneStepList(appSceneStepList);
         JSONObject variable = variableService.getVariable(appSceneId);

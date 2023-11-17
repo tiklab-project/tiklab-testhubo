@@ -1,4 +1,4 @@
-package io.tiklab.teston.test.common.model;
+package io.tiklab.teston.test.common.ifjudgment.model;
 
 import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
@@ -6,19 +6,20 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
 
+
 /**
- * 变量断言 模型
+ * if中的值比较 模型
  */
 @ApiModel
-@Mapper(targetName  = "io.tiklab.teston.test.common.stepassert.entity.VariableAssertEntity")
+@Mapper
 @Join
-public class VariableAssert extends BaseModel{
+public class IfVariable extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="assertId",desc="assertId")
-    private String assertId;
+    @ApiProperty(name="stepId",desc="stepId")
+    private String stepId;
 
     @ApiProperty(name="variable",desc="变量")
     private String variable;
@@ -37,12 +38,12 @@ public class VariableAssert extends BaseModel{
         this.id = id;
     }
 
-    public String getAssertId() {
-        return assertId;
+    public String getStepId() {
+        return stepId;
     }
 
-    public void setAssertId(String assertId) {
-        this.assertId = assertId;
+    public void setStepId(String stepId) {
+        this.stepId = stepId;
     }
 
     public String getVariable() {
