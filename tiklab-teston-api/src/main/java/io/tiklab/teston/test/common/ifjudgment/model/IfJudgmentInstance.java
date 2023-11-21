@@ -15,19 +15,19 @@ import java.util.List;
 @ApiModel
 @Mapper
 @Join
-public class IfJudgment extends BaseModel{
+public class IfJudgmentInstance extends BaseModel{
 
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="caseId",desc="用例id")
-    private String caseId;
+    @ApiProperty(name="stepInstanceId",desc="stepInstanceId")
+    private String stepInstanceId;
 
     @ApiProperty(name="relation",desc="条件关系:and/or")
     private String relation;
 
-    @ApiProperty(name="ifVariableList",desc="if 变量列表")
-    private List<IfVariable> ifVariableList;
+    @ApiProperty(name="ifVariableInstanceList",desc="if 变量列表")
+    private List<IfVariableInstance> ifVariableInstanceList;
 
     public String getId() {
         return id;
@@ -37,13 +37,12 @@ public class IfJudgment extends BaseModel{
         this.id = id;
     }
 
-
-    public String getCaseId() {
-        return caseId;
+    public String getStepInstanceId() {
+        return stepInstanceId;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setStepInstanceId(String stepInstanceId) {
+        this.stepInstanceId = stepInstanceId;
     }
 
     public String getRelation() {
@@ -54,11 +53,13 @@ public class IfJudgment extends BaseModel{
         this.relation = relation;
     }
 
-    public List<IfVariable> getIfVariableList() {
-        return ifVariableList;
+    public List<IfVariableInstance> getIfVariableInstanceList() {
+        return ifVariableInstanceList;
     }
 
-    public void setIfVariableList(List<IfVariable> ifVariableList) {
-        this.ifVariableList = ifVariableList;
+    public void setIfVariableInstanceList(List<IfVariableInstance> ifVariableInstanceList) {
+        this.ifVariableInstanceList = ifVariableInstanceList;
     }
+
+
 }

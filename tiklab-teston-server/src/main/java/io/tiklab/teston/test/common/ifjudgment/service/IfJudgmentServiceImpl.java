@@ -6,6 +6,8 @@ import io.tiklab.teston.test.common.ifjudgment.dao.IfJudgmentDao;
 import io.tiklab.teston.test.common.ifjudgment.entity.IfJudgmentEntity;
 import io.tiklab.teston.test.common.ifjudgment.model.IfJudgment;
 import io.tiklab.teston.test.common.ifjudgment.model.IfJudgmentQuery;
+import io.tiklab.teston.test.common.ifjudgment.model.IfVariable;
+import io.tiklab.teston.test.common.ifjudgment.model.IfVariableQuery;
 import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class IfJudgmentServiceImpl implements IfJudgmentService {
 
     @Autowired
     StepCommonService stepCommonService;
+
+    @Autowired
+    IfVariableService ifVariableService;
 
     @Override
     public String createIfJudgment(@NotNull @Valid IfJudgment ifJudgment) {
@@ -80,6 +85,22 @@ public class IfJudgmentServiceImpl implements IfJudgmentService {
         joinTemplate.joinQuery(ifJudgmentList);
 
         return ifJudgmentList;
+    }
+
+    @Override
+    public IfJudgment findIfAddVariable(String id) {
+        IfJudgment ifJudgment = findOne(id);
+
+        if(ifJudgment==null){
+            return null;
+        }
+
+        IfVariableQuery ifVariableQuery = new IfVariableQuery();
+        ifVariableQuery.setStepId(id);
+        List<IfVariable> ifVariableList = ifVariableService.findIfVariableList(ifVariableQuery);
+
+        ifJudgment.setIfVariableList(ifVariableList);
+        return ifJudgment;
     }
 
 

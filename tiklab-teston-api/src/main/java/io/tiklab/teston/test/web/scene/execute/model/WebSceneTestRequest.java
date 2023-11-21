@@ -1,6 +1,7 @@
 package io.tiklab.teston.test.web.scene.execute.model;
 
 import com.alibaba.fastjson.JSONObject;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 import io.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
@@ -35,8 +36,8 @@ public class WebSceneTestRequest extends BaseModel {
 //    private WebSceneTestConfig testConfig;
 
 
-    @ApiProperty(name="webSceneStepList",desc="web场景中步骤测试数据")
-    private List<WebSceneStep> webSceneStepList;
+    @ApiProperty(name="stepCommonList",desc="web场景中步骤测试数据")
+    private List<StepCommon> stepCommonList;
 
     public String getRepositoryId() {
         return repositoryId;
@@ -56,13 +57,6 @@ public class WebSceneTestRequest extends BaseModel {
         this.webSceneId = webSceneId;
     }
 
-    public WebSceneStep getWebSceneStep() {
-        return webSceneStep;
-    }
-
-    public void setWebSceneStep(WebSceneStep webSceneStep) {
-        this.webSceneStep = webSceneStep;
-    }
 
     public String getAgentConfigId() {
         return agentConfigId;
@@ -72,22 +66,13 @@ public class WebSceneTestRequest extends BaseModel {
         this.agentConfigId = agentConfigId;
     }
 
-    public List<WebSceneStep> getWebSceneStepList() {
-        return webSceneStepList;
+    public WebSceneStep getWebSceneStep() {
+        return webSceneStep;
     }
 
-    public void setWebSceneStepList(List<WebSceneStep> webSceneStepList) {
-        this.webSceneStepList = webSceneStepList;
+    public void setWebSceneStep(WebSceneStep webSceneStep) {
+        this.webSceneStep = webSceneStep;
     }
-
-    public String getWebDriver() {
-        return webDriver;
-    }
-
-    public void setWebDriver(String webDriver) {
-        this.webDriver = webDriver;
-    }
-
 
     public String getExeType() {
         return exeType;
@@ -103,5 +88,21 @@ public class WebSceneTestRequest extends BaseModel {
 
     public void setVariableJson(JSONObject variableJson) {
         this.variableJson = variableJson;
+    }
+
+    public List<StepCommon> getStepCommonList() {
+        return stepCommonList;
+    }
+
+    public void setStepCommonList(List<StepCommon> stepCommonList) {
+        this.stepCommonList = stepCommonList;
+    }
+
+    public String getWebDriver() {
+        return webDriver;
+    }
+
+    public void setWebDriver(String webDriver) {
+        this.webDriver = webDriver;
     }
 }

@@ -13,22 +13,17 @@ import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 import io.tiklab.teston.test.common.stepcommon.model.StepCommonQuery;
 import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
-import io.tiklab.teston.test.web.scene.cases.model.WebSceneStep;
-import io.tiklab.teston.test.web.scene.cases.model.WebSceneStepQuery;
 import io.tiklab.teston.test.web.scene.cases.service.WebSceneStepService;
 import io.tiklab.teston.test.web.scene.execute.model.WebSceneTestRequest;
 import io.tiklab.teston.test.web.scene.execute.model.WebSceneTestResponse;
 import io.tiklab.teston.test.web.scene.instance.model.WebSceneInstance;
 import io.tiklab.teston.test.web.scene.instance.service.WebSceneInstanceService;
-import io.tiklab.teston.test.web.scene.instance.service.WebSceneInstanceStepService;
 import io.tiklab.teston.test.web.utils.RpcClientWebUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,16 +95,12 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_WEB);
         List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
 
-        List<WebSceneStep> webSceneStepList = new ArrayList<>();
-        for(StepCommon stepCommon : stepCommonList){
-            webSceneStepList.add(stepCommon.getWebSceneStep());
-        }
 
         JSONObject variable = variableService.getVariable(webSceneId);
         webSceneTestRequest.setVariableJson(variable);
 
         //设置步骤数据
-        webSceneTestRequest.setWebSceneStepList(webSceneStepList);
+        webSceneTestRequest.setStepCommonList(stepCommonList);
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc

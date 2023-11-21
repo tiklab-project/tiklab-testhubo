@@ -21,6 +21,9 @@ public class WebSceneInstanceStep extends BaseModel {
     @ApiProperty(name="webSceneInstanceId",desc="所属场景实例")
     private String webSceneInstanceId;
 
+    @ApiProperty(name="name",desc="名称")
+    private String name;
+
     @ApiProperty(name="location",desc="定位器")
     private String location;
 
@@ -36,9 +39,6 @@ public class WebSceneInstanceStep extends BaseModel {
     @ApiProperty(name="parameter",desc="参数")
     private String parameter;
 
-    @ApiProperty(name="result",desc="结果")
-    private Integer result;
-
     @ApiProperty(name="duration",desc="耗时")
     private Double duration;
 
@@ -52,6 +52,14 @@ public class WebSceneInstanceStep extends BaseModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getWebSceneInstanceId() {
@@ -96,13 +104,6 @@ public class WebSceneInstanceStep extends BaseModel {
 
     public void setParameter(String parameter) {
         this.parameter = parameter;
-    }
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public Double getDuration() {

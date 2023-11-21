@@ -53,10 +53,32 @@ DROP COLUMN create_time,
 DROP COLUMN sort;
 
 
+CREATE TABLE teston_case_step_instance_common (
+    id VARCHAR(32) PRIMARY KEY,
+    instance_id VARCHAR(32),
+    sort int,
+    result int
+);
 
+CREATE TABLE teston_case_step_instance_if (
+    id VARCHAR(32) PRIMARY KEY,
+    step_instance_id VARCHAR(32),
+    relation VARCHAR(12)
+);
 
+CREATE TABLE teston_case_step_instance_if_variable (
+    id VARCHAR(32) PRIMARY KEY,
+    step_instance_id VARCHAR(32),
+    variable VARCHAR(128),
+    compare int,
+    expect VARCHAR(128)
+);
 
+ALTER TABLE teston_web_scene_instance_step
+ADD COLUMN name VARCHAR(256);
 
+ALTER TABLE teston_web_scene_instance_step
+DROP COLUMN result;
 
 
 

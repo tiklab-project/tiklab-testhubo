@@ -5,6 +5,7 @@ import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -41,7 +42,7 @@ public class WebSceneInstance extends BaseModel{
     private Double totalDuration;
 
     @ApiProperty(name="stepList",desc="存放webUI测试步骤结果")
-    private List<WebSceneInstanceStep> stepList;
+    private List<StepCommonInstance> stepList;
 
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -114,11 +115,11 @@ public class WebSceneInstance extends BaseModel{
         this.totalDuration = totalDuration;
     }
 
-    public List<WebSceneInstanceStep> getStepList() {
+    public List<StepCommonInstance> getStepList() {
         return stepList;
     }
 
-    public void setStepList(List<WebSceneInstanceStep> stepList) {
+    public void setStepList(List<StepCommonInstance> stepList) {
         this.stepList = stepList;
     }
 

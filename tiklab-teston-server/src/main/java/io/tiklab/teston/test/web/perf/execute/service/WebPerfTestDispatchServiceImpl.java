@@ -239,7 +239,7 @@ public class WebPerfTestDispatchServiceImpl implements WebPerfTestDispatchServic
                 List<WebSceneStep> webSceneStepList = webSceneStepService.findWebSceneStepList(webSceneStepQuery);
 
 
-                webSceneTestRequest.setWebSceneStepList(webSceneStepList);
+//                webSceneTestRequest.setWebSceneStepList(webSceneStepList);
 
                 //设置webDriver
 //                webSceneTestRequest.setWebDriver(SeleniumDriverContext.webPerfDriver());

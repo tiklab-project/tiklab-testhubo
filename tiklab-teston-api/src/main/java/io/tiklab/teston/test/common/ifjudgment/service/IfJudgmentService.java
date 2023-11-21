@@ -54,6 +54,10 @@ public interface IfJudgmentService {
     */
     List<IfJudgment> findIfJudgmentList(IfJudgmentQuery ifJudgmentQuery);
 
+    /**
+     * 根据id查找if判断,带下级变量列表
+     */
+    IfJudgment findIfAddVariable(@NotNull String id);
 
 
 }

@@ -189,7 +189,7 @@ public class StepCommonServiceImpl implements StepCommonService {
                         break;
                 }
 
-                IfJudgment ifJudgment = ifJudgmentService.findIfJudgment(stepCommon.getId());
+                IfJudgment ifJudgment = ifJudgmentService.findIfAddVariable(stepCommon.getId());
                 stepCommon.setIfJudgment(ifJudgment);
             }
         }

@@ -10,13 +10,17 @@ import io.tiklab.dal.jpa.annotation.*;
 public class WebSceneInstanceStepEntity {
 
     @Id
-     @GeneratorValue(length = 12)
+    //@GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
     // 所属场景实例
     @Column(name = "web_scene_instance_id")
     private String webSceneInstanceId;
+
+    // 名称
+    @Column(name = "name")
+    private String name;
 
     // 定位器
     @Column(name = "location")
@@ -37,10 +41,6 @@ public class WebSceneInstanceStepEntity {
     // 参数
     @Column(name = "parameter")
     private String parameter;
-
-    // 结果
-    @Column(name = "result")
-    private Integer result;
 
     // 耗时
     @Column(name = "duration")
@@ -101,20 +101,19 @@ public class WebSceneInstanceStepEntity {
     public void setParameter(String parameter) {
         this.parameter = parameter;
     }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
-    }
-
     public double getDuration() {
         return duration;
     }
 
     public void setDuration(double duration) {
         this.duration = duration;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

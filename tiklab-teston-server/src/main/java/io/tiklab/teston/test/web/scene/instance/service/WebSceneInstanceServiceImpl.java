@@ -1,5 +1,11 @@
 package io.tiklab.teston.test.web.scene.instance.service;
 
+import io.tiklab.teston.common.MagicValue;
+import io.tiklab.teston.test.common.ifjudgment.model.IfJudgmentInstance;
+import io.tiklab.teston.test.common.ifjudgment.service.IfJudgmentInstanceService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonInstanceService;
 import io.tiklab.teston.test.web.scene.instance.dao.WebSceneInstanceDao;
 import io.tiklab.teston.test.web.scene.instance.entity.WebSceneInstanceEntity;
 import io.tiklab.beans.BeanMapper;
@@ -34,6 +40,12 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
     
     @Autowired
     WebSceneInstanceStepService webSceneInstanceStepService;
+
+    @Autowired
+    StepCommonInstanceService stepCommonInstanceService;
+
+    @Autowired
+    IfJudgmentInstanceService ifJudgmentInstanceService;
 
     @Override
     public String createWebSceneInstance(@NotNull @Valid WebSceneInstance webSceneInstance) {
@@ -76,9 +88,11 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
     public WebSceneInstance findWebSceneInstance(@NotNull String id) {
         WebSceneInstance webSceneInstance = findOne(id);
 
-        List<WebSceneInstanceStep> webSceneInstanceStepList = webSceneInstanceStepService.findWebSceneInstanceStepList(new WebSceneInstanceStepQuery().setWebSceneInstanceId(id));
-
-        webSceneInstance.setStepList(webSceneInstanceStepList);
+        StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();
+        stepCommonInstanceQuery.setInstanceId(id);
+        stepCommonInstanceQuery.setCaseType(MagicValue.CASE_TYPE_WEB);
+        List<StepCommonInstance> stepCommonInstanceList = stepCommonInstanceService.findStepCommonInstanceList(stepCommonInstanceQuery);
+        webSceneInstance.setStepList(stepCommonInstanceList);
 
         joinTemplate.joinQuery(webSceneInstance);
         return webSceneInstance;
@@ -122,10 +136,28 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
         String webSceneInstanceId= createWebSceneInstance(webSceneInstance);
 
         //保存单个步骤
-        if(CollectionUtils.isNotEmpty(webSceneTestResponse.getWebUnitResultList())){
-            for(WebSceneInstanceStep webSceneInstanceStep:webSceneTestResponse.getWebUnitResultList()){
-                webSceneInstanceStep.setWebSceneInstanceId(webSceneInstanceId);
-                webSceneInstanceStepService.createWebSceneInstanceStep(webSceneInstanceStep);
+        if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
+
+            for(StepCommonInstance stepCommonInstance:webSceneTestResponse.getStepCommonInstanceList()){
+                //公共的历史创建
+                stepCommonInstance.setInstanceId(webSceneInstanceId);
+                String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
+
+                //web步骤历史创建
+                if(stepCommonInstance.getWebSceneInstanceStep()!=null){
+                    WebSceneInstanceStep webSceneInstanceStep = stepCommonInstance.getWebSceneInstanceStep();
+                    webSceneInstanceStep.setWebSceneInstanceId(webSceneInstanceId);
+                    webSceneInstanceStep.setId(stepInstanceId);
+                    webSceneInstanceStepService.createWebSceneInstanceStep(webSceneInstanceStep);
+                }
+
+                //if判断历史创建
+                if(stepCommonInstance.getIfJudgmentInstance()!=null){
+                    IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
+                    ifJudgmentInstance.setStepInstanceId(webSceneInstanceId);
+                    ifJudgmentInstance.setId(stepInstanceId);
+                    ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
+                }
             }
         }
 
