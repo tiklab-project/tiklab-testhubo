@@ -326,7 +326,7 @@ public class AppPerfTestDispatchServiceImpl implements AppPerfTestDispatchServic
                 appSceneStepQuery.setAppSceneId(appPerfStep.getAppScene().getId());
                 List<AppSceneStep> appSceneStepList = appSceneStepService.findAppSceneStepList(appSceneStepQuery);
 
-                appSceneTestRequest.setAppSceneStepList(appSceneStepList);
+//                appSceneTestRequest.setAppSceneStepList(appSceneStepList);
                 appSceneTestRequest.setAppTestConfig(appTestConfig);
 
 

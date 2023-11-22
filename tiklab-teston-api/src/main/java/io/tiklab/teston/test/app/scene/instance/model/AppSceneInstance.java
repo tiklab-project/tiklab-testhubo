@@ -6,6 +6,7 @@ import io.tiklab.core.BaseModel;
 import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -40,7 +41,7 @@ public class AppSceneInstance extends BaseModel{
     private String passRate;
 
     @ApiProperty(name="stepList",desc="存放app测试步骤结果")
-    private List<AppSceneInstanceStep> stepList;
+    private List<StepCommonInstance> stepList;
 
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -105,11 +106,11 @@ public class AppSceneInstance extends BaseModel{
         this.passRate = passRate;
     }
 
-    public List<AppSceneInstanceStep> getStepList() {
+    public List<StepCommonInstance> getStepList() {
         return stepList;
     }
 
-    public void setStepList(List<AppSceneInstanceStep> stepList) {
+    public void setStepList(List<StepCommonInstance> stepList) {
         this.stepList = stepList;
     }
 

@@ -5,6 +5,7 @@ import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class AppSceneTestRequest extends BaseModel {
     @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
     private List<AppTestConfig> appTestConfigList;
 
-    @ApiProperty(name = "appSceneTestData", desc = "app场景测试数据")
-    private List<AppSceneStep> appSceneStepList;
+    @ApiProperty(name = "stepCommonList", desc = "app场景测试数据")
+    private List<StepCommon> stepCommonList;
 
     @ApiProperty(name="currentAgentId",desc="当前agent")
     private String currentAgentId;
@@ -79,12 +80,12 @@ public class AppSceneTestRequest extends BaseModel {
         this.appTestConfig = appTestConfig;
     }
 
-    public List<AppSceneStep> getAppSceneStepList() {
-        return appSceneStepList;
+    public List<StepCommon> getStepCommonList() {
+        return stepCommonList;
     }
 
-    public void setAppSceneStepList(List<AppSceneStep> appSceneStepList) {
-        this.appSceneStepList = appSceneStepList;
+    public void setStepCommonList(List<StepCommon> stepCommonList) {
+        this.stepCommonList = stepCommonList;
     }
 
     public String getExeType() {

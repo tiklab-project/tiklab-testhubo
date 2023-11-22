@@ -5,6 +5,7 @@ import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceStep;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
 
 import java.util.List;
 
@@ -13,8 +14,8 @@ import java.util.List;
  */
 @ApiModel
 public class AppSceneTestResponse extends BaseModel {
-    @ApiProperty(name="webUnitResultList",desc="测试结果的list ")
-    private List<AppSceneInstanceStep> appSceneInstanceStepList;
+    @ApiProperty(name="stepCommonInstanceList",desc="测试结果的list ")
+    private List<StepCommonInstance> stepCommonInstanceList;
 
     @ApiProperty(name="webSceneInstance",desc="测试结果的list ")
     private AppSceneInstance appSceneInstance;
@@ -22,12 +23,12 @@ public class AppSceneTestResponse extends BaseModel {
     @ApiProperty(name = "errMsg")
     private String errMsg;
 
-    public List<AppSceneInstanceStep> getAppSceneInstanceStepList() {
-        return appSceneInstanceStepList;
+    public List<StepCommonInstance> getStepCommonInstanceList() {
+        return stepCommonInstanceList;
     }
 
-    public void setAppSceneInstanceStepList(List<AppSceneInstanceStep> appSceneInstanceStepList) {
-        this.appSceneInstanceStepList = appSceneInstanceStepList;
+    public void setStepCommonInstanceList(List<StepCommonInstance> stepCommonInstanceList) {
+        this.stepCommonInstanceList = stepCommonInstanceList;
     }
 
     public AppSceneInstance getAppSceneInstance() {

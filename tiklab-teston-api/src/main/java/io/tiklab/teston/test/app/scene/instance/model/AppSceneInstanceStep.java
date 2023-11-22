@@ -21,6 +21,9 @@ public class AppSceneInstanceStep extends BaseModel {
     @ApiProperty(name="appSceneInstanceId",desc="app场景实例id")
     private String appSceneInstanceId;
 
+    @ApiProperty(name="name",desc="名称")
+    private String name;
+
     @ApiProperty(name="location",desc="location")
     private String location;
 
@@ -36,9 +39,6 @@ public class AppSceneInstanceStep extends BaseModel {
     @ApiProperty(name="parameter",desc="parameter")
     private String parameter;
 
-    @ApiProperty(name="result",desc="结果")
-    private Integer result;
-
     private String preScript;
     private String afterScript;
     private List<StepAssertCommon> stepAssertCommonList;
@@ -50,6 +50,15 @@ public class AppSceneInstanceStep extends BaseModel {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getAppSceneInstanceId() {
         return appSceneInstanceId;
     }
@@ -91,13 +100,6 @@ public class AppSceneInstanceStep extends BaseModel {
 
     public void setParameter(String parameter) {
         this.parameter = parameter;
-    }
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public String getPreScript() {

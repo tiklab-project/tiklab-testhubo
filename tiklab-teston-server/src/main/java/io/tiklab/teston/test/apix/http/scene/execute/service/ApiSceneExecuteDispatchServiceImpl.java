@@ -141,7 +141,7 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         }
 
 
-        List<ApiUnitTestRequest> apiUnitTestRequestList = new ArrayList<>();
+        List<ApiUnitTestRequest> apiUnitTestRequestList = new ArrayList< >();
         if(CollectionUtils.isNotEmpty(apiSceneStepList)){
             for(ApiSceneStep apiSceneStep :apiSceneStepList){
                 //设置apiUnitTestRequest参数

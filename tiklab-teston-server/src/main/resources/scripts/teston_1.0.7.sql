@@ -81,6 +81,11 @@ ALTER TABLE teston_web_scene_instance_step
 DROP COLUMN result;
 
 
+ALTER TABLE teston_app_scene_instance_step
+ADD COLUMN name VARCHAR(256);
+
+ALTER TABLE teston_app_scene_instance_step
+DROP COLUMN result;
 
 
 

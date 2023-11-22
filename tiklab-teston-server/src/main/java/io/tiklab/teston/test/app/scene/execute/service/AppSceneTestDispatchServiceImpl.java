@@ -106,13 +106,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         stepCommonQuery.setCaseId(appSceneId);
         stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_APP);
         List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
-
-        ArrayList<AppSceneStep> appSceneStepList = new ArrayList<>();
-        for (StepCommon stepCommon : stepCommonList) {
-            appSceneStepList.add(stepCommon.getAppSceneStep());
-        }
-
-        appSceneTestRequest.setAppSceneStepList(appSceneStepList);
+        //设置步骤数据
+        appSceneTestRequest.setStepCommonList(stepCommonList);
+        //设置变量数据
         JSONObject variable = variableService.getVariable(appSceneId);
         appSceneTestRequest.setVariableJson(variable);
 

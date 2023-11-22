@@ -10,13 +10,17 @@ import io.tiklab.dal.jpa.annotation.*;
 public class AppSceneInstanceStepEntity {
 
     @Id
-     @GeneratorValue(length = 12)
+    //@GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
     // 所属场景实例
     @Column(name = "app_scene_instance_id")
     private String appSceneInstanceId;
+
+    // 名称
+    @Column(name = "name")
+    private String name;
 
     // 定位器
     @Column(name = "location")
@@ -37,10 +41,6 @@ public class AppSceneInstanceStepEntity {
     // 参数
     @Column(name = "parameter")
     private String parameter;
-
-    // 结果
-    @Column(name = "result")
-    private Integer result;
 
     public String getId() {
         return id;
@@ -98,12 +98,11 @@ public class AppSceneInstanceStepEntity {
         this.parameter = parameter;
     }
 
-    public Integer getResult() {
-        return result;
+    public String getName() {
+        return name;
     }
 
-    public void setResult(Integer result) {
-        this.result = result;
+    public void setName(String name) {
+        this.name = name;
     }
-
 }

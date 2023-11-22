@@ -94,13 +94,13 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         stepCommonQuery.setCaseId(webSceneId);
         stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_WEB);
         List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+        //设置步骤数据
+        webSceneTestRequest.setStepCommonList(stepCommonList);
 
-
+        //设置变量数据
         JSONObject variable = variableService.getVariable(webSceneId);
         webSceneTestRequest.setVariableJson(variable);
 
-        //设置步骤数据
-        webSceneTestRequest.setStepCommonList(stepCommonList);
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc

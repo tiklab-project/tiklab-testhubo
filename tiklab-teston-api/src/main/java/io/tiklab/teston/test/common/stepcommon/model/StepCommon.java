@@ -7,6 +7,7 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStep;
+import io.tiklab.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.teston.test.common.ifjudgment.model.IfJudgment;
 import io.tiklab.teston.test.func.model.FuncUnitStep;
@@ -38,6 +39,7 @@ public class StepCommon extends BaseModel{
     @ApiProperty(name="oldSort",desc="原排序")
     private Integer oldSort;
 
+    private ApiSceneTestRequest apiSceneTestRequest;
     private WebSceneStep webSceneStep;
     private AppSceneStep appSceneStep;
     private ApiSceneStep apiSceneStep;
@@ -123,5 +125,13 @@ public class StepCommon extends BaseModel{
 
     public void setIfJudgment(IfJudgment ifJudgment) {
         this.ifJudgment = ifJudgment;
+    }
+
+    public ApiSceneTestRequest getApiSceneTestRequest() {
+        return apiSceneTestRequest;
+    }
+
+    public void setApiSceneTestRequest(ApiSceneTestRequest apiSceneTestRequest) {
+        this.apiSceneTestRequest = apiSceneTestRequest;
     }
 }

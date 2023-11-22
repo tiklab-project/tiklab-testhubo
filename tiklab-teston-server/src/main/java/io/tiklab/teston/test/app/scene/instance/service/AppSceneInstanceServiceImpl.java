@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.app.scene.instance.service;
 
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.app.scene.instance.dao.AppSceneInstanceDao;
 import io.tiklab.teston.test.app.scene.instance.entity.AppSceneInstanceEntity;
 import io.tiklab.beans.BeanMapper;
@@ -11,6 +12,11 @@ import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceStep;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceStepQuery;
+import io.tiklab.teston.test.common.ifjudgment.model.IfJudgmentInstance;
+import io.tiklab.teston.test.common.ifjudgment.service.IfJudgmentInstanceService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonInstanceService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +40,12 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
 
     @Autowired
     AppSceneInstanceStepService appSceneInstanceStepService;
+
+    @Autowired
+    StepCommonInstanceService stepCommonInstanceService;
+
+    @Autowired
+    IfJudgmentInstanceService ifJudgmentInstanceService;
 
     @Override
     public String createAppSceneInstance(@NotNull @Valid AppSceneInstance appSceneInstance) {
@@ -77,8 +89,11 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
         AppSceneInstance appSceneInstance = findOne(id);
 
         //历史回显把步骤列表带上
-        List<AppSceneInstanceStep> appSceneInstanceStepList = appSceneInstanceStepService.findAppSceneInstanceStepList(new AppSceneInstanceStepQuery().setAppSceneInstanceId(id));
-        appSceneInstance.setStepList(appSceneInstanceStepList);
+        StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();
+        stepCommonInstanceQuery.setInstanceId(id);
+        stepCommonInstanceQuery.setCaseType(MagicValue.CASE_TYPE_APP);
+        List<StepCommonInstance> stepCommonInstanceList = stepCommonInstanceService.findStepCommonInstanceList(stepCommonInstanceQuery);
+        appSceneInstance.setStepList(stepCommonInstanceList);
 
         joinTemplate.joinQuery(appSceneInstance);
         return appSceneInstance;
@@ -122,11 +137,27 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
         String appSceneInstanceId = createAppSceneInstance(appSceneInstance);
 
         //保存单个步骤
-        if(CollectionUtils.isNotEmpty(appSceneTestResponse.getAppSceneInstanceStepList())){
-            for(AppSceneInstanceStep appSceneInstanceStep: appSceneTestResponse.getAppSceneInstanceStepList()){
-                appSceneInstanceStep.setAppSceneInstanceId(appSceneInstanceId);
+        if(CollectionUtils.isNotEmpty(appSceneTestResponse.getStepCommonInstanceList())){
+            for(StepCommonInstance stepCommonInstance:appSceneTestResponse.getStepCommonInstanceList()){
+                //公共的历史创建
+                stepCommonInstance.setInstanceId(appSceneInstanceId);
+                String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
 
-                appSceneInstanceStepService.createAppSceneInstanceStep(appSceneInstanceStep);
+                //步骤历史创建
+                if(stepCommonInstance.getAppSceneInstanceStep()!=null){
+                    AppSceneInstanceStep appSceneInstanceStep = stepCommonInstance.getAppSceneInstanceStep();
+                    appSceneInstanceStep.setAppSceneInstanceId(appSceneInstanceId);
+                    appSceneInstanceStep.setId(stepInstanceId);
+                    appSceneInstanceStepService.createAppSceneInstanceStep(appSceneInstanceStep);
+                }
+
+                //if判断历史创建
+                if(stepCommonInstance.getIfJudgmentInstance()!=null){
+                    IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
+                    ifJudgmentInstance.setStepInstanceId(appSceneInstanceId);
+                    ifJudgmentInstance.setId(stepInstanceId);
+                    ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
+                }
             }
         }
 

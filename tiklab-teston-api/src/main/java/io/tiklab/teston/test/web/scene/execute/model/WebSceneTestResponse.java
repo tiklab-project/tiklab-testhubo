@@ -11,7 +11,7 @@ import java.util.List;
 @ApiModel
 public class WebSceneTestResponse extends BaseModel {
 
-    @ApiProperty(name="webUnitResultList",desc="测试结果的list ")
+    @ApiProperty(name="stepCommonInstanceList",desc="测试结果的list ")
     private List<StepCommonInstance> stepCommonInstanceList;
 
     @ApiProperty(name="webSceneInstance",desc="测试结果的list ")

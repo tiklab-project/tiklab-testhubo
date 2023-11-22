@@ -84,8 +84,10 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
     public ApiSceneStep findApiSceneStep(@NotNull String id) {
         ApiSceneStep apiSceneStep = findOne(id);
         joinTemplate.joinQuery(apiSceneStep);
-        TestCase testCase = testCaseService.findTestCase(apiSceneStep.getApiUnit().getId());
-        apiSceneStep.getApiUnit().setTestCase(testCase);
+        if(apiSceneStep!=null){
+            TestCase testCase = testCaseService.findTestCase(apiSceneStep.getApiUnit().getId());
+            apiSceneStep.getApiUnit().setTestCase(testCase);
+        }
 
         return apiSceneStep;
     }
