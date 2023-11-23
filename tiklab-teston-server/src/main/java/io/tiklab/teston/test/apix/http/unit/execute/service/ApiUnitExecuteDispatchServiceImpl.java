@@ -82,15 +82,8 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
     @Override
     public ApiUnitInstance execute(ApiUnitTestRequest apiUnitTestRequest) {
         String apiUnitId = apiUnitTestRequest.getApiUnitCase().getId();
-        ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiUnitId);
-
-        //数据准备
-        ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
-        JSONObject variable = variableService.getVariable(apiUnitCase.getTestCase().getRepositoryId());
-
-        apiUnitTestRequest.setVariableJson(variable);
-        apiUnitTestRequest.setApiUnitCase(apiUnitCase);
-        apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
+        //准备测试的数据
+        ApiUnitTestRequest processData = setApiUnitTestRequestData(apiUnitId, apiUnitTestRequest.getApiEnv());
 
         ApiUnitInstance apiUnitInstance = null;
         logger.info("api-----");
@@ -99,14 +92,14 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         try {
             if(enable){
                 logger.info("api-enable----");
-                apiUnitInstance = apiUnitTestService.execute(apiUnitTestRequest);
+                apiUnitInstance = apiUnitTestService.execute(processData);
                 logger.info("api-enable----end");
             }else {
                 logger.info("api-not-enable----");
                 List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
                 if( CollectionUtils.isNotEmpty(agentConfigList)){
                     AgentConfig agentConfig = agentConfigList.get(0);
-                    apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(apiUnitTestRequest);
+                    apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(processData);
                 }
                 logger.info("api-not-enable----end");
             }
@@ -158,5 +151,26 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
     }
 
 
+    /**
+     * 设置测试数据
+     * @param apiUnitId
+     * @param apiEnv
+     * @return
+     */
+
+    public ApiUnitTestRequest setApiUnitTestRequestData(String apiUnitId,String apiEnv){
+        ApiUnitTestRequest apiUnitTestRequest = new ApiUnitTestRequest();
+
+        ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiUnitId);
+        ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
+        JSONObject variable = variableService.getVariable(apiUnitCase.getTestCase().getRepositoryId());
+
+        apiUnitTestRequest.setVariableJson(variable);
+        apiUnitTestRequest.setApiUnitCase(apiUnitCase);
+        apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
+        apiUnitTestRequest.setApiEnv(apiEnv);
+
+        return apiUnitTestRequest;
+    }
 
 }

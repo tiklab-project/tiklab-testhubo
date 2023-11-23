@@ -30,6 +30,9 @@ public class IfVariableInstance extends BaseModel{
     @ApiProperty(name="expect",desc="变量值")
     private String expect;
 
+    @ApiProperty(name="result",desc="结果")
+    private int result;
+
     public String getId() {
         return id;
     }
@@ -68,5 +71,13 @@ public class IfVariableInstance extends BaseModel{
 
     public void setStepInstanceId(String stepInstanceId) {
         this.stepInstanceId = stepInstanceId;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
     }
 }

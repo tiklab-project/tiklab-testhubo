@@ -4,6 +4,7 @@ import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import io.tiklab.teston.test.func.dao.FuncUnitStepDao;
@@ -39,6 +40,7 @@ public class FuncUnitStepServiceImpl implements FuncUnitStepService {
         //公共步骤 创建
         StepCommon stepCommon = new StepCommon();
         stepCommon.setCaseId(funcUnitStep.getFuncUnitId());
+        stepCommon.setType(MagicValue.CASE_TYPE_FUNCTION);
         String stepId = stepCommonService.createStepCommon(stepCommon);
 
         FuncUnitStepEntity funcUnitStepEntity = BeanMapper.map(funcUnitStep, FuncUnitStepEntity.class);

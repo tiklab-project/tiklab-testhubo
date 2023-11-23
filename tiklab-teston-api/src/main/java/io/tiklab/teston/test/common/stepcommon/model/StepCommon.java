@@ -29,6 +29,9 @@ public class StepCommon extends BaseModel{
     @ApiProperty(name="caseId",desc="caseId")
     private String caseId;
 
+    @ApiProperty(name="type",desc="步骤类型")
+    private String type;
+
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
@@ -39,10 +42,11 @@ public class StepCommon extends BaseModel{
     @ApiProperty(name="oldSort",desc="原排序")
     private Integer oldSort;
 
+
+    private ApiSceneStep apiSceneStep;
     private ApiSceneTestRequest apiSceneTestRequest;
     private WebSceneStep webSceneStep;
     private AppSceneStep appSceneStep;
-    private ApiSceneStep apiSceneStep;
     private FuncUnitStep funcUnitStep;
     private IfJudgment ifJudgment;
 
@@ -54,6 +58,13 @@ public class StepCommon extends BaseModel{
         this.id = id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getCaseId() {
         return caseId;

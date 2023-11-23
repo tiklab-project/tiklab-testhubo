@@ -23,6 +23,7 @@ import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
 
+import io.tiklab.teston.test.apix.http.unit.execute.service.ApiUnitExecuteDispatchService;
 import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 import io.tiklab.teston.test.common.stepcommon.model.StepCommonQuery;
 import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
@@ -88,10 +89,14 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
      */
     @Override
     public ApiSceneTestResponse execute(ApiSceneTestRequest apiSceneTestRequest) {
-
+        String apiSceneId = apiSceneTestRequest.getApiSceneCase().getId();
         //数据构造
-        List<ApiUnitTestRequest> apiUnitTestRequestList = processApiSceneTestData(apiSceneTestRequest);
-        apiSceneTestRequest.setApiUnitTestRequestList(apiUnitTestRequestList);
+        //查询测试步骤
+        StepCommonQuery stepCommonQuery = new StepCommonQuery();
+        stepCommonQuery.setCaseId(apiSceneId);
+        stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API_SCENE);
+        List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+        apiSceneTestRequest.setStepCommonList(stepCommonList);
 
         JSONObject variable = variableService.getVariable(apiSceneTestRequest.getRepositoryId());
         apiSceneTestRequest.setVariableJson(variable);
@@ -115,54 +120,10 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         //测试计划中设置了执行类型，其他没设置
         if(apiSceneTestRequest.getExeType()==null){
             //保存实例，存入数据库
-            String apiSceneId = apiSceneTestRequest.getApiSceneCase().getId();
             saveInstance( apiSceneTestResponse,apiSceneId);
         }
 
         return apiSceneTestResponse;
-    }
-
-
-    /**
-     * 数据构造
-     */
-    @Override
-    public List<ApiUnitTestRequest> processApiSceneTestData(ApiSceneTestRequest apiSceneTestRequest){
-        String apiSceneId = apiSceneTestRequest.getApiSceneCase().getId();
-        //查询测试步骤
-        StepCommonQuery stepCommonQuery = new StepCommonQuery();
-        stepCommonQuery.setCaseId(apiSceneId);
-        stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API);
-        List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
-
-        List<ApiSceneStep> apiSceneStepList = new ArrayList<>();
-        for(StepCommon stepCommon : stepCommonList){
-            apiSceneStepList.add(stepCommon.getApiSceneStep());
-        }
-
-
-        List<ApiUnitTestRequest> apiUnitTestRequestList = new ArrayList< >();
-        if(CollectionUtils.isNotEmpty(apiSceneStepList)){
-            for(ApiSceneStep apiSceneStep :apiSceneStepList){
-                //设置apiUnitTestRequest参数
-                ApiUnitTestRequest apiUnitTestRequest = new ApiUnitTestRequest();
-
-                ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiSceneStep.getApiUnit().getId());
-                apiUnitTestRequest.setApiUnitCase(apiUnitCase);
-
-                //参数设置
-                ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
-                apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
-
-                //前置地址
-                apiUnitTestRequest.setApiEnv(apiSceneTestRequest.getApiEnv());
-
-                apiUnitTestRequestList.add(apiUnitTestRequest);
-            }
-        }
-
-
-        return apiUnitTestRequestList;
     }
 
 

@@ -32,6 +32,9 @@ public class IfVariableInstanceEntity implements Serializable {
     @Column(name = "expect",length = 128)
     private String expect;
 
+    // 变量值
+    @Column(name = "result")
+    private int result;
 
     public String getId() {
         return id;
@@ -71,5 +74,13 @@ public class IfVariableInstanceEntity implements Serializable {
 
     public void setExpect(String expect) {
         this.expect = expect;
+    }
+
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
     }
 }

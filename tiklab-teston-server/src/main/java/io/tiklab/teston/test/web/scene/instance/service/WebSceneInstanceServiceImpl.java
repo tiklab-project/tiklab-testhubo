@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
 * web场景实例 服务
@@ -144,7 +145,7 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
                 String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
 
                 //web步骤历史创建
-                if(stepCommonInstance.getWebSceneInstanceStep()!=null){
+                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_WEB)){
                     WebSceneInstanceStep webSceneInstanceStep = stepCommonInstance.getWebSceneInstanceStep();
                     webSceneInstanceStep.setWebSceneInstanceId(webSceneInstanceId);
                     webSceneInstanceStep.setId(stepInstanceId);
@@ -152,7 +153,7 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
                 }
 
                 //if判断历史创建
-                if(stepCommonInstance.getIfJudgmentInstance()!=null){
+                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_IF)){
                     IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
                     ifJudgmentInstance.setStepInstanceId(webSceneInstanceId);
                     ifJudgmentInstance.setId(stepInstanceId);

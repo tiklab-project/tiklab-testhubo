@@ -4,6 +4,7 @@ import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ApiSceneTestResponse extends BaseModel {
 
     private ApiSceneInstance apiSceneInstance;
 
-    private List<ApiUnitInstance> apiUnitInstanceList;
+    private List<StepCommonInstance> stepCommonInstanceList;
 
     public ApiSceneInstance getApiSceneInstance() {
         return apiSceneInstance;
@@ -25,11 +26,11 @@ public class ApiSceneTestResponse extends BaseModel {
         this.apiSceneInstance = apiSceneInstance;
     }
 
-    public List<ApiUnitInstance> getApiUnitInstanceList() {
-        return apiUnitInstanceList;
+    public List<StepCommonInstance> getStepCommonInstanceList() {
+        return stepCommonInstanceList;
     }
 
-    public void setApiUnitInstanceList(List<ApiUnitInstance> apiUnitInstanceList) {
-        this.apiUnitInstanceList = apiUnitInstanceList;
+    public void setStepCommonInstanceList(List<StepCommonInstance> stepCommonInstanceList) {
+        this.stepCommonInstanceList = stepCommonInstanceList;
     }
 }

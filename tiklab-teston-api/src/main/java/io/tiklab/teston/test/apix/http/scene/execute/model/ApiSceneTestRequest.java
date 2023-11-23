@@ -6,6 +6,7 @@ import io.tiklab.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
 import io.tiklab.core.BaseModel;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ApiSceneTestRequest extends BaseModel {
     @ApiProperty(name="exeType",desc="当前执行的类型，用于测试计划中")
     private String exeType;
 
-    private List<ApiUnitTestRequest> apiUnitTestRequestList;
+    private List<StepCommon> stepCommonList;
 
     public ApiSceneCase getApiSceneCase() {
         return apiSceneCase;
@@ -48,12 +49,12 @@ public class ApiSceneTestRequest extends BaseModel {
         this.apiEnv = apiEnv;
     }
 
-    public List<ApiUnitTestRequest> getApiUnitTestRequestList() {
-        return apiUnitTestRequestList;
+    public List<StepCommon> getStepCommonList() {
+        return stepCommonList;
     }
 
-    public void setApiUnitTestRequestList(List<ApiUnitTestRequest> apiUnitTestRequestList) {
-        this.apiUnitTestRequestList = apiUnitTestRequestList;
+    public void setStepCommonList(List<StepCommon> stepCommonList) {
+        this.stepCommonList = stepCommonList;
     }
 
     public String getExeType() {

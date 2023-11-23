@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
 * app场景测试历史实例 服务
@@ -144,7 +145,7 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
                 String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
 
                 //步骤历史创建
-                if(stepCommonInstance.getAppSceneInstanceStep()!=null){
+                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_APP)){
                     AppSceneInstanceStep appSceneInstanceStep = stepCommonInstance.getAppSceneInstanceStep();
                     appSceneInstanceStep.setAppSceneInstanceId(appSceneInstanceId);
                     appSceneInstanceStep.setId(stepInstanceId);
@@ -152,7 +153,7 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
                 }
 
                 //if判断历史创建
-                if(stepCommonInstance.getIfJudgmentInstance()!=null){
+                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_IF)){
                     IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
                     ifJudgmentInstance.setStepInstanceId(appSceneInstanceId);
                     ifJudgmentInstance.setId(stepInstanceId);

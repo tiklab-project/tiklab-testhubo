@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.apix.http.scene.cases.service;
 
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.apix.http.scene.cases.dao.ApiSceneStepDao;
 import io.tiklab.teston.test.apix.http.scene.cases.entity.ApiSceneStepEntity;
 import io.tiklab.core.page.Pagination;
@@ -44,6 +45,7 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
         //公共步骤 创建
         StepCommon stepCommon = new StepCommon();
         stepCommon.setCaseId(apiSceneStep.getApiSceneId());
+        stepCommon.setType(MagicValue.CASE_TYPE_API_SCENE);
         String stepId = stepCommonService.createStepCommon(stepCommon);
 
         ApiSceneStepEntity apiSceneStepEntity = BeanMapper.map(apiSceneStep, ApiSceneStepEntity.class);

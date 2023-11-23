@@ -11,6 +11,8 @@ import io.tiklab.join.annotation.JoinQuery;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
 
+import java.util.List;
+
 /**
  * 接口场景下步骤的实例公共表 模型
  */

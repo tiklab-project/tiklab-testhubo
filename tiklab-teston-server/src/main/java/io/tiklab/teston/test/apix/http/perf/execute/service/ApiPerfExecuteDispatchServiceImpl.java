@@ -3,6 +3,7 @@ package io.tiklab.teston.test.apix.http.perf.execute.service;
 import com.alibaba.fastjson.JSONObject;
 import io.tiklab.rpc.client.router.lookup.FixedLookup;
 import io.tiklab.teston.agent.api.http.perf.ApiPerfTestService;
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfCase;
 import io.tiklab.teston.test.apix.http.perf.cases.model.ApiPerfStep;
@@ -27,6 +28,9 @@ import io.tiklab.teston.support.utils.TestApixUtil;
 import io.tiklab.teston.support.agentconfig.model.AgentConfig;
 import io.tiklab.teston.support.agentconfig.model.AgentConfigQuery;
 import io.tiklab.teston.support.agentconfig.service.AgentConfigService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommon;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,9 +62,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     ApiPerfInstanceService apiPerfInstanceService;
 
     @Autowired
-    ApiSceneExecuteDispatchService apiSceneExecuteDispatchService;
-
-    @Autowired
     AgentConfigService agentConfigService;
 
     @Autowired
@@ -74,6 +75,10 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Autowired
     VariableService variableService;
+
+    @Autowired
+    StepCommonService stepCommonService;
+
     /**
      * rpc 远程调用
      */
@@ -114,6 +119,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         //执行的数据 处理
         List<ApiSceneTestRequest> apiSceneTestRequestList = processApiPerfTestData(apiPerfTestRequest);
 
+        //如果没有场景直接结束
         if(apiSceneTestRequestList==null||apiSceneTestRequestList.size()==0){
             status=0;
             return;
@@ -264,40 +270,42 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiPerfStepQuery.setApiPerfId(apiPerfId);
         List<ApiPerfStep> apiPerfStepList = apiPerfStepService.findApiPerfStepList(apiPerfStepQuery);
 
+        //如果没有场景直接结束
+        if(apiPerfStepList==null||apiPerfStepList.size()==0){return null;}
+
         List<ApiSceneTestRequest> apiSceneTestRequestList = new ArrayList<>();
 
+        // 测试数据索引
+        int dataIndex = 0;
+        //获取测试数据
+        List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfId);
+
         //循环所有场景构造数据
-        if(CollectionUtils.isNotEmpty(apiPerfStepList)){
-            // 测试数据索引
-            int dataIndex = 0;
-            //获取测试数据
-            List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfId);
+        for(ApiPerfStep apiPerfStep:apiPerfStepList){
+            ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
 
-            for(ApiPerfStep apiPerfStep:apiPerfStepList){
-                ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
+            StepCommonQuery stepCommonQuery = new StepCommonQuery();
+            stepCommonQuery.setCaseId(apiPerfStep.getApiScene().getId());
+            stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API_SCENE);
+            List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+            apiSceneTestRequest.setStepCommonList(stepCommonList);
 
-                //环境变量设置
-                JSONObject variable = processVariable(apiSceneTestRequest, testDataList,dataIndex);
-                apiSceneTestRequest.setVariableJson(variable);
-                // 测试数据索引+1
-                dataIndex++;
-                if (dataIndex >= testDataList.size()) {
-                    dataIndex = 0;
-                }
+            //环境变量设置
+            JSONObject variable = processVariable(apiSceneTestRequest, testDataList,dataIndex);
+            apiSceneTestRequest.setVariableJson(variable);
 
-                logger.info("variable --- - - - -{}",variable.toString());
+            //设置pre url
+            apiSceneTestRequest.setApiEnv(apiPerfTestRequest.getApiEnv());
 
-                ApiSceneCase apiSceneCase = new ApiSceneCase();
-                apiSceneCase.setId(apiPerfStep.getApiScene().getId());
-                apiSceneTestRequest.setApiSceneCase(apiSceneCase);
-                apiSceneTestRequest.setApiEnv(apiPerfTestRequest.getApiEnv());
-
-                List<ApiUnitTestRequest> apiUnitTestRequestList = apiSceneExecuteDispatchService.processApiSceneTestData(apiSceneTestRequest);
-                apiSceneTestRequest.setApiUnitTestRequestList(apiUnitTestRequestList);
-
-                apiSceneTestRequestList.add(apiSceneTestRequest);
+            // 测试数据索引+1
+            dataIndex++;
+            if (dataIndex >= testDataList.size()) {
+                dataIndex = 0;
             }
+
+            apiSceneTestRequestList.add(apiSceneTestRequest);
         }
+
 
         return apiSceneTestRequestList;
 

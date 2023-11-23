@@ -10,6 +10,7 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 
 import java.sql.Timestamp;
 
@@ -34,6 +35,7 @@ public class ApiSceneStep extends BaseModel{
     @JoinQuery(key = "id")
     private ApiUnitCase apiUnit;
 
+    private ApiUnitCaseDataConstruction apiUnitCaseDataConstruction;
 
     public String getId() {
         return id;
@@ -59,4 +61,11 @@ public class ApiSceneStep extends BaseModel{
         this.apiUnit = apiUnit;
     }
 
+    public ApiUnitCaseDataConstruction getApiUnitCaseDataConstruction() {
+        return apiUnitCaseDataConstruction;
+    }
+
+    public void setApiUnitCaseDataConstruction(ApiUnitCaseDataConstruction apiUnitCaseDataConstruction) {
+        this.apiUnitCaseDataConstruction = apiUnitCaseDataConstruction;
+    }
 }

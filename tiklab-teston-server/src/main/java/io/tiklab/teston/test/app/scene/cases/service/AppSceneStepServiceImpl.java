@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.app.scene.cases.service;
 
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.app.scene.cases.dao.AppSceneStepDao;
 import io.tiklab.teston.test.app.scene.cases.entity.AppSceneStepEntity;
 import io.tiklab.beans.BeanMapper;
@@ -44,6 +45,7 @@ public class AppSceneStepServiceImpl implements AppSceneStepService {
         //公共步骤 创建
         StepCommon stepCommon = new StepCommon();
         stepCommon.setCaseId(appSceneStep.getAppSceneId());
+        stepCommon.setType(MagicValue.CASE_TYPE_APP);
         String stepId = stepCommonService.createStepCommon(stepCommon);
 
         AppSceneStepEntity appSceneStepEntity = BeanMapper.map(appSceneStep, AppSceneStepEntity.class);

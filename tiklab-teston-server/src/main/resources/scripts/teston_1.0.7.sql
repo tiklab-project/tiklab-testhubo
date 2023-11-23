@@ -2,6 +2,7 @@ CREATE TABLE teston_case_step_common (
     id VARCHAR(32) PRIMARY KEY,
     case_id VARCHAR(32),
     create_time timestamp,
+    type VARCHAR(32),
     sort int
 );
 
@@ -57,6 +58,7 @@ CREATE TABLE teston_case_step_instance_common (
     id VARCHAR(32) PRIMARY KEY,
     instance_id VARCHAR(32),
     sort int,
+    type VARCHAR(32),
     result int
 );
 
@@ -71,7 +73,8 @@ CREATE TABLE teston_case_step_instance_if_variable (
     step_instance_id VARCHAR(32),
     variable VARCHAR(128),
     compare int,
-    expect VARCHAR(128)
+    expect VARCHAR(128),
+    result int
 );
 
 ALTER TABLE teston_web_scene_instance_step
@@ -88,6 +91,30 @@ ALTER TABLE teston_app_scene_instance_step
 DROP COLUMN result;
 
 
+UPDATE teston_case_step_common
+SET type = 'api-scene'
+FROM teston_api_scene_step
+WHERE teston_case_step_common.id = teston_api_scene_step.id;
+
+UPDATE teston_case_step_common
+SET type = 'web'
+FROM teston_web_scene_step
+WHERE teston_case_step_common.id = teston_web_scene_step.id;
+
+UPDATE teston_case_step_common
+SET type = 'app'
+FROM teston_app_scene_step
+WHERE teston_case_step_common.id = teston_app_scene_step.id;
+
+UPDATE teston_case_step_common
+SET type = 'function'
+FROM teston_func_unit_step
+WHERE teston_case_step_common.id = teston_func_unit_step.id;
+
+UPDATE teston_case_step_common
+SET type = 'if'
+FROM teston_case_step_if
+WHERE teston_case_step_common.id = teston_case_step_if.id;
 
 
 

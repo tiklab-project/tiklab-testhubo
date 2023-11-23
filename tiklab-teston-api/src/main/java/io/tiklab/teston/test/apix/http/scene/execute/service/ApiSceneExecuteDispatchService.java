@@ -17,11 +17,4 @@ public interface ApiSceneExecuteDispatchService {
      */
     ApiSceneTestResponse execute(ApiSceneTestRequest apiSceneTestRequest);
 
-    /**
-     * 数据构造
-     * @param apiSceneTestRequest
-     * @return
-     */
-    List<ApiUnitTestRequest> processApiSceneTestData(ApiSceneTestRequest apiSceneTestRequest);
-
 }

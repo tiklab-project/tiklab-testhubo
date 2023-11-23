@@ -25,6 +25,10 @@ public class StepCommonEntity implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 类型
+    @Column(name = "type")
+    private String type;
+
     // 排序
     @Column(name = "sort")
     private Integer sort;
@@ -45,6 +49,13 @@ public class StepCommonEntity implements Serializable {
         this.caseId = caseId;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getSort() {
         return sort;

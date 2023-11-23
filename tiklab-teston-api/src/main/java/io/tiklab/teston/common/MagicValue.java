@@ -23,10 +23,11 @@ public class MagicValue {
     public static final int ELEMENT_NOT_EXIST = 3;
 
     //步骤类型
-    public static final String CASE_TYPE_API = "api";
-    public static final String CASE_TYPE_WEB = "web";
+    public static final String CASE_TYPE_API_UNIT = "api-unit";
+    public static final String CASE_TYPE_API_SCENE = "api-scene";
     public static final String CASE_TYPE_APP = "app";
+    public static final String CASE_TYPE_WEB = "web";
     public static final String CASE_TYPE_FUNCTION = "function";
-
+    public static final String CASE_TYPE_IF = "if";
 
 }

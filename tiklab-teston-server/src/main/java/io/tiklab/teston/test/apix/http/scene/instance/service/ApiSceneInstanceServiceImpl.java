@@ -5,6 +5,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.join.JoinTemplate;
 
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.apix.http.scene.execute.model.ApiSceneTestResponse;
 import io.tiklab.teston.test.apix.http.scene.instance.entity.ApiSceneInstanceEntity;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
@@ -15,6 +16,11 @@ import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
 import io.tiklab.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
+import io.tiklab.teston.test.common.ifjudgment.model.IfJudgmentInstance;
+import io.tiklab.teston.test.common.ifjudgment.service.IfJudgmentInstanceService;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
+import io.tiklab.teston.test.common.stepcommon.service.StepCommonInstanceService;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import io.tiklab.teston.test.apix.http.scene.instance.dao.ApiSceneInstanceDao;
 import io.tiklab.eam.common.context.LoginContext;
@@ -43,13 +49,10 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
     ApiUnitInstanceService apiUnitInstanceService;
 
     @Autowired
-    ApiSceneStepInstanceBindService apiSceneStepInstanceBindService;
+    StepCommonInstanceService stepCommonInstanceService;
 
     @Autowired
-    TestCaseService unitCaseService;
-
-    @Autowired
-    ApiUnitCaseService apiUnitCaseService;
+    IfJudgmentInstanceService ifJudgmentInstanceService;
 
     @Override
     public String createApiSceneInstance(@NotNull @Valid ApiSceneInstance scenInstance) {
@@ -94,24 +97,11 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
     public ApiSceneInstance findApiSceneInstance(@NotNull String id) {
         ApiSceneInstance apiSceneInstance = findOne(id);
 
-        //通过中间表把所有步骤历史查不出
-        ApiSceneStepInstanceBindQuery apiSceneStepInstanceBindQuery = new ApiSceneStepInstanceBindQuery();
-        apiSceneStepInstanceBindQuery.setApiSceneInstanceId(id);
-        List<ApiSceneStepInstanceBind> apiSceneStepInstanceBindList = apiSceneStepInstanceBindService.findApiSceneStepInstanceBindList(apiSceneStepInstanceBindQuery);
-
-        //用于手动添加字段
-        ArrayList<ApiSceneStepInstanceBind> newApiStepList = new ArrayList<>();
-        for(ApiSceneStepInstanceBind apiSceneStepInstanceBind:apiSceneStepInstanceBindList){
-            ApiUnitCase apiUnit = apiSceneStepInstanceBind.getApiUnitInstance().getApiUnit();
-            ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiUnit.getId());
-
-            apiSceneStepInstanceBind.getApiUnitInstance().setApiUnit(apiUnitCase);
-
-            newApiStepList.add(apiSceneStepInstanceBind);
-        }
-
-
-        apiSceneInstance.setStepList(newApiStepList);
+        StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();
+        stepCommonInstanceQuery.setInstanceId(id);
+        stepCommonInstanceQuery.setCaseType(MagicValue.CASE_TYPE_API_SCENE);
+        List<StepCommonInstance> stepCommonInstanceList = stepCommonInstanceService.findStepCommonInstanceList(stepCommonInstanceQuery);
+        apiSceneInstance.setStepCommonInstanceList(stepCommonInstanceList);
 
         joinTemplate.joinQuery(apiSceneInstance);
         return apiSceneInstance;
@@ -154,23 +144,26 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         String apiSceneInstanceId = createApiSceneInstance(apiSceneInstance);
 
         //所有ApiUnitInstance设置apiSceneInstanceId创建
-        List<ApiUnitInstance> apiUnitInstanceList = apiSceneTestResponse.getApiUnitInstanceList();
-        apiUnitInstanceList.forEach(apiUnitInstance -> {
+        List<StepCommonInstance> stepCommonInstanceList = apiSceneTestResponse.getStepCommonInstanceList();
+        stepCommonInstanceList.forEach(stepCommonInstance -> {
+            //公共的历史创建
+            stepCommonInstance.setInstanceId(apiSceneInstanceId);
+            String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
 
-            String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
+            if(stepCommonInstance.getApiUnitInstance() != null){
+                ApiUnitInstance apiUnitInstance = stepCommonInstance.getApiUnitInstance();
+                apiUnitInstance.setId(stepInstanceId);
+                apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
+            }
 
-            //关联表， 用于 场景步骤历史 与 场景历史 相关联
-            ApiSceneStepInstanceBind apiSceneStepInstanceBind = new ApiSceneStepInstanceBind();
-            apiSceneStepInstanceBind.setApiSceneInstanceId(apiSceneInstanceId);
-
-            ApiUnitInstance apiUnitInstance1 = new ApiUnitInstance();
-            apiUnitInstance1.setId(apiUnitInstanceId);
-            apiSceneStepInstanceBind.setApiUnitInstance(apiUnitInstance1);
-            apiSceneStepInstanceBind.setId(apiUnitInstanceId);
-            apiSceneStepInstanceBindService.createApiSceneStepInstanceBind(apiSceneStepInstanceBind);
-
+            //if判断历史创建
+            if(stepCommonInstance.getIfJudgmentInstance()!=null){
+                IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
+                ifJudgmentInstance.setStepInstanceId(apiSceneInstanceId);
+                ifJudgmentInstance.setId(stepInstanceId);
+                ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
+            }
         });
-
 
         return apiSceneInstanceId;
     }

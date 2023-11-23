@@ -5,6 +5,10 @@ import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.tiklab.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
+import io.tiklab.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
+import io.tiklab.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
 import io.tiklab.teston.test.app.scene.cases.model.AppSceneStep;
 import io.tiklab.teston.test.app.scene.cases.service.AppSceneStepService;
 import io.tiklab.teston.test.common.ifjudgment.model.IfJudgment;
@@ -42,6 +46,8 @@ public class StepCommonServiceImpl implements StepCommonService {
     @Autowired
     AppSceneStepService appSceneStepService;
     @Autowired
+    ApiUnitCaseService apiUnitCaseService;
+    @Autowired
     ApiSceneStepService apiSceneStepService;
     @Autowired
     FuncUnitStepService funcUnitStepService;
@@ -70,32 +76,35 @@ public class StepCommonServiceImpl implements StepCommonService {
     @Override
     public void updateStepCommon(@NotNull @Valid StepCommon stepCommon) {
 
-        Integer curSort = stepCommon.getSort();
-        Integer oldSort = stepCommon.getOldSort();
+        if(stepCommon.getOldSort()!=null){
+            Integer curSort = stepCommon.getSort();
+            Integer oldSort = stepCommon.getOldSort();
 
-        List<StepCommon> stepCommonList = getStepCommonList(stepCommon.getCaseId());
+            List<StepCommon> stepCommonList = getStepCommonList(stepCommon.getCaseId());
 
-        //如果当前排序大于源排序，中间项的排序都得减1
-        if(curSort > oldSort){
-            for(int i=oldSort;i<=curSort;i++){
-                StepCommon stepCommonItem = stepCommonList.get(i);
-                stepCommonItem.setSort(stepCommonItem.getSort()-1);
+            //如果当前排序大于源排序，中间项的排序都得减1
+            if(curSort > oldSort){
+                for(int i=oldSort;i<=curSort;i++){
+                    StepCommon stepCommonItem = stepCommonList.get(i);
+                    stepCommonItem.setSort(stepCommonItem.getSort()-1);
 
-                StepCommonEntity stepCommonEntity = BeanMapper.map(stepCommonItem, StepCommonEntity.class);
-                stepCommonDao.updateStepCommon(stepCommonEntity);
+                    StepCommonEntity stepCommonEntity = BeanMapper.map(stepCommonItem, StepCommonEntity.class);
+                    stepCommonDao.updateStepCommon(stepCommonEntity);
+                }
+            }
+
+            //如果当前排序小于源排序，中间项的排序都得加1
+            if(curSort < oldSort){
+                for (int i=oldSort;i>=curSort;i--){
+                    StepCommon stepCommonItem = stepCommonList.get(i);
+                    stepCommonItem.setSort(stepCommonItem.getSort()+1);
+
+                    StepCommonEntity stepCommonEntity = BeanMapper.map(stepCommonItem, StepCommonEntity.class);
+                    stepCommonDao.updateStepCommon(stepCommonEntity);
+                }
             }
         }
 
-        //如果当前排序小于源排序，中间项的排序都得加1
-        if(curSort < oldSort){
-            for (int i=oldSort;i>=curSort;i--){
-                StepCommon stepCommonItem = stepCommonList.get(i);
-                stepCommonItem.setSort(stepCommonItem.getSort()+1);
-
-                StepCommonEntity stepCommonEntity = BeanMapper.map(stepCommonItem, StepCommonEntity.class);
-                stepCommonDao.updateStepCommon(stepCommonEntity);
-            }
-        }
 
         StepCommonEntity entity = BeanMapper.map(stepCommon, StepCommonEntity.class);
         stepCommonDao.updateStepCommon(entity);
@@ -120,7 +129,7 @@ public class StepCommonServiceImpl implements StepCommonService {
                 stepCommonDao.deleteStepCommon(id);
 
                 switch (caseType){
-                    case MagicValue.CASE_TYPE_API:
+                    case MagicValue.CASE_TYPE_API_SCENE:
                         apiSceneStepService.deleteApiSceneStep(id);
                         break;
                     case MagicValue.CASE_TYPE_APP:
@@ -170,10 +179,12 @@ public class StepCommonServiceImpl implements StepCommonService {
             for(StepCommon stepCommon:stepCommonList){
 
                 switch (caseType){
-                    case MagicValue.CASE_TYPE_API:
+                    case MagicValue.CASE_TYPE_API_SCENE:
                         ApiSceneStep apiSceneStep = apiSceneStepService.findApiSceneStep(stepCommon.getId());
+                        if(apiSceneStep==null){break;}
+                        ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiSceneStep.getApiUnit());
+                        apiSceneStep.setApiUnitCaseDataConstruction(apiUnitCaseDataConstruction);
                         stepCommon.setApiSceneStep(apiSceneStep);
-
                         break;
                     case MagicValue.CASE_TYPE_APP:
                         AppSceneStep appSceneStep = appSceneStepService.findAppSceneStep(stepCommon.getId());

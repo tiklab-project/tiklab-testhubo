@@ -4,6 +4,7 @@ import io.tiklab.beans.annotation.Mapper;
 import io.tiklab.core.BaseModel;
 import io.tiklab.join.annotation.Join;
 import io.tiklab.postin.annotation.ApiModel;
+import io.tiklab.postin.annotation.ApiProperty;
 import io.tiklab.teston.test.apix.http.scene.instance.model.ApiSceneStepInstanceBind;
 import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceStep;
@@ -21,6 +22,7 @@ public class StepCommonInstance extends BaseModel{
     private String instanceId;
     private int result;
     private int sort;
+    private String type;
 
     private ApiUnitInstance apiUnitInstance;
     private ApiSceneStepInstanceBind apiSceneStepInstanceBind;
@@ -42,6 +44,14 @@ public class StepCommonInstance extends BaseModel{
 
     public void setInstanceId(String instanceId) {
         this.instanceId = instanceId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getResult() {

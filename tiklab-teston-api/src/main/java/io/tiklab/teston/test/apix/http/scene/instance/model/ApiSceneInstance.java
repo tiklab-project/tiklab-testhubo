@@ -9,6 +9,7 @@ import io.tiklab.join.annotation.Join;
 import io.tiklab.join.annotation.JoinQuery;
 import io.tiklab.postin.annotation.ApiModel;
 import io.tiklab.postin.annotation.ApiProperty;
+import io.tiklab.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.tiklab.user.user.model.User;
 
 import java.sql.Timestamp;
@@ -50,8 +51,8 @@ public class ApiSceneInstance extends BaseModel{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="stepList",desc="步骤示例列表")
-    private List<ApiSceneStepInstanceBind> stepList;
+    @ApiProperty(name="stepCommonInstanceList",desc="步骤实例列表")
+    private List<StepCommonInstance> stepCommonInstanceList;
 
     @ApiProperty(name="createUser",desc="创建人")
     @Mappings({
@@ -95,12 +96,12 @@ public class ApiSceneInstance extends BaseModel{
         this.elapsedTime = elapsedTime;
     }
 
-    public List<ApiSceneStepInstanceBind> getStepList() {
-        return stepList;
+    public List<StepCommonInstance> getStepCommonInstanceList() {
+        return stepCommonInstanceList;
     }
 
-    public void setStepList(List<ApiSceneStepInstanceBind> stepList) {
-        this.stepList = stepList;
+    public void setStepCommonInstanceList(List<StepCommonInstance> stepCommonInstanceList) {
+        this.stepCommonInstanceList = stepCommonInstanceList;
     }
 
     public String getApiSceneId() {

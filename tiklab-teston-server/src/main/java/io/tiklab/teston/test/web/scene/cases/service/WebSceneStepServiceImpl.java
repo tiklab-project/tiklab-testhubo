@@ -1,5 +1,6 @@
 package io.tiklab.teston.test.web.scene.cases.service;
 
+import io.tiklab.teston.common.MagicValue;
 import io.tiklab.teston.test.common.stepassert.model.StepAssertCommon;
 import io.tiklab.teston.test.common.stepassert.model.StepAssertCommonQuery;
 import io.tiklab.teston.test.common.stepassert.service.StepAssertCommonService;
@@ -46,6 +47,7 @@ public class WebSceneStepServiceImpl implements WebSceneStepService {
         //公共步骤 创建
         StepCommon stepCommon = new StepCommon();
         stepCommon.setCaseId(webSceneStep.getWebSceneId());
+        stepCommon.setType(MagicValue.CASE_TYPE_WEB);
         String stepId = stepCommonService.createStepCommon(stepCommon);
 
         // 创建 webSceneStep

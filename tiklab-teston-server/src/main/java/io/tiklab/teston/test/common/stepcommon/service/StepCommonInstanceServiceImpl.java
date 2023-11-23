@@ -3,6 +3,7 @@ package io.tiklab.teston.test.common.stepcommon.service;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.common.MagicValue;
+import io.tiklab.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.tiklab.teston.test.app.scene.instance.model.AppSceneInstanceStep;
 import io.tiklab.teston.test.common.ifjudgment.model.IfJudgmentInstance;
 import io.tiklab.teston.test.common.stepcommon.service.StepCommonInstanceService;
@@ -96,8 +97,9 @@ public class StepCommonInstanceServiceImpl implements StepCommonInstanceService 
         if(caseType!=null){
             for(StepCommonInstance stepCommonInstance:stepCommonInstanceList){
                 switch (caseType){
-                    case MagicValue.CASE_TYPE_API:
-
+                    case MagicValue.CASE_TYPE_API_SCENE:
+                        ApiUnitInstance apiUnitInstance = apiUnitInstanceService.findApiUnitInstance(stepCommonInstance.getId());
+                        stepCommonInstance.setApiUnitInstance(apiUnitInstance);
                     case MagicValue.CASE_TYPE_APP:
                         AppSceneInstanceStep appSceneInstanceStep = appSceneInstanceStepService.findAppSceneInstanceStep(stepCommonInstance.getId());
                         stepCommonInstance.setAppSceneInstanceStep(appSceneInstanceStep);
