@@ -29,7 +29,7 @@ public class TestCasesEntity implements Serializable {
     @Column(name = "repository_id",length = 32,notNull = true)
     private String repositoryId;
 
-    // 测试类型:auto,perform,function
+    // 测试类型
     @Column(name = "test_type",length = 64,notNull = true)
     private String testType;
 
@@ -57,10 +57,6 @@ public class TestCasesEntity implements Serializable {
     @Column(name = "sort")
     private Integer sort;
 
-    // 描述
-    @Column(name = "description",length = 128)
-    private String desc;
-
     @Column(name = "workitem_id",length = 64)
     private String workItemId ;
 
@@ -75,6 +71,10 @@ public class TestCasesEntity implements Serializable {
     // 优先级
     @Column(name = "priority_level",length = 8)
     private Integer priorityLevel;
+
+    // 描述
+    @Column(name = "description",length = 128)
+    private String desc;
 
     public String getId() {
         return id;
