@@ -66,12 +66,12 @@ teston-agent:
     path: C:\Users\JacksonSun\AppData\Local\Chromium\Application\chrome.exe
 
 postin:
-  enable: false
+  enable: true
   scan:
     package: io.tiklab.teston
   report:
-    workspaceId: f5b82a695903
-    server: http://192.168.10.3:8090
+    workspaceId: fae36fc39946
+    server: http://192.168.10.21:8090
 
 file:
   path:

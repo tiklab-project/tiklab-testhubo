@@ -41,7 +41,7 @@ public class IfJudgmentServiceImpl implements IfJudgmentService {
         //公共步骤 创建
         StepCommon stepCommon = new StepCommon();
         stepCommon.setCaseId(ifJudgment.getCaseId());
-        stepCommon.setType(MagicValue.CASE_TYPE_FUNCTION);
+        stepCommon.setType(MagicValue.CASE_TYPE_IF);
         String stepId = stepCommonService.createStepCommon(stepCommon);
 
         IfJudgmentEntity ifJudgmentEntity = BeanMapper.map(ifJudgment, IfJudgmentEntity.class);

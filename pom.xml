@@ -42,7 +42,7 @@
         <tiklab-upgrade.version>1.0.0</tiklab-upgrade.version>
         <tiklab-jdk.version>1.0.0</tiklab-jdk.version>
         <tiklab-plugin.version>1.0.1-SNAPSHOT</tiklab-plugin.version>
-
+        <tiklab-openapi.version>1.0.0-SNAPSHOT</tiklab-openapi.version>
 
         <!--业务-->
         <tiklab-teston-agent.version>1.0.1-SNAPSHOT</tiklab-teston-agent.version>
@@ -191,6 +191,11 @@
                 <groupId>io.tiklab</groupId>
                 <artifactId>tiklab-gateway-spring-boot-starter</artifactId>
                 <version>${tiklab-gateway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.tiklab</groupId>
+                <artifactId>tiklab-openapi-spring-boot-starter</artifactId>
+                <version>${tiklab-openapi.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.tiklab</groupId>
