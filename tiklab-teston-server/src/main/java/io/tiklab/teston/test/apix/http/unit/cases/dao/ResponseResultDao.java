@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.ResponseResultEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,24 +77,24 @@ public class ResponseResultDao{
 
     /**
      * 根据查询参数查询响应结果列表
-     * @param responseResultQuery
+     * @param responseResultUnitQuery
      * @return
      */
-    public List<ResponseResultEntity> findResponseResultList(ResponseResultQuery responseResultQuery) {
+    public List<ResponseResultEntity> findResponseResultList(ResponseResultUnitQuery responseResultUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ResponseResultEntity.class)
-                .eq("apiUnitId", responseResultQuery.getApiUnitId())
+                .eq("apiUnitId", responseResultUnitQuery.getApiUnitId())
                 .get();
         return jpaTemplate.findList(queryCondition, ResponseResultEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询响应结果
-     * @param responseResultQuery
+     * @param responseResultUnitQuery
      * @return
      */
-    public Pagination<ResponseResultEntity> findResponseResultPage(ResponseResultQuery responseResultQuery) {
+    public Pagination<ResponseResultEntity> findResponseResultPage(ResponseResultUnitQuery responseResultUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ResponseResultEntity.class)
-                .eq("apiUnitId", responseResultQuery.getApiUnitId())
+                .eq("apiUnitId", responseResultUnitQuery.getApiUnitId())
                 .get();
         return jpaTemplate.findPage(queryCondition, ResponseResultEntity.class);
     }

@@ -1,6 +1,7 @@
 package io.tiklab.teston.integrated.postin.postinapi.service;
 
-import io.tiklab.postin.api.apix.model.Apix;
+import io.tiklab.teston.integrated.postin.postinapi.model.Apix;
+import io.tiklab.teston.integrated.postin.postinapi.model.ApixQuery;
 import io.tiklab.teston.integrated.postin.postinapi.model.PostInApiToCase;
 
 import javax.validation.Valid;

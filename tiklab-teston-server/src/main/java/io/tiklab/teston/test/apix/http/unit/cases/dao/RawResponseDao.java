@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.RawResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,27 +77,27 @@ public class RawResponseDao{
 
     /**
      * 根据查询参数查询响应中raw列表
-     * @param rawResponseQuery
+     * @param rawResponseUnitQuery
      * @return
      */
-    public List<RawResponseEntity> findRawResponseList(RawResponseQuery rawResponseQuery) {
+    public List<RawResponseEntity> findRawResponseList(RawResponseUnitQuery rawResponseUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RawResponseEntity.class)
-                .eq("apiUnitId", rawResponseQuery.getApiUnitId())
-                .orders(rawResponseQuery.getOrderParams())
+                .eq("apiUnitId", rawResponseUnitQuery.getApiUnitId())
+                .orders(rawResponseUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, RawResponseEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询响应中raw
-     * @param rawResponseQuery
+     * @param rawResponseUnitQuery
      * @return
      */
-    public Pagination<RawResponseEntity> findRawResponsePage(RawResponseQuery rawResponseQuery) {
+    public Pagination<RawResponseEntity> findRawResponsePage(RawResponseUnitQuery rawResponseUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RawResponseEntity.class)
-                .eq("apiUnitId", rawResponseQuery.getApiUnitId())
-                .orders(rawResponseQuery.getOrderParams())
-                .pagination(rawResponseQuery.getPageParam())
+                .eq("apiUnitId", rawResponseUnitQuery.getApiUnitId())
+                .orders(rawResponseUnitQuery.getOrderParams())
+                .pagination(rawResponseUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, RawResponseEntity.class);
     }

@@ -8,8 +8,8 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScript;
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +30,15 @@ public class PreScriptServiceImpl implements PreScriptService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createPreScript(@NotNull @Valid PreScript preScript) {
-        PreScriptEntity preScriptEntity = BeanMapper.map(preScript, PreScriptEntity.class);
+    public String createPreScript(@NotNull @Valid PreScriptUnit preScriptUnit) {
+        PreScriptEntity preScriptEntity = BeanMapper.map(preScriptUnit, PreScriptEntity.class);
 
         return preScriptDao.createPreScript(preScriptEntity);
     }
 
     @Override
-    public void updatePreScript(@NotNull @Valid PreScript preScript) {
-        PreScriptEntity preScriptEntity = BeanMapper.map(preScript, PreScriptEntity.class);
+    public void updatePreScript(@NotNull @Valid PreScriptUnit preScriptUnit) {
+        PreScriptEntity preScriptEntity = BeanMapper.map(preScriptUnit, PreScriptEntity.class);
 
         preScriptDao.updatePreScript(preScriptEntity);
     }
@@ -49,59 +49,59 @@ public class PreScriptServiceImpl implements PreScriptService {
     }
 
     @Override
-    public PreScript findOne(String id) {
+    public PreScriptUnit findOne(String id) {
         PreScriptEntity preScriptEntity = preScriptDao.findPreScript(id);
 
-        PreScript preScript = BeanMapper.map(preScriptEntity, PreScript.class);
-        return preScript;
+        PreScriptUnit preScriptUnit = BeanMapper.map(preScriptEntity, PreScriptUnit.class);
+        return preScriptUnit;
     }
 
     @Override
-    public List<PreScript> findList(List<String> idList) {
+    public List<PreScriptUnit> findList(List<String> idList) {
         List<PreScriptEntity> preScriptEntityList =  preScriptDao.findPreScriptList(idList);
 
-        List<PreScript> preScriptList =  BeanMapper.mapList(preScriptEntityList,PreScript.class);
-        return preScriptList;
+        List<PreScriptUnit> preScriptUnitList =  BeanMapper.mapList(preScriptEntityList, PreScriptUnit.class);
+        return preScriptUnitList;
     }
 
     @Override
-    public PreScript findPreScript(@NotNull String id) {
-        PreScript preScript = findOne(id);
+    public PreScriptUnit findPreScript(@NotNull String id) {
+        PreScriptUnit preScriptUnit = findOne(id);
 
-        joinTemplate.joinQuery(preScript);
-        return preScript;
+        joinTemplate.joinQuery(preScriptUnit);
+        return preScriptUnit;
     }
 
     @Override
-    public List<PreScript> findAllPreScript() {
+    public List<PreScriptUnit> findAllPreScript() {
         List<PreScriptEntity> preScriptEntityList =  preScriptDao.findAllPreScript();
 
-        List<PreScript> preScriptList =  BeanMapper.mapList(preScriptEntityList,PreScript.class);
+        List<PreScriptUnit> preScriptUnitList =  BeanMapper.mapList(preScriptEntityList, PreScriptUnit.class);
 
-        joinTemplate.joinQuery(preScriptList);
-        return preScriptList;
+        joinTemplate.joinQuery(preScriptUnitList);
+        return preScriptUnitList;
     }
 
     @Override
-    public List<PreScript> findPreScriptList(PreScriptQuery preScriptQuery) {
-        List<PreScriptEntity> preScriptEntityList = preScriptDao.findPreScriptList(preScriptQuery);
+    public List<PreScriptUnit> findPreScriptList(PreScriptUnitQuery preScriptUnitQuery) {
+        List<PreScriptEntity> preScriptEntityList = preScriptDao.findPreScriptList(preScriptUnitQuery);
 
-        List<PreScript> preScriptList = BeanMapper.mapList(preScriptEntityList,PreScript.class);
+        List<PreScriptUnit> preScriptUnitList = BeanMapper.mapList(preScriptEntityList, PreScriptUnit.class);
 
-        joinTemplate.joinQuery(preScriptList);
+        joinTemplate.joinQuery(preScriptUnitList);
 
-        return preScriptList;
+        return preScriptUnitList;
     }
 
     @Override
-    public Pagination<PreScript> findPreScriptPage(PreScriptQuery preScriptQuery) {
+    public Pagination<PreScriptUnit> findPreScriptPage(PreScriptUnitQuery preScriptUnitQuery) {
 
-        Pagination<PreScriptEntity>  pagination = preScriptDao.findPreScriptPage(preScriptQuery);
+        Pagination<PreScriptEntity>  pagination = preScriptDao.findPreScriptPage(preScriptUnitQuery);
 
-        List<PreScript> preScriptList = BeanMapper.mapList(pagination.getDataList(),PreScript.class);
+        List<PreScriptUnit> preScriptUnitList = BeanMapper.mapList(pagination.getDataList(), PreScriptUnit.class);
 
-        joinTemplate.joinQuery(preScriptList);
+        joinTemplate.joinQuery(preScriptUnitList);
 
-        return PaginationBuilder.build(pagination,preScriptList);
+        return PaginationBuilder.build(pagination, preScriptUnitList);
     }
 }

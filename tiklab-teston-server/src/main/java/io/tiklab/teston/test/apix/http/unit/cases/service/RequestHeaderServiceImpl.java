@@ -7,8 +7,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeader;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderUnitQuery;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,15 +32,15 @@ public class RequestHeaderServiceImpl implements RequestHeaderService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createRequestHeader(@NotNull @Valid RequestHeader requestHeader) {
-        RequestHeaderEntity requestHeaderEntity = BeanMapper.map(requestHeader, RequestHeaderEntity.class);
+    public String createRequestHeader(@NotNull @Valid RequestHeaderUnit requestHeaderUnit) {
+        RequestHeaderEntity requestHeaderEntity = BeanMapper.map(requestHeaderUnit, RequestHeaderEntity.class);
 
         return requestHeaderDao.createRequestHeader(requestHeaderEntity);
     }
 
     @Override
-    public void updateRequestHeader(@NotNull @Valid RequestHeader requestHeader) {
-        RequestHeaderEntity requestHeaderEntity = BeanMapper.map(requestHeader, RequestHeaderEntity.class);
+    public void updateRequestHeader(@NotNull @Valid RequestHeaderUnit requestHeaderUnit) {
+        RequestHeaderEntity requestHeaderEntity = BeanMapper.map(requestHeaderUnit, RequestHeaderEntity.class);
 
         requestHeaderDao.updateRequestHeader(requestHeaderEntity);
     }
@@ -51,60 +51,60 @@ public class RequestHeaderServiceImpl implements RequestHeaderService {
     }
 
     @Override
-    public RequestHeader findOne(String id) {
+    public RequestHeaderUnit findOne(String id) {
         RequestHeaderEntity requestHeaderEntity = requestHeaderDao.findRequestHeader(id);
 
-        RequestHeader requestHeader = BeanMapper.map(requestHeaderEntity, RequestHeader.class);
-        return requestHeader;
+        RequestHeaderUnit requestHeaderUnit = BeanMapper.map(requestHeaderEntity, RequestHeaderUnit.class);
+        return requestHeaderUnit;
     }
 
     @Override
-    public List<RequestHeader> findList(List<String> idList) {
+    public List<RequestHeaderUnit> findList(List<String> idList) {
         List<RequestHeaderEntity> requestHeaderEntityList =  requestHeaderDao.findRequestHeaderList(idList);
 
-        List<RequestHeader> requestHeaderList =  BeanMapper.mapList(requestHeaderEntityList,RequestHeader.class);
-        return requestHeaderList;
+        List<RequestHeaderUnit> requestHeaderUnitList =  BeanMapper.mapList(requestHeaderEntityList, RequestHeaderUnit.class);
+        return requestHeaderUnitList;
     }
 
     @Override
-    public RequestHeader findRequestHeader(@NotNull String id) {
-        RequestHeader requestHeader = findOne(id);
+    public RequestHeaderUnit findRequestHeader(@NotNull String id) {
+        RequestHeaderUnit requestHeaderUnit = findOne(id);
 
-        joinTemplate.joinQuery(requestHeader);
-        return requestHeader;
+        joinTemplate.joinQuery(requestHeaderUnit);
+        return requestHeaderUnit;
     }
 
     @Override
-    public List<RequestHeader> findAllRequestHeader() {
+    public List<RequestHeaderUnit> findAllRequestHeader() {
         List<RequestHeaderEntity> requestHeaderEntityList =  requestHeaderDao.findAllRequestHeader();
 
-        List<RequestHeader> requestHeaderList =  BeanMapper.mapList(requestHeaderEntityList,RequestHeader.class);
+        List<RequestHeaderUnit> requestHeaderUnitList =  BeanMapper.mapList(requestHeaderEntityList, RequestHeaderUnit.class);
 
-        joinTemplate.joinQuery(requestHeaderList);
-        return requestHeaderList;
+        joinTemplate.joinQuery(requestHeaderUnitList);
+        return requestHeaderUnitList;
     }
 
     @Override
-    public List<RequestHeader> findRequestHeaderList(RequestHeaderQuery requestHeaderQuery) {
-        List<RequestHeaderEntity> requestHeaderEntityList = requestHeaderDao.findRequestHeaderList(requestHeaderQuery);
+    public List<RequestHeaderUnit> findRequestHeaderList(RequestHeaderUnitQuery requestHeaderUnitQuery) {
+        List<RequestHeaderEntity> requestHeaderEntityList = requestHeaderDao.findRequestHeaderList(requestHeaderUnitQuery);
 
-        List<RequestHeader> requestHeaderList = BeanMapper.mapList(requestHeaderEntityList,RequestHeader.class);
+        List<RequestHeaderUnit> requestHeaderUnitList = BeanMapper.mapList(requestHeaderEntityList, RequestHeaderUnit.class);
 
-        joinTemplate.joinQuery(requestHeaderList);
+        joinTemplate.joinQuery(requestHeaderUnitList);
 
-        return requestHeaderList;
+        return requestHeaderUnitList;
     }
 
     @Override
-    public Pagination<RequestHeader> findRequestHeaderPage(RequestHeaderQuery requestHeaderQuery) {
+    public Pagination<RequestHeaderUnit> findRequestHeaderPage(RequestHeaderUnitQuery requestHeaderUnitQuery) {
 
-        Pagination<RequestHeaderEntity>  pagination = requestHeaderDao.findRequestHeaderPage(requestHeaderQuery);
+        Pagination<RequestHeaderEntity>  pagination = requestHeaderDao.findRequestHeaderPage(requestHeaderUnitQuery);
 
-        List<RequestHeader> requestHeaderList = BeanMapper.mapList(pagination.getDataList(),RequestHeader.class);
+        List<RequestHeaderUnit> requestHeaderUnitList = BeanMapper.mapList(pagination.getDataList(), RequestHeaderUnit.class);
 
-        joinTemplate.joinQuery(requestHeaderList);
+        joinTemplate.joinQuery(requestHeaderUnitList);
 
-        return PaginationBuilder.build(pagination,requestHeaderList);
+        return PaginationBuilder.build(pagination, requestHeaderUnitList);
     }
 
     /**
@@ -115,17 +115,17 @@ public class RequestHeaderServiceImpl implements RequestHeaderService {
     @Override
     public Map<String, String> jointHeader(ApiUnitCase apiUnitCase){
         Map headerMap = new HashMap();
-        RequestHeaderQuery requestHeaderQuery = new RequestHeaderQuery();
-        requestHeaderQuery.setApiUnitId(apiUnitCase.getId());
+        RequestHeaderUnitQuery requestHeaderUnitQuery = new RequestHeaderUnitQuery();
+        requestHeaderUnitQuery.setApiUnitId(apiUnitCase.getId());
         //通过步骤id查询请步骤请求头数据
-        List<RequestHeader> requestHeaderList = this.findRequestHeaderList(requestHeaderQuery);
+        List<RequestHeaderUnit> requestHeaderUnitList = this.findRequestHeaderList(requestHeaderUnitQuery);
 
-        if (CollectionUtils.isNotEmpty(requestHeaderList)){
-            for (RequestHeader requestHeader:requestHeaderList){
+        if (CollectionUtils.isNotEmpty(requestHeaderUnitList)){
+            for (RequestHeaderUnit requestHeaderUnit : requestHeaderUnitList){
                 //请求头属性名
-                String headerName = requestHeader.getHeaderName();
+                String headerName = requestHeaderUnit.getHeaderName();
                 //请求头参数
-                String value = requestHeader.getValue();
+                String value = requestHeaderUnit.getValue();
                 headerMap.put(headerName,value);
             }
         }

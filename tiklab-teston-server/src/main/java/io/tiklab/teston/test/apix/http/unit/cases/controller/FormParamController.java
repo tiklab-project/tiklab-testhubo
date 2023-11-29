@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.FormParamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class FormParamController {
     @RequestMapping(path="/createFormParam",method = RequestMethod.POST)
     @ApiMethod(name = "createFormParam",desc = "创建form-data")
     @ApiParam(name = "formParam",desc = "formParam",required = true)
-    public Result<String> createFormParam(@RequestBody @NotNull @Valid FormParam formParam){
-        String id = formParamService.createFormParam(formParam);
+    public Result<String> createFormParam(@RequestBody @NotNull @Valid FormParamUnit formParamUnit){
+        String id = formParamService.createFormParam(formParamUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class FormParamController {
     @RequestMapping(path="/updateFormParam",method = RequestMethod.POST)
     @ApiMethod(name = "updateFormParam",desc = "更新form-data")
     @ApiParam(name = "formParam",desc = "formParam",required = true)
-    public Result<Void> updateFormParam(@RequestBody @NotNull @Valid FormParam formParam){
-        formParamService.updateFormParam(formParam);
+    public Result<Void> updateFormParam(@RequestBody @NotNull @Valid FormParamUnit formParamUnit){
+        formParamService.updateFormParam(formParamUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class FormParamController {
     @RequestMapping(path="/findFormParam",method = RequestMethod.POST)
     @ApiMethod(name = "findFormParam",desc = "根据id查找form-data")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<FormParam> findFormParam(@NotNull String id){
-        FormParam formParam = formParamService.findFormParam(id);
+    public Result<FormParamUnit> findFormParam(@NotNull String id){
+        FormParamUnit formParamUnit = formParamService.findFormParam(id);
 
-        return Result.ok(formParam);
+        return Result.ok(formParamUnit);
     }
 
     @RequestMapping(path="/findAllFormParam",method = RequestMethod.POST)
     @ApiMethod(name = "findAllFormParam",desc = "查找所有form-data")
-    public Result<List<FormParam>> findAllFormParam(){
-        List<FormParam> formParamList = formParamService.findAllFormParam();
+    public Result<List<FormParamUnit>> findAllFormParam(){
+        List<FormParamUnit> formParamUnitList = formParamService.findAllFormParam();
 
-        return Result.ok(formParamList);
+        return Result.ok(formParamUnitList);
     }
 
     @RequestMapping(path = "/findFormParamList",method = RequestMethod.POST)
     @ApiMethod(name = "findFormParamList",desc = "根据查询参数查询form-data列表")
     @ApiParam(name = "formParamQuery",desc = "formParamQuery",required = true)
-    public Result<List<FormParam>> findFormParamList(@RequestBody @Valid @NotNull FormParamQuery formParamQuery){
-        List<FormParam> formParamList = formParamService.findFormParamList(formParamQuery);
+    public Result<List<FormParamUnit>> findFormParamList(@RequestBody @Valid @NotNull FormParamUnitQuery formParamUnitQuery){
+        List<FormParamUnit> formParamUnitList = formParamService.findFormParamList(formParamUnitQuery);
 
-        return Result.ok(formParamList);
+        return Result.ok(formParamUnitList);
     }
 
     @RequestMapping(path = "/findFormParamPage",method = RequestMethod.POST)
     @ApiMethod(name = "findFormParamPage",desc = "根据查询参数按分页查询form-data")
     @ApiParam(name = "formParamQuery",desc = "formParamQuery",required = true)
-    public Result<Pagination<FormParam>> findFormParamPage(@RequestBody @Valid @NotNull FormParamQuery formParamQuery){
-        Pagination<FormParam> pagination = formParamService.findFormParamPage(formParamQuery);
+    public Result<Pagination<FormParamUnit>> findFormParamPage(@RequestBody @Valid @NotNull FormParamUnitQuery formParamUnitQuery){
+        Pagination<FormParamUnit> pagination = formParamService.findFormParamPage(formParamUnitQuery);
 
         return Result.ok(pagination);
     }

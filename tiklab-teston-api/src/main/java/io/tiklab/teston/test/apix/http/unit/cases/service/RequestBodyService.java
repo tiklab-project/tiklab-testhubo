@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBody;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -15,16 +15,16 @@ public interface RequestBodyService {
 
     /**
     * 创建请求体
-    * @param requestBody
+    * @param requestBodyUnit
     * @return
     */
-    String createRequestBody(@NotNull @Valid RequestBody requestBody);
+    String createRequestBody(@NotNull @Valid RequestBodyUnit requestBodyUnit);
 
     /**
     * 更新请求体
-    * @param requestBody
+    * @param requestBodyUnit
     */
-    void updateRequestBody(@NotNull @Valid RequestBody requestBody);
+    void updateRequestBody(@NotNull @Valid RequestBodyUnit requestBodyUnit);
 
     /**
     * 删除请求体
@@ -32,35 +32,35 @@ public interface RequestBodyService {
     */
     void deleteRequestBody(@NotNull String id);
 
-    RequestBody findOne(@NotNull String id);
+    RequestBodyUnit findOne(@NotNull String id);
 
-    List<RequestBody> findList(List<String> idList);
+    List<RequestBodyUnit> findList(List<String> idList);
 
     /**
     * 查找请求体
     * @param id
     * @return
     */
-    RequestBody findRequestBody(@NotNull String id);
+    RequestBodyUnit findRequestBody(@NotNull String id);
 
     /**
     * 查找所有请求体
     * @return
     */
-    List<RequestBody> findAllRequestBody();
+    List<RequestBodyUnit> findAllRequestBody();
 
     /**
     * 根据查询参数查询请求体列表
-    * @param requestBodyQuery
+    * @param requestBodyUnitQuery
     * @return
     */
-    List<RequestBody> findRequestBodyList(RequestBodyQuery requestBodyQuery);
+    List<RequestBodyUnit> findRequestBodyList(RequestBodyUnitQuery requestBodyUnitQuery);
 
     /**
     * 根据查询参数按分页查询请求体
-    * @param requestBodyQuery
+    * @param requestBodyUnitQuery
     * @return
     */
-    Pagination<RequestBody> findRequestBodyPage(RequestBodyQuery requestBodyQuery);
+    Pagination<RequestBodyUnit> findRequestBodyPage(RequestBodyUnitQuery requestBodyUnitQuery);
 
 }

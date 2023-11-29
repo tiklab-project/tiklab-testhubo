@@ -4,10 +4,10 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.join.annotation.FindAll;
 import io.tiklab.join.annotation.FindList;
 import io.tiklab.join.annotation.FindOne;
-import io.tiklab.postin.workspace.model.Workspace;
-import io.tiklab.postin.workspace.model.WorkspaceQuery;
+import io.tiklab.teston.integrated.postin.workspaceBind.model.Workspace;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBind;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBindQuery;
+import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceQuery;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

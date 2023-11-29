@@ -21,7 +21,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 测试计划 控制器
+ * @pi.protocol: http
+ * @pi.groupName: 测试计划 控制器
  */
 @RestController
 @RequestMapping("/testPlan")
@@ -33,6 +34,13 @@ public class TestPlanController {
     @Autowired
     private TestPlanService testPlanService;
 
+    /**
+     * @pi.name:createTestPlan
+     * @pi.path:/testPlan/createTestPlan
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlan
+     */
     @RequestMapping(path="/createTestPlan",method = RequestMethod.POST)
     @ApiMethod(name = "createTestPlan",desc = "创建测试i计划")
     @ApiParam(name = "testPlan",desc = "testPlan",required = true)
@@ -42,6 +50,13 @@ public class TestPlanController {
         return Result.ok(id);
     }
 
+    /**
+     * @pi.name:updateTestPlan
+     * @pi.path:/testPlan/updateTestPlan
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlan
+     */
     @RequestMapping(path="/updateTestPlan",method = RequestMethod.POST)
     @ApiMethod(name = "updateTestPlan",desc = "修改测试计划")
     @ApiParam(name = "testPlan",desc = "testPlan",required = true)
@@ -51,6 +66,13 @@ public class TestPlanController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:deleteTestPlan
+     * @pi.path:/testPlan/deleteTestPlan
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: name=id;dataType=string;value=id;desc=当前删除的id
+     */
     @RequestMapping(path="/deleteTestPlan",method = RequestMethod.POST)
     @ApiMethod(name = "deleteTestPlan",desc = "通过id删除测试计划")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -60,6 +82,14 @@ public class TestPlanController {
         return Result.ok();
     }
 
+
+    /**
+     * @pi.name:findTestPlan
+     * @pi.path:/testPlan/findTestPlan
+     * @pi.methodType:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=id;desc=当前查找的id
+     */
     @RequestMapping(path="/findTestPlan",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlan",desc = "通过id查询测试计划")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -69,6 +99,12 @@ public class TestPlanController {
         return Result.ok(testPlan);
     }
 
+    /**
+     * @pi.name:findAllTestPlan
+     * @pi.path:/testPlan/findAllTestPlan
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path="/findAllTestPlan",method = RequestMethod.POST)
     @ApiMethod(name = "findAllTestPlan",desc = "查询所有测试计划")
     public Result<List<TestPlan>> findAllTestPlan(){
@@ -77,6 +113,13 @@ public class TestPlanController {
         return Result.ok(testPlanList);
     }
 
+    /**
+     * @pi.name:findTestPlanList
+     * @pi.path:/testPlan/findTestPlanList
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlan
+     */
     @RequestMapping(path = "/findTestPlanList",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanList",desc = "通过查询对象查询测试计划")
     @ApiParam(name = "testPlanQuery",desc = "testPlanQuery",required = true)
@@ -86,6 +129,13 @@ public class TestPlanController {
         return Result.ok(testPlanList);
     }
 
+    /**
+     * @pi.name:findTestPlanPage
+     * @pi.path:/testPlan/findTestPlanPage
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanQuery
+     */
     @RequestMapping(path = "/findTestPlanPage",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanPage",desc = "通过查询对象分页查询测试计划")
     @ApiParam(name = "testPlanQuery",desc = "testPlanQuery",required = true)

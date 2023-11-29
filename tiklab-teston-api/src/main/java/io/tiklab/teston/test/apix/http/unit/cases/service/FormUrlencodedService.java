@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncoded;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncodedUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -15,16 +15,16 @@ public interface FormUrlencodedService {
 
     /**
     * 创建form-urlencoded
-    * @param formUrlencoded
+    * @param formUrlencodedUnit
     * @return
     */
-    String createFormUrlencoded(@NotNull @Valid FormUrlEncoded formUrlencoded);
+    String createFormUrlencoded(@NotNull @Valid FormUrlEncodedUnit formUrlencodedUnit);
 
     /**
     * 更新form-urlencoded
-    * @param formUrlencoded
+    * @param formUrlencodedUnit
     */
-    void updateFormUrlencoded(@NotNull @Valid FormUrlEncoded formUrlencoded);
+    void updateFormUrlencoded(@NotNull @Valid FormUrlEncodedUnit formUrlencodedUnit);
 
     /**
     * 删除form-urlencoded
@@ -32,35 +32,35 @@ public interface FormUrlencodedService {
     */
     void deleteFormUrlencoded(@NotNull String id);
 
-    FormUrlEncoded findOne(@NotNull String id);
+    FormUrlEncodedUnit findOne(@NotNull String id);
 
-    List<FormUrlEncoded> findList(List<String> idList);
+    List<FormUrlEncodedUnit> findList(List<String> idList);
 
     /**
     * 根据id查找form-urlencoded
     * @param id
     * @return
     */
-    FormUrlEncoded findFormUrlencoded(@NotNull String id);
+    FormUrlEncodedUnit findFormUrlencoded(@NotNull String id);
 
     /**
     * 查找所有form-urlencoded
     * @return
     */
-    List<FormUrlEncoded> findAllFormUrlencoded();
+    List<FormUrlEncodedUnit> findAllFormUrlencoded();
 
     /**
     * 查询form-urlencoded 列表
-    * @param formUrlencodedQuery
+    * @param formUrlencodedUnitQuery
     * @return
     */
-    List<FormUrlEncoded> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery);
+    List<FormUrlEncodedUnit> findFormUrlencodedList(FormUrlencodedUnitQuery formUrlencodedUnitQuery);
 
     /**
     * 按分页查询form-urlencoded
-    * @param formUrlencodedQuery
+    * @param formUrlencodedUnitQuery
     * @return
     */
-    Pagination<FormUrlEncoded> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery);
+    Pagination<FormUrlEncodedUnit> findFormUrlencodedPage(FormUrlencodedUnitQuery formUrlencodedUnitQuery);
 
 }

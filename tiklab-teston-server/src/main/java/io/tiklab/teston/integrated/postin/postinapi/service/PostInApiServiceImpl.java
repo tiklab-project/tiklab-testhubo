@@ -1,24 +1,16 @@
 package io.tiklab.teston.integrated.postin.postinapi.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.core.exception.ApplicationException;
-import io.tiklab.eam.common.context.LoginContext;
-import io.tiklab.postin.api.apix.model.*;
-import io.tiklab.postin.api.apix.model.RawParam;
-import io.tiklab.postin.api.apix.model.RequestHeader;
-import io.tiklab.postin.api.apix.service.ApixService;
-import io.tiklab.postin.api.http.definition.model.*;
-import io.tiklab.postin.api.http.definition.service.HttpApiService;
-import io.tiklab.rpc.client.router.lookup.FixedLookup;
-import io.tiklab.teston.integrated.postin.postinapi.model.PostInApiToCase;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrl;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrlQuery;
-import io.tiklab.teston.integrated.postin.integratedurl.service.PostinUrlService;
+import io.tiklab.teston.common.RestTemplateUtils;
+
+import io.tiklab.teston.integrated.integratedurl.model.IntegratedUrlQuery;
+import io.tiklab.teston.integrated.integratedurl.service.IntegratedUrlService;
+import io.tiklab.teston.integrated.postin.postinapi.model.*;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBind;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBindQuery;
 import io.tiklab.teston.integrated.postin.workspaceBind.service.WorkspaceBindService;
-import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import io.tiklab.teston.test.apix.http.unit.cases.model.*;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParam;
 import io.tiklab.teston.test.apix.http.unit.cases.service.*;
 import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.service.TestCaseService;
@@ -35,10 +27,7 @@ import java.util.List;
 public class PostInApiServiceImpl implements PostInApiService {
 
     @Autowired
-    RpcClientApixUtil rpcClientApixUtil;
-
-    @Autowired
-    PostinUrlService postinUrlService;
+    IntegratedUrlService integratedUrlService;
 
     @Autowired
     WorkspaceBindService workspaceBindService;
@@ -73,27 +62,9 @@ public class PostInApiServiceImpl implements PostInApiService {
     @Autowired
     AfterScriptService testOnAfterScriptService;
 
-    /**mei
-     * rpc 调用
-     */
-    HttpApiService httpApiServiceRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("postin");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-        return rpcClientApixUtil.rpcClient().getBean(HttpApiService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
+    @Autowired
+    RestTemplateUtils restTemplateUtils;
 
-    /**
-     * rpc 调用
-     */
-    ApixService apixServiceRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("postin");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-        return rpcClientApixUtil.rpcClient().getBean(ApixService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
 
     @Override
     public List<Apix> findPostInApiList(String repositoryId) {
@@ -105,21 +76,18 @@ public class PostInApiServiceImpl implements PostInApiService {
         //存放接口
         ArrayList<Apix> apiList = new ArrayList<>();
 
+        //请求的apix接口
+        String postInUrl = getPostInUrl(repositoryId);
+        String apxUrl = postInUrl+"/api/apx/findApixList";
         if(workspaceBindList!=null&&workspaceBindList.size()>0){
             for(WorkspaceBind workspaceBind:workspaceBindList){
                 //通过空间id查询下面所有的接口
                 ApixQuery apixQuery = new ApixQuery();
                 apixQuery.setWorkspaceId(workspaceBind.getWorkspace().getId());
-                List<Apix> apixList = apixServiceRpc().findApixList(apixQuery);
+                List<Apix> apixList = restTemplateUtils.requestPostList(apxUrl, apixQuery, Apix.class);
 
                 if(apixList==null&&apixList.size()==0){
                     continue;
-                }
-
-                //通过接口中间层id查询对应接口的数据
-                for(Apix apix:apixList){
-                    HttpApi httpApi = httpApiServiceRpc().findHttpApi(apix.getId());
-                    apix.setHttpApi(httpApi);
                 }
 
                 apiList.addAll(apixList);
@@ -131,16 +99,23 @@ public class PostInApiServiceImpl implements PostInApiService {
 
     @Override
     public void createPostInApiToCase(PostInApiToCase postInApiToCase) {
+        String postInUrl = getPostInUrl(postInApiToCase.getRepositoryId());
+        //请求的apix接口
+        String apxUrl = postInUrl+"/api/httpApi/findHttpApi";
+
         if(postInApiToCase.getApiList() != null){
             for(String apiId:postInApiToCase.getApiList()){
 
-                HttpApi httpApi = httpApiServiceRpc().findHttpApi(apiId);
-                ApiUnitCase apiUnitCase = new ApiUnitCase();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("apiId",apiId);
+                jsonObject.put("protocolType","http");
+                HttpApi httpApi = restTemplateUtils.requestPost(apxUrl, jsonObject, HttpApi.class);
 
+                ApiUnitCase apiUnitCase = new ApiUnitCase();
                 String apiUnitCaseId = null;
                 try {
                     //apix -> testcase  中间公共表
-                    Apix apix = apixServiceRpc().findApix(apiId);
+                    Apix apix = httpApi.getApix();
                     TestCase testCase = new TestCase();
                     testCase.setName(apix.getName());
                     testCase.setCaseType("api-unit");
@@ -152,7 +127,7 @@ public class PostInApiServiceImpl implements PostInApiService {
                     apiUnitCase.setPath(apix.getPath());
                     apiUnitCase.setMethodType(httpApi.getMethodType());
 
-                     apiUnitCaseId = apiUnitCaseService.createApiUnitCase(apiUnitCase);
+                    apiUnitCaseId = apiUnitCaseService.createApiUnitCase(apiUnitCase);
                 }catch (Exception e) {
                     throw new ApplicationException("Error in converting apix to testcase", e);
                 }
@@ -172,7 +147,7 @@ public class PostInApiServiceImpl implements PostInApiService {
                 ApiRequest request = httpApi.getRequest();
                 if(apiUnitCaseId!=null&&request!=null){
                     try{
-                        RequestBody testOnRequestBody = new RequestBody();
+                        RequestBodyUnit testOnRequestBody = new RequestBodyUnit();
                         testOnRequestBody.setBodyType(request.getBodyType());
                         testOnRequestBody.setId(apiUnitCaseId);
                         testOnRequestBody.setApiUnitId(apiUnitCaseId);
@@ -229,7 +204,7 @@ public class PostInApiServiceImpl implements PostInApiService {
     private void convertHeader(String apiUnitCaseId, HttpApi httpApi){
         try {
             for( RequestHeader postInHeader :httpApi.getHeaderList()){
-                io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeader testOnHeader = new io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeader();
+                RequestHeaderUnit testOnHeader = new RequestHeaderUnit();
                 testOnHeader.setHeaderName(postInHeader.getHeaderName());
                 testOnHeader.setRequired(postInHeader.getRequired());
                 testOnHeader.setValue(postInHeader.getValue());
@@ -251,7 +226,7 @@ public class PostInApiServiceImpl implements PostInApiService {
     private void convertQuery(String apiUnitCaseId, HttpApi httpApi) {
         try {
             for(QueryParam postInQuery:httpApi.getQueryList()){
-                QueryParams testOnQuery = new QueryParams();
+                QueryParamUnit testOnQuery = new QueryParamUnit();
                 testOnQuery.setParamName(postInQuery.getParamName());
                 testOnQuery.setValue(postInQuery.getValue());
                 testOnQuery.setDesc((postInQuery.getDesc()));
@@ -264,9 +239,6 @@ public class PostInApiServiceImpl implements PostInApiService {
         }
     }
 
-
-
-
     /**
      * formdata转换
      * @param apiUnitCaseId
@@ -274,8 +246,8 @@ public class PostInApiServiceImpl implements PostInApiService {
      */
     private void convertFormData(String apiUnitCaseId, HttpApi httpApi) {
         try {
-            for(io.tiklab.postin.api.http.definition.model.FormParam postInFormParam:httpApi.getFormList()){
-                FormParam testOnFormParam = new FormParam();
+            for(FormParam postInFormParam:httpApi.getFormList()){
+                FormParamUnit testOnFormParam = new FormParamUnit();
                 testOnFormParam.setParamName(postInFormParam.getParamName());
                 testOnFormParam.setValue(postInFormParam.getValue());
                 testOnFormParam.setDesc((postInFormParam.getDesc()));
@@ -296,7 +268,7 @@ public class PostInApiServiceImpl implements PostInApiService {
     private void convertFormUrlEncoded(String apiUnitCaseId, HttpApi httpApi) {
         try {
             for(FormUrlencoded postInFormUrl:httpApi.getUrlencodedList()){
-                FormUrlEncoded testOnFormUrl = new FormUrlEncoded();
+                FormUrlEncodedUnit testOnFormUrl = new FormUrlEncodedUnit();
                 testOnFormUrl.setParamName(postInFormUrl.getParamName());
                 testOnFormUrl.setValue(postInFormUrl.getValue());
                 testOnFormUrl.setDesc((postInFormUrl.getDesc()));
@@ -318,7 +290,7 @@ public class PostInApiServiceImpl implements PostInApiService {
     private void convertRaw(String apiUnitCaseId, HttpApi httpApi) {
         try {
             RawParam postInRaw = httpApi.getRawParam();
-            io.tiklab.teston.test.apix.http.unit.cases.model.RawParam testOnRaw = new io.tiklab.teston.test.apix.http.unit.cases.model.RawParam();
+            RawParamUnit testOnRaw = new RawParamUnit();
             testOnRaw.setRaw(postInRaw.getRaw());
             testOnRaw.setType(postInRaw.getType());
             testOnRaw.setApiUnit(new ApiUnitCase().setId(apiUnitCaseId));
@@ -337,7 +309,7 @@ public class PostInApiServiceImpl implements PostInApiService {
     private void convertPreScript(String apiUnitCaseId, ApiRequest requestData) {
         try {
             String postInPre = requestData.getPreScript();
-            PreScript testOnPre = new PreScript();
+            PreScriptUnit testOnPre = new PreScriptUnit();
             testOnPre.setScriptex(postInPre);
             testOnPre.setApiUnitId(apiUnitCaseId);
             testOnPre.setId(apiUnitCaseId);
@@ -356,7 +328,7 @@ public class PostInApiServiceImpl implements PostInApiService {
     private void convertAfterScript(String apiUnitCaseId, ApiRequest requestData) {
         try {
             String postInAfter = requestData.getAfterScript();
-            AfterScript testOnAfter = new AfterScript();
+            AfterScriptUnit testOnAfter = new AfterScriptUnit();
             testOnAfter.setScriptex(postInAfter);
             testOnAfter.setApiUnitId(apiUnitCaseId);
             testOnAfter.setId(apiUnitCaseId);
@@ -364,7 +336,15 @@ public class PostInApiServiceImpl implements PostInApiService {
         }catch (Exception e){
             throw new ApplicationException("Error in converting after script", e);
         }
+    }
 
+    private String getPostInUrl(String repositoryId){
+        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
+        integratedUrlQuery.setRepositoryId(repositoryId);
+        integratedUrlQuery.setProjectName("postin");
+        String productUrl = integratedUrlService.getProductUrl(integratedUrlQuery);
+
+        return productUrl;
     }
 
 }

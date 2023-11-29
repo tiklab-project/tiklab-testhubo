@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponse;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseUnitQuery;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.join.annotation.FindAll;
 import io.tiklab.join.annotation.FindList;
@@ -15,21 +15,21 @@ import java.util.List;
 /**
 * 响应中json 服务接口
 */
-@JoinProvider(model = JsonResponse.class)
+@JoinProvider(model = JsonResponseUnit.class)
 public interface JsonResponseService {
 
     /**
     * 创建响应中json
-    * @param jsonResponse
+    * @param jsonResponseUnit
     * @return
     */
-    String createJsonResponse(@NotNull @Valid JsonResponse jsonResponse);
+    String createJsonResponse(@NotNull @Valid JsonResponseUnit jsonResponseUnit);
 
     /**
     * 更新响应中json
-    * @param jsonResponse
+    * @param jsonResponseUnit
     */
-    void updateJsonResponse(@NotNull @Valid JsonResponse jsonResponse);
+    void updateJsonResponse(@NotNull @Valid JsonResponseUnit jsonResponseUnit);
 
     /**
     * 删除响应中json
@@ -38,43 +38,43 @@ public interface JsonResponseService {
     void deleteJsonResponse(@NotNull String id);
 
     @FindOne
-    JsonResponse findOne(@NotNull String id);
+    JsonResponseUnit findOne(@NotNull String id);
 
     @FindList
-    List<JsonResponse> findList(List<String> idList);
+    List<JsonResponseUnit> findList(List<String> idList);
 
     /**
     * 根据id查找响应中json
     * @param id
     * @return
     */
-    JsonResponse findJsonResponse(@NotNull String id);
+    JsonResponseUnit findJsonResponse(@NotNull String id);
 
     /**
     * 查找所有响应中json
     * @return
     */
     @FindAll
-    List<JsonResponse> findAllJsonResponse();
+    List<JsonResponseUnit> findAllJsonResponse();
 
     /**
     * 根据查询参数查找查询响应中json列表
-    * @param jsonResponseQuery
+    * @param jsonResponseUnitQuery
     * @return
     */
-    List<JsonResponse> findJsonResponseList(JsonResponseQuery jsonResponseQuery);
+    List<JsonResponseUnit> findJsonResponseList(JsonResponseUnitQuery jsonResponseUnitQuery);
 
     /**
     * 根据查询参数查找按分页查询响应中json
-    * @param jsonResponseQuery
+    * @param jsonResponseUnitQuery
     * @return
     */
-    Pagination<JsonResponse> findJsonResponsePage(JsonResponseQuery jsonResponseQuery);
+    Pagination<JsonResponseUnit> findJsonResponsePage(JsonResponseUnitQuery jsonResponseUnitQuery);
 
     /**
      * 查询json返回结果树
-     * @param jsonResponseQuery
+     * @param jsonResponseUnitQuery
      * @return
      */
-    List<JsonResponse> findJsonResponseListTree(JsonResponseQuery jsonResponseQuery);
+    List<JsonResponseUnit> findJsonResponseListTree(JsonResponseUnitQuery jsonResponseUnitQuery);
 }

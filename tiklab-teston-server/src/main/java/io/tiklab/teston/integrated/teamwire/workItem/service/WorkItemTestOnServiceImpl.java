@@ -1,24 +1,14 @@
 package io.tiklab.teston.integrated.teamwire.workItem.service;
 
 
-import io.tiklab.eam.common.context.LoginContext;
-import io.tiklab.rpc.client.router.lookup.FixedLookup;
-import io.tiklab.teamwire.project.project.model.Project;
-import io.tiklab.teamwire.project.project.service.ProjectService;
-import io.tiklab.teamwire.workitem.model.*;
-import io.tiklab.teamwire.workitem.service.WorkItemService;
-import io.tiklab.teamwire.workitem.service.WorkTypeDmService;
-import io.tiklab.teamwire.workitem.service.WorkTypeService;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrl;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrlQuery;
-import io.tiklab.teston.integrated.postin.integratedurl.service.PostinUrlService;
-import io.tiklab.teston.integrated.teamwire.workItem.model.ProjectTestOn;
-import io.tiklab.teston.integrated.teamwire.workItem.model.ProjectTestOnQuery;
-import io.tiklab.teston.integrated.teamwire.workItem.model.WorkItemTestOn;
-import io.tiklab.teston.integrated.teamwire.workItem.model.WorkItemTestOnQuery;
+import com.alibaba.fastjson.JSONObject;
+import io.tiklab.teston.common.RestTemplateUtils;
+import io.tiklab.teston.integrated.integratedurl.model.IntegratedUrl;
+import io.tiklab.teston.integrated.integratedurl.model.IntegratedUrlQuery;
+import io.tiklab.teston.integrated.integratedurl.service.IntegratedUrlService;
+import io.tiklab.teston.integrated.teamwire.workItem.model.*;
 import io.tiklab.teston.integrated.teamwire.workItemBind.model.WorkItemBind;
 import io.tiklab.teston.integrated.teamwire.workItemBind.service.WorkItemBindService;
-import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,53 +23,25 @@ import java.util.Objects;
 public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
 
     @Autowired
-    RpcClientApixUtil rpcClientApixUtil;
-
-    @Autowired
     WorkItemBindService workItemBindService;
 
     @Autowired
-    PostinUrlService postinUrlService;
+    IntegratedUrlService integratedUrlService;
 
-    /**
-     * rpc 调用
-     */
-    ProjectService projectServiceRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("teamwire");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-        return rpcClientApixUtil.rpcClient().getBean(ProjectService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
+    @Autowired
+    RestTemplateUtils restTemplateUtils;
 
-    /**
-     * rpc 调用
-     */
-    WorkTypeDmService workTypeDmServiceRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("teamwire");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-        return rpcClientApixUtil.rpcClient().getBean(WorkTypeDmService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
-
-    /**
-     * rpc 调用
-     */
-    WorkItemService workItemServiceRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("teamwire");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-        return rpcClientApixUtil.rpcClient().getBean(WorkItemService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
 
 
     @Override
     public List<ProjectTestOn> findProjectList(ProjectTestOnQuery projectTestOnQuery) {
+
+        String teamWireUrl = getTeamWireUrl(projectTestOnQuery.getRepositoryId());
+        String findAllProjectUrl = teamWireUrl + "/api/project/findAllProject";
+
         //查询所有项目
-        List<Project> projectList = projectServiceRpc().findAllProject();
-        
+        List<Project> projectList = restTemplateUtils.requestPostList(findAllProjectUrl, null, Project.class);
+
         //存储处理过的项目
         ArrayList<ProjectTestOn> arrayList = new ArrayList<>();
         if(projectList!=null&&projectList.size()>0){
@@ -96,11 +58,15 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
 
     @Override
     public List<WorkItemTestOn> findWorkItemList(WorkItemTestOnQuery workItemTestOnQuery) {
+
+        String teamWireUrl = getTeamWireUrl(workItemTestOnQuery.getRepositoryId());
+        String findAllProjectUrl = teamWireUrl + "/api/workItem/findWorkItemList";
+
         WorkItemQuery workItemQuery = new WorkItemQuery();
         workItemQuery.setWorkTypeCode(workItemTestOnQuery.getWorkTypeCode());
         workItemQuery.setProjectId(workItemTestOnQuery.getProjectId());
         workItemQuery.setTitle(workItemTestOnQuery.getName());
-        List<WorkItem> workItemList = workItemServiceRpc().findWorkItemList(workItemQuery);
+        List<WorkItem> workItemList = restTemplateUtils.requestPostList(findAllProjectUrl, workItemQuery, WorkItem.class);
 
         //存储处理过的事项
         ArrayList<WorkItemTestOn> workItemTestOnList = new ArrayList<>();
@@ -120,7 +86,6 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
                     workItemTestOn.setPriority(workItem.getWorkPriority().getName());
                 }
 
-
                 workItemTestOnList.add(workItemTestOn);
             }
         }
@@ -129,8 +94,14 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
     }
 
     @Override
-    public WorkItemTestOn findWorkItem(String id) {
-        WorkItem workItem = workItemServiceRpc().findWorkItem(id);
+    public WorkItemTestOn findWorkItem(String id,String repositoryId) {
+
+        String teamWireUrl = getTeamWireUrl(repositoryId);
+        String findWorkItemUrl = teamWireUrl + "/api/workItem/findWorkItem";
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",id);
+        WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, jsonObject, WorkItem.class);
 
         WorkItemTestOn workItemTestOn = new WorkItemTestOn();
         workItemTestOn.setId(workItem.getId());
@@ -147,21 +118,20 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
             workItemTestOn.setPriority(workItem.getWorkPriority().getName());
         }
 
-
-        //获取服务端地址
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setProjectName("teamwire");
-        List<IntegratedUrl> postinUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-        workItemTestOn.setProjectUrl(postinUrlList.get(0).getUrl());
+        workItemTestOn.setProjectUrl(teamWireUrl);
 
         return workItemTestOn;
     }
 
     @Override
     public String createWorkItem(WorkItemTestOn workItemTestOn) {
+
+        String teamWireUrl = getTeamWireUrl(workItemTestOn.getRepositoryId());
+        String findWorkTypeDmListUrl = teamWireUrl + "/api/workTypeDm/findWorkTypeDmList";
+
         WorkTypeDmQuery workTypeDmQuery = new WorkTypeDmQuery();
         workTypeDmQuery.setProjectId(workItemTestOn.getProjectId());
-        List<WorkTypeDm> workTypeDmList = workTypeDmServiceRpc().findWorkTypeDmList(workTypeDmQuery);
+        List<WorkTypeDm> workTypeDmList = restTemplateUtils.requestPostList(findWorkTypeDmListUrl, workTypeDmQuery, WorkTypeDm.class);
 
         //从teamwire获取类型为缺陷
         WorkTypeDm defectType = null;
@@ -185,8 +155,10 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
         //设置开始结束时间
 //        workItem.setPlanBeginTime(workItemTestOn.getPlanBeginTime());
 //        workItem.setPlanEndTime(workItemTestOn.getPlanEndTime());
+
         //创建缺陷获取id
-        String defectId = workItemServiceRpc().createWorkItem(workItem);
+        String createWorkItemUrl = teamWireUrl + "/api/workType/createWorkItem";
+        String defectId = restTemplateUtils.requestPost(createWorkItemUrl, workItem, String.class);
 
 
         //绑定到当前用例上
@@ -199,6 +171,17 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
         String workItemBindId = workItemBindService.createWorkItemBind(workItemBind);
 
         return workItemBindId;
+    }
+
+
+
+    private String getTeamWireUrl(String repositoryId){
+        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
+        integratedUrlQuery.setRepositoryId(repositoryId);
+        integratedUrlQuery.setProjectName("teamwire");
+        String productUrl = integratedUrlService.getProductUrl(integratedUrlQuery);
+
+        return productUrl;
     }
 
 

@@ -1,8 +1,8 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScriptQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScriptUnitQuery;
 import io.tiklab.core.page.Pagination;
-import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScript;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScriptUnit;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,16 +15,16 @@ public interface AfterScriptService {
 
     /**
     * 创建后置脚本
-    * @param afterScript
+    * @param afterScriptUnit
     * @return
     */
-    String createAfterScript(@NotNull @Valid AfterScript afterScript);
+    String createAfterScript(@NotNull @Valid AfterScriptUnit afterScriptUnit);
 
     /**
     * 更新后置脚本
-    * @param afterScript
+    * @param afterScriptUnit
     */
-    void updateAfterScript(@NotNull @Valid AfterScript afterScript);
+    void updateAfterScript(@NotNull @Valid AfterScriptUnit afterScriptUnit);
 
     /**
     * 删除后置脚本
@@ -32,35 +32,35 @@ public interface AfterScriptService {
     */
     void deleteAfterScript(@NotNull String id);
 
-    AfterScript findOne(@NotNull String id);
+    AfterScriptUnit findOne(@NotNull String id);
 
-    List<AfterScript> findList(List<String> idList);
+    List<AfterScriptUnit> findList(List<String> idList);
 
     /**
     * 根据id查找后置脚本
     * @param id
     * @return
     */
-    AfterScript findAfterScript(@NotNull String id);
+    AfterScriptUnit findAfterScript(@NotNull String id);
 
     /**
     * 查找所有后置脚本
     * @return
     */
-    List<AfterScript> findAllAfterScript();
+    List<AfterScriptUnit> findAllAfterScript();
 
     /**
     * 通过查询参数查询后置脚本列表
-    * @param afterScriptQuery
+    * @param afterScriptUnitQuery
     * @return
     */
-    List<AfterScript> findAfterScriptList(AfterScriptQuery afterScriptQuery);
+    List<AfterScriptUnit> findAfterScriptList(AfterScriptUnitQuery afterScriptUnitQuery);
 
     /**
     * 通过查询参数按分页查询后置脚本
-    * @param afterScriptQuery
+    * @param afterScriptUnitQuery
     * @return
     */
-    Pagination<AfterScript> findAfterScriptPage(AfterScriptQuery afterScriptQuery);
+    Pagination<AfterScriptUnit> findAfterScriptPage(AfterScriptUnitQuery afterScriptUnitQuery);
 
 }

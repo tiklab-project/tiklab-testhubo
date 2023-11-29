@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncoded;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncodedUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.FormUrlencodedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class FormUrlencodedController {
     @RequestMapping(path="/createFormUrlencoded",method = RequestMethod.POST)
     @ApiMethod(name = "createFormUrlencoded",desc = "创建form-urlencoded ")
     @ApiParam(name = "formUrlencoded",desc = "formUrlencoded",required = true)
-    public Result<String> createFormUrlencoded(@RequestBody @NotNull @Valid FormUrlEncoded formUrlencoded){
-        String id = formUrlencodedService.createFormUrlencoded(formUrlencoded);
+    public Result<String> createFormUrlencoded(@RequestBody @NotNull @Valid FormUrlEncodedUnit formUrlencodedUnit){
+        String id = formUrlencodedService.createFormUrlencoded(formUrlencodedUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class FormUrlencodedController {
     @RequestMapping(path="/updateFormUrlencoded",method = RequestMethod.POST)
     @ApiMethod(name = "updateFormUrlencoded",desc = "更新form-urlencoded ")
     @ApiParam(name = "formUrlencoded",desc = "formUrlencoded",required = true)
-    public Result<Void> updateFormUrlencoded(@RequestBody @NotNull @Valid FormUrlEncoded formUrlencoded){
-        formUrlencodedService.updateFormUrlencoded(formUrlencoded);
+    public Result<Void> updateFormUrlencoded(@RequestBody @NotNull @Valid FormUrlEncodedUnit formUrlencodedUnit){
+        formUrlencodedService.updateFormUrlencoded(formUrlencodedUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class FormUrlencodedController {
     @RequestMapping(path="/findFormUrlencoded",method = RequestMethod.POST)
     @ApiMethod(name = "findFormUrlencoded",desc = "根据id查找form-urlencoded")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<FormUrlEncoded> findFormUrlencoded(@NotNull String id){
-        FormUrlEncoded formUrlencoded = formUrlencodedService.findFormUrlencoded(id);
+    public Result<FormUrlEncodedUnit> findFormUrlencoded(@NotNull String id){
+        FormUrlEncodedUnit formUrlencodedUnit = formUrlencodedService.findFormUrlencoded(id);
 
-        return Result.ok(formUrlencoded);
+        return Result.ok(formUrlencodedUnit);
     }
 
     @RequestMapping(path="/findAllFormUrlencoded",method = RequestMethod.POST)
     @ApiMethod(name = "findAllFormUrlencoded",desc = "查找所有form-urlencoded")
-    public Result<List<FormUrlEncoded>> findAllFormUrlencoded(){
-        List<FormUrlEncoded> formUrlEncodedList = formUrlencodedService.findAllFormUrlencoded();
+    public Result<List<FormUrlEncodedUnit>> findAllFormUrlencoded(){
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList = formUrlencodedService.findAllFormUrlencoded();
 
-        return Result.ok(formUrlEncodedList);
+        return Result.ok(formUrlEncodedUnitList);
     }
 
     @RequestMapping(path = "/findFormUrlencodedList",method = RequestMethod.POST)
     @ApiMethod(name = "findFormUrlencodedList",desc = "查询form-urlencoded 列表")
     @ApiParam(name = "formUrlencodedQuery",desc = "formUrlencodedQuery",required = true)
-    public Result<List<FormUrlEncoded>> findFormUrlencodedList(@RequestBody @Valid @NotNull FormUrlencodedQuery formUrlencodedQuery){
-        List<FormUrlEncoded> formUrlEncodedList = formUrlencodedService.findFormUrlencodedList(formUrlencodedQuery);
+    public Result<List<FormUrlEncodedUnit>> findFormUrlencodedList(@RequestBody @Valid @NotNull FormUrlencodedUnitQuery formUrlencodedUnitQuery){
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList = formUrlencodedService.findFormUrlencodedList(formUrlencodedUnitQuery);
 
-        return Result.ok(formUrlEncodedList);
+        return Result.ok(formUrlEncodedUnitList);
     }
 
     @RequestMapping(path = "/findFormUrlencodedPage",method = RequestMethod.POST)
     @ApiMethod(name = "findFormUrlencodedPage",desc = "按分页查询form-urlencoded ")
     @ApiParam(name = "formUrlencodedQuery",desc = "formUrlencodedQuery",required = true)
-    public Result<Pagination<FormUrlEncoded>> findFormUrlencodedPage(@RequestBody @Valid @NotNull FormUrlencodedQuery formUrlencodedQuery){
-        Pagination<FormUrlEncoded> pagination = formUrlencodedService.findFormUrlencodedPage(formUrlencodedQuery);
+    public Result<Pagination<FormUrlEncodedUnit>> findFormUrlencodedPage(@RequestBody @Valid @NotNull FormUrlencodedUnitQuery formUrlencodedUnitQuery){
+        Pagination<FormUrlEncodedUnit> pagination = formUrlencodedService.findFormUrlencodedPage(formUrlencodedUnitQuery);
 
         return Result.ok(pagination);
     }

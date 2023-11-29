@@ -1,8 +1,8 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeader;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -17,16 +17,16 @@ public interface RequestHeaderService {
 
     /**
     * 创建请求头
-    * @param requestHeader
+    * @param requestHeaderUnit
     * @return
     */
-    String createRequestHeader(@NotNull @Valid RequestHeader requestHeader);
+    String createRequestHeader(@NotNull @Valid RequestHeaderUnit requestHeaderUnit);
 
     /**
     * 更新请求头
-    * @param requestHeader
+    * @param requestHeaderUnit
     */
-    void updateRequestHeader(@NotNull @Valid RequestHeader requestHeader);
+    void updateRequestHeader(@NotNull @Valid RequestHeaderUnit requestHeaderUnit);
 
     /**
     * 删除请求头
@@ -34,36 +34,36 @@ public interface RequestHeaderService {
     */
     void deleteRequestHeader(@NotNull String id);
 
-    RequestHeader findOne(@NotNull String id);
+    RequestHeaderUnit findOne(@NotNull String id);
 
-    List<RequestHeader> findList(List<String> idList);
+    List<RequestHeaderUnit> findList(List<String> idList);
 
     /**
     * 查找请求头
     * @param id
     * @return
     */
-    RequestHeader findRequestHeader(@NotNull String id);
+    RequestHeaderUnit findRequestHeader(@NotNull String id);
 
     /**
     * 查找所有请求头
     * @return
     */
-    List<RequestHeader> findAllRequestHeader();
+    List<RequestHeaderUnit> findAllRequestHeader();
 
     /**
     * 根据参数查询请求头列表
-    * @param requestHeaderQuery
+    * @param requestHeaderUnitQuery
     * @return
     */
-    List<RequestHeader> findRequestHeaderList(RequestHeaderQuery requestHeaderQuery);
+    List<RequestHeaderUnit> findRequestHeaderList(RequestHeaderUnitQuery requestHeaderUnitQuery);
 
     /**
     * 根据参数按分页查询请求头
-    * @param requestHeaderQuery
+    * @param requestHeaderUnitQuery
     * @return
     */
-    Pagination<RequestHeader> findRequestHeaderPage(RequestHeaderQuery requestHeaderQuery);
+    Pagination<RequestHeaderUnit> findRequestHeaderPage(RequestHeaderUnitQuery requestHeaderUnitQuery);
 
     /**
      *请求头拼接

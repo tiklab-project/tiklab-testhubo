@@ -110,21 +110,21 @@ public class MockServlet extends HttpServlet {
     }
 
     private void setResponse(HttpServletResponse response, String apiId){
-        ResponseResult responseResult = responseResultService.findResponseResult(apiId);
+        ResponseResultUnit responseResultUnit = responseResultService.findResponseResult(apiId);
 
-        String bodyData = processApiBody(responseResult);
+        String bodyData = processApiBody(responseResultUnit);
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
             servletOutputStream.write(bodyData.getBytes("UTF-8"));
 
-            response.setStatus(responseResult.getHttpCode());
+            response.setStatus(responseResultUnit.getHttpCode());
 
-            ResponseHeaderQuery responseHeaderQuery = new ResponseHeaderQuery();
-            responseHeaderQuery.setApiUnitId(apiId);
-            List<ResponseHeader> responseHeaderList = responseHeaderService.findResponseHeaderList(responseHeaderQuery);
-            if(responseHeaderList!=null){
-                for(ResponseHeader responseHeader:responseHeaderList){
-                    response.setHeader(responseHeader.getHeaderName(),responseHeader.getValue());
+            ResponseHeaderUnitQuery responseHeaderUnitQuery = new ResponseHeaderUnitQuery();
+            responseHeaderUnitQuery.setApiUnitId(apiId);
+            List<ResponseHeaderUnit> responseHeaderUnitList = responseHeaderService.findResponseHeaderList(responseHeaderUnitQuery);
+            if(responseHeaderUnitList !=null){
+                for(ResponseHeaderUnit responseHeaderUnit : responseHeaderUnitList){
+                    response.setHeader(responseHeaderUnit.getHeaderName(), responseHeaderUnit.getValue());
                 }
             }
         }catch (Exception e){
@@ -135,14 +135,14 @@ public class MockServlet extends HttpServlet {
     /**
      * 处理 接口定义 中响应体
      */
-    private String processApiBody(ResponseResult responseResult){
+    private String processApiBody(ResponseResultUnit responseResultUnit){
         String jsonMockData = null;
         JsonGenerator jsonGenerator = new JsonGenerator();
-        if("json".equals(responseResult.getDataType())){
-            String jsonText = responseResult.getJsonText();
+        if("json".equals(responseResultUnit.getDataType())){
+            String jsonText = responseResultUnit.getJsonText();
             jsonMockData = jsonGenerator.generateJson(jsonText);
         }else {
-            String rawText = responseResult.getRawText();
+            String rawText = responseResultUnit.getRawText();
             jsonMockData =jsonGenerator.generateRaw(rawText);
         }
         return jsonMockData;

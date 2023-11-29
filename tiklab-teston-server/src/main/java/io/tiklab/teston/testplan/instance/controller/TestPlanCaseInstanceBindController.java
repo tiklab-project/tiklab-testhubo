@@ -22,7 +22,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 测试计划下用例的实例中间层 控制器
+ * 
+ * @pi.protocol: http
+ * @pi.groupName: 测试计划下用例的实例中间层 控制器
  */
 @RestController
 @RequestMapping("/testPlanCaseInstanceBind")
@@ -33,7 +35,14 @@ public class TestPlanCaseInstanceBindController {
 
     @Autowired
     private TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
-
+    
+    /**
+     * @pi.name:createTestPlanCaseInstanceBind
+     * @pi.path:/testPlanCaseInstanceBind/createTestPlanCaseInstanceBind
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanCaseInstanceBind
+     */
     @RequestMapping(path="/createTestPlanCaseInstanceBind",method = RequestMethod.POST)
     @ApiMethod(name = "createTestPlanCaseInstanceBind",desc = "创建用例的实例中间层")
     @ApiParam(name = "testPlanCaseInstanceBind",desc = "testPlanCaseInstanceBind",required = true)
@@ -43,6 +52,13 @@ public class TestPlanCaseInstanceBindController {
         return Result.ok(id);
     }
 
+    /**
+     * @pi.name:updateTestPlanCaseInstanceBind
+     * @pi.path:/testPlanCaseInstanceBind/updateTestPlanCaseInstanceBind
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanCaseInstanceBind
+     */
     @RequestMapping(path="/updateTestPlanCaseInstanceBind",method = RequestMethod.POST)
     @ApiMethod(name = "updateTestPlanCaseInstanceBind",desc = "更新用例的实例中间层")
     @ApiParam(name = "testPlanCaseInstanceBind",desc = "testPlanCaseInstanceBind",required = true)
@@ -51,7 +67,14 @@ public class TestPlanCaseInstanceBindController {
 
         return Result.ok();
     }
-
+    
+    /**
+     * @pi.name:deleteTestPlanCaseInstanceBind
+     * @pi.path:/testPlanCaseInstanceBind/deleteTestPlanCaseInstanceBind
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: name=id;dataType=string;value=id;desc=当前删除的id
+     */
     @RequestMapping(path="/deleteTestPlanCaseInstanceBind",method = RequestMethod.POST)
     @ApiMethod(name = "deleteTestPlanCaseInstanceBind",desc = "删除用例的实例中间层")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -61,6 +84,13 @@ public class TestPlanCaseInstanceBindController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:findTestPlanCaseInstanceBind
+     * @pi.path:/testPlanCaseInstanceBind/findTestPlanCaseInstanceBind
+     * @pi.methodType:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=id;desc=当前查找的id
+     */
     @RequestMapping(path="/findTestPlanCaseInstanceBind",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanCaseInstanceBind",desc = "查找用例的实例中间层")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -70,6 +100,12 @@ public class TestPlanCaseInstanceBindController {
         return Result.ok(testPlanCaseInstanceBind);
     }
 
+    /**
+     * @pi.name:findAllTestPlanCaseInstanceBind
+     * @pi.path:/testPlanCaseInstanceBind/findAllTestPlanCaseInstanceBind
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path="/findAllTestPlanCaseInstanceBind",method = RequestMethod.POST)
     @ApiMethod(name = "findAllTestPlanCaseInstanceBind",desc = "查找所有用例的实例中间层")
     public Result<List<TestPlanCaseInstanceBind>> findAllTestPlanCaseInstanceBind(){
@@ -78,6 +114,13 @@ public class TestPlanCaseInstanceBindController {
         return Result.ok(testPlanCaseInstanceBindList);
     }
 
+    /**
+     * @pi.name:findTestPlanCaseInstanceBindList
+     * @pi.path:/testPlanCaseInstanceBind/findTestPlanCaseInstanceBindList
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanCaseInstanceBind
+     */
     @RequestMapping(path = "/findTestPlanCaseInstanceBindList",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanCaseInstanceBindList",desc = "根据查询参数查询用例的实例中间层列表")
     @ApiParam(name = "testPlanCaseInstanceBindQuery",desc = "testPlanCaseInstanceBindQuery",required = true)
@@ -87,6 +130,13 @@ public class TestPlanCaseInstanceBindController {
         return Result.ok(testPlanCaseInstanceBindList);
     }
 
+    /**
+     * @pi.name:findTestPlanCaseInstanceBindPage
+     * @pi.path:/testPlanCaseInstanceBind/findTestPlanCaseInstanceBindPage
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanCaseInstanceBindQuery
+     */
     @RequestMapping(path = "/findTestPlanCaseInstanceBindPage",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanCaseInstanceBindPage",desc = "根据查询参数按分页查询用例的实例中间层")
     @ApiParam(name = "testPlanCaseInstanceBindQuery",desc = "testPlanCaseInstanceBindQuery",required = true)

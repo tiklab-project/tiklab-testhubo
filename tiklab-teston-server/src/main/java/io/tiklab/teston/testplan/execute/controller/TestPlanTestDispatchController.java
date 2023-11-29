@@ -19,7 +19,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * 测试计划测试 控制器
+ *
+ * @pi.protocol: http
+ * @pi.groupName: 测试计划测试 控制器
  */
 @RestController
 @RequestMapping("/testPlanTestDispatch")
@@ -31,6 +33,13 @@ public class TestPlanTestDispatchController {
     @Autowired
     TestPlanExecuteDispatchService testPlanExecuteDispatchService;
 
+    /**
+     * @pi.name:execute
+     * @pi.path:/testPlanTestDispatch/execute
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanTestData
+     */
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
     @ApiMethod(name = "execute", desc = "执行测试")
     @ApiParam(name = "testPlanTestData", desc = "执行需要传的参数", required = true)
@@ -40,6 +49,12 @@ public class TestPlanTestDispatchController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:exeResult
+     * @pi.path:/testPlanTestDispatch/exeResult
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path = "/exeResult", method = RequestMethod.POST)
     @ApiMethod(name = "exeResult", desc = "获取测试结果")
     public Result<TestPlanTestResponse> exeResult() {

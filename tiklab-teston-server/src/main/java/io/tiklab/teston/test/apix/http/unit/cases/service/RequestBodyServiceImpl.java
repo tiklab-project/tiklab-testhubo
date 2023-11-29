@@ -35,39 +35,39 @@ public class RequestBodyServiceImpl implements RequestBodyService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createRequestBody(@NotNull @Valid RequestBody requestBody) {
-        RequestBodyEntity requestBodyEntity = BeanMapper.map(requestBody, RequestBodyEntity.class);
+    public String createRequestBody(@NotNull @Valid RequestBodyUnit requestBodyUnit) {
+        RequestBodyEntity requestBodyEntity = BeanMapper.map(requestBodyUnit, RequestBodyEntity.class);
 
         return requestBodyDao.createRequestBody(requestBodyEntity);
     }
 
     @Override
-    public void updateRequestBody(@NotNull @Valid RequestBody requestBody) {
-        RequestBodyEntity requestBodyEntity = BeanMapper.map(requestBody, RequestBodyEntity.class);
+    public void updateRequestBody(@NotNull @Valid RequestBodyUnit requestBodyUnit) {
+        RequestBodyEntity requestBodyEntity = BeanMapper.map(requestBodyUnit, RequestBodyEntity.class);
 
-        if("json".equals(requestBody.getBodyType())){
+        if("json".equals(requestBodyUnit.getBodyType())){
             //切换请求体，如果是json，没有找到，就会自动生成一个。
-            String apiUnitId = requestBody.getApiUnitId();
-            JsonParam isExsit = jsonParamService.findJsonParam(apiUnitId);
+            String apiUnitId = requestBodyUnit.getApiUnitId();
+            JsonParamUnit isExsit = jsonParamService.findJsonParam(apiUnitId);
             if(isExsit==null){
-                JsonParam jsonParam = new JsonParam();
-                jsonParam.setId(apiUnitId);
-                jsonParam.setApiUnitId(apiUnitId);
-                jsonParam.setSchemaText("{\"type\": \"object\",\"properties\": {}}");
-                jsonParamService.createJsonParam(jsonParam);
+                JsonParamUnit jsonParamUnit = new JsonParamUnit();
+                jsonParamUnit.setId(apiUnitId);
+                jsonParamUnit.setApiUnitId(apiUnitId);
+                jsonParamUnit.setSchemaText("{\"type\": \"object\",\"properties\": {}}");
+                jsonParamService.createJsonParam(jsonParamUnit);
             }
         }
 
-        if("raw".equals(requestBody.getBodyType())){
-            String apiUnitId = requestBody.getApiUnitId();
-            RawParam rawParamIsExist = rawParamService.findRawParam(apiUnitId);
-            if(rawParamIsExist==null){
-                RawParam rawParam = new RawParam();
-                rawParam.setApiUnit(new ApiUnitCase().setId(apiUnitId));
-                rawParam.setId(apiUnitId);
-                rawParam.setType("application/json");
-                rawParam.setRaw("");
-                rawParamService.createRawParam(rawParam);
+        if("raw".equals(requestBodyUnit.getBodyType())){
+            String apiUnitId = requestBodyUnit.getApiUnitId();
+            RawParamUnit rawParamUnitIsExist = rawParamService.findRawParam(apiUnitId);
+            if(rawParamUnitIsExist ==null){
+                RawParamUnit rawParamUnit = new RawParamUnit();
+                rawParamUnit.setApiUnit(new ApiUnitCase().setId(apiUnitId));
+                rawParamUnit.setId(apiUnitId);
+                rawParamUnit.setType("application/json");
+                rawParamUnit.setRaw("");
+                rawParamService.createRawParam(rawParamUnit);
             }
         }
 
@@ -81,60 +81,60 @@ public class RequestBodyServiceImpl implements RequestBodyService {
     }
 
     @Override
-    public RequestBody findOne(String id) {
+    public RequestBodyUnit findOne(String id) {
         RequestBodyEntity requestBodyEntity = requestBodyDao.findRequestBody(id);
 
-        RequestBody requestBody = BeanMapper.map(requestBodyEntity, RequestBody.class);
-        return requestBody;
+        RequestBodyUnit requestBodyUnit = BeanMapper.map(requestBodyEntity, RequestBodyUnit.class);
+        return requestBodyUnit;
     }
 
     @Override
-    public List<RequestBody> findList(List<String> idList) {
+    public List<RequestBodyUnit> findList(List<String> idList) {
         List<RequestBodyEntity> requestBodyEntityList =  requestBodyDao.findRequestBodyList(idList);
 
-        List<RequestBody> requestBodyList =  BeanMapper.mapList(requestBodyEntityList, RequestBody.class);
-        return requestBodyList;
+        List<RequestBodyUnit> requestBodyUnitList =  BeanMapper.mapList(requestBodyEntityList, RequestBodyUnit.class);
+        return requestBodyUnitList;
     }
 
     @Override
-    public RequestBody findRequestBody(@NotNull String id) {
-        RequestBody requestBody = findOne(id);
+    public RequestBodyUnit findRequestBody(@NotNull String id) {
+        RequestBodyUnit requestBodyUnit = findOne(id);
 
-        joinTemplate.joinQuery(requestBody);
-        return requestBody;
+        joinTemplate.joinQuery(requestBodyUnit);
+        return requestBodyUnit;
     }
 
     @Override
-    public List<RequestBody> findAllRequestBody() {
+    public List<RequestBodyUnit> findAllRequestBody() {
         List<RequestBodyEntity> requestBodyEntityList =  requestBodyDao.findAllRequestBody();
 
-        List<RequestBody> requestBodyList =  BeanMapper.mapList(requestBodyEntityList, RequestBody.class);
+        List<RequestBodyUnit> requestBodyUnitList =  BeanMapper.mapList(requestBodyEntityList, RequestBodyUnit.class);
 
-        joinTemplate.joinQuery(requestBodyList);
-        return requestBodyList;
+        joinTemplate.joinQuery(requestBodyUnitList);
+        return requestBodyUnitList;
     }
 
     @Override
-    public List<RequestBody> findRequestBodyList(RequestBodyQuery requestBodyQuery) {
-        List<RequestBodyEntity> requestBodyEntityList = requestBodyDao.findRequestBodyList(requestBodyQuery);
+    public List<RequestBodyUnit> findRequestBodyList(RequestBodyUnitQuery requestBodyUnitQuery) {
+        List<RequestBodyEntity> requestBodyEntityList = requestBodyDao.findRequestBodyList(requestBodyUnitQuery);
 
-        List<RequestBody> requestBodyList = BeanMapper.mapList(requestBodyEntityList, RequestBody.class);
+        List<RequestBodyUnit> requestBodyUnitList = BeanMapper.mapList(requestBodyEntityList, RequestBodyUnit.class);
 
-        joinTemplate.joinQuery(requestBodyList);
+        joinTemplate.joinQuery(requestBodyUnitList);
 
-        return requestBodyList;
+        return requestBodyUnitList;
     }
 
     @Override
-    public Pagination<RequestBody> findRequestBodyPage(RequestBodyQuery requestBodyQuery) {
+    public Pagination<RequestBodyUnit> findRequestBodyPage(RequestBodyUnitQuery requestBodyUnitQuery) {
 
-        Pagination<RequestBodyEntity>  pagination = requestBodyDao.findRequestBodyPage(requestBodyQuery);
+        Pagination<RequestBodyEntity>  pagination = requestBodyDao.findRequestBodyPage(requestBodyUnitQuery);
 
-        List<RequestBody> requestBodyList = BeanMapper.mapList(pagination.getDataList(), RequestBody.class);
+        List<RequestBodyUnit> requestBodyUnitList = BeanMapper.mapList(pagination.getDataList(), RequestBodyUnit.class);
 
-        joinTemplate.joinQuery(requestBodyList);
+        joinTemplate.joinQuery(requestBodyUnitList);
 
-        return PaginationBuilder.build(pagination,requestBodyList);
+        return PaginationBuilder.build(pagination, requestBodyUnitList);
     }
 
 

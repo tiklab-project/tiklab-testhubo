@@ -21,7 +21,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * app环境 控制器
+ * 
+ * @pi.protocol: http
+ * @pi.groupName: app环境 控制器
  */
 @RestController
 @RequestMapping("/appEnv")
@@ -33,6 +35,13 @@ public class AppEnvController {
     @Autowired
     private AppEnvService appEnvService;
 
+    /**
+     * @pi.name:createAppEnv
+     * @pi.path:/appEnv/createAppEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=AppEnv
+     */
     @RequestMapping(path="/createAppEnv",method = RequestMethod.POST)
     @ApiMethod(name = "createAppEnv",desc = "创建app环境")
     @ApiParam(name = "appEnv",desc = "appEnv",required = true)
@@ -42,6 +51,13 @@ public class AppEnvController {
         return Result.ok(id);
     }
 
+    /**
+     * @pi.name:updateAppEnv
+     * @pi.path:/appEnv/updateAppEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=AppEnv
+     */
     @RequestMapping(path="/updateAppEnv",method = RequestMethod.POST)
     @ApiMethod(name = "updateAppEnv",desc = "更新app环境")
     @ApiParam(name = "appEnv",desc = "appEnv",required = true)
@@ -51,6 +67,13 @@ public class AppEnvController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:deleteAppEnv
+     * @pi.path:/appEnv/deleteAppEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: name=id;dataType=string;value=id;desc=当前删除的id
+     */
     @RequestMapping(path="/deleteAppEnv",method = RequestMethod.POST)
     @ApiMethod(name = "deleteAppEnv",desc = "删除app环境")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -60,6 +83,13 @@ public class AppEnvController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:findAppEnv
+     * @pi.path:/appEnv/findAppEnv
+     * @pi.methodType:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=id;desc=当前查找的id
+     */
     @RequestMapping(path="/findAppEnv",method = RequestMethod.POST)
     @ApiMethod(name = "findAppEnv",desc = "根据id查找app环境")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -69,6 +99,12 @@ public class AppEnvController {
         return Result.ok(appEnv);
     }
 
+    /**
+     * @pi.name:findAllAppEnv
+     * @pi.path:/appEnv/findAllAppEnv
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path="/findAllAppEnv",method = RequestMethod.POST)
     @ApiMethod(name = "findAllAppEnv",desc = "查找所有app环境")
     public Result<List<AppEnv>> findAllAppEnv(){
@@ -77,6 +113,13 @@ public class AppEnvController {
         return Result.ok(appEnvList);
     }
 
+    /**
+     * @pi.name:findAppEnvList
+     * @pi.path:/appEnv/findAppEnvList
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=AppEnv
+     */
     @RequestMapping(path = "/findAppEnvList",method = RequestMethod.POST)
     @ApiMethod(name = "findAppEnvList",desc = "根据查询参数查询app环境列表")
     @ApiParam(name = "appEnvQuery",desc = "appEnvQuery",required = true)
@@ -86,6 +129,13 @@ public class AppEnvController {
         return Result.ok(appEnvList);
     }
 
+    /**
+     * @pi.name:findAppEnvPage
+     * @pi.path:/appEnv/findAppEnvPage
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=AppEnvQuery
+     */
     @RequestMapping(path = "/findAppEnvPage",method = RequestMethod.POST)
     @ApiMethod(name = "findAppEnvPage",desc = "根据查询参数按分页查询app环境")
     @ApiParam(name = "appEnvQuery",desc = "appEnvQuery",required = true)

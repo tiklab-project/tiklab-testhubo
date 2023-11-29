@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawParamUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawParamUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.RawParamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class RawParamController {
     @RequestMapping(path="/createRawParam",method = RequestMethod.POST)
     @ApiMethod(name = "createRawParam",desc = "创建raw")
     @ApiParam(name = "rawParam",desc = "rawParam",required = true)
-    public Result<String> createRawParam(@RequestBody @NotNull @Valid RawParam rawParam){
-        String id = rawParamService.createRawParam(rawParam);
+    public Result<String> createRawParam(@RequestBody @NotNull @Valid RawParamUnit rawParamUnit){
+        String id = rawParamService.createRawParam(rawParamUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class RawParamController {
     @RequestMapping(path="/updateRawParam",method = RequestMethod.POST)
     @ApiMethod(name = "updateRawParam",desc = "更新raw")
     @ApiParam(name = "rawParam",desc = "rawParam",required = true)
-    public Result<Void> updateRawParam(@RequestBody @NotNull @Valid RawParam rawParam){
-        rawParamService.updateRawParam(rawParam);
+    public Result<Void> updateRawParam(@RequestBody @NotNull @Valid RawParamUnit rawParamUnit){
+        rawParamService.updateRawParam(rawParamUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class RawParamController {
     @RequestMapping(path="/findRawParam",method = RequestMethod.POST)
     @ApiMethod(name = "findRawParam",desc = "根据id查找raw")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<RawParam> findRawParam(@NotNull String id){
-        RawParam rawParam = rawParamService.findRawParam(id);
+    public Result<RawParamUnit> findRawParam(@NotNull String id){
+        RawParamUnit rawParamUnit = rawParamService.findRawParam(id);
 
-        return Result.ok(rawParam);
+        return Result.ok(rawParamUnit);
     }
 
     @RequestMapping(path="/findAllRawParam",method = RequestMethod.POST)
     @ApiMethod(name = "findAllRawParam",desc = "查找所有raw")
-    public Result<List<RawParam>> findAllRawParam(){
-        List<RawParam> rawParamList = rawParamService.findAllRawParam();
+    public Result<List<RawParamUnit>> findAllRawParam(){
+        List<RawParamUnit> rawParamUnitList = rawParamService.findAllRawParam();
 
-        return Result.ok(rawParamList);
+        return Result.ok(rawParamUnitList);
     }
 
     @RequestMapping(path = "/findRawParamList",method = RequestMethod.POST)
     @ApiMethod(name = "findRawParamList",desc = "根据查询参数查询raw列表")
     @ApiParam(name = "rawParamQuery",desc = "rawParamQuery",required = true)
-    public Result<List<RawParam>> findRawParamList(@RequestBody @Valid @NotNull RawParamQuery rawParamQuery){
-        List<RawParam> rawParamList = rawParamService.findRawParamList(rawParamQuery);
+    public Result<List<RawParamUnit>> findRawParamList(@RequestBody @Valid @NotNull RawParamUnitQuery rawParamUnitQuery){
+        List<RawParamUnit> rawParamUnitList = rawParamService.findRawParamList(rawParamUnitQuery);
 
-        return Result.ok(rawParamList);
+        return Result.ok(rawParamUnitList);
     }
 
     @RequestMapping(path = "/findRawParamPage",method = RequestMethod.POST)
     @ApiMethod(name = "findRawParamPage",desc = "根据查询参数按分页查询raw")
     @ApiParam(name = "rawParamQuery",desc = "rawParamQuery",required = true)
-    public Result<Pagination<RawParam>> findRawParamPage(@RequestBody @Valid @NotNull RawParamQuery rawParamQuery){
-        Pagination<RawParam> pagination = rawParamService.findRawParamPage(rawParamQuery);
+    public Result<Pagination<RawParamUnit>> findRawParamPage(@RequestBody @Valid @NotNull RawParamUnitQuery rawParamUnitQuery){
+        Pagination<RawParamUnit> pagination = rawParamService.findRawParamPage(rawParamUnitQuery);
 
         return Result.ok(pagination);
     }

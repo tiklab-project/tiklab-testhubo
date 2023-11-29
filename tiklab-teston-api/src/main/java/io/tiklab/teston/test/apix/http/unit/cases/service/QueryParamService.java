@@ -1,8 +1,8 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
 import io.tiklab.teston.test.apix.http.unit.cases.model.ApiUnitCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParams;
-import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -16,16 +16,16 @@ public interface QueryParamService {
 
     /**
     * 创建query
-    * @param queryParams
+    * @param queryParamUnit
     * @return
     */
-    String createQueryParam(@NotNull @Valid QueryParams queryParams);
+    String createQueryParam(@NotNull @Valid QueryParamUnit queryParamUnit);
 
     /**
     * 更新query
-    * @param queryParams
+    * @param queryParamUnit
     */
-    void updateQueryParam(@NotNull @Valid QueryParams queryParams);
+    void updateQueryParam(@NotNull @Valid QueryParamUnit queryParamUnit);
 
     /**
     * 删除query
@@ -33,36 +33,36 @@ public interface QueryParamService {
     */
     void deleteQueryParam(@NotNull String id);
 
-    QueryParams findOne(@NotNull String id);
+    QueryParamUnit findOne(@NotNull String id);
 
-    List<QueryParams> findList(List<String> idList);
+    List<QueryParamUnit> findList(List<String> idList);
 
     /**
     * 根据id查找query
     * @param id
     * @return
     */
-    QueryParams findQueryParam(@NotNull String id);
+    QueryParamUnit findQueryParam(@NotNull String id);
 
     /**
     * 查找所有query
     * @return
     */
-    List<QueryParams> findAllQueryParam();
+    List<QueryParamUnit> findAllQueryParam();
 
     /**
     * 根据查询参数查询query列表
-    * @param queryParamQuery
+    * @param queryParamUnitQuery
     * @return
     */
-    List<QueryParams> findQueryParamList(QueryParamQuery queryParamQuery);
+    List<QueryParamUnit> findQueryParamList(QueryParamUnitQuery queryParamUnitQuery);
 
     /**
     * 根据查询参数按分页查询query
-    * @param queryParamQuery
+    * @param queryParamUnitQuery
     * @return
     */
-    Pagination<QueryParams> findQueryParamPage(QueryParamQuery queryParamQuery);
+    Pagination<QueryParamUnit> findQueryParamPage(QueryParamUnitQuery queryParamUnitQuery);
 
     /**
      * 构造query参数

@@ -11,6 +11,9 @@ import java.util.List;
 @ApiModel
 public class WorkItemTestOnQuery {
 
+    @ApiProperty(name ="repositoryId",desc = "repositoryId")
+    private String repositoryId;
+
     @ApiProperty(name ="orderParams",desc = "排序参数")
     private List<Order> orderParams = OrderBuilders.instance().asc("id").get();
 
@@ -25,6 +28,14 @@ public class WorkItemTestOnQuery {
 
     @ApiProperty(name ="name",desc = "name")
     private String name;
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
 
     public List<Order> getOrderParams() {
         return orderParams;

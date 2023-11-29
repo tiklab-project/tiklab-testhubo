@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScript;
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -15,16 +15,16 @@ public interface PreScriptService {
 
     /**
     * 创建前置脚本
-    * @param preScript
+    * @param preScriptUnit
     * @return
     */
-    String createPreScript(@NotNull @Valid PreScript preScript);
+    String createPreScript(@NotNull @Valid PreScriptUnit preScriptUnit);
 
     /**
     * 更新前置脚本
-    * @param preScript
+    * @param preScriptUnit
     */
-    void updatePreScript(@NotNull @Valid PreScript preScript);
+    void updatePreScript(@NotNull @Valid PreScriptUnit preScriptUnit);
 
     /**
     * 删除前置脚本
@@ -32,35 +32,35 @@ public interface PreScriptService {
     */
     void deletePreScript(@NotNull String id);
 
-    PreScript findOne(@NotNull String id);
+    PreScriptUnit findOne(@NotNull String id);
 
-    List<PreScript> findList(List<String> idList);
+    List<PreScriptUnit> findList(List<String> idList);
 
     /**
     * 根据id查找前置脚本
     * @param id
     * @return
     */
-    PreScript findPreScript(@NotNull String id);
+    PreScriptUnit findPreScript(@NotNull String id);
 
     /**
     * 查找所有前置脚本
     * @return
     */
-    List<PreScript> findAllPreScript();
+    List<PreScriptUnit> findAllPreScript();
 
     /**
     * 根据查询参数查询前置脚本列表
-    * @param preScriptQuery
+    * @param preScriptUnitQuery
     * @return
     */
-    List<PreScript> findPreScriptList(PreScriptQuery preScriptQuery);
+    List<PreScriptUnit> findPreScriptList(PreScriptUnitQuery preScriptUnitQuery);
 
     /**
     * 根据查询参数按分页查询前置脚本
-    * @param preScriptQuery
+    * @param preScriptUnitQuery
     * @return
     */
-    Pagination<PreScript> findPreScriptPage(PreScriptQuery preScriptQuery);
+    Pagination<PreScriptUnit> findPreScriptPage(PreScriptUnitQuery preScriptUnitQuery);
 
 }

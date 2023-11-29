@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawParamUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawParamUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -15,16 +15,16 @@ public interface RawParamService {
 
     /**
     * 创建raw
-    * @param rawParam
+    * @param rawParamUnit
     * @return
     */
-    String createRawParam(@NotNull @Valid RawParam rawParam);
+    String createRawParam(@NotNull @Valid RawParamUnit rawParamUnit);
 
     /**
     * 更新raw
-    * @param rawParam
+    * @param rawParamUnit
     */
-    void updateRawParam(@NotNull @Valid RawParam rawParam);
+    void updateRawParam(@NotNull @Valid RawParamUnit rawParamUnit);
 
     /**
     * 删除raw
@@ -32,35 +32,35 @@ public interface RawParamService {
     */
     void deleteRawParam(@NotNull String id);
 
-    RawParam findOne(@NotNull String id);
+    RawParamUnit findOne(@NotNull String id);
 
-    List<RawParam> findList(List<String> idList);
+    List<RawParamUnit> findList(List<String> idList);
 
     /**
     * 根据id查找raw
     * @param id
     * @return
     */
-    RawParam findRawParam(@NotNull String id);
+    RawParamUnit findRawParam(@NotNull String id);
 
     /**
     * 查找所有raw
     * @return
     */
-    List<RawParam> findAllRawParam();
+    List<RawParamUnit> findAllRawParam();
 
     /**
     * 根据查询参数查询raw列表
-    * @param rawParamQuery
+    * @param rawParamUnitQuery
     * @return
     */
-    List<RawParam> findRawParamList(RawParamQuery rawParamQuery);
+    List<RawParamUnit> findRawParamList(RawParamUnitQuery rawParamUnitQuery);
 
     /**
     * 根据查询参数按分页查询raw
-    * @param rawParamQuery
+    * @param rawParamUnitQuery
     * @return
     */
-    Pagination<RawParam> findRawParamPage(RawParamQuery rawParamQuery);
+    Pagination<RawParamUnit> findRawParamPage(RawParamUnitQuery rawParamUnitQuery);
 
 }

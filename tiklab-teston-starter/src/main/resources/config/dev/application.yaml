@@ -66,7 +66,7 @@ teston-agent:
     path: C:\Users\JacksonSun\AppData\Local\Chromium\Application\chrome.exe
 
 postin:
-  enable: true
+  enable: false
   scan:
     package: io.tiklab.teston
   report:

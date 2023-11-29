@@ -8,8 +8,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.ResponseResultEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResult;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,19 +31,19 @@ public class ResponseResultServiceImpl implements ResponseResultService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createResponseResult(@NotNull @Valid ResponseResult responseResult) {
-        ResponseResultEntity responseResultEntity = BeanMapper.map(responseResult, ResponseResultEntity.class);
+    public String createResponseResult(@NotNull @Valid ResponseResultUnit responseResultUnit) {
+        ResponseResultEntity responseResultEntity = BeanMapper.map(responseResultUnit, ResponseResultEntity.class);
         responseResultEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
         return responseResultDao.createResponseResult(responseResultEntity);
     }
 
     @Override
-    public void updateResponseResult(@NotNull @Valid ResponseResult responseResult) {
-        ResponseResultEntity responseResultEntity = BeanMapper.map(responseResult, ResponseResultEntity.class);
+    public void updateResponseResult(@NotNull @Valid ResponseResultUnit responseResultUnit) {
+        ResponseResultEntity responseResultEntity = BeanMapper.map(responseResultUnit, ResponseResultEntity.class);
 
-        ResponseResult isExist = findResponseResult(responseResult.getId());
+        ResponseResultUnit isExist = findResponseResult(responseResultUnit.getId());
         if(isExist==null){
-            createResponseResult(responseResult);
+            createResponseResult(responseResultUnit);
         }
         responseResultDao.updateResponseResult(responseResultEntity);
     }
@@ -54,59 +54,59 @@ public class ResponseResultServiceImpl implements ResponseResultService {
     }
 
     @Override
-    public ResponseResult findOne(String id) {
+    public ResponseResultUnit findOne(String id) {
         ResponseResultEntity responseResultEntity = responseResultDao.findResponseResult(id);
 
-        ResponseResult responseResult = BeanMapper.map(responseResultEntity, ResponseResult.class);
-        return responseResult;
+        ResponseResultUnit responseResultUnit = BeanMapper.map(responseResultEntity, ResponseResultUnit.class);
+        return responseResultUnit;
     }
 
     @Override
-    public List<ResponseResult> findList(List<String> idList) {
+    public List<ResponseResultUnit> findList(List<String> idList) {
         List<ResponseResultEntity> responseResultEntityList =  responseResultDao.findResponseResultList(idList);
 
-        List<ResponseResult> responseResultList =  BeanMapper.mapList(responseResultEntityList,ResponseResult.class);
-        return responseResultList;
+        List<ResponseResultUnit> responseResultUnitList =  BeanMapper.mapList(responseResultEntityList, ResponseResultUnit.class);
+        return responseResultUnitList;
     }
 
     @Override
-    public ResponseResult findResponseResult(@NotNull String id) {
-        ResponseResult responseResult = findOne(id);
+    public ResponseResultUnit findResponseResult(@NotNull String id) {
+        ResponseResultUnit responseResultUnit = findOne(id);
 
-        joinTemplate.joinQuery(responseResult);
-        return responseResult;
+        joinTemplate.joinQuery(responseResultUnit);
+        return responseResultUnit;
     }
 
     @Override
-    public List<ResponseResult> findAllResponseResult() {
+    public List<ResponseResultUnit> findAllResponseResult() {
         List<ResponseResultEntity> responseResultEntityList =  responseResultDao.findAllResponseResult();
 
-        List<ResponseResult> responseResultList =  BeanMapper.mapList(responseResultEntityList,ResponseResult.class);
+        List<ResponseResultUnit> responseResultUnitList =  BeanMapper.mapList(responseResultEntityList, ResponseResultUnit.class);
 
-        joinTemplate.joinQuery(responseResultList);
-        return responseResultList;
+        joinTemplate.joinQuery(responseResultUnitList);
+        return responseResultUnitList;
     }
 
     @Override
-    public List<ResponseResult> findResponseResultList(ResponseResultQuery responseResultQuery) {
-        List<ResponseResultEntity> responseResultEntityList = responseResultDao.findResponseResultList(responseResultQuery);
+    public List<ResponseResultUnit> findResponseResultList(ResponseResultUnitQuery responseResultUnitQuery) {
+        List<ResponseResultEntity> responseResultEntityList = responseResultDao.findResponseResultList(responseResultUnitQuery);
 
-        List<ResponseResult> responseResultList = BeanMapper.mapList(responseResultEntityList,ResponseResult.class);
+        List<ResponseResultUnit> responseResultUnitList = BeanMapper.mapList(responseResultEntityList, ResponseResultUnit.class);
 
-        joinTemplate.joinQuery(responseResultList);
+        joinTemplate.joinQuery(responseResultUnitList);
 
-        return responseResultList;
+        return responseResultUnitList;
     }
 
     @Override
-    public Pagination<ResponseResult> findResponseResultPage(ResponseResultQuery responseResultQuery) {
+    public Pagination<ResponseResultUnit> findResponseResultPage(ResponseResultUnitQuery responseResultUnitQuery) {
 
-        Pagination<ResponseResultEntity>  pagination = responseResultDao.findResponseResultPage(responseResultQuery);
+        Pagination<ResponseResultEntity>  pagination = responseResultDao.findResponseResultPage(responseResultUnitQuery);
 
-        List<ResponseResult> responseResultList = BeanMapper.mapList(pagination.getDataList(),ResponseResult.class);
+        List<ResponseResultUnit> responseResultUnitList = BeanMapper.mapList(pagination.getDataList(), ResponseResultUnit.class);
 
-        joinTemplate.joinQuery(responseResultList);
+        joinTemplate.joinQuery(responseResultUnitList);
 
-        return PaginationBuilder.build(pagination,responseResultList);
+        return PaginationBuilder.build(pagination, responseResultUnitList);
     }
 }

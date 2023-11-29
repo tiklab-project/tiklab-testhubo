@@ -1,12 +1,5 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tiklab.core.exception.ApplicationException;
-import io.tiklab.teston.support.variable.model.Variable;
-import io.tiklab.teston.support.variable.model.VariableQuery;
 import io.tiklab.teston.support.variable.service.VariableService;
 import io.tiklab.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.tiklab.teston.test.apix.http.unit.cases.model.*;
@@ -21,21 +14,12 @@ import io.tiklab.teston.test.test.model.TestCase;
 import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.service.TestCaseService;
 import org.apache.commons.collections.CollectionUtils;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,21 +92,21 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         apiApiUnitCaseDao.updateApiUnitCase(apiUnitCaseEntity);
 
         //初始化请求响应中的类型
-        RequestBody requestBody = new RequestBody();
-        requestBody.setId(id);
-        requestBody.setApiUnitId(id);
-        requestBody.setBodyType("none");
-        requestBodyService.createRequestBody(requestBody);
+        RequestBodyUnit requestBodyUnit = new RequestBodyUnit();
+        requestBodyUnit.setId(id);
+        requestBodyUnit.setApiUnitId(id);
+        requestBodyUnit.setBodyType("none");
+        requestBodyService.createRequestBody(requestBodyUnit);
 
         //初始化响应结果
-        ResponseResult responseResult = new ResponseResult();
-        responseResult.setId(id);
-        responseResult.setApiUnitId(id);
-        responseResult.setHttpCode(200);
-        responseResult.setName("成功");
-        responseResult.setDataType("json");
-        responseResult.setJsonText("{\"type\": \"object\",\"properties\": {}}");
-        responseResultService.createResponseResult(responseResult);
+        ResponseResultUnit responseResultUnit = new ResponseResultUnit();
+        responseResultUnit.setId(id);
+        responseResultUnit.setApiUnitId(id);
+        responseResultUnit.setHttpCode(200);
+        responseResultUnit.setName("成功");
+        responseResultUnit.setDataType("json");
+        responseResultUnit.setJsonText("{\"type\": \"object\",\"properties\": {}}");
+        responseResultService.createResponseResult(responseResultUnit);
 
 
         //添加testCase
@@ -296,13 +280,13 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * 获取contentType
      */
     Map jointMediaType(ApiUnitCase apiUnitCase){
-        RequestBody bodyType = requestBodyService.findRequestBody(apiUnitCase.getId());
+        RequestBodyUnit bodyType = requestBodyService.findRequestBody(apiUnitCase.getId());
 
         //获取raw下面的mediaType
-        RawParam rawParam = rawParamService.findRawParam(apiUnitCase.getId());
+        RawParamUnit rawParamUnit = rawParamService.findRawParam(apiUnitCase.getId());
         String rawMediaType = null;
-        if(!ObjectUtils.isEmpty(rawParam)){
-            rawMediaType= rawParam.getType();
+        if(!ObjectUtils.isEmpty(rawParamUnit)){
+            rawMediaType= rawParamUnit.getType();
         }
 
         Map mediaType = new HashMap();
@@ -342,7 +326,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      *
      */
     private String bodyConstruction(ApiUnitCase apiUnitCase){
-        RequestBody bodyType = requestBodyService.findRequestBody(apiUnitCase.getId());
+        RequestBodyUnit bodyType = requestBodyService.findRequestBody(apiUnitCase.getId());
        
 //        HashMap<String, Object> map = new HashMap<>();
         String bodyStr = "";
@@ -372,13 +356,13 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      *  获取formData
      */
     private String getFormData (ApiUnitCase apiUnitCase,String bodyStr){
-        FormParamQuery formParamQuery = new FormParamQuery();
-        formParamQuery.setApiUnitId(apiUnitCase.getId());
-        List<FormParam> formParamList = formParamService.findFormParamList(formParamQuery);
+        FormParamUnitQuery formParamUnitQuery = new FormParamUnitQuery();
+        formParamUnitQuery.setApiUnitId(apiUnitCase.getId());
+        List<FormParamUnit> formParamUnitList = formParamService.findFormParamList(formParamUnitQuery);
 
-        if (CollectionUtils.isNotEmpty(formParamList)){
-            for (FormParam formParam : formParamList){
-                bodyStr = bodyStr + formParam.getParamName() + "=" + formParam.getValue() + "&";
+        if (CollectionUtils.isNotEmpty(formParamUnitList)){
+            for (FormParamUnit formParamUnit : formParamUnitList){
+                bodyStr = bodyStr + formParamUnit.getParamName() + "=" + formParamUnit.getValue() + "&";
             }
         }
 
@@ -389,12 +373,12 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * 获取FormUrlDataMap
      */
     private String getFormUrlencoded (ApiUnitCase apiUnitCase, String bodyStr){
-        FormUrlencodedQuery formUrlencodedQuery = new FormUrlencodedQuery();
-        formUrlencodedQuery.setApiUnitId(apiUnitCase.getId());
-        List<FormUrlEncoded> formUrlEncodedList = formUrlencodedService.findFormUrlencodedList(formUrlencodedQuery);
-        if (CollectionUtils.isNotEmpty(formUrlEncodedList)){
-            for (FormUrlEncoded formUrlencoded: formUrlEncodedList){
-                bodyStr = bodyStr + formUrlencoded.getParamName() + "=" + formUrlencoded.getValue() + "&";
+        FormUrlencodedUnitQuery formUrlencodedUnitQuery = new FormUrlencodedUnitQuery();
+        formUrlencodedUnitQuery.setApiUnitId(apiUnitCase.getId());
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList = formUrlencodedService.findFormUrlencodedList(formUrlencodedUnitQuery);
+        if (CollectionUtils.isNotEmpty(formUrlEncodedUnitList)){
+            for (FormUrlEncodedUnit formUrlencodedUnit : formUrlEncodedUnitList){
+                bodyStr = bodyStr + formUrlencodedUnit.getParamName() + "=" + formUrlencodedUnit.getValue() + "&";
             }
         }
 
@@ -414,9 +398,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     private String getRaw(ApiUnitCase apiUnitCase, String bodyStr){
 
         //通过测试步骤方法的id查询
-        RawParam rawParam = rawParamService.findRawParam(apiUnitCase.getId());
-        if(!ObjectUtils.isEmpty(rawParam)){
-            String raw = rawParam.getRaw();
+        RawParamUnit rawParamUnit = rawParamService.findRawParam(apiUnitCase.getId());
+        if(!ObjectUtils.isEmpty(rawParamUnit)){
+            String raw = rawParamUnit.getRaw();
             bodyStr = raw;
 
 //            if(rawParam.getType().equals("application/json")){
@@ -444,11 +428,11 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * 获取前置脚本
      */
     private String getPreScript(ApiUnitCase apiUnitCase){
-        PreScript preScript = preScriptService.findPreScript(apiUnitCase.getId());
-        if (preScript == null||preScript.getScriptex()==null) {
+        PreScriptUnit preScriptUnit = preScriptService.findPreScript(apiUnitCase.getId());
+        if (preScriptUnit == null|| preScriptUnit.getScriptex()==null) {
             return null;
         }
-        return preScript.getScriptex();
+        return preScriptUnit.getScriptex();
     }
 
 
@@ -456,12 +440,12 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * 获取脚本
      */
     private String getAfterScript(String caseId) {
-        AfterScript afterScript = afterScriptService.findAfterScript(caseId);
-        if (afterScript == null||afterScript.getScriptex()==null) {
+        AfterScriptUnit afterScriptUnit = afterScriptService.findAfterScript(caseId);
+        if (afterScriptUnit == null|| afterScriptUnit.getScriptex()==null) {
             return null;
         }
 
-        return afterScript.getScriptex();
+        return afterScriptUnit.getScriptex();
     }
 
 

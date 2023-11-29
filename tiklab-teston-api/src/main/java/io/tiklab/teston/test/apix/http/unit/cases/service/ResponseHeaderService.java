@@ -1,8 +1,8 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeaderQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeaderUnitQuery;
 import io.tiklab.core.page.Pagination;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeader;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeaderUnit;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,16 +15,16 @@ public interface ResponseHeaderService {
 
     /**
     * 创建响应头
-    * @param responseHeader
+    * @param responseHeaderUnit
     * @return
     */
-    String createResponseHeader(@NotNull @Valid ResponseHeader responseHeader);
+    String createResponseHeader(@NotNull @Valid ResponseHeaderUnit responseHeaderUnit);
 
     /**
     * 更新响应头
-    * @param responseHeader
+    * @param responseHeaderUnit
     */
-    void updateResponseHeader(@NotNull @Valid ResponseHeader responseHeader);
+    void updateResponseHeader(@NotNull @Valid ResponseHeaderUnit responseHeaderUnit);
 
     /**
     * 删除响应头
@@ -32,35 +32,35 @@ public interface ResponseHeaderService {
     */
     void deleteResponseHeader(@NotNull String id);
 
-    ResponseHeader findOne(@NotNull String id);
+    ResponseHeaderUnit findOne(@NotNull String id);
 
-    List<ResponseHeader> findList(List<String> idList);
+    List<ResponseHeaderUnit> findList(List<String> idList);
 
     /**
     * 查找响应头
     * @param id
     * @return
     */
-    ResponseHeader findResponseHeader(@NotNull String id);
+    ResponseHeaderUnit findResponseHeader(@NotNull String id);
 
     /**
     * 查找所有响应头
     * @return
     */
-    List<ResponseHeader> findAllResponseHeader();
+    List<ResponseHeaderUnit> findAllResponseHeader();
 
     /**
     * 根据查询参数查询响应头列表
-    * @param responseHeaderQuery
+    * @param responseHeaderUnitQuery
     * @return
     */
-    List<ResponseHeader> findResponseHeaderList(ResponseHeaderQuery responseHeaderQuery);
+    List<ResponseHeaderUnit> findResponseHeaderList(ResponseHeaderUnitQuery responseHeaderUnitQuery);
 
     /**
     * 根据查询参数按分页查询响应头
-    * @param responseHeaderQuery
+    * @param responseHeaderUnitQuery
     * @return
     */
-    Pagination<ResponseHeader> findResponseHeaderPage(ResponseHeaderQuery responseHeaderQuery);
+    Pagination<ResponseHeaderUnit> findResponseHeaderPage(ResponseHeaderUnitQuery responseHeaderUnitQuery);
 
 }

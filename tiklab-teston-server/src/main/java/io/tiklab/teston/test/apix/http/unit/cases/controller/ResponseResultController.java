@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResult;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.ResponseResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class ResponseResultController {
     @RequestMapping(path="/createResponseResult",method = RequestMethod.POST)
     @ApiMethod(name = "createResponseResult",desc = "创建响应结果")
     @ApiParam(name = "responseResult",desc = "responseResult",required = true)
-    public Result<String> createResponseResult(@RequestBody @NotNull @Valid ResponseResult responseResult){
-        String id = responseResultService.createResponseResult(responseResult);
+    public Result<String> createResponseResult(@RequestBody @NotNull @Valid ResponseResultUnit responseResultUnit){
+        String id = responseResultService.createResponseResult(responseResultUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class ResponseResultController {
     @RequestMapping(path="/updateResponseResult",method = RequestMethod.POST)
     @ApiMethod(name = "updateResponseResult",desc = "更新响应结果")
     @ApiParam(name = "responseResult",desc = "responseResult",required = true)
-    public Result<Void> updateResponseResult(@RequestBody @NotNull @Valid ResponseResult responseResult){
-        responseResultService.updateResponseResult(responseResult);
+    public Result<Void> updateResponseResult(@RequestBody @NotNull @Valid ResponseResultUnit responseResultUnit){
+        responseResultService.updateResponseResult(responseResultUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class ResponseResultController {
     @RequestMapping(path="/findResponseResult",method = RequestMethod.POST)
     @ApiMethod(name = "findResponseResult",desc = "查找响应结果")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<ResponseResult> findResponseResult(@NotNull String id){
-        ResponseResult responseResult = responseResultService.findResponseResult(id);
+    public Result<ResponseResultUnit> findResponseResult(@NotNull String id){
+        ResponseResultUnit responseResultUnit = responseResultService.findResponseResult(id);
 
-        return Result.ok(responseResult);
+        return Result.ok(responseResultUnit);
     }
 
     @RequestMapping(path="/findAllResponseResult",method = RequestMethod.POST)
     @ApiMethod(name = "findAllResponseResult",desc = "查找所有响应结果")
-    public Result<List<ResponseResult>> findAllResponseResult(){
-        List<ResponseResult> responseResultList = responseResultService.findAllResponseResult();
+    public Result<List<ResponseResultUnit>> findAllResponseResult(){
+        List<ResponseResultUnit> responseResultUnitList = responseResultService.findAllResponseResult();
 
-        return Result.ok(responseResultList);
+        return Result.ok(responseResultUnitList);
     }
 
     @RequestMapping(path = "/findResponseResultList",method = RequestMethod.POST)
     @ApiMethod(name = "findResponseResultList",desc = "根据查询参数查询响应结果列表")
     @ApiParam(name = "responseResultQuery",desc = "responseResultQuery",required = true)
-    public Result<List<ResponseResult>> findResponseResultList(@RequestBody @Valid @NotNull ResponseResultQuery responseResultQuery){
-        List<ResponseResult> responseResultList = responseResultService.findResponseResultList(responseResultQuery);
+    public Result<List<ResponseResultUnit>> findResponseResultList(@RequestBody @Valid @NotNull ResponseResultUnitQuery responseResultUnitQuery){
+        List<ResponseResultUnit> responseResultUnitList = responseResultService.findResponseResultList(responseResultUnitQuery);
 
-        return Result.ok(responseResultList);
+        return Result.ok(responseResultUnitList);
     }
 
     @RequestMapping(path = "/findResponseResultPage",method = RequestMethod.POST)
     @ApiMethod(name = "findResponseResultPage",desc = "根据查询参数按分页查询响应结果")
     @ApiParam(name = "responseResultQuery",desc = "responseResultQuery",required = true)
-    public Result<Pagination<ResponseResult>> findResponseResultPage(@RequestBody @Valid @NotNull ResponseResultQuery responseResultQuery){
-        Pagination<ResponseResult> pagination = responseResultService.findResponseResultPage(responseResultQuery);
+    public Result<Pagination<ResponseResultUnit>> findResponseResultPage(@RequestBody @Valid @NotNull ResponseResultUnitQuery responseResultUnitQuery){
+        Pagination<ResponseResultUnit> pagination = responseResultService.findResponseResultPage(responseResultUnitQuery);
 
         return Result.ok(pagination);
     }

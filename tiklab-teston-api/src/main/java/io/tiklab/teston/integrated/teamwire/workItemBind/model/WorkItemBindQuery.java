@@ -10,6 +10,8 @@ import java.util.List;
 
 @ApiModel
 public class WorkItemBindQuery {
+    @ApiProperty(name ="repositoryId",desc = "repositoryId")
+    private String repositoryId;
 
     @ApiProperty(name ="caseId",desc = "用例ID，精确匹配")
     private String caseId;
@@ -20,6 +22,14 @@ public class WorkItemBindQuery {
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
 
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
 
     public List<Order> getOrderParams() {
         return orderParams;

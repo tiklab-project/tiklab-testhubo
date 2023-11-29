@@ -6,7 +6,7 @@ import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.FormParamsEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamUnitQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,27 +77,27 @@ public class FormParamDao{
 
     /**
      * 根据查询参数查询form-data列表
-     * @param formParamQuery
+     * @param formParamUnitQuery
      * @return
      */
-    public List<FormParamsEntity> findFormParamList(FormParamQuery formParamQuery) {
+    public List<FormParamsEntity> findFormParamList(FormParamUnitQuery formParamUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormParamsEntity.class)
-                .eq("apiUnitId",formParamQuery.getApiUnitId())
-                .orders(formParamQuery.getOrderParams())
+                .eq("apiUnitId", formParamUnitQuery.getApiUnitId())
+                .orders(formParamUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, FormParamsEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询form-data
-     * @param formParamQuery
+     * @param formParamUnitQuery
      * @return
      */
-    public Pagination<FormParamsEntity> findFormParamPage(FormParamQuery formParamQuery) {
+    public Pagination<FormParamsEntity> findFormParamPage(FormParamUnitQuery formParamUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormParamsEntity.class)
-                .eq("apiUnitId",formParamQuery.getApiUnitId())
-                .orders(formParamQuery.getOrderParams())
-                .pagination(formParamQuery.getPageParam())
+                .eq("apiUnitId", formParamUnitQuery.getApiUnitId())
+                .orders(formParamUnitQuery.getOrderParams())
+                .pagination(formParamUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, FormParamsEntity.class);
     }

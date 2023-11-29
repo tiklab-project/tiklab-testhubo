@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponse;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -15,16 +15,16 @@ public interface RawResponseService {
 
     /**
     * 创建响应中raw
-    * @param rawResponse
+    * @param rawResponseUnit
     * @return
     */
-    String createRawResponse(@NotNull @Valid RawResponse rawResponse);
+    String createRawResponse(@NotNull @Valid RawResponseUnit rawResponseUnit);
 
     /**
     * 更新响应中raw
-    * @param rawResponse
+    * @param rawResponseUnit
     */
-    void updateRawResponse(@NotNull @Valid RawResponse rawResponse);
+    void updateRawResponse(@NotNull @Valid RawResponseUnit rawResponseUnit);
 
     /**
     * 删除响应中raw
@@ -32,35 +32,35 @@ public interface RawResponseService {
     */
     void deleteRawResponse(@NotNull String id);
 
-    RawResponse findOne(@NotNull String id);
+    RawResponseUnit findOne(@NotNull String id);
 
-    List<RawResponse> findList(List<String> idList);
+    List<RawResponseUnit> findList(List<String> idList);
 
     /**
     * 查找响应中raw
     * @param id
     * @return
     */
-    RawResponse findRawResponse(@NotNull String id);
+    RawResponseUnit findRawResponse(@NotNull String id);
 
     /**
     * 查找所有响应中raw
     * @return
     */
-    List<RawResponse> findAllRawResponse();
+    List<RawResponseUnit> findAllRawResponse();
 
     /**
     * 根据查询参数查询响应中raw列表
-    * @param rawResponseQuery
+    * @param rawResponseUnitQuery
     * @return
     */
-    List<RawResponse> findRawResponseList(RawResponseQuery rawResponseQuery);
+    List<RawResponseUnit> findRawResponseList(RawResponseUnitQuery rawResponseUnitQuery);
 
     /**
     * 根据查询参数按分页查询响应中raw
-    * @param rawResponseQuery
+    * @param rawResponseUnitQuery
     * @return
     */
-    Pagination<RawResponse> findRawResponsePage(RawResponseQuery rawResponseQuery);
+    Pagination<RawResponseUnit> findRawResponsePage(RawResponseUnitQuery rawResponseUnitQuery);
 
 }

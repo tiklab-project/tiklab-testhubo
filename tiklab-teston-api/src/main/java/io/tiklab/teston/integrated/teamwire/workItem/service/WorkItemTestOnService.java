@@ -34,7 +34,7 @@ public interface WorkItemTestOnService {
      * @param id
      * @return
      */
-    WorkItemTestOn findWorkItem(String id);
+    WorkItemTestOn findWorkItem(String id,String repositoryId);
 
 
     /**

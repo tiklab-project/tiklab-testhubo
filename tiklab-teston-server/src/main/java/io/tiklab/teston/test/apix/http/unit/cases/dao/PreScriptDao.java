@@ -6,7 +6,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnitQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,27 +77,27 @@ public class PreScriptDao{
 
     /**
      * 根据查询参数查询前置脚本列表
-     * @param preScriptQuery
+     * @param preScriptUnitQuery
      * @return
      */
-    public List<PreScriptEntity> findPreScriptList(PreScriptQuery preScriptQuery) {
+    public List<PreScriptEntity> findPreScriptList(PreScriptUnitQuery preScriptUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(PreScriptEntity.class)
-                .eq("apiUnitId", preScriptQuery.getApiUnitId())
-                .orders(preScriptQuery.getOrderParams())
+                .eq("apiUnitId", preScriptUnitQuery.getApiUnitId())
+                .orders(preScriptUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, PreScriptEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询前置脚本
-     * @param preScriptQuery
+     * @param preScriptUnitQuery
      * @return
      */
-    public Pagination<PreScriptEntity> findPreScriptPage(PreScriptQuery preScriptQuery) {
+    public Pagination<PreScriptEntity> findPreScriptPage(PreScriptUnitQuery preScriptUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(PreScriptEntity.class)
-                .eq("apiUnitId", preScriptQuery.getApiUnitId())
-                .orders(preScriptQuery.getOrderParams())
-                .pagination(preScriptQuery.getPageParam())
+                .eq("apiUnitId", preScriptUnitQuery.getApiUnitId())
+                .orders(preScriptUnitQuery.getOrderParams())
+                .pagination(preScriptUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, PreScriptEntity.class);
     }

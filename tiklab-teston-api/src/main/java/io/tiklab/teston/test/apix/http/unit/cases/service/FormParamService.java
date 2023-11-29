@@ -1,8 +1,8 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParam;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamUnit;
 import io.tiklab.core.page.Pagination;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormParamUnitQuery;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -15,16 +15,16 @@ public interface FormParamService {
 
     /**
     * 创建form-data
-    * @param formParam
+    * @param formParamUnit
     * @return
     */
-    String createFormParam(@NotNull @Valid FormParam formParam);
+    String createFormParam(@NotNull @Valid FormParamUnit formParamUnit);
 
     /**
     * 更新form-data
-    * @param formParam
+    * @param formParamUnit
     */
-    void updateFormParam(@NotNull @Valid FormParam formParam);
+    void updateFormParam(@NotNull @Valid FormParamUnit formParamUnit);
 
     /**
     * 删除form-data
@@ -32,35 +32,35 @@ public interface FormParamService {
     */
     void deleteFormParam(@NotNull String id);
 
-    FormParam findOne(@NotNull String id);
+    FormParamUnit findOne(@NotNull String id);
 
-    List<FormParam> findList(List<String> idList);
+    List<FormParamUnit> findList(List<String> idList);
 
     /**
     * 根据id查找form-data
     * @param id
     * @return
     */
-    FormParam findFormParam(@NotNull String id);
+    FormParamUnit findFormParam(@NotNull String id);
 
     /**
     * 查找所有form-data
     * @return
     */
-    List<FormParam> findAllFormParam();
+    List<FormParamUnit> findAllFormParam();
 
     /**
     * 根据查询参数查询form-data列表
-    * @param formParamQuery
+    * @param formParamUnitQuery
     * @return
     */
-    List<FormParam> findFormParamList(FormParamQuery formParamQuery);
+    List<FormParamUnit> findFormParamList(FormParamUnitQuery formParamUnitQuery);
 
     /**
     * 根据查询参数按分页查询form-data
-    * @param formParamQuery
+    * @param formParamUnitQuery
     * @return
     */
-    Pagination<FormParam> findFormParamPage(FormParamQuery formParamQuery);
+    Pagination<FormParamUnit> findFormParamPage(FormParamUnitQuery formParamUnitQuery);
 
 }

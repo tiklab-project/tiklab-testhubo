@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.AssertCaseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AssertUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.AssertCaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,27 +77,27 @@ public class AssertCaseDao{
 
     /**
      * 查询断言列表
-     * @param assertCaseQuery
+     * @param assertUnitQuery
      * @return
      */
-    public List<AssertCaseEntity> findAssertCaseList(AssertCaseQuery assertCaseQuery) {
+    public List<AssertCaseEntity> findAssertCaseList(AssertUnitQuery assertUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AssertCaseEntity.class)
-                .eq("apiUnitId", assertCaseQuery.getApiUnitId())
-                .orders(assertCaseQuery.getOrderParams())
+                .eq("apiUnitId", assertUnitQuery.getApiUnitId())
+                .orders(assertUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, AssertCaseEntity.class);
     }
 
     /**
      * 按分页查询断言
-     * @param assertCaseQuery
+     * @param assertUnitQuery
      * @return
      */
-    public Pagination<AssertCaseEntity> findAssertCasePage(AssertCaseQuery assertCaseQuery) {
+    public Pagination<AssertCaseEntity> findAssertCasePage(AssertUnitQuery assertUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AssertCaseEntity.class)
-                .eq("apiUnitId", assertCaseQuery.getApiUnitId())
-                .pagination(assertCaseQuery.getPageParam())
-                .orders(assertCaseQuery.getOrderParams())
+                .eq("apiUnitId", assertUnitQuery.getApiUnitId())
+                .pagination(assertUnitQuery.getPageParam())
+                .orders(assertUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findPage(queryCondition, AssertCaseEntity.class);
     }

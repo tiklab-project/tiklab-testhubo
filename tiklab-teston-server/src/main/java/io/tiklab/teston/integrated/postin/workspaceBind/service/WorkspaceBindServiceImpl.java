@@ -1,23 +1,19 @@
 package io.tiklab.teston.integrated.postin.workspaceBind.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
-import io.tiklab.eam.common.context.LoginContext;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.postin.workspace.model.Workspace;
-import io.tiklab.postin.workspace.model.WorkspaceQuery;
-import io.tiklab.postin.workspace.service.WorkspaceService;
-import io.tiklab.rpc.client.router.lookup.FixedLookup;
+import io.tiklab.teston.common.RestTemplateUtils;
 import io.tiklab.teston.integrated.postin.workspaceBind.dao.WorkspaceBindDao;
 import io.tiklab.teston.integrated.postin.workspaceBind.entity.WorkspaceBindEntity;
+import io.tiklab.teston.integrated.postin.workspaceBind.model.Workspace;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBind;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceBindQuery;
-
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrl;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrlQuery;
-import io.tiklab.teston.integrated.postin.integratedurl.service.PostinUrlService;
-import io.tiklab.teston.support.utils.RpcClientApixUtil;
+import io.tiklab.teston.integrated.integratedurl.model.IntegratedUrlQuery;
+import io.tiklab.teston.integrated.integratedurl.service.IntegratedUrlService;
+import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,22 +35,11 @@ public class WorkspaceBindServiceImpl implements WorkspaceBindService {
     JoinTemplate joinTemplate;
 
     @Autowired
-    RpcClientApixUtil rpcClientApixUtil;
+    IntegratedUrlService integratedUrlService;
 
     @Autowired
-    PostinUrlService postinUrlService;
+    RestTemplateUtils restTemplateUtils;
 
-    /**
-     * rpc 调用
-     */
-    WorkspaceService workspaceRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("postin");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-
-        return rpcClientApixUtil.rpcClient().getBean(WorkspaceService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
 
 
     @Override
@@ -118,10 +103,16 @@ public class WorkspaceBindServiceImpl implements WorkspaceBindService {
         List<WorkspaceBindEntity> workspaceBindEntityList = workspaceBindDao.findWorkspaceBindList(workspaceBindQuery);
         List<WorkspaceBind> workspaceBindList = BeanMapper.mapList(workspaceBindEntityList,WorkspaceBind.class);
 
+        String postInUrl = getPostInUrl(workspaceBindQuery.getRepositoryId());
+        //请求的apix接口
+        String findWorkspaceUrl = postInUrl+"/api/workspace/findWorkspace";
+
         //通过workspaceId 获取空间的数据
         if(workspaceBindList!=null&&workspaceBindList.size()>0){
             for(WorkspaceBind workspaceBind:workspaceBindList){
-                Workspace workspace = workspaceRpc().findWorkspace(workspaceBind.getWorkspace().getId());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",workspaceBind.getWorkspace().getId());
+                Workspace workspace = restTemplateUtils.requestPost(findWorkspaceUrl,jsonObject, Workspace.class);
                 workspaceBind.setWorkspace(workspace);
             }
         }
@@ -143,7 +134,11 @@ public class WorkspaceBindServiceImpl implements WorkspaceBindService {
     @Override
     public List<Workspace> findWorkspaceList(WorkspaceQuery workspaceQuery) {
 
-        List<Workspace> workspaceList = workspaceRpc().findWorkspaceList(workspaceQuery);
+        String postInUrl = getPostInUrl(workspaceQuery.getRepositoryId());
+        //请求的apix接口
+        String findWorkspaceListUrl = postInUrl+"/api/workspace/findWorkspaceList";
+
+        List<Workspace> workspaceList = restTemplateUtils.requestPostList(findWorkspaceListUrl, workspaceQuery, Workspace.class);
 
         return workspaceList;
     }
@@ -164,6 +159,15 @@ public class WorkspaceBindServiceImpl implements WorkspaceBindService {
         String workspaceBindId = createWorkspaceBind(workspaceBind);
 
         return workspaceBindId;
+    }
+
+    private String getPostInUrl(String repositoryId){
+        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
+        integratedUrlQuery.setRepositoryId(repositoryId);
+        integratedUrlQuery.setProjectName("postin");
+        String productUrl = integratedUrlService.getProductUrl(integratedUrlQuery);
+
+        return productUrl;
     }
 
 

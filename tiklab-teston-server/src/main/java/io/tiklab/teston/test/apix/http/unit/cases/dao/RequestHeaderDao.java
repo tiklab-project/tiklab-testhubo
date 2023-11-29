@@ -6,7 +6,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestHeaderUnitQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,28 +77,28 @@ public class RequestHeaderDao{
 
     /**
      * 根据参数查询请求头列表
-     * @param requestHeaderQuery
+     * @param requestHeaderUnitQuery
      * @return
      */
-    public List<RequestHeaderEntity> findRequestHeaderList(RequestHeaderQuery requestHeaderQuery) {
+    public List<RequestHeaderEntity> findRequestHeaderList(RequestHeaderUnitQuery requestHeaderUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestHeaderEntity.class)
-                .eq("apiUnitId", requestHeaderQuery.getApiUnitId())
-                .orders(requestHeaderQuery.getOrderParams())
+                .eq("apiUnitId", requestHeaderUnitQuery.getApiUnitId())
+                .orders(requestHeaderUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, RequestHeaderEntity.class);
     }
 
     /**
      * 根据参数按分页查询请求头
-     * @param requestHeaderQuery
+     * @param requestHeaderUnitQuery
      * @return
      */
-    public Pagination<RequestHeaderEntity> findRequestHeaderPage(RequestHeaderQuery requestHeaderQuery) {
+    public Pagination<RequestHeaderEntity> findRequestHeaderPage(RequestHeaderUnitQuery requestHeaderUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestHeaderEntity.class)
-                .eq("apiUnitId", requestHeaderQuery.getApiUnitId())
-                .orders(requestHeaderQuery.getOrderParams())
-                .pagination(requestHeaderQuery.getPageParam())
+                .eq("apiUnitId", requestHeaderUnitQuery.getApiUnitId())
+                .orders(requestHeaderUnitQuery.getOrderParams())
+                .pagination(requestHeaderUnitQuery.getPageParam())
                 .get();
-        return jpaTemplate.findPage(requestHeaderQuery, RequestHeaderEntity.class);
+        return jpaTemplate.findPage(requestHeaderUnitQuery, RequestHeaderEntity.class);
     }
 }

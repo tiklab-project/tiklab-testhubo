@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeader;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeaderQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeaderUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseHeaderUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.ResponseHeaderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class ResponseHeaderController {
     @RequestMapping(path="/createResponseHeader",method = RequestMethod.POST)
     @ApiMethod(name = "createResponseHeader",desc = "创建响应头")
     @ApiParam(name = "responseHeader",desc = "responseHeader",required = true)
-    public Result<String> createResponseHeader(@RequestBody @NotNull @Valid ResponseHeader responseHeader){
-        String id = responseHeaderService.createResponseHeader(responseHeader);
+    public Result<String> createResponseHeader(@RequestBody @NotNull @Valid ResponseHeaderUnit responseHeaderUnit){
+        String id = responseHeaderService.createResponseHeader(responseHeaderUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class ResponseHeaderController {
     @RequestMapping(path="/updateResponseHeader",method = RequestMethod.POST)
     @ApiMethod(name = "updateResponseHeader",desc = "更新响应头")
     @ApiParam(name = "responseHeader",desc = "responseHeader",required = true)
-    public Result<Void> updateResponseHeader(@RequestBody @NotNull @Valid ResponseHeader responseHeader){
-        responseHeaderService.updateResponseHeader(responseHeader);
+    public Result<Void> updateResponseHeader(@RequestBody @NotNull @Valid ResponseHeaderUnit responseHeaderUnit){
+        responseHeaderService.updateResponseHeader(responseHeaderUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class ResponseHeaderController {
     @RequestMapping(path="/findResponseHeader",method = RequestMethod.POST)
     @ApiMethod(name = "findResponseHeader",desc = "查找响应头")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<ResponseHeader> findResponseHeader(@NotNull String id){
-        ResponseHeader responseHeader = responseHeaderService.findResponseHeader(id);
+    public Result<ResponseHeaderUnit> findResponseHeader(@NotNull String id){
+        ResponseHeaderUnit responseHeaderUnit = responseHeaderService.findResponseHeader(id);
 
-        return Result.ok(responseHeader);
+        return Result.ok(responseHeaderUnit);
     }
 
     @RequestMapping(path="/findAllResponseHeader",method = RequestMethod.POST)
     @ApiMethod(name = "findAllResponseHeader",desc = "查找所有响应头")
-    public Result<List<ResponseHeader>> findAllResponseHeader(){
-        List<ResponseHeader> responseHeaderList = responseHeaderService.findAllResponseHeader();
+    public Result<List<ResponseHeaderUnit>> findAllResponseHeader(){
+        List<ResponseHeaderUnit> responseHeaderUnitList = responseHeaderService.findAllResponseHeader();
 
-        return Result.ok(responseHeaderList);
+        return Result.ok(responseHeaderUnitList);
     }
 
     @RequestMapping(path = "/findResponseHeaderList",method = RequestMethod.POST)
     @ApiMethod(name = "findResponseHeaderList",desc = "根据查询参数查询响应头列表")
     @ApiParam(name = "responseHeaderQuery",desc = "responseHeaderQuery",required = true)
-    public Result<List<ResponseHeader>> findResponseHeaderList(@RequestBody @Valid @NotNull ResponseHeaderQuery responseHeaderQuery){
-        List<ResponseHeader> responseHeaderList = responseHeaderService.findResponseHeaderList(responseHeaderQuery);
+    public Result<List<ResponseHeaderUnit>> findResponseHeaderList(@RequestBody @Valid @NotNull ResponseHeaderUnitQuery responseHeaderUnitQuery){
+        List<ResponseHeaderUnit> responseHeaderUnitList = responseHeaderService.findResponseHeaderList(responseHeaderUnitQuery);
 
-        return Result.ok(responseHeaderList);
+        return Result.ok(responseHeaderUnitList);
     }
 
     @RequestMapping(path = "/findResponseHeaderPage",method = RequestMethod.POST)
     @ApiMethod(name = "findResponseHeaderPage",desc = "根据查询参数按分页查询响应头")
     @ApiParam(name = "responseHeaderQuery",desc = "responseHeaderQuery",required = true)
-    public Result<Pagination<ResponseHeader>> findResponseHeaderPage(@RequestBody @Valid @NotNull ResponseHeaderQuery responseHeaderQuery){
-        Pagination<ResponseHeader> pagination = responseHeaderService.findResponseHeaderPage(responseHeaderQuery);
+    public Result<Pagination<ResponseHeaderUnit>> findResponseHeaderPage(@RequestBody @Valid @NotNull ResponseHeaderUnitQuery responseHeaderUnitQuery){
+        Pagination<ResponseHeaderUnit> pagination = responseHeaderService.findResponseHeaderPage(responseHeaderUnitQuery);
 
         return Result.ok(pagination);
     }

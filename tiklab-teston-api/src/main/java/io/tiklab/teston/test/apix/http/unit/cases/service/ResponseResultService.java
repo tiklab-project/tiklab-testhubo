@@ -1,7 +1,7 @@
 package io.tiklab.teston.test.apix.http.unit.cases.service;
 
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResult;
-import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.ResponseResultUnitQuery;
 import io.tiklab.core.page.Pagination;
 
 import javax.validation.Valid;
@@ -15,16 +15,16 @@ public interface ResponseResultService {
 
     /**
     * 创建响应结果
-    * @param responseResult
+    * @param responseResultUnit
     * @return
     */
-    String createResponseResult(@NotNull @Valid ResponseResult responseResult);
+    String createResponseResult(@NotNull @Valid ResponseResultUnit responseResultUnit);
 
     /**
     * 更新响应结果
-    * @param responseResult
+    * @param responseResultUnit
     */
-    void updateResponseResult(@NotNull @Valid ResponseResult responseResult);
+    void updateResponseResult(@NotNull @Valid ResponseResultUnit responseResultUnit);
 
     /**
     * 删除响应结果
@@ -32,35 +32,35 @@ public interface ResponseResultService {
     */
     void deleteResponseResult(@NotNull String id);
 
-    ResponseResult findOne(@NotNull String id);
+    ResponseResultUnit findOne(@NotNull String id);
 
-    List<ResponseResult> findList(List<String> idList);
+    List<ResponseResultUnit> findList(List<String> idList);
 
     /**
     * 查找响应结果
     * @param id
     * @return
     */
-    ResponseResult findResponseResult(@NotNull String id);
+    ResponseResultUnit findResponseResult(@NotNull String id);
 
     /**
     * 查找所有响应结果
     * @return
     */
-    List<ResponseResult> findAllResponseResult();
+    List<ResponseResultUnit> findAllResponseResult();
 
     /**
     * 根据查询参数查询响应结果列表
-    * @param responseResultQuery
+    * @param responseResultUnitQuery
     * @return
     */
-    List<ResponseResult> findResponseResultList(ResponseResultQuery responseResultQuery);
+    List<ResponseResultUnit> findResponseResultList(ResponseResultUnitQuery responseResultUnitQuery);
 
     /**
     * 根据查询参数按分页查询响应结果
-    * @param responseResultQuery
+    * @param responseResultUnitQuery
     * @return
     */
-    Pagination<ResponseResult> findResponseResultPage(ResponseResultQuery responseResultQuery);
+    Pagination<ResponseResultUnit> findResponseResultPage(ResponseResultUnitQuery responseResultUnitQuery);
 
 }

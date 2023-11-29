@@ -8,8 +8,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.RawResponseEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponse;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RawResponseUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +30,15 @@ public class RawResponseServiceImpl implements RawResponseService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createRawResponse(@NotNull @Valid RawResponse rawResponse) {
-        RawResponseEntity rawResponseEntity = BeanMapper.map(rawResponse, RawResponseEntity.class);
+    public String createRawResponse(@NotNull @Valid RawResponseUnit rawResponseUnit) {
+        RawResponseEntity rawResponseEntity = BeanMapper.map(rawResponseUnit, RawResponseEntity.class);
 
         return rawResponseDao.createRawResponse(rawResponseEntity);
     }
 
     @Override
-    public void updateRawResponse(@NotNull @Valid RawResponse rawResponse) {
-        RawResponseEntity rawResponseEntity = BeanMapper.map(rawResponse, RawResponseEntity.class);
+    public void updateRawResponse(@NotNull @Valid RawResponseUnit rawResponseUnit) {
+        RawResponseEntity rawResponseEntity = BeanMapper.map(rawResponseUnit, RawResponseEntity.class);
 
         rawResponseDao.updateRawResponse(rawResponseEntity);
     }
@@ -49,59 +49,59 @@ public class RawResponseServiceImpl implements RawResponseService {
     }
 
     @Override
-    public RawResponse findOne(String id) {
+    public RawResponseUnit findOne(String id) {
         RawResponseEntity rawResponseEntity = rawResponseDao.findRawResponse(id);
 
-        RawResponse rawResponse = BeanMapper.map(rawResponseEntity, RawResponse.class);
-        return rawResponse;
+        RawResponseUnit rawResponseUnit = BeanMapper.map(rawResponseEntity, RawResponseUnit.class);
+        return rawResponseUnit;
     }
 
     @Override
-    public List<RawResponse> findList(List<String> idList) {
+    public List<RawResponseUnit> findList(List<String> idList) {
         List<RawResponseEntity> rawResponseEntityList =  rawResponseDao.findRawResponseList(idList);
 
-        List<RawResponse> rawResponseList =  BeanMapper.mapList(rawResponseEntityList,RawResponse.class);
-        return rawResponseList;
+        List<RawResponseUnit> rawResponseUnitList =  BeanMapper.mapList(rawResponseEntityList, RawResponseUnit.class);
+        return rawResponseUnitList;
     }
 
     @Override
-    public RawResponse findRawResponse(@NotNull String id) {
-        RawResponse rawResponse = findOne(id);
+    public RawResponseUnit findRawResponse(@NotNull String id) {
+        RawResponseUnit rawResponseUnit = findOne(id);
 
-        joinTemplate.joinQuery(rawResponse);
-        return rawResponse;
+        joinTemplate.joinQuery(rawResponseUnit);
+        return rawResponseUnit;
     }
 
     @Override
-    public List<RawResponse> findAllRawResponse() {
+    public List<RawResponseUnit> findAllRawResponse() {
         List<RawResponseEntity> rawResponseEntityList =  rawResponseDao.findAllRawResponse();
 
-        List<RawResponse> rawResponseList =  BeanMapper.mapList(rawResponseEntityList,RawResponse.class);
+        List<RawResponseUnit> rawResponseUnitList =  BeanMapper.mapList(rawResponseEntityList, RawResponseUnit.class);
 
-        joinTemplate.joinQuery(rawResponseList);
-        return rawResponseList;
+        joinTemplate.joinQuery(rawResponseUnitList);
+        return rawResponseUnitList;
     }
 
     @Override
-    public List<RawResponse> findRawResponseList(RawResponseQuery rawResponseQuery) {
-        List<RawResponseEntity> rawResponseEntityList = rawResponseDao.findRawResponseList(rawResponseQuery);
+    public List<RawResponseUnit> findRawResponseList(RawResponseUnitQuery rawResponseUnitQuery) {
+        List<RawResponseEntity> rawResponseEntityList = rawResponseDao.findRawResponseList(rawResponseUnitQuery);
 
-        List<RawResponse> rawResponseList = BeanMapper.mapList(rawResponseEntityList,RawResponse.class);
+        List<RawResponseUnit> rawResponseUnitList = BeanMapper.mapList(rawResponseEntityList, RawResponseUnit.class);
 
-        joinTemplate.joinQuery(rawResponseList);
+        joinTemplate.joinQuery(rawResponseUnitList);
 
-        return rawResponseList;
+        return rawResponseUnitList;
     }
 
     @Override
-    public Pagination<RawResponse> findRawResponsePage(RawResponseQuery rawResponseQuery) {
+    public Pagination<RawResponseUnit> findRawResponsePage(RawResponseUnitQuery rawResponseUnitQuery) {
 
-        Pagination<RawResponseEntity>  pagination = rawResponseDao.findRawResponsePage(rawResponseQuery);
+        Pagination<RawResponseEntity>  pagination = rawResponseDao.findRawResponsePage(rawResponseUnitQuery);
 
-        List<RawResponse> rawResponseList = BeanMapper.mapList(pagination.getDataList(),RawResponse.class);
+        List<RawResponseUnit> rawResponseUnitList = BeanMapper.mapList(pagination.getDataList(), RawResponseUnit.class);
 
-        joinTemplate.joinQuery(rawResponseList);
+        joinTemplate.joinQuery(rawResponseUnitList);
 
-        return PaginationBuilder.build(pagination,rawResponseList);
+        return PaginationBuilder.build(pagination, rawResponseUnitList);
     }
 }

@@ -8,8 +8,8 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +30,15 @@ public class JsonParamServiceImpl implements JsonParamService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createJsonParam(@NotNull @Valid JsonParam jsonParam) {
-        JsonParamEntity jsonParamEntity = BeanMapper.map(jsonParam, JsonParamEntity.class);
+    public String createJsonParam(@NotNull @Valid JsonParamUnit jsonParamUnit) {
+        JsonParamEntity jsonParamEntity = BeanMapper.map(jsonParamUnit, JsonParamEntity.class);
 
         return jsonParamDao.createJsonParam(jsonParamEntity);
     }
 
     @Override
-    public void updateJsonParam(@NotNull @Valid JsonParam jsonParam) {
-        JsonParamEntity jsonParamEntity = BeanMapper.map(jsonParam, JsonParamEntity.class);
+    public void updateJsonParam(@NotNull @Valid JsonParamUnit jsonParamUnit) {
+        JsonParamEntity jsonParamEntity = BeanMapper.map(jsonParamUnit, JsonParamEntity.class);
 
         jsonParamDao.updateJsonParam(jsonParamEntity);
     }
@@ -49,60 +49,60 @@ public class JsonParamServiceImpl implements JsonParamService {
     }
 
     @Override
-    public JsonParam findOne(String id) {
+    public JsonParamUnit findOne(String id) {
         JsonParamEntity jsonParamEntity = jsonParamDao.findJsonParam(id);
 
-        JsonParam jsonParam = BeanMapper.map(jsonParamEntity, JsonParam.class);
-        return jsonParam;
+        JsonParamUnit jsonParamUnit = BeanMapper.map(jsonParamEntity, JsonParamUnit.class);
+        return jsonParamUnit;
     }
 
     @Override
-    public List<JsonParam> findList(List<String> idList) {
+    public List<JsonParamUnit> findList(List<String> idList) {
         List<JsonParamEntity> jsonParamEntityList =  jsonParamDao.findJsonParamList(idList);
 
-        List<JsonParam> jsonParamList =  BeanMapper.mapList(jsonParamEntityList,JsonParam.class);
-        return jsonParamList;
+        List<JsonParamUnit> jsonParamUnitList =  BeanMapper.mapList(jsonParamEntityList, JsonParamUnit.class);
+        return jsonParamUnitList;
     }
 
     @Override
-    public JsonParam findJsonParam(@NotNull String id) {
-        JsonParam jsonParam = findOne(id);
+    public JsonParamUnit findJsonParam(@NotNull String id) {
+        JsonParamUnit jsonParamUnit = findOne(id);
 
-        joinTemplate.joinQuery(jsonParam);
-        return jsonParam;
+        joinTemplate.joinQuery(jsonParamUnit);
+        return jsonParamUnit;
     }
 
     @Override
-    public List<JsonParam> findAllJsonParam() {
+    public List<JsonParamUnit> findAllJsonParam() {
         List<JsonParamEntity> jsonParamEntityList =  jsonParamDao.findAllJsonParam();
 
-        List<JsonParam> jsonParamList =  BeanMapper.mapList(jsonParamEntityList,JsonParam.class);
+        List<JsonParamUnit> jsonParamUnitList =  BeanMapper.mapList(jsonParamEntityList, JsonParamUnit.class);
 
-        joinTemplate.joinQuery(jsonParamList);
-        return jsonParamList;
+        joinTemplate.joinQuery(jsonParamUnitList);
+        return jsonParamUnitList;
     }
 
     @Override
-    public List<JsonParam> findJsonParamList(JsonParamQuery jsonParamQuery) {
-        List<JsonParamEntity> jsonParamEntityList = jsonParamDao.findJsonParamList(jsonParamQuery);
+    public List<JsonParamUnit> findJsonParamList(JsonParamUnitQuery jsonParamUnitQuery) {
+        List<JsonParamEntity> jsonParamEntityList = jsonParamDao.findJsonParamList(jsonParamUnitQuery);
 
-        List<JsonParam> jsonParamList = BeanMapper.mapList(jsonParamEntityList,JsonParam.class);
+        List<JsonParamUnit> jsonParamUnitList = BeanMapper.mapList(jsonParamEntityList, JsonParamUnit.class);
 
-        joinTemplate.joinQuery(jsonParamList);
+        joinTemplate.joinQuery(jsonParamUnitList);
 
-        return jsonParamList;
+        return jsonParamUnitList;
     }
 
     @Override
-    public Pagination<JsonParam> findJsonParamPage(JsonParamQuery jsonParamQuery) {
+    public Pagination<JsonParamUnit> findJsonParamPage(JsonParamUnitQuery jsonParamUnitQuery) {
 
-        Pagination<JsonParamEntity>  pagination = jsonParamDao.findJsonParamPage(jsonParamQuery);
+        Pagination<JsonParamEntity>  pagination = jsonParamDao.findJsonParamPage(jsonParamUnitQuery);
 
-        List<JsonParam> jsonParamList = BeanMapper.mapList(pagination.getDataList(),JsonParam.class);
+        List<JsonParamUnit> jsonParamUnitList = BeanMapper.mapList(pagination.getDataList(), JsonParamUnit.class);
 
-        joinTemplate.joinQuery(jsonParamList);
+        joinTemplate.joinQuery(jsonParamUnitList);
 
-        return PaginationBuilder.build(pagination,jsonParamList);
+        return PaginationBuilder.build(pagination, jsonParamUnitList);
     }
 
 

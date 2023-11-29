@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.RequestBodyEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,27 +77,27 @@ public class RequestBodyDao{
 
     /**
      * 根据查询参数查询请求体列表
-     * @param requestBodyQuery
+     * @param requestBodyUnitQuery
      * @return
      */
-    public List<RequestBodyEntity> findRequestBodyList(RequestBodyQuery requestBodyQuery) {
+    public List<RequestBodyEntity> findRequestBodyList(RequestBodyUnitQuery requestBodyUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestBodyEntity.class)
-                .eq("apiUnitId", requestBodyQuery.getApiUnitId())
-                .orders(requestBodyQuery.getOrderParams())
+                .eq("apiUnitId", requestBodyUnitQuery.getApiUnitId())
+                .orders(requestBodyUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, RequestBodyEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询请求体
-     * @param requestBodyQuery
+     * @param requestBodyUnitQuery
      * @return
      */
-    public Pagination<RequestBodyEntity> findRequestBodyPage(RequestBodyQuery requestBodyQuery) {
+    public Pagination<RequestBodyEntity> findRequestBodyPage(RequestBodyUnitQuery requestBodyUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(RequestBodyEntity.class)
-                .eq("apiUnitId", requestBodyQuery.getApiUnitId())
-                .orders(requestBodyQuery.getOrderParams())
-                .pagination(requestBodyQuery.getPageParam())
+                .eq("apiUnitId", requestBodyUnitQuery.getApiUnitId())
+                .orders(requestBodyUnitQuery.getOrderParams())
+                .pagination(requestBodyUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, RequestBodyEntity.class);
     }

@@ -21,7 +21,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Web环境控制器
+ * 
+ * @pi.protocol: http
+ * @pi.groupName: Web环境控制器
  */
 @RestController
 @RequestMapping("/webEnv")
@@ -32,7 +34,14 @@ public class WebEnvController {
 
     @Autowired
     private WebEnvService webEnvService;
-
+    
+    /**
+     * @pi.name:createWebEnv
+     * @pi.path:/webEnv/createWebEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=WebEnv
+     */
     @RequestMapping(path="/createWebEnv",method = RequestMethod.POST)
     @ApiMethod(name = "createWebEnv",desc = "创建Web环境")
     @ApiParam(name = "webEnv",desc = "webEnv",required = true)
@@ -42,6 +51,13 @@ public class WebEnvController {
         return Result.ok(id);
     }
 
+    /**
+     * @pi.name:updateWebEnv
+     * @pi.path:/webEnv/updateWebEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=WebEnv
+     */
     @RequestMapping(path="/updateWebEnv",method = RequestMethod.POST)
     @ApiMethod(name = "updateWebEnv",desc = "更新Web环境")
     @ApiParam(name = "webEnv",desc = "webEnv",required = true)
@@ -51,6 +67,13 @@ public class WebEnvController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:deleteWebEnv
+     * @pi.path:/webEnv/deleteWebEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: name=id;dataType=string;value=id;desc=当前删除的id
+     */
     @RequestMapping(path="/deleteWebEnv",method = RequestMethod.POST)
     @ApiMethod(name = "deleteWebEnv",desc = "删除Web环境")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -60,6 +83,13 @@ public class WebEnvController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:findWebEnv
+     * @pi.path:/webEnv/findWebEnv
+     * @pi.methodType:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=id;desc=当前查找的id
+     */
     @RequestMapping(path="/findWebEnv",method = RequestMethod.POST)
     @ApiMethod(name = "findWebEnv",desc = "根据id查找Web环境")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -69,6 +99,12 @@ public class WebEnvController {
         return Result.ok(webEnv);
     }
 
+    /**
+     * @pi.name:findAllWebEnv
+     * @pi.path:/webEnv/findAllWebEnv
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path="/findAllWebEnv",method = RequestMethod.POST)
     @ApiMethod(name = "findAllWebEnv",desc = "查找所有Web环境")
     public Result<List<WebEnv>> findAllWebEnv(){
@@ -77,6 +113,13 @@ public class WebEnvController {
         return Result.ok(webEnvList);
     }
 
+    /**
+     * @pi.name:findWebEnvList
+     * @pi.path:/webEnv/findWebEnvList
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=WebEnv
+     */
     @RequestMapping(path = "/findWebEnvList",method = RequestMethod.POST)
     @ApiMethod(name = "findWebEnvList",desc = "根据查询参数查询Web环境列表")
     @ApiParam(name = "webEnvQuery",desc = "webEnvQuery",required = true)
@@ -86,6 +129,13 @@ public class WebEnvController {
         return Result.ok(webEnvList);
     }
 
+    /**
+     * @pi.name:findWebEnvPage
+     * @pi.path:/webEnv/findWebEnvPage
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=WebEnvQuery
+     */
     @RequestMapping(path = "/findWebEnvPage",method = RequestMethod.POST)
     @ApiMethod(name = "findWebEnvPage",desc = "根据查询参数按分页查询Web环境")
     @ApiParam(name = "webEnvQuery",desc = "webEnvQuery",required = true)

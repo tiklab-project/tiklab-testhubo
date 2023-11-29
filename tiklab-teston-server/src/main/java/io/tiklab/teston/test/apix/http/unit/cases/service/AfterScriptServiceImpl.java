@@ -8,8 +8,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.AfterScriptEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScript;
-import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScriptQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScriptUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AfterScriptUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +30,15 @@ public class AfterScriptServiceImpl implements AfterScriptService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createAfterScript(@NotNull @Valid AfterScript afterScript) {
-        AfterScriptEntity afterScriptEntity = BeanMapper.map(afterScript, AfterScriptEntity.class);
+    public String createAfterScript(@NotNull @Valid AfterScriptUnit afterScriptUnit) {
+        AfterScriptEntity afterScriptEntity = BeanMapper.map(afterScriptUnit, AfterScriptEntity.class);
 
         return afterScriptDao.createAfterScript(afterScriptEntity);
     }
 
     @Override
-    public void updateAfterScript(@NotNull @Valid AfterScript afterScript) {
-        AfterScriptEntity afterScriptEntity = BeanMapper.map(afterScript, AfterScriptEntity.class);
+    public void updateAfterScript(@NotNull @Valid AfterScriptUnit afterScriptUnit) {
+        AfterScriptEntity afterScriptEntity = BeanMapper.map(afterScriptUnit, AfterScriptEntity.class);
 
         afterScriptDao.updateAfterScript(afterScriptEntity);
     }
@@ -49,59 +49,59 @@ public class AfterScriptServiceImpl implements AfterScriptService {
     }
 
     @Override
-    public AfterScript findOne(String id) {
+    public AfterScriptUnit findOne(String id) {
         AfterScriptEntity afterScriptEntity = afterScriptDao.findAfterScript(id);
 
-        AfterScript afterScript = BeanMapper.map(afterScriptEntity, AfterScript.class);
-        return afterScript;
+        AfterScriptUnit afterScriptUnit = BeanMapper.map(afterScriptEntity, AfterScriptUnit.class);
+        return afterScriptUnit;
     }
 
     @Override
-    public List<AfterScript> findList(List<String> idList) {
+    public List<AfterScriptUnit> findList(List<String> idList) {
         List<AfterScriptEntity> afterScriptEntityList =  afterScriptDao.findAfterScriptList(idList);
 
-        List<AfterScript> afterScriptList =  BeanMapper.mapList(afterScriptEntityList,AfterScript.class);
-        return afterScriptList;
+        List<AfterScriptUnit> afterScriptUnitList =  BeanMapper.mapList(afterScriptEntityList, AfterScriptUnit.class);
+        return afterScriptUnitList;
     }
 
     @Override
-    public AfterScript findAfterScript(@NotNull String id) {
-        AfterScript afterScript = findOne(id);
+    public AfterScriptUnit findAfterScript(@NotNull String id) {
+        AfterScriptUnit afterScriptUnit = findOne(id);
 
-        joinTemplate.joinQuery(afterScript);
-        return afterScript;
+        joinTemplate.joinQuery(afterScriptUnit);
+        return afterScriptUnit;
     }
 
     @Override
-    public List<AfterScript> findAllAfterScript() {
+    public List<AfterScriptUnit> findAllAfterScript() {
         List<AfterScriptEntity> afterScriptEntityList =  afterScriptDao.findAllAfterScript();
 
-        List<AfterScript> afterScriptList =  BeanMapper.mapList(afterScriptEntityList,AfterScript.class);
+        List<AfterScriptUnit> afterScriptUnitList =  BeanMapper.mapList(afterScriptEntityList, AfterScriptUnit.class);
 
-        joinTemplate.joinQuery(afterScriptList);
-        return afterScriptList;
+        joinTemplate.joinQuery(afterScriptUnitList);
+        return afterScriptUnitList;
     }
 
     @Override
-    public List<AfterScript> findAfterScriptList(AfterScriptQuery afterScriptQuery) {
-        List<AfterScriptEntity> afterScriptEntityList = afterScriptDao.findAfterScriptList(afterScriptQuery);
+    public List<AfterScriptUnit> findAfterScriptList(AfterScriptUnitQuery afterScriptUnitQuery) {
+        List<AfterScriptEntity> afterScriptEntityList = afterScriptDao.findAfterScriptList(afterScriptUnitQuery);
 
-        List<AfterScript> afterScriptList = BeanMapper.mapList(afterScriptEntityList,AfterScript.class);
+        List<AfterScriptUnit> afterScriptUnitList = BeanMapper.mapList(afterScriptEntityList, AfterScriptUnit.class);
 
-        joinTemplate.joinQuery(afterScriptList);
+        joinTemplate.joinQuery(afterScriptUnitList);
 
-        return afterScriptList;
+        return afterScriptUnitList;
     }
 
     @Override
-    public Pagination<AfterScript> findAfterScriptPage(AfterScriptQuery afterScriptQuery) {
+    public Pagination<AfterScriptUnit> findAfterScriptPage(AfterScriptUnitQuery afterScriptUnitQuery) {
 
-        Pagination<AfterScriptEntity>  pagination = afterScriptDao.findAfterScriptPage(afterScriptQuery);
+        Pagination<AfterScriptEntity>  pagination = afterScriptDao.findAfterScriptPage(afterScriptUnitQuery);
 
-        List<AfterScript> afterScriptList = BeanMapper.mapList(pagination.getDataList(),AfterScript.class);
+        List<AfterScriptUnit> afterScriptUnitList = BeanMapper.mapList(pagination.getDataList(), AfterScriptUnit.class);
 
-        joinTemplate.joinQuery(afterScriptList);
+        joinTemplate.joinQuery(afterScriptUnitList);
 
-        return PaginationBuilder.build(pagination,afterScriptList);
+        return PaginationBuilder.build(pagination, afterScriptUnitList);
     }
 }

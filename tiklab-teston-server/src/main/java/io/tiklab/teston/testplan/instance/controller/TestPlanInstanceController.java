@@ -21,7 +21,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 测试计划实例 控制器
+ *
+ * @pi.protocol: http
+ * @pi.groupName: 测试计划实例 控制器
  */
 @RestController
 @RequestMapping("/testPlanInstance")
@@ -33,6 +35,13 @@ public class TestPlanInstanceController {
     @Autowired
     private TestPlanInstanceService testPlanInstanceService;
 
+    /**
+     * @pi.name:createTestPlanInstance
+     * @pi.path:/testPlanInstance/createTestPlanInstance
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlan
+     */
     @RequestMapping(path="/createTestPlanInstance",method = RequestMethod.POST)
     @ApiMethod(name = "createTestPlanInstance",desc = "创建测试计划实例")
     @ApiParam(name = "testPlanInstance",desc = "testPlanInstance",required = true)
@@ -42,6 +51,13 @@ public class TestPlanInstanceController {
         return Result.ok(id);
     }
 
+    /**
+     * @pi.name:updateTestPlanInstance
+     * @pi.path:/testPlanInstance/updateTestPlanInstance
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlan
+     */
     @RequestMapping(path="/updateTestPlanInstance",method = RequestMethod.POST)
     @ApiMethod(name = "updateTestPlanInstance",desc = "更新测试计划实例")
     @ApiParam(name = "testPlanInstance",desc = "testPlanInstance",required = true)
@@ -51,6 +67,13 @@ public class TestPlanInstanceController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:deleteTestPlanInstance
+     * @pi.path:/testPlanInstance/deleteTestPlanInstance
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: name=id;dataType=string;value=id;desc=当前删除的id
+     */
     @RequestMapping(path="/deleteTestPlanInstance",method = RequestMethod.POST)
     @ApiMethod(name = "deleteTestPlanInstance",desc = "删除测试计划实例")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -60,6 +83,13 @@ public class TestPlanInstanceController {
         return Result.ok();
     }
 
+    /**
+     * @pi.name:findTestPlanInstance
+     * @pi.path:/testPlanInstance/findTestPlanInstance
+     * @pi.methodType:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=id;desc=当前查找的id
+     */
     @RequestMapping(path="/findTestPlanInstance",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanInstance",desc = "根据id查找测试计划实例")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -69,6 +99,12 @@ public class TestPlanInstanceController {
         return Result.ok(testPlanInstance);
     }
 
+    /**
+     * @pi.name:findAllTestPlan
+     * @pi.path:/testPlanInstance/findAllTestPlan
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path="/findAllTestPlanInstance",method = RequestMethod.POST)
     @ApiMethod(name = "findAllTestPlanInstance",desc = "查找所有测试计划实例")
     public Result<List<TestPlanInstance>> findAllTestPlanInstance(){
@@ -77,6 +113,13 @@ public class TestPlanInstanceController {
         return Result.ok(testPlanInstanceList);
     }
 
+    /**
+     * @pi.name:findTestPlanInstanceList
+     * @pi.path:/testPlanInstance/findTestPlanInstanceList
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanInstanceQuery
+     */
     @RequestMapping(path = "/findTestPlanInstanceList",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanInstanceList",desc = "根据查询参数查询测试计划实例列表")
     @ApiParam(name = "testPlanInstanceQuery",desc = "testPlanInstanceQuery",required = true)
@@ -86,6 +129,13 @@ public class TestPlanInstanceController {
         return Result.ok(testPlanInstanceList);
     }
 
+    /**
+     * @pi.name:findTestPlanInstancePage
+     * @pi.path:/testPlanInstance/findTestPlanInstancePage
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=TestPlanInstanceQuery
+     */
     @RequestMapping(path = "/findTestPlanInstancePage",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanInstancePage",desc = "根据查询参数按分页查询测试计划实例")
     @ApiParam(name = "testPlanInstanceQuery",desc = "testPlanInstanceQuery",required = true)

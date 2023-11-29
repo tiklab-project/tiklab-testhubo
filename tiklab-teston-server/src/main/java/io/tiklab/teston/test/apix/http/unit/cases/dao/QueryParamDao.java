@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.QueryParamUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.QueryParamsEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,27 +77,27 @@ public class QueryParamDao{
 
     /**
      * 根据查询参数查询query列表
-     * @param queryParamQuery
+     * @param queryParamUnitQuery
      * @return
      */
-    public List<QueryParamsEntity> findQueryParamList(QueryParamQuery queryParamQuery) {
+    public List<QueryParamsEntity> findQueryParamList(QueryParamUnitQuery queryParamUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamsEntity.class)
-                .eq("apiUnitId", queryParamQuery.getApiUnitId())
-                .orders(queryParamQuery.getOrderParams())
+                .eq("apiUnitId", queryParamUnitQuery.getApiUnitId())
+                .orders(queryParamUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, QueryParamsEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询query
-     * @param queryParamQuery
+     * @param queryParamUnitQuery
      * @return
      */
-    public Pagination<QueryParamsEntity> findQueryParamPage(QueryParamQuery queryParamQuery) {
+    public Pagination<QueryParamsEntity> findQueryParamPage(QueryParamUnitQuery queryParamUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(QueryParamsEntity.class)
-                .eq("apiUnitId", queryParamQuery.getApiUnitId())
-                .pagination(queryParamQuery.getPageParam())
-                .orders(queryParamQuery.getOrderParams())
+                .eq("apiUnitId", queryParamUnitQuery.getApiUnitId())
+                .pagination(queryParamUnitQuery.getPageParam())
+                .orders(queryParamUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findPage(queryCondition, QueryParamsEntity.class);
     }

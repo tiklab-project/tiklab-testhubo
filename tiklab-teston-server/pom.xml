@@ -106,33 +106,33 @@
 
     </dependencies>
 
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>exec-maven-plugin</artifactId>-->
-<!--                <version>3.0.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>test</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>java</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <mainClass>io.tiklab.postin.doclet.starter.DocletApplication</mainClass>-->
-<!--                    <arguments>-->
-<!--                        &lt;!&ndash; modules&ndash;&gt;-->
-<!--                        <argument>${project.basedir};</argument>-->
-<!--                        &lt;!&ndash; workspaceId&ndash;&gt;-->
-<!--                        <argument>73c78f9e2b1c</argument>-->
-<!--                        &lt;!&ndash; server&ndash;&gt;-->
-<!--                        <argument>http://192.168.10.3:8090</argument>-->
-<!--                    </arguments>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>io.tiklab.postin.doclet.starter.DocletApplication</mainClass>
+                    <arguments>
+                        <!-- modules-->
+                        <argument>D:\a-dk-sever\tiklab-teston\tiklab-teston-api;D:\a-dk-sever\tiklab-teston\tiklab-teston-server</argument>
+                        <!-- workspaceId-->
+                        <argument>578da3e297d4</argument>
+                        <!-- server-->
+                        <argument>http://192.168.10.21:8090</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

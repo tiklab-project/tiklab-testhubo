@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScript;
-import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.PreScriptUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.PreScriptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class PreScriptController {
     @RequestMapping(path="/createPreScript",method = RequestMethod.POST)
     @ApiMethod(name = "createPreScript",desc = "创建前置脚本")
     @ApiParam(name = "preScript",desc = "preScript",required = true)
-    public Result<String> createPreScript(@RequestBody @NotNull @Valid PreScript preScript){
-        String id = preScriptService.createPreScript(preScript);
+    public Result<String> createPreScript(@RequestBody @NotNull @Valid PreScriptUnit preScriptUnit){
+        String id = preScriptService.createPreScript(preScriptUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class PreScriptController {
     @RequestMapping(path="/updatePreScript",method = RequestMethod.POST)
     @ApiMethod(name = "updatePreScript",desc = "更新前置脚本")
     @ApiParam(name = "preScript",desc = "preScript",required = true)
-    public Result<Void> updatePreScript(@RequestBody @NotNull @Valid PreScript preScript){
-        preScriptService.updatePreScript(preScript);
+    public Result<Void> updatePreScript(@RequestBody @NotNull @Valid PreScriptUnit preScriptUnit){
+        preScriptService.updatePreScript(preScriptUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class PreScriptController {
     @RequestMapping(path="/findPreScript",method = RequestMethod.POST)
     @ApiMethod(name = "findPreScript",desc = "根据id查找前置脚本")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<PreScript> findPreScript(@NotNull String id){
-        PreScript preScript = preScriptService.findPreScript(id);
+    public Result<PreScriptUnit> findPreScript(@NotNull String id){
+        PreScriptUnit preScriptUnit = preScriptService.findPreScript(id);
 
-        return Result.ok(preScript);
+        return Result.ok(preScriptUnit);
     }
 
     @RequestMapping(path="/findAllPreScript",method = RequestMethod.POST)
     @ApiMethod(name = "findAllPreScript",desc = "查找所有前置脚本")
-    public Result<List<PreScript>> findAllPreScript(){
-        List<PreScript> preScriptList = preScriptService.findAllPreScript();
+    public Result<List<PreScriptUnit>> findAllPreScript(){
+        List<PreScriptUnit> preScriptUnitList = preScriptService.findAllPreScript();
 
-        return Result.ok(preScriptList);
+        return Result.ok(preScriptUnitList);
     }
 
     @RequestMapping(path = "/findPreScriptList",method = RequestMethod.POST)
     @ApiMethod(name = "findPreScriptList",desc = "根据查询参数查询前置脚本列表")
     @ApiParam(name = "preScriptQuery",desc = "preScriptQuery",required = true)
-    public Result<List<PreScript>> findPreScriptList(@RequestBody @Valid @NotNull PreScriptQuery preScriptQuery){
-        List<PreScript> preScriptList = preScriptService.findPreScriptList(preScriptQuery);
+    public Result<List<PreScriptUnit>> findPreScriptList(@RequestBody @Valid @NotNull PreScriptUnitQuery preScriptUnitQuery){
+        List<PreScriptUnit> preScriptUnitList = preScriptService.findPreScriptList(preScriptUnitQuery);
 
-        return Result.ok(preScriptList);
+        return Result.ok(preScriptUnitList);
     }
 
     @RequestMapping(path = "/findPreScriptPage",method = RequestMethod.POST)
     @ApiMethod(name = "findPreScriptPage",desc = "根据查询参数按分页查询前置脚本")
     @ApiParam(name = "preScriptQuery",desc = "preScriptQuery",required = true)
-    public Result<Pagination<PreScript>> findPreScriptPage(@RequestBody @Valid @NotNull PreScriptQuery preScriptQuery){
-        Pagination<PreScript> pagination = preScriptService.findPreScriptPage(preScriptQuery);
+    public Result<Pagination<PreScriptUnit>> findPreScriptPage(@RequestBody @Valid @NotNull PreScriptUnitQuery preScriptUnitQuery){
+        Pagination<PreScriptUnit> pagination = preScriptService.findPreScriptPage(preScriptUnitQuery);
 
         return Result.ok(pagination);
     }

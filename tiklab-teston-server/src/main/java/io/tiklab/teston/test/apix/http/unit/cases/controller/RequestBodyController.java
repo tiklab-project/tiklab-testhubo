@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBody;
-import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.RequestBodyUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.RequestBodyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +35,8 @@ public class RequestBodyController {
     @RequestMapping(path="/createRequestBody",method = RequestMethod.POST)
     @ApiMethod(name = "createRequestBody",desc = "创建请求体")
     @ApiParam(name = "requestBody",desc = "requestBody",required = true)
-    public Result<String> createRequestBody(@org.springframework.web.bind.annotation.RequestBody @NotNull @Valid RequestBody requestBody){
-        String id = requestBodyService.createRequestBody(requestBody);
+    public Result<String> createRequestBody(@org.springframework.web.bind.annotation.RequestBody @NotNull @Valid RequestBodyUnit requestBodyUnit){
+        String id = requestBodyService.createRequestBody(requestBodyUnit);
 
         return Result.ok(id);
     }
@@ -44,8 +44,8 @@ public class RequestBodyController {
     @RequestMapping(path="/updateRequestBody",method = RequestMethod.POST)
     @ApiMethod(name = "updateRequestBody",desc = "更新请求体")
     @ApiParam(name = "requestBody",desc = "requestBody",required = true)
-    public Result<Void> updateRequestBody(@org.springframework.web.bind.annotation.RequestBody @NotNull @Valid RequestBody requestBody){
-        requestBodyService.updateRequestBody(requestBody);
+    public Result<Void> updateRequestBody(@org.springframework.web.bind.annotation.RequestBody @NotNull @Valid RequestBodyUnit requestBodyUnit){
+        requestBodyService.updateRequestBody(requestBodyUnit);
 
         return Result.ok();
     }
@@ -62,34 +62,34 @@ public class RequestBodyController {
     @RequestMapping(path="/findRequestBody",method = RequestMethod.POST)
     @ApiMethod(name = "findRequestBody",desc = "查找请求体")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<RequestBody> findRequestBody(@NotNull String id){
-        RequestBody requestBody = requestBodyService.findRequestBody(id);
+    public Result<RequestBodyUnit> findRequestBody(@NotNull String id){
+        RequestBodyUnit requestBodyUnit = requestBodyService.findRequestBody(id);
 
-        return Result.ok(requestBody);
+        return Result.ok(requestBodyUnit);
     }
 
     @RequestMapping(path="/findAllRequestBody",method = RequestMethod.POST)
     @ApiMethod(name = "findAllRequestBody",desc = "查找所有请求体")
-    public Result<List<RequestBody>> findAllRequestBody(){
-        List<RequestBody> requestBodyList = requestBodyService.findAllRequestBody();
+    public Result<List<RequestBodyUnit>> findAllRequestBody(){
+        List<RequestBodyUnit> requestBodyUnitList = requestBodyService.findAllRequestBody();
 
-        return Result.ok(requestBodyList);
+        return Result.ok(requestBodyUnitList);
     }
 
     @RequestMapping(path = "/findRequestBodyList",method = RequestMethod.POST)
     @ApiMethod(name = "findRequestBodyList",desc = "根据查询参数查询请求体列表")
     @ApiParam(name = "requestBodyQuery",desc = "requestBodyQuery",required = true)
-    public Result<List<RequestBody>> findRequestBodyList(@org.springframework.web.bind.annotation.RequestBody @Valid @NotNull RequestBodyQuery requestBodyQuery){
-        List<RequestBody> requestBodyList = requestBodyService.findRequestBodyList(requestBodyQuery);
+    public Result<List<RequestBodyUnit>> findRequestBodyList(@org.springframework.web.bind.annotation.RequestBody @Valid @NotNull RequestBodyUnitQuery requestBodyUnitQuery){
+        List<RequestBodyUnit> requestBodyUnitList = requestBodyService.findRequestBodyList(requestBodyUnitQuery);
 
-        return Result.ok(requestBodyList);
+        return Result.ok(requestBodyUnitList);
     }
 
     @RequestMapping(path = "/findRequestBodyPage",method = RequestMethod.POST)
     @ApiMethod(name = "findRequestBodyPage",desc = "根据查询参数按分页查询请求体")
     @ApiParam(name = "requestBodyQuery",desc = "requestBodyQuery",required = true)
-    public Result<Pagination<RequestBody>> findRequestBodyPage(@org.springframework.web.bind.annotation.RequestBody @Valid @NotNull RequestBodyQuery requestBodyQuery){
-        Pagination<RequestBody> pagination = requestBodyService.findRequestBodyPage(requestBodyQuery);
+    public Result<Pagination<RequestBodyUnit>> findRequestBodyPage(@org.springframework.web.bind.annotation.RequestBody @Valid @NotNull RequestBodyUnitQuery requestBodyUnitQuery){
+        Pagination<RequestBodyUnit> pagination = requestBodyService.findRequestBodyPage(requestBodyUnitQuery);
 
         return Result.ok(pagination);
     }

@@ -52,6 +52,8 @@ public class WorkItemTestOn extends BaseModel {
     @ApiProperty(name="projectUrl",desc="teamwire服务端地址")
     private String projectUrl;
 
+    @ApiProperty(name="repositoryId",desc="repositoryId")
+    private String repositoryId;
 
     public String getId() {
         return id;
@@ -139,5 +141,13 @@ public class WorkItemTestOn extends BaseModel {
 
     public void setProjectUrl(String projectUrl) {
         this.projectUrl = projectUrl;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }

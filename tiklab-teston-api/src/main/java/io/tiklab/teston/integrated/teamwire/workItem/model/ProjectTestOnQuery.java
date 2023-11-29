@@ -17,6 +17,8 @@ public class ProjectTestOnQuery {
     @ApiProperty(name ="pageParam",desc = "分页参数")
     private Page pageParam = new Page();
 
+    @ApiProperty(name ="pageParam",desc = "分页参数")
+    private String repositoryId;
 
 
     public List<Order> getOrderParams() {
@@ -35,4 +37,11 @@ public class ProjectTestOnQuery {
         this.pageParam = pageParam;
     }
 
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
 }

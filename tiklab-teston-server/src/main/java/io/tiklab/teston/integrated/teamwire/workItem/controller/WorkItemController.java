@@ -65,8 +65,8 @@ public class WorkItemController {
     @RequestMapping(path="/findWorkItem",method = RequestMethod.POST)
     @ApiMethod(name = "findWorkItem",desc = "根据id查找需求")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<WorkItemTestOn> findCategory(@NotNull String id){
-        WorkItemTestOn workItem = workItemTestOnService.findWorkItem(id);
+    public Result<WorkItemTestOn> findCategory(@NotNull String id,String repositoryId){
+        WorkItemTestOn workItem = workItemTestOnService.findWorkItem(id,repositoryId);
 
         return Result.ok(workItem);
     }

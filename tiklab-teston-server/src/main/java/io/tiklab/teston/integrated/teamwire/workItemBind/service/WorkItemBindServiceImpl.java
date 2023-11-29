@@ -1,22 +1,20 @@
 package io.tiklab.teston.integrated.teamwire.workItemBind.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.core.page.Pagination;
 import io.tiklab.core.page.PaginationBuilder;
-import io.tiklab.eam.common.context.LoginContext;
 import io.tiklab.join.JoinTemplate;
-import io.tiklab.rpc.client.router.lookup.FixedLookup;
-import io.tiklab.teamwire.workitem.model.WorkItem;
-import io.tiklab.teamwire.workitem.service.WorkItemService;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrl;
-import io.tiklab.teston.integrated.postin.integratedurl.model.IntegratedUrlQuery;
-import io.tiklab.teston.integrated.postin.integratedurl.service.PostinUrlService;
+import io.tiklab.teston.common.RestTemplateUtils;
+import io.tiklab.teston.integrated.integratedurl.model.IntegratedUrl;
+import io.tiklab.teston.integrated.integratedurl.model.IntegratedUrlQuery;
+import io.tiklab.teston.integrated.integratedurl.service.IntegratedUrlService;
+import io.tiklab.teston.integrated.teamwire.workItem.model.WorkItem;
 import io.tiklab.teston.integrated.teamwire.workItem.model.WorkItemTestOn;
 import io.tiklab.teston.integrated.teamwire.workItemBind.dao.WorkItemBindDao;
 import io.tiklab.teston.integrated.teamwire.workItemBind.entity.WorkItemBindEntity;
 import io.tiklab.teston.integrated.teamwire.workItemBind.model.WorkItemBind;
 import io.tiklab.teston.integrated.teamwire.workItemBind.model.WorkItemBindQuery;
-import io.tiklab.teston.support.utils.RpcClientApixUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,22 +36,10 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
     JoinTemplate joinTemplate;
 
     @Autowired
-    RpcClientApixUtil rpcClientApixUtil;
+    IntegratedUrlService integratedUrlService;
 
     @Autowired
-    PostinUrlService postinUrlService;
-
-    /**
-     * rpc 调用
-     */
-    WorkItemService workItemRpc(){
-        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-        integratedUrlQuery.setUserId(LoginContext.getLoginId());
-        integratedUrlQuery.setProjectName("teamwire");
-        List<IntegratedUrl> integratedUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
-
-        return rpcClientApixUtil.rpcClient().getBean(WorkItemService.class, new FixedLookup(integratedUrlList.get(0).getUrl()));
-    }
+    RestTemplateUtils restTemplateUtils;
 
 
     @Override
@@ -119,8 +105,14 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
         //
         if(workItemBindList!=null&&workItemBindList.size() > 0){
             for(WorkItemBind workItemBind:workItemBindList){
+
+                String teamWireUrl = getTeamWireUrl(workItemBindQuery.getRepositoryId());
+                String findWorkItemUrl = teamWireUrl + "/api/workItem/findWorkItem";
                 //查到teamwire缺陷
-                WorkItem workItem = workItemRpc().findWorkItem(workItemBind.getWorkItem().getId());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",workItemBind.getWorkItem().getId());
+                WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, jsonObject, WorkItem.class);
+
                 //放入本工程模型中
                 WorkItemTestOn workItemTestOn = new WorkItemTestOn();
                 workItemTestOn.setId(workItem.getId());
@@ -142,7 +134,7 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
                 //获取服务端地址
                 IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
                 integratedUrlQuery.setProjectName("teamwire");
-                List<IntegratedUrl> postinUrlList = postinUrlService.findPostinUrlList(integratedUrlQuery);
+                List<IntegratedUrl> postinUrlList = integratedUrlService.findIntegratedUrlList(integratedUrlQuery);
                 workItemBind.setProjectUrl(postinUrlList.get(0).getUrl());
 
             }
@@ -162,6 +154,14 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
         return PaginationBuilder.build(pagination,workItemBindList);
     }
 
+    private String getTeamWireUrl(String repositoryId){
+        IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
+        integratedUrlQuery.setRepositoryId(repositoryId);
+        integratedUrlQuery.setProjectName("teamwire");
+        String productUrl = integratedUrlService.getProductUrl(integratedUrlQuery);
+
+        return productUrl;
+    }
 
 
 }

@@ -6,7 +6,7 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.dal.jpa.JpaTemplate;
 import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.FormUrlEncodedEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedUnitQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,27 +77,27 @@ public class FormUrlencodedDao{
 
     /**
      * 查询form-urlencoded 列表
-     * @param formUrlencodedQuery
+     * @param formUrlencodedUnitQuery
      * @return
      */
-    public List<FormUrlEncodedEntity> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery) {
+    public List<FormUrlEncodedEntity> findFormUrlencodedList(FormUrlencodedUnitQuery formUrlencodedUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlEncodedEntity.class)
-                .eq("apiUnitId", formUrlencodedQuery.getApiUnitId())
-                .orders(formUrlencodedQuery.getOrderParams())
+                .eq("apiUnitId", formUrlencodedUnitQuery.getApiUnitId())
+                .orders(formUrlencodedUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, FormUrlEncodedEntity.class);
     }
 
     /**
      * 按分页查询form-urlencoded
-     * @param formUrlencodedQuery
+     * @param formUrlencodedUnitQuery
      * @return
      */
-    public Pagination<FormUrlEncodedEntity> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery) {
+    public Pagination<FormUrlEncodedEntity> findFormUrlencodedPage(FormUrlencodedUnitQuery formUrlencodedUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(FormUrlEncodedEntity.class)
-                .eq("apiUnitId", formUrlencodedQuery.getApiUnitId())
-                .orders(formUrlencodedQuery.getOrderParams())
-                .pagination(formUrlencodedQuery.getPageParam())
+                .eq("apiUnitId", formUrlencodedUnitQuery.getApiUnitId())
+                .orders(formUrlencodedUnitQuery.getOrderParams())
+                .pagination(formUrlencodedUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, FormUrlEncodedEntity.class);
     }

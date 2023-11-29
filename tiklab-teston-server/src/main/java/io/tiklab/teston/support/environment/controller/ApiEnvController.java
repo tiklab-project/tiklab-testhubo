@@ -21,10 +21,11 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * 接口环境 控制器
+ * @pi.protocol: http
+ * @pi.groupName: apiEnv 控制器
  */
 @RestController
-@RequestMapping("/apiEnv")
+@RequestMapping("/apxEnv")
 @Api(name = "ApiEnvController",desc = "测试环境管理")
 public class ApiEnvController {
 
@@ -33,7 +34,13 @@ public class ApiEnvController {
     @Autowired
     private ApiEnvService apiEnvService;
 
-
+    /**
+     * @pi.name:createApiEnv
+     * @pi.path:/apxEnv/createApiEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=ApiEnv
+     */
     @RequestMapping(path="/createApiEnv",method = RequestMethod.POST)
     @ApiMethod(name = "createApiEnv",desc = "添加测试环境")
     @ApiParam(name = "apiEnv",desc = "apiEnv",required = true)
@@ -43,7 +50,13 @@ public class ApiEnvController {
         return Result.ok(id);
     }
 
-
+    /**
+     * @pi.name:updateApiEnv
+     * @pi.path:/apxEnv/updateApiEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=ApiEnv
+     */
     @RequestMapping(path="/updateApiEnv",method = RequestMethod.POST)
     @ApiMethod(name = "updateApiEnv",desc = "更新测试环境")
     @ApiParam(name = "apiEnv",desc = "apiEnv",required = true)
@@ -53,7 +66,13 @@ public class ApiEnvController {
         return Result.ok();
     }
 
-
+    /**
+     * @pi.name:deleteApiEnv
+     * @pi.path:/apxEnv/deleteApiEnv
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: name=id;dataType=string;value=id;desc=当前删除的id
+     */
     @RequestMapping(path="/deleteApiEnv",method = RequestMethod.POST)
     @ApiMethod(name = "deleteApiEnv",desc = "删除测试环境")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -63,7 +82,13 @@ public class ApiEnvController {
         return Result.ok();
     }
 
-
+    /**
+     * @pi.name:findApiEnv
+     * @pi.path:/apxEnv/findApiEnv
+     * @pi.methodType:post
+     * @pi.request-type:formdata
+     * @pi.param: name=id;dataType=string;value=id;desc=当前查找的id
+     */
     @RequestMapping(path="/findApiEnv",method = RequestMethod.POST)
     @ApiMethod(name = "findApiEnv",desc = "通过id查询测试环境")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -73,6 +98,12 @@ public class ApiEnvController {
         return Result.ok(apiEnv);
     }
 
+    /**
+     * @pi.name:findAllApiEnv
+     * @pi.path:/apxEnv/findAllApiEnv
+     * @pi.methodType:post
+     * @pi.request-type:none
+     */
     @RequestMapping(path="/findAllApiEnv",method = RequestMethod.POST)
     @ApiMethod(name = "findAllApiEnv",desc = "查询所有测试环境")
     public Result<List<ApiEnv>> findAllApiEnv(){
@@ -82,6 +113,13 @@ public class ApiEnvController {
     }
 
 
+    /**
+     * @pi.name:findApiEnvList
+     * @pi.path:/apxEnv/findApiEnvList
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=ApiEnv
+     */
     @RequestMapping(path = "/findApiEnvList",method = RequestMethod.POST)
     @ApiMethod(name = "findApiEnvList",desc = "通过查询对象查询测试环境")
     @ApiParam(name = "apiEnvQuery",desc = "apiEnvQuery",required = true)
@@ -91,7 +129,13 @@ public class ApiEnvController {
         return Result.ok(apiEnvList);
     }
 
-
+    /**
+     * @pi.name:findApiEnvPage
+     * @pi.path:/apxEnv/findApiEnvPage
+     * @pi.methodType:post
+     * @pi.request-type:json
+     * @pi.param: model=ApiEnvQuery
+     */
     @RequestMapping(path = "/findApiEnvPage",method = RequestMethod.POST)
     @ApiMethod(name = "findApiEnvPage",desc = "通过查询对象分页查询测试环境")
     @ApiParam(name = "apiEnvQuery",desc = "apiEnvQuery",required = true)

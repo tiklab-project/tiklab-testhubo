@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.AssertCase;
-import io.tiklab.teston.test.apix.http.unit.cases.model.AssertCaseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AssertUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.AssertUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.AssertService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class AssertController {
     @RequestMapping(path="/createAssertParam",method = RequestMethod.POST)
     @ApiMethod(name = "createAssertCase",desc = "创建断言")
     @ApiParam(name = "assertCase",desc = "assertCase",required = true)
-    public Result<String> createAssertCase(@RequestBody @NotNull @Valid AssertCase assertCase){
-        String id = assertCaseService.createAssertCase(assertCase);
+    public Result<String> createAssertCase(@RequestBody @NotNull @Valid AssertUnit assertUnit){
+        String id = assertCaseService.createAssertCase(assertUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class AssertController {
     @RequestMapping(path="/updateAssertParam",method = RequestMethod.POST)
     @ApiMethod(name = "updateAssertCase",desc = "更新断言")
     @ApiParam(name = "assertCase",desc = "assertCase",required = true)
-    public Result<Void> updateAssertCase(@RequestBody @NotNull @Valid AssertCase assertCase){
-        assertCaseService.updateAssertCase(assertCase);
+    public Result<Void> updateAssertCase(@RequestBody @NotNull @Valid AssertUnit assertUnit){
+        assertCaseService.updateAssertCase(assertUnit);
 
         return Result.ok();
     }
@@ -63,34 +63,34 @@ public class AssertController {
     @RequestMapping(path="/findAssertParam",method = RequestMethod.POST)
     @ApiMethod(name = "findAssertCase",desc = "通过id查找断言")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<AssertCase> findAssertCase(@NotNull String id){
-        AssertCase assertCase = assertCaseService.findAssertCase(id);
+    public Result<AssertUnit> findAssertCase(@NotNull String id){
+        AssertUnit assertUnit = assertCaseService.findAssertCase(id);
 
-        return Result.ok(assertCase);
+        return Result.ok(assertUnit);
     }
 
     @RequestMapping(path="/findAllAssertParam",method = RequestMethod.POST)
     @ApiMethod(name = "findAllAssertCase",desc = "查找所有断言")
-    public Result<List<AssertCase>> findAllAssertCase(){
-        List<AssertCase> assertCaseList = assertCaseService.findAllAssertCase();
+    public Result<List<AssertUnit>> findAllAssertCase(){
+        List<AssertUnit> assertUnitList = assertCaseService.findAllAssertCase();
 
-        return Result.ok(assertCaseList);
+        return Result.ok(assertUnitList);
     }
 
     @RequestMapping(path = "/findAssertParamList",method = RequestMethod.POST)
     @ApiMethod(name = "findAssertCaseList",desc = "查询断言列表")
     @ApiParam(name = "assertCaseQuery",desc = "assertCaseQuery",required = true)
-    public Result<List<AssertCase>> findAssertCaseList(@RequestBody @Valid @NotNull AssertCaseQuery assertCaseQuery){
-        List<AssertCase> assertCaseList = assertCaseService.findAssertCaseList(assertCaseQuery);
+    public Result<List<AssertUnit>> findAssertCaseList(@RequestBody @Valid @NotNull AssertUnitQuery assertUnitQuery){
+        List<AssertUnit> assertUnitList = assertCaseService.findAssertCaseList(assertUnitQuery);
 
-        return Result.ok(assertCaseList);
+        return Result.ok(assertUnitList);
     }
 
     @RequestMapping(path = "/findAssertParamPage",method = RequestMethod.POST)
     @ApiMethod(name = "findAssertCasePage",desc = "按分页查询断言")
     @ApiParam(name = "assertCaseQuery",desc = "assertCaseQuery",required = true)
-    public Result<Pagination<AssertCase>> findAssertCasePage(@RequestBody @Valid @NotNull AssertCaseQuery assertCaseQuery){
-        Pagination<AssertCase> pagination = assertCaseService.findAssertCasePage(assertCaseQuery);
+    public Result<Pagination<AssertUnit>> findAssertCasePage(@RequestBody @Valid @NotNull AssertUnitQuery assertUnitQuery){
+        Pagination<AssertUnit> pagination = assertCaseService.findAssertCasePage(assertUnitQuery);
 
         return Result.ok(pagination);
     }

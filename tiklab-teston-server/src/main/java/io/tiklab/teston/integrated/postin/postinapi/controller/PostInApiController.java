@@ -4,7 +4,7 @@ import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.Api;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.postin.api.apix.model.Apix;
+import io.tiklab.teston.integrated.postin.postinapi.model.Apix;
 import io.tiklab.teston.integrated.postin.postinapi.model.PostInApiToCase;
 import io.tiklab.teston.integrated.postin.postinapi.service.PostInApiService;
 import org.slf4j.Logger;
@@ -45,7 +45,7 @@ public class PostInApiController {
     @RequestMapping(path = "/findPostInApiList",method = RequestMethod.POST)
     @ApiMethod(name = "findPostInApiList",desc = "根据查询仓库关联的空间查询接口")
     @ApiParam(name = "repositoryId",desc = "repositoryId")
-    public Result<List<Apix>> findPostInApiList( @NotNull  String repositoryId ){
+    public Result<List<Apix>> findPostInApiList(@NotNull  String repositoryId ){
         List<Apix> postInApiList = postInApiService.findPostInApiList(repositoryId);
 
         return Result.ok(postInApiList);

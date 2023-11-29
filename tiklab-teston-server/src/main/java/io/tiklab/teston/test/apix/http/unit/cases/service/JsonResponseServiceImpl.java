@@ -8,8 +8,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.JsonResponseEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponse;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,15 +31,15 @@ public class JsonResponseServiceImpl implements JsonResponseService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createJsonResponse(@NotNull @Valid JsonResponse jsonResponse) {
-        JsonResponseEntity jsonResponseEntity = BeanMapper.map(jsonResponse, JsonResponseEntity.class);
+    public String createJsonResponse(@NotNull @Valid JsonResponseUnit jsonResponseUnit) {
+        JsonResponseEntity jsonResponseEntity = BeanMapper.map(jsonResponseUnit, JsonResponseEntity.class);
 
         return jsonResponseDao.createJsonResponse(jsonResponseEntity);
     }
 
     @Override
-    public void updateJsonResponse(@NotNull @Valid JsonResponse jsonResponse) {
-        JsonResponseEntity jsonResponseEntity = BeanMapper.map(jsonResponse, JsonResponseEntity.class);
+    public void updateJsonResponse(@NotNull @Valid JsonResponseUnit jsonResponseUnit) {
+        JsonResponseEntity jsonResponseEntity = BeanMapper.map(jsonResponseUnit, JsonResponseEntity.class);
 
         jsonResponseDao.updateJsonResponse(jsonResponseEntity);
     }
@@ -50,107 +50,107 @@ public class JsonResponseServiceImpl implements JsonResponseService {
     }
 
     @Override
-    public JsonResponse findOne(String id) {
+    public JsonResponseUnit findOne(String id) {
         JsonResponseEntity jsonResponseEntity = jsonResponseDao.findJsonResponse(id);
 
-        JsonResponse jsonResponse = BeanMapper.map(jsonResponseEntity, JsonResponse.class);
-        return jsonResponse;
+        JsonResponseUnit jsonResponseUnit = BeanMapper.map(jsonResponseEntity, JsonResponseUnit.class);
+        return jsonResponseUnit;
     }
 
     @Override
-    public List<JsonResponse> findList(List<String> idList) {
+    public List<JsonResponseUnit> findList(List<String> idList) {
         List<JsonResponseEntity> jsonResponseEntityList =  jsonResponseDao.findJsonResponseList(idList);
 
-        List<JsonResponse> jsonResponseList =  BeanMapper.mapList(jsonResponseEntityList,JsonResponse.class);
-        return jsonResponseList;
+        List<JsonResponseUnit> jsonResponseUnitList =  BeanMapper.mapList(jsonResponseEntityList, JsonResponseUnit.class);
+        return jsonResponseUnitList;
     }
 
     @Override
-    public JsonResponse findJsonResponse(@NotNull String id) {
-        JsonResponse jsonResponse = findOne(id);
+    public JsonResponseUnit findJsonResponse(@NotNull String id) {
+        JsonResponseUnit jsonResponseUnit = findOne(id);
 
-        joinTemplate.joinQuery(jsonResponse);
-        return jsonResponse;
+        joinTemplate.joinQuery(jsonResponseUnit);
+        return jsonResponseUnit;
     }
 
     @Override
-    public List<JsonResponse> findAllJsonResponse() {
+    public List<JsonResponseUnit> findAllJsonResponse() {
         List<JsonResponseEntity> jsonResponseEntityList =  jsonResponseDao.findAllJsonResponse();
 
-        List<JsonResponse> jsonResponseList =  BeanMapper.mapList(jsonResponseEntityList,JsonResponse.class);
+        List<JsonResponseUnit> jsonResponseUnitList =  BeanMapper.mapList(jsonResponseEntityList, JsonResponseUnit.class);
 
-        joinTemplate.joinQuery(jsonResponseList);
-        return jsonResponseList;
+        joinTemplate.joinQuery(jsonResponseUnitList);
+        return jsonResponseUnitList;
     }
 
     @Override
-    public List<JsonResponse> findJsonResponseList(JsonResponseQuery jsonResponseQuery) {
-        List<JsonResponseEntity> jsonResponseEntityList = jsonResponseDao.findJsonResponseList(jsonResponseQuery);
+    public List<JsonResponseUnit> findJsonResponseList(JsonResponseUnitQuery jsonResponseUnitQuery) {
+        List<JsonResponseEntity> jsonResponseEntityList = jsonResponseDao.findJsonResponseList(jsonResponseUnitQuery);
 
-        List<JsonResponse> jsonResponseList = BeanMapper.mapList(jsonResponseEntityList,JsonResponse.class);
+        List<JsonResponseUnit> jsonResponseUnitList = BeanMapper.mapList(jsonResponseEntityList, JsonResponseUnit.class);
 
-        joinTemplate.joinQuery(jsonResponseList);
+        joinTemplate.joinQuery(jsonResponseUnitList);
 
-        return jsonResponseList;
+        return jsonResponseUnitList;
     }
 
     @Override
-    public Pagination<JsonResponse> findJsonResponsePage(JsonResponseQuery jsonResponseQuery) {
+    public Pagination<JsonResponseUnit> findJsonResponsePage(JsonResponseUnitQuery jsonResponseUnitQuery) {
 
-        Pagination<JsonResponseEntity>  pagination = jsonResponseDao.findJsonResponsePage(jsonResponseQuery);
+        Pagination<JsonResponseEntity>  pagination = jsonResponseDao.findJsonResponsePage(jsonResponseUnitQuery);
 
-        List<JsonResponse> jsonResponseList = BeanMapper.mapList(pagination.getDataList(),JsonResponse.class);
+        List<JsonResponseUnit> jsonResponseUnitList = BeanMapper.mapList(pagination.getDataList(), JsonResponseUnit.class);
 
-        joinTemplate.joinQuery(jsonResponseList);
+        joinTemplate.joinQuery(jsonResponseUnitList);
 
-        return PaginationBuilder.build(pagination,jsonResponseList);
+        return PaginationBuilder.build(pagination, jsonResponseUnitList);
     }
 
     @Override
-    public List<JsonResponse> findJsonResponseListTree(JsonResponseQuery jsonResponseQuery) {
-        List<JsonResponse> matchJsonResponseList = this.findJsonResponseList(jsonResponseQuery);
+    public List<JsonResponseUnit> findJsonResponseListTree(JsonResponseUnitQuery jsonResponseUnitQuery) {
+        List<JsonResponseUnit> matchJsonResponseUnitList = this.findJsonResponseList(jsonResponseUnitQuery);
 
         //查找第一级属性列表
-        List<JsonResponse> topJsonResponseList = findTopJsonResponseList(matchJsonResponseList);
+        List<JsonResponseUnit> topJsonResponseUnitList = findTopJsonResponseList(matchJsonResponseUnitList);
 
         //设置下级节点列表
-        if(topJsonResponseList != null && topJsonResponseList.size() > 0){
-            for(JsonResponse jsonResponse:topJsonResponseList){
-                setChildren(matchJsonResponseList,jsonResponse);
+        if(topJsonResponseUnitList != null && topJsonResponseUnitList.size() > 0){
+            for(JsonResponseUnit jsonResponseUnit : topJsonResponseUnitList){
+                setChildren(matchJsonResponseUnitList, jsonResponseUnit);
             }
         }
 
-        return topJsonResponseList;
+        return topJsonResponseUnitList;
     }
 
     /**
      * 查找第一级属性列表
-     * @param matchJsonResponseList
+     * @param matchJsonResponseUnitList
      * @return
      */
-    List<JsonResponse> findTopJsonResponseList(List<JsonResponse> matchJsonResponseList) {
-        List<JsonResponse> jsonResponseList = matchJsonResponseList.stream()
-                .filter(jsonResponse -> (jsonResponse.getParent() == null || jsonResponse.getParent().getId() == null))
+    List<JsonResponseUnit> findTopJsonResponseList(List<JsonResponseUnit> matchJsonResponseUnitList) {
+        List<JsonResponseUnit> jsonResponseUnitList = matchJsonResponseUnitList.stream()
+                .filter(jsonResponseUnit -> (jsonResponseUnit.getParent() == null || jsonResponseUnit.getParent().getId() == null))
                 .collect(Collectors.toList());
-        return jsonResponseList;
+        return jsonResponseUnitList;
     }
 
     /**
      * 设置下级节点列表
-     * @param matchJsonResponseList
-     * @param parentJsonResponse
+     * @param matchJsonResponseUnitList
+     * @param parentJsonResponseUnit
      */
-    void setChildren(List<JsonResponse> matchJsonResponseList,JsonResponse parentJsonResponse){
-        List<JsonResponse> childList = matchJsonResponseList.stream()
-                .filter(jsonResponse -> (jsonResponse.getParent() != null && jsonResponse.getParent().getId() != null && jsonResponse.getParent().getId().equals(parentJsonResponse.getId())))
+    void setChildren(List<JsonResponseUnit> matchJsonResponseUnitList, JsonResponseUnit parentJsonResponseUnit){
+        List<JsonResponseUnit> childList = matchJsonResponseUnitList.stream()
+                .filter(jsonResponseUnit -> (jsonResponseUnit.getParent() != null && jsonResponseUnit.getParent().getId() != null && jsonResponseUnit.getParent().getId().equals(parentJsonResponseUnit.getId())))
                 .collect(Collectors.toList());
 
         if(childList != null && childList.size() > 0){
-            parentJsonResponse.setChildren(childList);
+            parentJsonResponseUnit.setChildren(childList);
 
             //设置下级节点列表
-            for(JsonResponse jsonResponse:childList){
-                setChildren(matchJsonResponseList,jsonResponse);
+            for(JsonResponseUnit jsonResponseUnit :childList){
+                setChildren(matchJsonResponseUnitList, jsonResponseUnit);
             }
         }
     }

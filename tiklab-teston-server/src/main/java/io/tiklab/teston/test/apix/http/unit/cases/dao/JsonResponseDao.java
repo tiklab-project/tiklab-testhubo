@@ -5,7 +5,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonResponseUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.JsonResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,27 +77,27 @@ public class JsonResponseDao{
 
     /**
      * 根据查询参数查找查询响应中json列表
-     * @param jsonResponseQuery
+     * @param jsonResponseUnitQuery
      * @return
      */
-    public List<JsonResponseEntity> findJsonResponseList(JsonResponseQuery jsonResponseQuery) {
+    public List<JsonResponseEntity> findJsonResponseList(JsonResponseUnitQuery jsonResponseUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonResponseEntity.class)
-                .eq("apiUnitId", jsonResponseQuery.getApiUnitId())
-                .orders(jsonResponseQuery.getOrderParams())
+                .eq("apiUnitId", jsonResponseUnitQuery.getApiUnitId())
+                .orders(jsonResponseUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, JsonResponseEntity.class);
     }
 
     /**
      * 根据查询参数查找按分页查询响应中json
-     * @param jsonResponseQuery
+     * @param jsonResponseUnitQuery
      * @return
      */
-    public Pagination<JsonResponseEntity> findJsonResponsePage(JsonResponseQuery jsonResponseQuery) {
+    public Pagination<JsonResponseEntity> findJsonResponsePage(JsonResponseUnitQuery jsonResponseUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonResponseEntity.class)
-                .eq("apiUnitId", jsonResponseQuery.getApiUnitId())
-                .orders(jsonResponseQuery.getOrderParams())
-                .pagination(jsonResponseQuery.getPageParam())
+                .eq("apiUnitId", jsonResponseUnitQuery.getApiUnitId())
+                .orders(jsonResponseUnitQuery.getOrderParams())
+                .pagination(jsonResponseUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, JsonResponseEntity.class);
     }

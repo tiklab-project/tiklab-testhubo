@@ -8,8 +8,8 @@ import io.tiklab.core.page.PaginationBuilder;
 import io.tiklab.beans.BeanMapper;
 import io.tiklab.join.JoinTemplate;
 import io.tiklab.teston.test.apix.http.unit.cases.entity.FormUrlEncodedEntity;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncoded;
-import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlEncodedUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.FormUrlencodedUnitQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,15 +30,15 @@ public class FormUrlencodedServiceImpl implements FormUrlencodedService {
     JoinTemplate joinTemplate;
 
     @Override
-    public String createFormUrlencoded(@NotNull @Valid FormUrlEncoded formUrlencoded) {
-        FormUrlEncodedEntity formUrlencodedEntity = BeanMapper.map(formUrlencoded, FormUrlEncodedEntity.class);
+    public String createFormUrlencoded(@NotNull @Valid FormUrlEncodedUnit formUrlencodedUnit) {
+        FormUrlEncodedEntity formUrlencodedEntity = BeanMapper.map(formUrlencodedUnit, FormUrlEncodedEntity.class);
 
         return formUrlencodedDao.createFormUrlencoded(formUrlencodedEntity);
     }
 
     @Override
-    public void updateFormUrlencoded(@NotNull @Valid FormUrlEncoded formUrlencoded) {
-        FormUrlEncodedEntity formUrlencodedEntity = BeanMapper.map(formUrlencoded, FormUrlEncodedEntity.class);
+    public void updateFormUrlencoded(@NotNull @Valid FormUrlEncodedUnit formUrlencodedUnit) {
+        FormUrlEncodedEntity formUrlencodedEntity = BeanMapper.map(formUrlencodedUnit, FormUrlEncodedEntity.class);
 
         formUrlencodedDao.updateFormUrlencoded(formUrlencodedEntity);
     }
@@ -49,60 +49,60 @@ public class FormUrlencodedServiceImpl implements FormUrlencodedService {
     }
 
     @Override
-    public FormUrlEncoded findOne(String id) {
+    public FormUrlEncodedUnit findOne(String id) {
         FormUrlEncodedEntity formUrlencodedEntity = formUrlencodedDao.findFormUrlencoded(id);
 
-        FormUrlEncoded formUrlencoded = BeanMapper.map(formUrlencodedEntity, FormUrlEncoded.class);
-        return formUrlencoded;
+        FormUrlEncodedUnit formUrlencodedUnit = BeanMapper.map(formUrlencodedEntity, FormUrlEncodedUnit.class);
+        return formUrlencodedUnit;
     }
 
     @Override
-    public List<FormUrlEncoded> findList(List<String> idList) {
+    public List<FormUrlEncodedUnit> findList(List<String> idList) {
         List<FormUrlEncodedEntity> formUrlEncodedEntityList =  formUrlencodedDao.findFormUrlencodedList(idList);
 
-        List<FormUrlEncoded> formUrlEncodedList =  BeanMapper.mapList(formUrlEncodedEntityList, FormUrlEncoded.class);
-        return formUrlEncodedList;
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList =  BeanMapper.mapList(formUrlEncodedEntityList, FormUrlEncodedUnit.class);
+        return formUrlEncodedUnitList;
     }
 
     @Override
-    public FormUrlEncoded findFormUrlencoded(@NotNull String id) {
-        FormUrlEncoded formUrlencoded = findOne(id);
+    public FormUrlEncodedUnit findFormUrlencoded(@NotNull String id) {
+        FormUrlEncodedUnit formUrlencodedUnit = findOne(id);
 
-        joinTemplate.joinQuery(formUrlencoded);
+        joinTemplate.joinQuery(formUrlencodedUnit);
 
-        return formUrlencoded;
+        return formUrlencodedUnit;
     }
 
     @Override
-    public List<FormUrlEncoded> findAllFormUrlencoded() {
+    public List<FormUrlEncodedUnit> findAllFormUrlencoded() {
         List<FormUrlEncodedEntity> formUrlEncodedEntityList =  formUrlencodedDao.findAllFormUrlencoded();
 
-        List<FormUrlEncoded> formUrlEncodedList =  BeanMapper.mapList(formUrlEncodedEntityList, FormUrlEncoded.class);
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList =  BeanMapper.mapList(formUrlEncodedEntityList, FormUrlEncodedUnit.class);
 
-        joinTemplate.joinQuery(formUrlEncodedList);
+        joinTemplate.joinQuery(formUrlEncodedUnitList);
 
-        return formUrlEncodedList;
+        return formUrlEncodedUnitList;
     }
 
     @Override
-    public List<FormUrlEncoded> findFormUrlencodedList(FormUrlencodedQuery formUrlencodedQuery) {
-        List<FormUrlEncodedEntity> formUrlEncodedEntityList = formUrlencodedDao.findFormUrlencodedList(formUrlencodedQuery);
+    public List<FormUrlEncodedUnit> findFormUrlencodedList(FormUrlencodedUnitQuery formUrlencodedUnitQuery) {
+        List<FormUrlEncodedEntity> formUrlEncodedEntityList = formUrlencodedDao.findFormUrlencodedList(formUrlencodedUnitQuery);
 
-        List<FormUrlEncoded> formUrlEncodedList = BeanMapper.mapList(formUrlEncodedEntityList, FormUrlEncoded.class);
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList = BeanMapper.mapList(formUrlEncodedEntityList, FormUrlEncodedUnit.class);
 
-        joinTemplate.joinQuery(formUrlEncodedList);
+        joinTemplate.joinQuery(formUrlEncodedUnitList);
 
-        return formUrlEncodedList;
+        return formUrlEncodedUnitList;
     }
 
     @Override
-    public Pagination<FormUrlEncoded> findFormUrlencodedPage(FormUrlencodedQuery formUrlencodedQuery) {
-        Pagination<FormUrlEncodedEntity>  pagination = formUrlencodedDao.findFormUrlencodedPage(formUrlencodedQuery);
+    public Pagination<FormUrlEncodedUnit> findFormUrlencodedPage(FormUrlencodedUnitQuery formUrlencodedUnitQuery) {
+        Pagination<FormUrlEncodedEntity>  pagination = formUrlencodedDao.findFormUrlencodedPage(formUrlencodedUnitQuery);
 
-        List<FormUrlEncoded> formUrlEncodedList = BeanMapper.mapList(pagination.getDataList(), FormUrlEncoded.class);
+        List<FormUrlEncodedUnit> formUrlEncodedUnitList = BeanMapper.mapList(pagination.getDataList(), FormUrlEncodedUnit.class);
 
-        joinTemplate.joinQuery(formUrlEncodedList);
+        joinTemplate.joinQuery(formUrlEncodedUnitList);
 
-        return PaginationBuilder.build(pagination, formUrlEncodedList);
+        return PaginationBuilder.build(pagination, formUrlEncodedUnitList);
     }
 }

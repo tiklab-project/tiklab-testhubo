@@ -5,8 +5,8 @@ import io.tiklab.core.page.Pagination;
 import io.tiklab.core.Result;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParam;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamUnit;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamUnitQuery;
 import io.tiklab.teston.test.apix.http.unit.cases.service.JsonParamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ public class JsonParamController {
     @RequestMapping(path="/createJsonParam",method = RequestMethod.POST)
     @ApiMethod(name = "createJsonParam",desc = "创建json")
     @ApiParam(name = "jsonParam",desc = "jsonParam",required = true)
-    public Result<String> createJsonParam(@RequestBody @NotNull @Valid JsonParam jsonParam){
-        String id = jsonParamService.createJsonParam(jsonParam);
+    public Result<String> createJsonParam(@RequestBody @NotNull @Valid JsonParamUnit jsonParamUnit){
+        String id = jsonParamService.createJsonParam(jsonParamUnit);
 
         return Result.ok(id);
     }
@@ -45,8 +45,8 @@ public class JsonParamController {
     @RequestMapping(path="/updateJsonParam",method = RequestMethod.POST)
     @ApiMethod(name = "updateJsonParam",desc = "更新json")
     @ApiParam(name = "jsonParam",desc = "jsonParam",required = true)
-    public Result<Void> updateJsonParam(@RequestBody @NotNull @Valid JsonParam jsonParam){
-        jsonParamService.updateJsonParam(jsonParam);
+    public Result<Void> updateJsonParam(@RequestBody @NotNull @Valid JsonParamUnit jsonParamUnit){
+        jsonParamService.updateJsonParam(jsonParamUnit);
 
         return Result.ok();
     }
@@ -63,35 +63,35 @@ public class JsonParamController {
     @RequestMapping(path="/findJsonParam",method = RequestMethod.POST)
     @ApiMethod(name = "findJsonParam",desc = "根据id查找json")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<JsonParam> findJsonParam(@NotNull String id){
-        JsonParam jsonParam = jsonParamService.findJsonParam(id);
+    public Result<JsonParamUnit> findJsonParam(@NotNull String id){
+        JsonParamUnit jsonParamUnit = jsonParamService.findJsonParam(id);
 
-        return Result.ok(jsonParam);
+        return Result.ok(jsonParamUnit);
     }
 
     @RequestMapping(path="/findAllJsonParam",method = RequestMethod.POST)
     @ApiMethod(name = "findAllJsonParam",desc = "查找所有json")
-    public Result<List<JsonParam>> findAllJsonParam(){
-        List<JsonParam> jsonParamList = jsonParamService.findAllJsonParam();
+    public Result<List<JsonParamUnit>> findAllJsonParam(){
+        List<JsonParamUnit> jsonParamUnitList = jsonParamService.findAllJsonParam();
 
-        return Result.ok(jsonParamList);
+        return Result.ok(jsonParamUnitList);
     }
 
     @RequestMapping(path = "/findJsonParamList",method = RequestMethod.POST)
     @ApiMethod(name = "findJsonParamList",desc = "findJsonParamList")
     @ApiParam(name = "jsonParamQuery",desc = "jsonParamQuery",required = true)
-    public Result<List<JsonParam>> findJsonParamList(@RequestBody @Valid @NotNull JsonParamQuery jsonParamQuery){
-        List<JsonParam> jsonParamList = jsonParamService.findJsonParamList(jsonParamQuery);
+    public Result<List<JsonParamUnit>> findJsonParamList(@RequestBody @Valid @NotNull JsonParamUnitQuery jsonParamUnitQuery){
+        List<JsonParamUnit> jsonParamUnitList = jsonParamService.findJsonParamList(jsonParamUnitQuery);
 
-        return Result.ok(jsonParamList);
+        return Result.ok(jsonParamUnitList);
     }
 
 
     @RequestMapping(path = "/findJsonParamPage",method = RequestMethod.POST)
     @ApiMethod(name = "findJsonParamPage",desc = "根据查询参数按分页查询json")
     @ApiParam(name = "jsonParamQuery",desc = "jsonParamQuery",required = true)
-    public Result<Pagination<JsonParam>> findJsonParamPage(@RequestBody @Valid @NotNull JsonParamQuery jsonParamQuery){
-        Pagination<JsonParam> pagination = jsonParamService.findJsonParamPage(jsonParamQuery);
+    public Result<Pagination<JsonParamUnit>> findJsonParamPage(@RequestBody @Valid @NotNull JsonParamUnitQuery jsonParamUnitQuery){
+        Pagination<JsonParamUnit> pagination = jsonParamService.findJsonParamPage(jsonParamUnitQuery);
 
         return Result.ok(pagination);
     }

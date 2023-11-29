@@ -6,7 +6,7 @@ import io.tiklab.dal.jpa.criterial.condition.DeleteCondition;
 import io.tiklab.dal.jpa.criterial.condition.QueryCondition;
 import io.tiklab.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.tiklab.dal.jpa.JpaTemplate;
-import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamQuery;
+import io.tiklab.teston.test.apix.http.unit.cases.model.JsonParamUnitQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,27 +77,27 @@ public class JsonParamDao{
 
     /**
      * 根据查询参数查询json列表
-     * @param jsonParamQuery
+     * @param jsonParamUnitQuery
      * @return
      */
-    public List<JsonParamEntity> findJsonParamList(JsonParamQuery jsonParamQuery) {
+    public List<JsonParamEntity> findJsonParamList(JsonParamUnitQuery jsonParamUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonParamEntity.class)
-                .eq("apiUnitId", jsonParamQuery.getApiUnitId())
-                .orders(jsonParamQuery.getOrderParams())
+                .eq("apiUnitId", jsonParamUnitQuery.getApiUnitId())
+                .orders(jsonParamUnitQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, JsonParamEntity.class);
     }
 
     /**
      * 根据查询参数按分页查询json
-     * @param jsonParamQuery
+     * @param jsonParamUnitQuery
      * @return
      */
-    public Pagination<JsonParamEntity> findJsonParamPage(JsonParamQuery jsonParamQuery) {
+    public Pagination<JsonParamEntity> findJsonParamPage(JsonParamUnitQuery jsonParamUnitQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(JsonParamEntity.class)
-                .eq("apiUnitId", jsonParamQuery.getApiUnitId())
-                .orders(jsonParamQuery.getOrderParams())
-                .pagination(jsonParamQuery.getPageParam())
+                .eq("apiUnitId", jsonParamUnitQuery.getApiUnitId())
+                .orders(jsonParamUnitQuery.getOrderParams())
+                .pagination(jsonParamUnitQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, JsonParamEntity.class);
     }
