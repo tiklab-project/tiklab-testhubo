@@ -17,6 +17,8 @@ import io.tiklab.teston.integrated.teamwire.workItemBind.model.WorkItemBind;
 import io.tiklab.teston.integrated.teamwire.workItemBind.model.WorkItemBindQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -109,9 +111,10 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
                 String teamWireUrl = getTeamWireUrl(workItemBindQuery.getRepositoryId());
                 String findWorkItemUrl = teamWireUrl + "/api/workItem/findWorkItem";
                 //查到teamwire缺陷
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",workItemBind.getWorkItem().getId());
-                WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, jsonObject, WorkItem.class);
+
+                MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
+                paramMap.add("id",workItemBind.getWorkItem().getId());
+                WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, paramMap, WorkItem.class);
 
                 //放入本工程模型中
                 WorkItemTestOn workItemTestOn = new WorkItemTestOn();

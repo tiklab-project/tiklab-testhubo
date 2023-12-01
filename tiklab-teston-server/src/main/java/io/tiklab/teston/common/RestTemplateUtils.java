@@ -31,7 +31,8 @@ public class RestTemplateUtils {
      */
     public <T> T requestPost( String requestUrl, Object param, Class<T> tClass){
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
         // 创建带有头部和请求体的 HttpEntity
         HttpEntity<Object> requestEntity = new HttpEntity<>(param, headers);
         ResponseEntity<JSONObject> response;

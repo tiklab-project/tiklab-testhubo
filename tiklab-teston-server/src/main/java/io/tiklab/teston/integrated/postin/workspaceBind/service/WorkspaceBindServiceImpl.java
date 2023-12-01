@@ -16,6 +16,8 @@ import io.tiklab.teston.integrated.integratedurl.service.IntegratedUrlService;
 import io.tiklab.teston.integrated.postin.workspaceBind.model.WorkspaceQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -110,9 +112,9 @@ public class WorkspaceBindServiceImpl implements WorkspaceBindService {
         //通过workspaceId 获取空间的数据
         if(workspaceBindList!=null&&workspaceBindList.size()>0){
             for(WorkspaceBind workspaceBind:workspaceBindList){
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",workspaceBind.getWorkspace().getId());
-                Workspace workspace = restTemplateUtils.requestPost(findWorkspaceUrl,jsonObject, Workspace.class);
+                MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
+                paramMap.add("id",workspaceBind.getWorkspace().getId());
+                Workspace workspace = restTemplateUtils.requestPost(findWorkspaceUrl,paramMap, Workspace.class);
                 workspaceBind.setWorkspace(workspace);
             }
         }
