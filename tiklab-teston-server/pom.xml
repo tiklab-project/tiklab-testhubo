@@ -126,9 +126,9 @@
                         <!-- modules-->
                         <argument>D:\a-dk-sever\tiklab-teston\tiklab-teston-api;D:\a-dk-sever\tiklab-teston\tiklab-teston-server</argument>
                         <!-- workspaceId-->
-                        <argument>578da3e297d4</argument>
+                        <argument>dde26370a923</argument>
                         <!-- server-->
-                        <argument>http://192.168.10.21:8090</argument>
+                        <argument>http://e.postin.tiklab.net</argument>
                     </arguments>
                 </configuration>
             </plugin>

@@ -85,8 +85,8 @@ public class JsonGenerator {
             default:
                 return "null";
         }
-
     }
+
     /**
      * mock 数据
      * @param mockType
