@@ -177,7 +177,9 @@ public class RepositoryServiceImpl implements RepositoryService {
         Map<String,String> map = new HashMap<>();
         map.put("name",repository.getName());
         map.put("repositoryId",repository.getId());
-        map.put("user",testOnUnit.getUser().getNickname());
+        String loginId = LoginContext.getLoginId();
+        User user = userService.findUser(loginId);
+        map.put("user",user.getNickname());
         map.put("mode","仓库");
         map.put("images",repository.getIconUrl());
         LoggingType oplogTypeOne = loggingTypeService.findOplogTypeOne(MessageTemplateConstant.LOG_TYPE_UPDATE_ID);
