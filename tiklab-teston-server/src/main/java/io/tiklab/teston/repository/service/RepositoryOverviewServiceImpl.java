@@ -1,5 +1,6 @@
 package io.tiklab.teston.repository.service;
 
+import io.tiklab.teston.repository.dao.RepositoryOverviewDao;
 import io.tiklab.teston.repository.model.RepositoryTotal;
 import io.tiklab.teston.category.model.Category;
 import io.tiklab.teston.category.model.CategoryQuery;
@@ -22,32 +23,17 @@ import java.util.*;
 @Service
 public class RepositoryOverviewServiceImpl implements RepositoryOverviewService {
 
-
-    @Autowired
-    CategoryService categoryService;
-
     @Autowired
     DmUserService dmUserService;
 
-
     @Autowired
-    TestPlanService testPlanService;
+    RepositoryOverviewDao repositoryOverviewDao;
 
 
     @Override
     public RepositoryTotal findRepositoryOverview(String id) {
-        RepositoryTotal repositoryTotal = new RepositoryTotal();
 
-        //获取测试计划总和
-        TestPlanQuery testPlanQuery = new TestPlanQuery();
-        testPlanQuery.setRepositoryId(id);
-        List<TestPlan> testPlanList = testPlanService.findTestPlanList(testPlanQuery);
-        repositoryTotal.setPlanTotal(testPlanList.size());
-
-        //获取分组的总和
-        List<Category> categoryList = categoryService.findCategoryList(new CategoryQuery().setRepositoryId(id));
-        repositoryTotal.setCategoryTotal(categoryList.size());
-
+        RepositoryTotal repositoryTotal = repositoryOverviewDao.findWorkspaceOverview(id);
 
         //成员总和
         DmUserQuery dmUserQuery = new DmUserQuery();

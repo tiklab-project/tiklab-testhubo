@@ -22,6 +22,8 @@ public class RepositoryTotal extends BaseModel {
     @ApiProperty(name="memberTotal",desc="成员总和")
     private Integer memberTotal;
 
+    private Integer caseTotal;
+
 
     public Integer getPlanTotal() {
         return planTotal;
@@ -53,5 +55,13 @@ public class RepositoryTotal extends BaseModel {
 
     public void setMemberTotal(Integer memberTotal) {
         this.memberTotal = memberTotal;
+    }
+
+    public Integer getCaseTotal() {
+        return caseTotal;
+    }
+
+    public void setCaseTotal(Integer caseTotal) {
+        this.caseTotal = caseTotal;
     }
 }
