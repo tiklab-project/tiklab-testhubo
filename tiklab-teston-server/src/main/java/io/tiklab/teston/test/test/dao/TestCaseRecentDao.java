@@ -102,6 +102,6 @@ public class TestCaseRecentDao {
                 .orders(testCaseRecentQuery.getOrderParams())
                 .pagination(testCaseRecentQuery.getPageParam())
                 .get();
-        return jpaTemplate.findPage(testCaseRecentQuery,TestCaseRecentEntity.class);
+        return jpaTemplate.findPage(queryCondition,TestCaseRecentEntity.class);
     }
 }

@@ -117,11 +117,23 @@ public class TestCaseRecentServiceImpl implements TestCaseRecentService {
 
     @Override
     public Pagination<TestCaseRecent> findTestCaseRecentPage(TestCaseRecentQuery testCaseRecentQuery) {
+
         Pagination<TestCaseRecentEntity>  pagination = testCaseRecentDao.findTestCaseRecentPage(testCaseRecentQuery);
 
         List<TestCaseRecent> testCaseRecentList = BeanMapper.mapList(pagination.getDataList(),TestCaseRecent.class);
 
-        joinTemplate.joinQuery(testCaseRecentList);
+        //第三层获取不到值，手动设置值
+        if(testCaseRecentList!=null&&testCaseRecentList.size()>0){
+            for(TestCaseRecent testCaseRecent:testCaseRecentList){
+                TestCase testCase = testCaseService.findTestCase(testCaseRecent.getTestCase().getId());
+                testCaseRecent.setTestCase(testCase);
+
+                Repository repository = repositoryService.findRepository(testCaseRecent.getRepository().getId());
+                testCaseRecent.setRepository(repository);
+            }
+        }
+
+//        joinTemplate.joinQuery(testCaseRecentList);
 
         return PaginationBuilder.build(pagination,testCaseRecentList);
     }

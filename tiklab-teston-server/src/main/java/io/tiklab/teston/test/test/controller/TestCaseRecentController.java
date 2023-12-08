@@ -1,9 +1,12 @@
 package io.tiklab.teston.test.test.controller;
 
 import io.tiklab.core.Result;
+import io.tiklab.core.page.Pagination;
 import io.tiklab.postin.annotation.Api;
 import io.tiklab.postin.annotation.ApiMethod;
 import io.tiklab.postin.annotation.ApiParam;
+import io.tiklab.teston.test.test.model.TestCase;
+import io.tiklab.teston.test.test.model.TestCaseQuery;
 import io.tiklab.teston.test.test.model.TestCaseRecent;
 import io.tiklab.teston.test.test.model.TestCaseRecentQuery;
 import io.tiklab.teston.test.test.service.TestCaseRecentService;
@@ -42,6 +45,17 @@ public class TestCaseRecentController {
 
         return Result.ok(testCaseRecentList);
     }
+
+
+    @RequestMapping(path = "/findTestCaseRecentPage",method = RequestMethod.POST)
+    @ApiMethod(name = "findTestCaseRecentPage",desc = "根据查询参数按分页查询最近访问仓库")
+    @ApiParam(name = "testCaseRecentQuery",desc = "testCaseRecentQuery",required = true)
+    public Result<Pagination<TestCaseRecent>> findTestCaseRecentPage(@RequestBody @Valid @NotNull  TestCaseRecentQuery testCaseRecentQuery){
+        Pagination<TestCaseRecent> pagination = testCaseRecentService.findTestCaseRecentPage(testCaseRecentQuery);
+
+        return Result.ok(pagination);
+    }
+
 
 
     @RequestMapping(path="/testCaseRecent",method = RequestMethod.POST)
