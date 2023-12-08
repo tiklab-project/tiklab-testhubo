@@ -52,7 +52,7 @@ licences:
 base:
   url: http://
 
-eas:
+darth:
   embbed:
     enable: true
 #  address:

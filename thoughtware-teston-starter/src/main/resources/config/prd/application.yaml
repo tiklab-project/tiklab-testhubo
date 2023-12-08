@@ -54,10 +54,10 @@ licences:
 base:
   url:  http://bac.teston.thoughtware.net
 
-eas:
+darth:
   embbed:
     enable: false
-  address:  http://bac.eas.thoughtware.net
+  address:  http://bac.darth.thoughtware.net
 
 postgresql:
   database: teston
