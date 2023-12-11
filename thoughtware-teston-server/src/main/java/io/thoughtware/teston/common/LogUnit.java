@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.eam.common.context.LoginContext;
 import io.thoughtware.security.logging.model.Logging;
 import io.thoughtware.security.logging.model.LoggingType;
-import io.thoughtware.security.logging.service.LoggingByTemplService;
+import io.thoughtware.security.logging.service.LoggingByTempService;
 import io.thoughtware.user.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +23,7 @@ public class LogUnit {
     String baseUrl;
 
     @Autowired
-    LoggingByTemplService opLogByTemplService;
+    LoggingByTempService opLogByTemplService;
 
     public void log(String type, String module, Map<String,String> map){
 
