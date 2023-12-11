@@ -70,6 +70,12 @@ public class TestPlanServiceImpl implements TestPlanService {
     }
 
     @Override
+    public int findTestPlanNum(String repositoryId) {
+        int testPlanNum = testPlanDao.findTestPlanNum(repositoryId);
+        return testPlanNum;
+    }
+
+    @Override
     public List<TestPlan> findList(List<String> idList) {
         List<TestPlanEntity> testPlanEntityList =  testPlanDao.findTestPlanList(idList);
 

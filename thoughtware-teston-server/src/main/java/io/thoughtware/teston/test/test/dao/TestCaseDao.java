@@ -64,6 +64,19 @@ public class TestCaseDao {
     }
 
     /**
+     * 查询总数
+     * @param repositoryId
+     * @return
+     */
+    public int findTestCaseNum(String repositoryId) {
+        String caseSql = "Select count(1) as total from teston_testcase where repository_id = '" + repositoryId+ "'";
+        Integer caseTotal = jpaTemplate.getJdbcTemplate().queryForObject(caseSql, new Object[]{}, Integer.class);
+
+        return caseTotal;
+    }
+
+
+    /**
     * 查找所有测试用例
     * @return
     */

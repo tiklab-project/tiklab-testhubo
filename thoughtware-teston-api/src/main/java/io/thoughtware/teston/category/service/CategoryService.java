@@ -50,6 +50,15 @@ public interface CategoryService {
     */
     Category findCategory(@NotNull String id);
 
+
+    /**
+     * 查询分组总数
+     * @param repositoryId
+     * @return
+     */
+    int findCategoryNum(String repositoryId);
+
+
     /**
     * 查找所有目录
     * @return

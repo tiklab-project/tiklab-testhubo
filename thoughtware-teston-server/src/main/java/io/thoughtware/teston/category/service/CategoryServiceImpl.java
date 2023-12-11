@@ -85,6 +85,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public int findCategoryNum(String repositoryId) {
+        int categoryNum = categoryDao.findCategoryNum(repositoryId);
+        return categoryNum;
+    }
+
+    @Override
     public List<Category> findAllCategory() {
         List<CategoryEntity> categoryEntityList =  categoryDao.findAllCategory();
 

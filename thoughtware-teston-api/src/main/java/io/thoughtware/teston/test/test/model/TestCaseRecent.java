@@ -6,6 +6,7 @@ import io.thoughtware.beans.annotation.Mapping;
 import io.thoughtware.beans.annotation.Mappings;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.join.annotation.Join;
+import io.thoughtware.join.annotation.JoinQuery;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
 import io.thoughtware.teston.repository.model.Repository;
@@ -28,6 +29,7 @@ public class TestCaseRecent extends BaseModel {
     @Mappings({
             @Mapping(source = "repository.id",target = "repositoryId")
     })
+    @JoinQuery(key = "id")
     private Repository repository;
 
     @ApiProperty(name="user",desc="所属用户",eg="@selectOne")
@@ -40,6 +42,7 @@ public class TestCaseRecent extends BaseModel {
     @Mappings({
             @Mapping(source = "testCase.id",target = "testCaseId")
     })
+    @JoinQuery(key = "id")
     private TestCase testCase;
 
 

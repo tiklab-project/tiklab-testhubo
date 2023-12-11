@@ -113,10 +113,8 @@ public class RepositoryRecentServiceImpl implements RepositoryRecentService {
             Repository repository = repositoryService.findRepository(repositoryId);
 
             //获取测试计划总数
-            int planNum=0;
-            List<TestPlan> testPlanList = testPlanService.findTestPlanList(new TestPlanQuery().setRepositoryId(repositoryId));
-            planNum=testPlanList.size();
-            repository.setPlanNum(planNum);
+            int testPlanNum = testPlanService.findTestPlanNum(repositoryId);
+            repository.setPlanNum(testPlanNum);
 
             //获取成员总数
             int memberNum =0;

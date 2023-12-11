@@ -64,6 +64,19 @@ public class TestPlanDao{
     }
 
     /**
+     * 查询总数
+     * @param repositoryId
+     * @return
+     */
+    public int findTestPlanNum(String repositoryId) {
+        String planSql = "Select count(1) as total from teston_test_plan where repository_id = '" + repositoryId+ "'";
+        Integer planTotal = jpaTemplate.getJdbcTemplate().queryForObject(planSql, new Object[]{}, Integer.class);
+
+        return planTotal;
+    }
+
+
+    /**
     * 查找所有测试计划
     * @return
     */

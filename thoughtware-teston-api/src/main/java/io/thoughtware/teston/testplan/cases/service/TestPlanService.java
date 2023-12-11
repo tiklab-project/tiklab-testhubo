@@ -41,6 +41,14 @@ public interface TestPlanService {
     @FindOne
     TestPlan findOne(@NotNull String id);
 
+    /**
+     * 查询测试计划总数
+     * @param repositoryId
+     * @return
+     */
+    int findTestPlanNum(String repositoryId);
+
+
     @FindList
     List<TestPlan> findList(List<String> idList);
 

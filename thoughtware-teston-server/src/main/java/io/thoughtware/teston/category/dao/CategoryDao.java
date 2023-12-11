@@ -64,6 +64,21 @@ public class CategoryDao{
         return jpaTemplate.findOne(CategoryEntity.class,id);
     }
 
+
+    /**
+     * 查询总数
+     * @param repositoryId
+     * @return
+     */
+    public int findCategoryNum(String repositoryId) {
+        String categorySql = "Select count(1) as total from teston_category where repository_id = '" + repositoryId+ "'";
+        Integer categoryTotal = jpaTemplate.getJdbcTemplate().queryForObject(categorySql, new Object[]{}, Integer.class);
+
+        return categoryTotal;
+    }
+
+
+
     /**
     * 查找所有目录
     * @return

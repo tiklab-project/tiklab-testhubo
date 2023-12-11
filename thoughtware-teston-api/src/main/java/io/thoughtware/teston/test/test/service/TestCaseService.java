@@ -50,6 +50,13 @@ public interface TestCaseService {
     List<TestCase> findList(List<String> idList);
 
     /**
+     * 查询分组总数
+     * @param repositoryId
+     * @return
+     */
+    int findTestCaseNum(String repositoryId);
+
+    /**
     * 根据id查找测试用例
     * @param id
     * @return

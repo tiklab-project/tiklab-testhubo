@@ -150,6 +150,12 @@ public class TestCaseServiceImpl implements TestCaseService {
     }
 
     @Override
+    public int findTestCaseNum(String repositoryId) {
+        int testCaseNum = testCaseDao.findTestCaseNum(repositoryId);
+        return testCaseNum;
+    }
+
+    @Override
     public TestCase findTestCase(@NotNull String id) {
         TestCase testCase = findOne(id);
 
