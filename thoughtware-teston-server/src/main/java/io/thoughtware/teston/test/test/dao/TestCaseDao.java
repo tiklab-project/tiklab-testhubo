@@ -7,9 +7,12 @@ import io.thoughtware.dal.jpa.JpaTemplate;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
 import io.thoughtware.dal.jpa.criterial.condition.QueryCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
+import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
+import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -101,6 +104,7 @@ public class TestCaseDao {
                 .eq("caseType",testCaseQuery.getCaseType())
                 .eq("createUser",testCaseQuery.getCreateUser())
                 .in("repositoryId",testCaseQuery.getInList())
+                .in("caseType",testCaseQuery.getCaseTypeList())
                 .notIn("id",testCaseQuery.getNotInList())
                 .like("name", testCaseQuery.getName())
                 .orders(testCaseQuery.getOrderParams())
@@ -122,11 +126,22 @@ public class TestCaseDao {
                 .eq("createUser",testCaseQuery.getCreateUser())
                 .notIn("id",testCaseQuery.getNotInList())
                 .in("repositoryId",testCaseQuery.getInList())
+                .in("caseType",testCaseQuery.getCaseTypeList())
                 .like("name", testCaseQuery.getName())
                 .pagination(testCaseQuery.getPageParam())
                 .orders(testCaseQuery.getOrderParams())
                 .get();
         return jpaTemplate.findPage(queryCondition, TestCasesEntity.class);
+    }
+
+    public Pagination<TestCasesEntity> findPlanCasePage(TestCaseQuery testCaseQuery){
+        String modelSql = "SELECT teston_testcase.create_user,teston_testcase.create_time,teston_testcase.case_type,teston_testcase.category_id,teston_testcase.name\n" +
+                "FROM teston_test_plan_detail\n" +
+                "JOIN teston_testcase ON teston_test_plan_detail.test_case_id = teston_testcase.id\n" +
+                "WHERE teston_testcase.name LIKE '%"+ testCaseQuery.getName()+"%'\n" +
+                "   OR teston_testcase.case_type = '"+testCaseQuery.getCaseType()+"'";
+        Pagination<TestCasesEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(TestCasesEntity.class));
+        return page;
     }
 
 }

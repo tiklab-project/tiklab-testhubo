@@ -30,6 +30,9 @@ public class TestCaseQuery implements Serializable {
     @ApiProperty(name = "caseType", desc = "用例类型: unit,scene,perform,func")
     private String caseType;
 
+    @ApiProperty(name = "caseTypeList", desc = "caseTypeList")
+    private String[] caseTypeList;
+
     @ApiProperty(name = "notInList", desc = "不包含")
     private String[] notInList;
 
@@ -92,6 +95,14 @@ public class TestCaseQuery implements Serializable {
 
     public void setCaseType(String caseType) {
         this.caseType = caseType;
+    }
+
+    public String[] getCaseTypeList() {
+        return caseTypeList;
+    }
+
+    public void setCaseTypeList(String[] caseTypeList) {
+        this.caseTypeList = caseTypeList;
     }
 
     public List<Order> getOrderParams() {

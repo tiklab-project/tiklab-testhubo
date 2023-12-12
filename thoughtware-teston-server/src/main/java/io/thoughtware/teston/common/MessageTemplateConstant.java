@@ -15,9 +15,9 @@ public class MessageTemplateConstant {
     public static final String LOG_TEMPLATE_ID = "LOG_CODE";
 
     //日志类型ID
-    public static final String LOG_TYPE_CREATE_ID = "CREATE_TYPE";
-    public static final String LOG_TYPE_UPDATE_ID = "UPDATE_TYPE";
-    public static final String LOG_TYPE_DELETE_ID = "DELETE_TYPE";
+    public static final String LOG_TYPE_CREATE_ID = "CREATE_REPOSITORY_TYPE";
+    public static final String LOG_TYPE_UPDATE_ID = "UPDATE_REPOSITORY_TYPE";
+    public static final String LOG_TYPE_DELETE_ID = "DELETE_REPOSITORY_TYPE";
 
 
 

@@ -6,10 +6,8 @@ import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.category.model.Category;
 import io.thoughtware.teston.common.LogUnit;
 import io.thoughtware.teston.common.MessageTemplateConstant;
-import io.thoughtware.teston.common.TestOnUnit;
 import io.thoughtware.teston.repository.dao.RepositoryDao;
 import io.thoughtware.teston.repository.entity.RepositoryEntity;
-import io.thoughtware.teston.repository.model.*;
 import io.thoughtware.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -17,8 +15,6 @@ import io.thoughtware.join.JoinTemplate;
 import io.thoughtware.message.message.model.SendMessageNotice;
 import io.thoughtware.message.message.service.SendMessageNoticeService;
 import io.thoughtware.privilege.dmRole.service.DmRoleService;
-import io.thoughtware.security.logging.model.LoggingType;
-import io.thoughtware.security.logging.service.LoggingTypeService;
 import io.thoughtware.teston.category.model.CategoryQuery;
 import io.thoughtware.teston.category.service.CategoryService;
 import io.thoughtware.teston.support.environment.model.ApiEnv;
@@ -72,12 +68,6 @@ public class RepositoryServiceImpl implements RepositoryService {
     DmRoleService dmRoleService;
 
     @Autowired
-    TestOnUnit testOnUnit;
-
-    @Autowired
-    LoggingTypeService loggingTypeService;
-
-    @Autowired
     SendMessageNoticeService sendMessageNoticeService;
 
     @Autowired
@@ -125,11 +115,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         Map<String,String> map = new HashMap<>();
         map.put("name",repository.getName());
         map.put("repositoryId",repositoryId);
-        map.put("user",testOnUnit.getUser().getNickname());
-        map.put("mode","仓库");
-        map.put("images",repository.getIconUrl());
-        LoggingType oplogTypeOne = loggingTypeService.findOplogTypeOne(MessageTemplateConstant.LOG_TYPE_CREATE_ID);
-        map.put("actionType",oplogTypeOne.getName());
+        map.put("link","/repository/detail/${repositoryId}");
         logUnit.log(MessageTemplateConstant.LOG_TYPE_CREATE_ID,"repository",map);
 
         //消息
@@ -178,15 +164,8 @@ public class RepositoryServiceImpl implements RepositoryService {
         Map<String,String> map = new HashMap<>();
         map.put("name",repository.getName());
         map.put("repositoryId",repository.getId());
-        String loginId = LoginContext.getLoginId();
-        User user = userService.findUser(loginId);
-        map.put("user",user.getNickname());
-        map.put("mode","仓库");
-        map.put("images",repository.getIconUrl());
-        LoggingType oplogTypeOne = loggingTypeService.findOplogTypeOne(MessageTemplateConstant.LOG_TYPE_UPDATE_ID);
-        map.put("actionType",oplogTypeOne.getName());
+        map.put("link","/repository/detail/${repositoryId}");
         logUnit.log(MessageTemplateConstant.LOG_TYPE_UPDATE_ID,"repository",map);
-
     }
 
     @Override

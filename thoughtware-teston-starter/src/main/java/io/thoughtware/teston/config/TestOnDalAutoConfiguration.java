@@ -40,11 +40,16 @@ public class TestOnDalAutoConfiguration {
 
         });
         dsmConfig.newVersion("1.0.1", new String[]{
+                "oplog_1.0.1",
+                "message_1.0.1",
+                "todotask_1.0.1",
+
                 "teston_1.0.1",
                 "teston-platform_1.0.1",
         });
         dsmConfig.newVersion("1.0.2", new String[]{
                 "teston_1.0.2",
+                "teston-platform_1.0.2",
         });
         dsmConfig.newVersion("1.0.3", new String[]{
                 "teston_1.0.3",

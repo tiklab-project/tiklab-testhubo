@@ -19,6 +19,12 @@ public class TestPlanCaseQuery {
     @ApiProperty(name = "testPlanId", desc = "测试计划id")
     private String testPlanId;
 
+    @ApiProperty(name = "name", desc = "用例名称")
+    private String name;
+
+    @ApiProperty(name = "caseType", desc = "用例类型")
+    private String caseType;
+
     public List<Order> getOrderParams() {
         return orderParams;
     }
@@ -42,5 +48,21 @@ public class TestPlanCaseQuery {
     public TestPlanCaseQuery setTestPlanId(String testPlanId) {
         this.testPlanId = testPlanId;
         return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCaseType() {
+        return caseType;
+    }
+
+    public void setCaseType(String caseType) {
+        this.caseType = caseType;
     }
 }

@@ -84,4 +84,11 @@ public interface TestCaseService {
     */
     Pagination<TestCase> findTestCasePage(TestCaseQuery testCaseQuery);
 
+    /**
+     * 测试计划中查询分页
+     * @param testCaseQuery
+     * @return
+     */
+    Pagination<TestCase> findPlanCasePage(TestCaseQuery testCaseQuery);
+
 }

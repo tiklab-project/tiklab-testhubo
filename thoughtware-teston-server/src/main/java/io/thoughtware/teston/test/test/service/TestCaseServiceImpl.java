@@ -199,6 +199,7 @@ public class TestCaseServiceImpl implements TestCaseService {
         return PaginationBuilder.build(pagination, newTestCaseList);
     }
 
+
     /**
      * 给用例设置最近一次执行结果
      * @param testCaseList
@@ -342,6 +343,15 @@ public class TestCaseServiceImpl implements TestCaseService {
         }
 
         return newTestCaseList;
+    }
+
+
+    @Override
+    public Pagination<TestCase> findPlanCasePage(TestCaseQuery testCaseQuery) {
+        Pagination<TestCasesEntity> planCasePage = testCaseDao.findPlanCasePage(testCaseQuery);
+        List<TestCase> testCaseList = BeanMapper.mapList(planCasePage.getDataList(), TestCase.class);
+        joinTemplate.joinQuery(testCaseList);
+        return PaginationBuilder.build(planCasePage, testCaseList);
     }
 
 

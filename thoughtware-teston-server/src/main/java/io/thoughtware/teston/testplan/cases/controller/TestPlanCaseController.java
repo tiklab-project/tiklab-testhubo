@@ -2,6 +2,7 @@ package io.thoughtware.teston.testplan.cases.controller;
 
 import io.thoughtware.postin.annotation.Api;
 import io.thoughtware.teston.test.test.model.TestCase;
+import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.teston.testplan.cases.service.TestPlanCaseService;
@@ -97,11 +98,11 @@ public class TestPlanCaseController {
     }
 
 
-    @RequestMapping(path = "/findTesCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findTesCase",desc = "测试计划绑定的用例添加用例弹窗列表")
-    @ApiParam(name = "testPlanCase",desc = "testPlanCase",required = true)
-    public Result<Pagination<TestCase>> findTesCaseList(@RequestBody @Valid @NotNull TestPlanCase testPlanCase){
-        Pagination<TestCase> pagination = testPlanCaseService.findTesCaseList(testPlanCase);
+    @RequestMapping(path = "/findPlanCasePage",method = RequestMethod.POST)
+    @ApiMethod(name = "findPlanCasePage",desc = "测试计划绑定的用例添加用例弹窗列表")
+    @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
+    public Result<Pagination<TestCase>> findPlanCasePage(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
+        Pagination<TestCase> pagination = testPlanCaseService.findPlanCasePage(testCaseQuery);
 
         return Result.ok(pagination);
     }

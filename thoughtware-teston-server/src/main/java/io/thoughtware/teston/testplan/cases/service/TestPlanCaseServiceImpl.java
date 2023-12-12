@@ -137,12 +137,10 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     }
 
     @Override
-    public Pagination<TestCase> findTesCaseList(TestPlanCase testPlanCase) {
+    public Pagination<TestCase> findPlanCasePage(TestCaseQuery testCaseQuery) {
 
-        //查询所有用例
-        TestCaseQuery testCaseQuery = new TestCaseQuery();
-        testCaseQuery.setRepositoryId(testPlanCase.getRepositoryId());
-        Pagination<TestCase> testCasePage = testCaseService.findTestCasePage(testCaseQuery);
+
+        Pagination<TestCase> testCasePage = testCaseService.findPlanCasePage(testCaseQuery);
 
         return testCasePage;
     }
