@@ -58,6 +58,7 @@ public class TestOnDalAutoConfiguration {
                 "teston_1.0.3",
 
                 "message_1.0.3",
+                "teston-platform_1.0.3",
         });
         dsmConfig.newVersion("1.0.4", new String[]{
                 "teston_1.0.4",
