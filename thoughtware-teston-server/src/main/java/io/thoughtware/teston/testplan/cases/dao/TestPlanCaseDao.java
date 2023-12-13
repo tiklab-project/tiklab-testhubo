@@ -1,5 +1,7 @@
 package io.thoughtware.teston.testplan.cases.dao;
 
+import io.thoughtware.teston.test.test.entity.TestCasesEntity;
+import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
@@ -10,6 +12,7 @@ import io.thoughtware.dal.jpa.JpaTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -100,6 +103,32 @@ public class TestPlanCaseDao {
                 .pagination(testPlanCaseQuery.getPageParam())
                 .get();
         return jpaTemplate.findPage(queryCondition, TestPlanCaseEntity.class);
+    }
+
+    public Pagination<TestCasesEntity> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery){
+        StringBuilder modelSqlBuilder = new StringBuilder();
+        modelSqlBuilder.append("SELECT teston_test_plan_detail.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type, teston_testcase.category_id, teston_testcase.name ")
+                .append("FROM teston_test_plan_detail ")
+                .append("JOIN teston_testcase ON teston_testcase.id = teston_test_plan_detail.test_case_id ")
+                .append("JOIN teston_test_plan ON teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("'");
+
+        if (testPlanCaseQuery.getName() != null) {
+            modelSqlBuilder.append(" WHERE teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
+        }
+
+        if (testPlanCaseQuery.getCaseType() != null) {
+            if (testPlanCaseQuery.getName() != null) {
+                modelSqlBuilder.append(" OR");
+            } else {
+                modelSqlBuilder.append(" WHERE");
+            }
+            modelSqlBuilder.append(" teston_testcase.case_type = '").append(testPlanCaseQuery.getCaseType()).append("'");
+        }
+
+        String modelSql = modelSqlBuilder.toString();
+
+        Pagination<TestCasesEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(TestCasesEntity.class));
+        return page;
     }
 
 

@@ -101,8 +101,8 @@ public class TestPlanCaseController {
     @RequestMapping(path = "/findPlanCasePage",method = RequestMethod.POST)
     @ApiMethod(name = "findPlanCasePage",desc = "测试计划绑定的用例添加用例弹窗列表")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
-    public Result<Pagination<TestCase>> findPlanCasePage(@RequestBody @Valid @NotNull TestCaseQuery testCaseQuery){
-        Pagination<TestCase> pagination = testPlanCaseService.findPlanCasePage(testCaseQuery);
+    public Result<Pagination<TestCase>> findPlanCasePage(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
+        Pagination<TestCase> pagination = testPlanCaseService.findPlanCasePage(testPlanCaseQuery);
 
         return Result.ok(pagination);
     }

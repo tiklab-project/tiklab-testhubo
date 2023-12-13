@@ -1,10 +1,9 @@
 package io.thoughtware.teston.repository.service;
 
-import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.common.TestOnUnit;
 import io.thoughtware.teston.repository.model.*;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.category.model.Category;
-import io.thoughtware.teston.common.LogUnit;
 import io.thoughtware.teston.common.MessageTemplateConstant;
 import io.thoughtware.teston.repository.dao.RepositoryDao;
 import io.thoughtware.teston.repository.entity.RepositoryEntity;
@@ -12,19 +11,14 @@ import io.thoughtware.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.join.JoinTemplate;
-import io.thoughtware.message.message.model.SendMessageNotice;
-import io.thoughtware.message.message.service.SendMessageNoticeService;
 import io.thoughtware.privilege.dmRole.service.DmRoleService;
 import io.thoughtware.teston.category.model.CategoryQuery;
 import io.thoughtware.teston.category.service.CategoryService;
 import io.thoughtware.teston.support.environment.model.ApiEnv;
 import io.thoughtware.teston.support.environment.service.ApiEnvService;
-import io.thoughtware.teston.testplan.cases.service.TestPlanService;
 import io.thoughtware.user.dmUser.model.DmUser;
 import io.thoughtware.user.dmUser.model.DmUserQuery;
 import io.thoughtware.user.dmUser.service.DmUserService;
-import io.thoughtware.user.user.model.User;
-import io.thoughtware.user.user.service.UserService;
 import io.thoughtware.eam.common.context.LoginContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,19 +56,11 @@ public class RepositoryServiceImpl implements RepositoryService {
     RepositoryRecentService repositoryRecentService;
 
     @Autowired
-    UserService userService;
-
-    @Autowired
     DmRoleService dmRoleService;
 
     @Autowired
-    SendMessageNoticeService sendMessageNoticeService;
+    TestOnUnit testOnUnit;
 
-    @Autowired
-    LogUnit logUnit;
-
-    @Autowired
-    TestPlanService testPlanService;
 
     @Autowired
     ApiEnvService apiEnvService;
@@ -85,7 +71,6 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public String createRepository(@NotNull @Valid Repository repository) {
         String userId = LoginContext.getLoginId();
-        User userInfo = userService.findUser(userId);
 
         //创建项目
         RepositoryEntity repositoryEntity = BeanMapper.map(repository, RepositoryEntity.class);
@@ -111,44 +96,15 @@ public class RepositoryServiceImpl implements RepositoryService {
         apiEnv.setPreUrl(mockUrl);
         apiEnvService.createApiEnv(apiEnv);
 
-        //日志
+
         Map<String,String> map = new HashMap<>();
         map.put("name",repository.getName());
         map.put("repositoryId",repositoryId);
         map.put("link","/repository/detail/${repositoryId}");
-        logUnit.log(MessageTemplateConstant.LOG_TYPE_CREATE_ID,"repository",map);
-
+        //日志
+        testOnUnit.log(MessageTemplateConstant.LOG_TYPE_CREATE_ID,"repository",map);
         //消息
-        //站内信
-        SendMessageNotice messageDispatchNotice = new SendMessageNotice();
-        Map<String,String> site_mail_Map = new HashMap<>();
-        site_mail_Map.put("name",repository.getName());
-        site_mail_Map.put("id",repositoryId);
-        site_mail_Map.put("userName",userInfo.getNickname());
-        site_mail_Map.put("images",repository.getIconUrl());
-        String siteMailMsg = JSONObject.toJSONString(site_mail_Map);
-
-        messageDispatchNotice.setSiteData(siteMailMsg);
-
-        //邮箱
-        messageDispatchNotice.setEmailData(siteMailMsg);
-
-        //钉钉
-        Map<String,String> DD_MSGMap = new HashMap<>();
-        DD_MSGMap.put("name",repository.getName());
-        DD_MSGMap.put("userName",userInfo.getNickname());
-        DD_MSGMap.put("images",repository.getIconUrl());
-        messageDispatchNotice.setDingdingData(JSONObject.toJSONString(DD_MSGMap));
-
-        //企业微信
-        Map<String,String> WX_MSGMap = new HashMap<>();
-        WX_MSGMap.put("name",repository.getName());
-        WX_MSGMap.put("userName",userInfo.getNickname());
-        messageDispatchNotice.setQywechatData(JSONObject.toJSONString(WX_MSGMap));
-
-        messageDispatchNotice.setId("MESSAGE_NOTICE_ID");
-        messageDispatchNotice.setBaseUrl(baseUrl);
-        sendMessageNoticeService.createMessageItem(messageDispatchNotice);
+        testOnUnit.message(map);
 
         return repositoryId;
 
@@ -165,7 +121,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         map.put("name",repository.getName());
         map.put("repositoryId",repository.getId());
         map.put("link","/repository/detail/${repositoryId}");
-        logUnit.log(MessageTemplateConstant.LOG_TYPE_UPDATE_ID,"repository",map);
+        testOnUnit.log(MessageTemplateConstant.LOG_TYPE_UPDATE_ID,"repository",map);
     }
 
     @Override

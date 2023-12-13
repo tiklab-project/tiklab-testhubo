@@ -79,10 +79,10 @@ INSERT INTO  pcs_mec_message_template  ( id ,  msg_type_id ,  msg_send_type_id ,
 INSERT INTO  pcs_mec_message_template  ( id ,  msg_type_id ,  msg_send_type_id ,  title ,  content ,  link ,  bgroup ) VALUES ('RP_CREATE_DD', 'RP_MS_TYPE', 'dingding', '钉钉仓库创建', '**仓库创建** \n\n**${userName}**  创建了   **${name}**\n\n![workspaceImg](${images})\n\n', NULL, 'teston');
 INSERT INTO  pcs_mec_message_template  ( id ,  msg_type_id ,  msg_send_type_id ,  title ,  content ,  link ,  bgroup ) VALUES ('RP_CREATE_WX', 'RP_MS_TYPE', 'qywechat', NULL, '**仓库创建**  \n\n**${userName}**  创建了   **${name}**\n', NULL, 'teston');
 
-INSERT INTO  pcs_mec_message_notice  ( id ,  message_type_id ,  type ,  bgroup ,  message_send_type_id ) VALUES ('MSG_NOTICEID', 'RP_MS_TYPE', 1, 'teston', 'dingding,email,qywechat,site');
+INSERT INTO  pcs_mec_message_notice  ( id ,  message_type_id ,  type ,  bgroup ,  message_send_type_id ) VALUES ('MESSAGE_NOTICE_ID', 'RP_MS_TYPE', 1, 'teston', 'dingding,email,qywechat,site');
 
-INSERT INTO  pcs_mec_message_notice_connect_user  ( id ,  message_notice_id ,  user_id ) VALUES ('afc42e5554', 'MSG_NOTICEID', '111111');
-INSERT INTO  pcs_mec_message_notice_connect_role  ( id ,  message_notice_id ,  role_id ) VALUES ('df4d545645', 'MSG_NOTICEID', '1');
+INSERT INTO  pcs_mec_message_notice_connect_user  ( id ,  message_notice_id ,  user_id ) VALUES ('afc42e5554', 'MESSAGE_NOTICE_ID', '111111');
+INSERT INTO  pcs_mec_message_notice_connect_role  ( id ,  message_notice_id ,  role_id ) VALUES ('df4d545645', 'MESSAGE_NOTICE_ID', '1');
 
 INSERT INTO  pcs_mec_message_type  ( id ,  name ,  description ,  bgroup ) VALUES ('RP_MS_TYPE', '创建仓库通知', NULL, 'teston');
 

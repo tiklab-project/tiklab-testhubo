@@ -346,14 +346,6 @@ public class TestCaseServiceImpl implements TestCaseService {
     }
 
 
-    @Override
-    public Pagination<TestCase> findPlanCasePage(TestCaseQuery testCaseQuery) {
-        Pagination<TestCasesEntity> planCasePage = testCaseDao.findPlanCasePage(testCaseQuery);
-        List<TestCase> testCaseList = BeanMapper.mapList(planCasePage.getDataList(), TestCase.class);
-        joinTemplate.joinQuery(testCaseList);
-        return PaginationBuilder.build(planCasePage, testCaseList);
-    }
-
 
 
 }

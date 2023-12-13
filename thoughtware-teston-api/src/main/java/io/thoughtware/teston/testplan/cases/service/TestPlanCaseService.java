@@ -68,10 +68,10 @@ public interface TestPlanCaseService {
     Pagination<TestPlanCase> findTestPlanCasePage(TestPlanCaseQuery testPlanCaseQuery);
     /**
      * 添加用例弹窗列表
-     * @param testPlanCase
+     * @param testPlanCaseQuery
      * @return
      */
-    Pagination<TestCase> findPlanCasePage(TestCaseQuery testPlanCase);
+    Pagination<TestCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery);
 
     /**
      * 查询已经关联的用例

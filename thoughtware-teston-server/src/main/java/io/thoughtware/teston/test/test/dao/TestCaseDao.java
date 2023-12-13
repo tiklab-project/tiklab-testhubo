@@ -134,14 +134,5 @@ public class TestCaseDao {
         return jpaTemplate.findPage(queryCondition, TestCasesEntity.class);
     }
 
-    public Pagination<TestCasesEntity> findPlanCasePage(TestCaseQuery testCaseQuery){
-        String modelSql = "SELECT teston_testcase.create_user,teston_testcase.create_time,teston_testcase.case_type,teston_testcase.category_id,teston_testcase.name\n" +
-                "FROM teston_test_plan_detail\n" +
-                "JOIN teston_testcase ON teston_test_plan_detail.test_case_id = teston_testcase.id\n" +
-                "WHERE teston_testcase.name LIKE '%"+ testCaseQuery.getName()+"%'\n" +
-                "   OR teston_testcase.case_type = '"+testCaseQuery.getCaseType()+"'";
-        Pagination<TestCasesEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(TestCasesEntity.class));
-        return page;
-    }
 
 }
