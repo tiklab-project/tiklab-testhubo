@@ -114,7 +114,7 @@ public class TestPlanInstanceServiceImpl implements TestPlanInstanceService {
 
     @Override
     public Pagination<TestPlanInstance> findTestPlanInstancePage(TestPlanInstanceQuery testPlanInstanceQuery) {
-        Pagination<TestPlanInstanceEntity>  pagination = testPlanInstanceDao.findTestPlanInstancePage(testPlanInstanceQuery);
+        Pagination<TestPlanInstanceEntity>  pagination = testPlanInstanceDao.findPlanCasePage(testPlanInstanceQuery);
 
         List<TestPlanInstance> testPlanInstanceList = BeanMapper.mapList(pagination.getDataList(),TestPlanInstance.class);
 
@@ -122,4 +122,6 @@ public class TestPlanInstanceServiceImpl implements TestPlanInstanceService {
 
         return PaginationBuilder.build(pagination,testPlanInstanceList);
     }
+
+
 }

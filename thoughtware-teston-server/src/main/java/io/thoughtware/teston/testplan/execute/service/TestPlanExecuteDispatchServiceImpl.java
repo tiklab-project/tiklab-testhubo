@@ -106,7 +106,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             testPlanInstance.setExecuteNumber(1);
         }
 
-        testPlanInstance.setTestPlanId(testPlanId);
+        testPlanInstance.getTestPlan().setId(testPlanId);
         testPlanInstance.setRepositoryId(repositoryId);
         testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
         testPlanInstance.setCreateUser(LoginContext.getLoginId());
@@ -173,8 +173,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             }
         }
     }
-
-
 
 
     @Override
@@ -273,7 +271,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      */
     private void saveToSql(TestPlanInstance testPlanInstance) {
 
-        testPlanInstance.setTestPlanId(testPlanId);
+        testPlanInstance.getTestPlan().setId(testPlanId);
         testPlanInstance.setId(testPlanInstanceId);
         testPlanInstanceService.updateTestPlanInstance(testPlanInstance);
 

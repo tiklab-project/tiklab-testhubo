@@ -1,5 +1,7 @@
 package io.thoughtware.teston.testplan.instance.dao;
 
+import io.thoughtware.teston.test.test.entity.TestCasesEntity;
+import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.teston.testplan.instance.entity.TestPlanInstanceEntity;
 import io.thoughtware.teston.testplan.instance.model.TestPlanInstanceQuery;
 import io.thoughtware.core.page.Pagination;
@@ -11,6 +13,7 @@ import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -104,4 +107,22 @@ public class TestPlanInstanceDao{
                 .get();
         return jpaTemplate.findPage(queryCondition,TestPlanInstanceEntity.class);
     }
+
+
+    public Pagination<TestPlanInstanceEntity> findPlanCasePage(TestPlanInstanceQuery testPlanInstanceQuery){
+        StringBuilder modelSqlBuilder = new StringBuilder();
+        modelSqlBuilder.append("SELECT * ")
+                .append(" FROM teston_test_plan_instance ")
+                .append(" JOIN teston_test_plan on teston_test_plan_instance.test_plan_id = teston_test_plan.id");
+
+        if (testPlanInstanceQuery.getName() != null) {
+            modelSqlBuilder.append(" WHERE teston_test_plan.name LIKE '%").append(testPlanInstanceQuery.getName()).append("%'");
+        }
+
+        String modelSql = modelSqlBuilder.toString();
+
+        Pagination<TestPlanInstanceEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanInstanceQuery.getPageParam(), new BeanPropertyRowMapper<>(TestPlanInstanceEntity.class));
+        return page;
+    }
+
 }

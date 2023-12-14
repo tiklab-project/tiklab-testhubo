@@ -11,6 +11,9 @@ import java.util.List;
 @ApiModel
 public class TestPlanInstanceQuery {
 
+    @ApiProperty(name="name",desc="name")
+    private java.lang.String name;
+
     @ApiProperty(name="testPlanId",desc="testPlanId")
     private java.lang.String testPlanId;
 
@@ -22,6 +25,14 @@ public class TestPlanInstanceQuery {
 
     @ApiProperty(name ="pageParam",desc = "分页参数")
     private Page pageParam = new Page();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getTestPlanId() {
         return testPlanId;

@@ -48,6 +48,8 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
 
     @Override
     public String createTestPlanCase(@NotNull @Valid TestPlanCase testPlanCase) {
+        testPlanCase.setId(testPlanCase.getTestCase().getId());
+
         TestPlanCaseEntity testPlanCaseEntity = BeanMapper.map(testPlanCase, TestPlanCaseEntity.class);
         //初始化 2为未执行
         testPlanCaseEntity.setStatus(2);

@@ -2,22 +2,32 @@ package io.thoughtware.teston.testplan.instance.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thoughtware.beans.annotation.Mapper;
+import io.thoughtware.beans.annotation.Mapping;
+import io.thoughtware.beans.annotation.Mappings;
 import io.thoughtware.core.BaseModel;
+import io.thoughtware.join.annotation.Join;
+import io.thoughtware.join.annotation.JoinQuery;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
+import io.thoughtware.teston.testplan.cases.model.TestPlan;
 
 /**
  * 测试计划实例 模型
  */
 @ApiModel
 @Mapper
+@Join
 public class TestPlanInstance extends BaseModel {
 
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
-    @ApiProperty(name="testPlanId",desc="所属计划")
-    private java.lang.String testPlanId;
+    @ApiProperty(name="testPlan",desc="所属模块")
+    @Mappings({
+            @Mapping(source = "testPlan.id",target = "testPlanId")
+    })
+    @JoinQuery(key = "id")
+    private TestPlan testPlan;
 
     @ApiProperty(name="repositoryId",desc="所属仓库")
     private java.lang.String repositoryId;
@@ -59,12 +69,13 @@ public class TestPlanInstance extends BaseModel {
     public void setId(java.lang.String id) {
         this.id = id;
     }
-    public java.lang.String getTestPlanId() {
-        return testPlanId;
+
+    public TestPlan getTestPlan() {
+        return testPlan;
     }
 
-    public void setTestPlanId(java.lang.String testPlanId) {
-        this.testPlanId = testPlanId;
+    public void setTestPlan(TestPlan testPlan) {
+        this.testPlan = testPlan;
     }
 
     public String getRepositoryId() {
