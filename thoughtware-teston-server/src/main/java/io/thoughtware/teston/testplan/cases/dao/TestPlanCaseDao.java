@@ -101,6 +101,7 @@ public class TestPlanCaseDao {
                 .eq("testPlanId", testPlanCaseQuery.getTestPlanId())
                 .orders(testPlanCaseQuery.getOrderParams())
                 .pagination(testPlanCaseQuery.getPageParam())
+
                 .get();
         return jpaTemplate.findPage(queryCondition, TestPlanCaseEntity.class);
     }
@@ -110,7 +111,8 @@ public class TestPlanCaseDao {
         modelSqlBuilder.append("SELECT teston_test_plan_detail.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type, teston_testcase.category_id, teston_testcase.name ")
                 .append("FROM teston_test_plan_detail ")
                 .append("JOIN teston_testcase ON teston_testcase.id = teston_test_plan_detail.test_case_id ")
-                .append("JOIN teston_test_plan ON teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("'");
+                .append("JOIN teston_test_plan ON teston_test_plan.id = teston_test_plan_detail.test_plan_id ")
+                .append("WHERE teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("'");
 
         if (testPlanCaseQuery.getName() != null) {
             modelSqlBuilder.append(" WHERE teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
