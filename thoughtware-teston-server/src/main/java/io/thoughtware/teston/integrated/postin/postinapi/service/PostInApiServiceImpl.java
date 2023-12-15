@@ -19,6 +19,8 @@ import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
 import io.thoughtware.teston.test.apix.http.unit.cases.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,10 +111,11 @@ public class PostInApiServiceImpl implements PostInApiService {
         if(postInApiToCase.getApiList() != null){
             for(String apiId:postInApiToCase.getApiList()){
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("apiId",apiId);
-                jsonObject.put("protocolType","http");
-                HttpApi httpApi = restTemplateUtils.requestPost(apxUrl, jsonObject, HttpApi.class);
+
+                MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                formData.add("apiId", apiId);
+                formData.add("protocolType", "http");
+                HttpApi httpApi = restTemplateUtils.requestPost(apxUrl, formData, HttpApi.class);
 
                 ApiUnitCase apiUnitCase = new ApiUnitCase();
                 String apiUnitCaseId = null;

@@ -119,6 +119,15 @@ public class TestPlanInstanceDao{
             modelSqlBuilder.append(" WHERE teston_test_plan.name LIKE '%").append(testPlanInstanceQuery.getName()).append("%'");
         }
 
+        if(testPlanInstanceQuery.getCreateUser() !=null){
+            if (testPlanInstanceQuery.getName() != null) {
+                modelSqlBuilder.append(" OR");
+            }else {
+                modelSqlBuilder.append(" WHERE");
+            }
+            modelSqlBuilder.append(" teston_test_plan_instance.create_user =  '").append(testPlanInstanceQuery.getCreateUser()).append("'");
+        }
+
         String modelSql = modelSqlBuilder.toString();
 
         Pagination<TestPlanInstanceEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanInstanceQuery.getPageParam(), new BeanPropertyRowMapper<>(TestPlanInstanceEntity.class));

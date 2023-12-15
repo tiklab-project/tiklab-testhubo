@@ -1,9 +1,7 @@
 package io.thoughtware.teston.integrated.teamwire.workItem.service;
 
-import io.thoughtware.teston.integrated.teamwire.workItem.model.ProjectTestOn;
-import io.thoughtware.teston.integrated.teamwire.workItem.model.ProjectTestOnQuery;
-import io.thoughtware.teston.integrated.teamwire.workItem.model.WorkItemTestOn;
-import io.thoughtware.teston.integrated.teamwire.workItem.model.WorkItemTestOnQuery;
+import io.thoughtware.core.page.Pagination;
+import io.thoughtware.teston.integrated.teamwire.workItem.model.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -27,7 +25,7 @@ public interface WorkItemTestOnService {
      * @param workItemTestOnQuery
      * @return
      */
-    List<WorkItemTestOn>findWorkItemList(WorkItemTestOnQuery workItemTestOnQuery);
+    Pagination<WorkItem> findWorkItemList(WorkItemTestOnQuery workItemTestOnQuery);
 
     /**
      * 查询通过id需求 缺陷

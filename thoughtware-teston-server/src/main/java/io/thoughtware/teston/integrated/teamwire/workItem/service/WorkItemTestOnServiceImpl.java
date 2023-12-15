@@ -2,6 +2,7 @@ package io.thoughtware.teston.integrated.teamwire.workItem.service;
 
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.core.page.Pagination;
 import io.thoughtware.teston.common.RestTemplateUtils;
 import io.thoughtware.teston.integrated.integratedurl.model.IntegratedUrlQuery;
 import io.thoughtware.teston.integrated.integratedurl.service.IntegratedUrlService;
@@ -11,6 +12,8 @@ import io.thoughtware.teston.integrated.teamwire.workItemBind.service.WorkItemBi
 import io.thoughtware.teston.integrated.teamwire.workItem.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,40 +60,22 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
     }
 
     @Override
-    public List<WorkItemTestOn> findWorkItemList(WorkItemTestOnQuery workItemTestOnQuery) {
+    public Pagination<WorkItem> findWorkItemList(WorkItemTestOnQuery workItemTestOnQuery) {
 
         String teamWireUrl = getTeamWireUrl(workItemTestOnQuery.getRepositoryId());
-        String findAllProjectUrl = teamWireUrl + "/api/workItem/findWorkItemList";
+        String findAllProjectUrl = teamWireUrl + "/api/workItem/findConditionWorkItemPage";
 
         WorkItemQuery workItemQuery = new WorkItemQuery();
         workItemQuery.setWorkTypeCode(workItemTestOnQuery.getWorkTypeCode());
         workItemQuery.setProjectId(workItemTestOnQuery.getProjectId());
         workItemQuery.setTitle(workItemTestOnQuery.getName());
-        List<WorkItem> workItemList = restTemplateUtils.requestPostList(findAllProjectUrl, workItemQuery, WorkItem.class);
+        workItemQuery.setPageParam(workItemTestOnQuery.getPageParam());
 
-        //存储处理过的事项
-        ArrayList<WorkItemTestOn> workItemTestOnList = new ArrayList<>();
-        if(workItemList!=null&&workItemList.size()>0){
-            for(WorkItem workItem:workItemList){
-                WorkItemTestOn workItemTestOn = new WorkItemTestOn();
-                workItemTestOn.setId(workItem.getId());
-                workItemTestOn.setName(workItem.getTitle());
-                workItemTestOn.setProjectName(workItem.getProject().getProjectName());
-                if(workItem.getWorkStatusNode()!=null&&workItem.getWorkStatusNode().getName()!=null){
-                    workItemTestOn.setStatus(workItem.getWorkStatusNode().getName());
-                }
-                if(workItem.getAssigner()!=null&&workItem.getAssigner().getNickname()!=null){
-                    workItemTestOn.setDirector(workItem.getAssigner().getNickname());
-                }
-                if(workItem.getWorkPriority()!=null&&workItem.getWorkPriority().getName()!=null){
-                    workItemTestOn.setPriority(workItem.getWorkPriority().getName());
-                }
+        Pagination<WorkItem> workItemPagination = restTemplateUtils.requestPostPage(findAllProjectUrl, workItemQuery, WorkItem.class);
 
-                workItemTestOnList.add(workItemTestOn);
-            }
-        }
 
-        return workItemTestOnList;
+
+        return workItemPagination;
     }
 
     @Override
@@ -99,9 +84,9 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
         String teamWireUrl = getTeamWireUrl(repositoryId);
         String findWorkItemUrl = teamWireUrl + "/api/workItem/findWorkItem";
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",id);
-        WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, jsonObject, WorkItem.class);
+        MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+        formData.add("id", id);
+        WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, formData, WorkItem.class);
 
         WorkItemTestOn workItemTestOn = new WorkItemTestOn();
         workItemTestOn.setId(workItem.getId());
@@ -157,14 +142,14 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
 //        workItem.setPlanEndTime(workItemTestOn.getPlanEndTime());
 
         //创建缺陷获取id
-        String createWorkItemUrl = teamWireUrl + "/api/workType/createWorkItem";
-        String defectId = restTemplateUtils.requestPost(createWorkItemUrl, workItem, String.class);
+//        String createWorkItemUrl = teamWireUrl + "/api/workType/createWorkItem";
+//        String defectId = restTemplateUtils.requestPost(createWorkItemUrl, workItem, String.class);
 
 
         //绑定到当前用例上
         WorkItemBind workItemBind = new WorkItemBind();
         WorkItemTestOn workItemTestOn1 = new WorkItemTestOn();
-        workItemTestOn1.setId(defectId);
+//        workItemTestOn1.setId(defectId);
         workItemBind.setWorkItem(workItemTestOn1);
         workItemBind.setCaseId(workItemTestOn.getCaseId());
 

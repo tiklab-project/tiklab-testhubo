@@ -1,9 +1,7 @@
 package io.thoughtware.teston.integrated.teamwire.workItem.controller;
 
-import io.thoughtware.teston.integrated.teamwire.workItem.model.ProjectTestOn;
-import io.thoughtware.teston.integrated.teamwire.workItem.model.ProjectTestOnQuery;
-import io.thoughtware.teston.integrated.teamwire.workItem.model.WorkItemTestOn;
-import io.thoughtware.teston.integrated.teamwire.workItem.model.WorkItemTestOnQuery;
+import io.thoughtware.core.page.Pagination;
+import io.thoughtware.teston.integrated.teamwire.workItem.model.*;
 import io.thoughtware.teston.integrated.teamwire.workItem.service.WorkItemTestOnService;
 import io.thoughtware.core.Result;
 import io.thoughtware.postin.annotation.Api;
@@ -56,8 +54,8 @@ public class WorkItemController {
     @RequestMapping(path = "/findWorkItemList",method = RequestMethod.POST)
     @ApiMethod(name = "findWorkItemList",desc = "查询teamwire 需求缺陷列表")
     @ApiParam(name = "workItemTestOnQuery",desc = "workItemTestOnQuery")
-    public Result<List<WorkItemTestOn>> findWorkItemList(@RequestBody @Valid @NotNull WorkItemTestOnQuery workItemTestOnQuery){
-        List<WorkItemTestOn> workItemTestOnList = workItemTestOnService.findWorkItemList(workItemTestOnQuery);
+    public Result<Pagination<WorkItem>> findWorkItemList(@RequestBody @Valid @NotNull WorkItemTestOnQuery workItemTestOnQuery){
+        Pagination<WorkItem> workItemTestOnList = workItemTestOnService.findWorkItemList(workItemTestOnQuery);
 
         return Result.ok(workItemTestOnList);
     }

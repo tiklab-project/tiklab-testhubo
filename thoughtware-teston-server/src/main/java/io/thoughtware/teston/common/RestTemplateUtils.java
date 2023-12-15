@@ -4,9 +4,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.core.exception.SystemException;
+import io.thoughtware.core.page.Pagination;
+import io.thoughtware.core.page.PaginationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,12 +33,15 @@ public class RestTemplateUtils {
      * @return 请求结果
      * @throws ApplicationException 请求失败
      */
-    public <T> T requestPost( String requestUrl, Object param, Class<T> tClass){
+    public <T> T requestPost( String requestUrl, MultiValueMap<String, Object> param , Class<T> tClass){
+
+        // 设置 HTTP 头
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        // 创建带有头部和请求体的 HttpEntity
-        HttpEntity<Object> requestEntity = new HttpEntity<>(param, headers);
+        // 创建请求实体
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(param, headers);
+
         ResponseEntity<JSONObject> response;
         try {
             response = restTemplate.exchange(requestUrl, HttpMethod.POST, requestEntity, JSONObject.class);
@@ -119,6 +126,54 @@ public class RestTemplateUtils {
         return data.toJavaList(tClass);
     }
 
+
+
+    public <T> Pagination<T> requestPostPage( String requestUrl, Object param, Class<T> tClass){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // 创建带有头部和请求体的 HttpEntity
+        HttpEntity<Object> requestEntity = new HttpEntity<>(param, headers);
+
+        ResponseEntity<JSONObject> response;
+        try {
+            response = restTemplate.exchange(requestUrl, HttpMethod.POST, requestEntity, JSONObject.class);
+        }catch (ResourceAccessException e){
+            boolean timedOut = Objects.requireNonNull(e.getMessage()).contains("Read timed out");
+            boolean connectOut = Objects.requireNonNull(e.getMessage()).contains("Connect timed out");
+            if (timedOut || connectOut){
+                throw new ApplicationException(50001,"请求超时！");
+            }
+            throw new SystemException(e);
+        }
+        JSONObject jsonObject = response.getBody();
+        return findBodyPage(jsonObject,tClass);
+    }
+
+
+    private <T> Pagination<T> findBodyPage(JSONObject jsonObject, Class<T> tClass){
+
+        if (Objects.isNull( jsonObject)){
+            throw new SystemException("获取返回值为空！");
+        }
+        Integer code = jsonObject.getInteger("code");
+        if (code != 0){
+            String msg = jsonObject.getString("msg");
+            throw new SystemException("接口请求错误！,Message："+msg);
+        }
+        JSONObject data = jsonObject.getJSONObject("data");
+
+        if (Objects.isNull(data)){
+            throw new SystemException("接口返回为空！");
+        }
+//        Pagination pagination = data.toJavaObject(Pagination.class);
+//
+//        return pagination;
+
+        Pagination pagination = JSONObject.parseObject(data.toJSONString(), Pagination.class);
+        JSONArray objects = JSONObject.parseArray(pagination.getDataList().toString());
+
+        return PaginationBuilder.build(pagination, objects.toJavaList(tClass));
+    }
 
     /**
      *

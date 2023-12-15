@@ -29,8 +29,6 @@ public class WorkItem extends BaseModel {
     @ApiProperty(name="orderNum",desc="序号")
     private Integer orderNum;
 
-    @ApiProperty(name="transitionId",desc="转换id")
-    private String transitionId;
 
     @NotNull
     @ApiProperty(name="title",desc="标题",required = true)
@@ -56,8 +54,6 @@ public class WorkItem extends BaseModel {
     @JoinQuery(key = "id")
     private WorkItem preDependWorkItem;
 
-    @ApiProperty(name="treePath",desc="所有上级事项按层级排序")
-    private java.lang.String treePath;
 
     @NotNull
     @ApiProperty(name="project",desc="所属项目",required = true)
@@ -83,8 +79,6 @@ public class WorkItem extends BaseModel {
     @JoinQuery(key = "id")
     private WorkType workTypeSys;
 
-    @ApiProperty(name="workTypeCode",desc="事项状态code, DONE, START, PROGRESS")
-    private String workTypeCode;
 
     @NotNull
     @ApiProperty(name="workPriority",desc="优先级")
@@ -93,7 +87,6 @@ public class WorkItem extends BaseModel {
     })
     @JoinQuery(key = "id")
     private WorkPriority workPriority;
-
 
     @ApiProperty(name="workStatusCode",desc="事项状态编码")
     private String workStatusCode;
@@ -106,12 +99,6 @@ public class WorkItem extends BaseModel {
     @JoinQuery(key = "id")
     private StateNode workStatusNode;
 
-    @ApiProperty(name="module",desc="所属模块")
-    @Mappings({
-            @Mapping(source = "module.id",target = "moduleId")
-    })
-    @JoinQuery(key = "id")
-    private Module module;
 
     @ApiProperty(name="builder",desc="创建人")
     @Mappings({
@@ -127,12 +114,7 @@ public class WorkItem extends BaseModel {
     @JoinQuery(key = "id")
     private User assigner;
 
-    @ApiProperty(name="reporter",desc="报告人")
-    @Mappings({
-            @Mapping(source = "reporter.id",target = "reporterId")
-    })
-    @JoinQuery(key = "id")
-    private User reporter;
+
 
     @ApiProperty(name="children",desc="下级事项列表")
     private List<WorkItem> children;
@@ -167,8 +149,6 @@ public class WorkItem extends BaseModel {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private String updateTime;
 
-    @ApiProperty(name="percent",desc="完成率")
-    private Integer percent;
 
     @ApiProperty(name="planTakeupTime",desc="计划用时")
     private Integer planTakeupTime;
@@ -176,20 +156,6 @@ public class WorkItem extends BaseModel {
     @ApiProperty(name="surplusTime",desc="剩余用时")
     private Integer surplusTime;
 
-    @ApiProperty(name="eachType",desc="eg: 需求类型、任务类型、缺陷类型")
-    private String eachType;
-
-    @ApiProperty(name="extData",desc="扩展数据")
-    private String extData;
-
-    @ApiProperty(name="flowId",desc="流程id")
-    private String flowId;
-
-    @ApiProperty(name="updateField",desc="更新字段")
-    private String updateField;
-
-    @ApiProperty(name="rootId",desc="根节点")
-    private String rootId;
 
     @ApiProperty(
             name = "isRele",
@@ -202,9 +168,8 @@ public class WorkItem extends BaseModel {
         return id;
     }
 
-    public WorkItem setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
     public Integer getOrderNum() {
@@ -231,6 +196,30 @@ public class WorkItem extends BaseModel {
         this.desc = desc;
     }
 
+    public WorkItem getParentWorkItem() {
+        return parentWorkItem;
+    }
+
+    public void setParentWorkItem(WorkItem parentWorkItem) {
+        this.parentWorkItem = parentWorkItem;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public WorkItem getPreDependWorkItem() {
+        return preDependWorkItem;
+    }
+
+    public void setPreDependWorkItem(WorkItem preDependWorkItem) {
+        this.preDependWorkItem = preDependWorkItem;
+    }
+
     public Project getProject() {
         return project;
     }
@@ -247,6 +236,14 @@ public class WorkItem extends BaseModel {
         this.workType = workType;
     }
 
+    public WorkType getWorkTypeSys() {
+        return workTypeSys;
+    }
+
+    public void setWorkTypeSys(WorkType workTypeSys) {
+        this.workTypeSys = workTypeSys;
+    }
+
     public WorkPriority getWorkPriority() {
         return workPriority;
     }
@@ -255,13 +252,20 @@ public class WorkItem extends BaseModel {
         this.workPriority = workPriority;
     }
 
-
-    public Module getModule() {
-        return module;
+    public String getWorkStatusCode() {
+        return workStatusCode;
     }
 
-    public void setModule(Module module) {
-        this.module = module;
+    public void setWorkStatusCode(String workStatusCode) {
+        this.workStatusCode = workStatusCode;
+    }
+
+    public StateNode getWorkStatusNode() {
+        return workStatusNode;
+    }
+
+    public void setWorkStatusNode(StateNode workStatusNode) {
+        this.workStatusNode = workStatusNode;
     }
 
     public User getBuilder() {
@@ -280,39 +284,6 @@ public class WorkItem extends BaseModel {
         this.assigner = assigner;
     }
 
-    public User getReporter() {
-        return reporter;
-    }
-
-    public void setReporter(User reporter) {
-        this.reporter = reporter;
-    }
-
-    public WorkItem getParentWorkItem() {
-        return parentWorkItem;
-    }
-
-    public void setParentWorkItem(WorkItem parentWorkItem) {
-        this.parentWorkItem = parentWorkItem;
-    }
-
-
-    public String getTreePath() {
-        return treePath;
-    }
-
-    public void setTreePath(String treePath) {
-        this.treePath = treePath;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
     public List<WorkItem> getChildren() {
         return children;
     }
@@ -320,7 +291,6 @@ public class WorkItem extends BaseModel {
     public void setChildren(List<WorkItem> children) {
         this.children = children;
     }
-
 
     public String getPlanBeginTime() {
         return planBeginTime;
@@ -354,12 +324,20 @@ public class WorkItem extends BaseModel {
         this.actualEndTime = actualEndTime;
     }
 
-    public Integer getPercent() {
-        return percent;
+    public String getBuildTime() {
+        return buildTime;
     }
 
-    public void setPercent(Integer percent) {
-        this.percent = percent;
+    public void setBuildTime(String buildTime) {
+        this.buildTime = buildTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Integer getPlanTakeupTime() {
@@ -370,70 +348,6 @@ public class WorkItem extends BaseModel {
         this.planTakeupTime = planTakeupTime;
     }
 
-    public WorkItem getPreDependWorkItem() {
-        return preDependWorkItem;
-    }
-
-    public void setPreDependWorkItem(WorkItem preDependWorkItem) {
-        this.preDependWorkItem = preDependWorkItem;
-    }
-
-    public String getExtData() {
-        return extData;
-    }
-
-    public void setExtData(String extData) {
-        this.extData = extData;
-    }
-
-    public Boolean getRele() {
-        return isRele;
-    }
-
-    public void setRele(Boolean rele) {
-        isRele = rele;
-    }
-
-    public String getBuildTime() {
-        return buildTime;
-    }
-
-    public void setBuildTime(String buildTime) {
-        this.buildTime = buildTime;
-    }
-
-    public String getUpdateField() {
-        return updateField;
-    }
-
-    public void setUpdateField(String updateField) {
-        this.updateField = updateField;
-    }
-
-    public String getRootId() {
-        return rootId;
-    }
-
-    public void setRootId(String rootId) {
-        this.rootId = rootId;
-    }
-
-    public String getWorkStatusCode() {
-        return workStatusCode;
-    }
-
-    public void setWorkStatusCode(String workStatusCode) {
-        this.workStatusCode = workStatusCode;
-    }
-
-    public String getWorkTypeCode() {
-        return workTypeCode;
-    }
-
-    public void setWorkTypeCode(String workTypeCode) {
-        this.workTypeCode = workTypeCode;
-    }
-
     public Integer getSurplusTime() {
         return surplusTime;
     }
@@ -442,51 +356,11 @@ public class WorkItem extends BaseModel {
         this.surplusTime = surplusTime;
     }
 
-    public WorkType getWorkTypeSys() {
-        return workTypeSys;
+    public Boolean getRele() {
+        return isRele;
     }
 
-    public void setWorkTypeSys(WorkType workTypeSys) {
-        this.workTypeSys = workTypeSys;
-    }
-
-    public StateNode getWorkStatusNode() {
-        return workStatusNode;
-    }
-
-    public void setWorkStatusNode(StateNode workStatusNode) {
-        this.workStatusNode = workStatusNode;
-    }
-
-    public String getFlowId() {
-        return flowId;
-    }
-
-    public void setFlowId(String flowId) {
-        this.flowId = flowId;
-    }
-
-    public String getEachType() {
-        return eachType;
-    }
-
-    public void setEachType(String eachType) {
-        this.eachType = eachType;
-    }
-
-    public String getTransitionId() {
-        return transitionId;
-    }
-
-    public void setTransitionId(String transitionId) {
-        this.transitionId = transitionId;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setRele(Boolean rele) {
+        isRele = rele;
     }
 }

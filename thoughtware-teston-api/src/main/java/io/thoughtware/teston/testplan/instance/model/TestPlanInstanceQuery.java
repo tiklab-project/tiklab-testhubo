@@ -17,6 +17,9 @@ public class TestPlanInstanceQuery {
     @ApiProperty(name="testPlanId",desc="testPlanId")
     private java.lang.String testPlanId;
 
+    @ApiProperty(name="createUser",desc="createUser")
+    private java.lang.String createUser;
+
     @ApiProperty(name="repositoryId",desc="repositoryId")
     private java.lang.String repositoryId;
 
@@ -32,6 +35,14 @@ public class TestPlanInstanceQuery {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 
     public String getTestPlanId() {
