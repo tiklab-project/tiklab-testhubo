@@ -1,5 +1,6 @@
 package io.thoughtware.teston.repository.service;
 
+import io.thoughtware.privilege.role.model.PatchUser;
 import io.thoughtware.teston.common.TestOnUnit;
 import io.thoughtware.teston.repository.model.*;
 import io.thoughtware.rpc.annotation.Exporter;
@@ -20,6 +21,7 @@ import io.thoughtware.user.dmUser.model.DmUser;
 import io.thoughtware.user.dmUser.model.DmUserQuery;
 import io.thoughtware.user.dmUser.service.DmUserService;
 import io.thoughtware.eam.common.context.LoginContext;
+import io.thoughtware.user.user.model.User;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,9 +87,6 @@ public class RepositoryServiceImpl implements RepositoryService {
         category.setName("默认分组");
         categoryService.createCategory(category);
 
-        //初始化项目权限
-        dmRoleService.initPatchDmRole(repositoryId,repository.getUserList(),"teston" );
-
         //初始化一个mock
         ApiEnv apiEnv = new ApiEnv();
         apiEnv.setRepositoryId(repositoryId);
@@ -96,6 +95,8 @@ public class RepositoryServiceImpl implements RepositoryService {
         apiEnv.setPreUrl(mockUrl);
         apiEnvService.createApiEnv(apiEnv);
 
+        //初始化项目权限
+        initProjectDmRole(repository.getUserList(),repositoryId);
 
         Map<String,String> map = new HashMap<>();
         map.put("name",repository.getName());
@@ -289,6 +290,52 @@ public class RepositoryServiceImpl implements RepositoryService {
                 .collect(Collectors.toList());
 
     }
+
+    /**
+     * 创建项目权限
+     * @param userList
+     * @param repositoryId
+     */
+    public void initProjectDmRole(List<PatchUser> userList, String repositoryId) {
+        List<PatchUser> patchUsers = new ArrayList<>();
+
+        boolean has111111 = false;
+
+        for (PatchUser patchUserItem : userList) {
+            String masterId = patchUserItem.getId();
+
+            if (!masterId.equals("111111")) {
+                // 初始化创建者
+                PatchUser patchUser = new PatchUser();
+                DmUser dmUser = new DmUser();
+                dmUser.setDomainId(repositoryId);
+                User user = new User();
+                user.setId(masterId);
+                dmUser.setUser(user);
+                patchUser.setId(masterId);
+                patchUser.setAdminRole(true);
+                patchUsers.add(patchUser);
+            } else {
+                has111111 = true;
+            }
+        }
+
+        // 如果列表中没有 "111111"，再添加默认用户
+        if (!has111111) {
+            PatchUser patchUser1 = new PatchUser();
+            DmUser dmUser1 = new DmUser();
+            dmUser1.setDomainId(repositoryId);
+            User user1 = new User();
+            user1.setId("111111");
+            dmUser1.setUser(user1);
+            patchUser1.setId("111111");
+            patchUser1.setAdminRole(true);
+            patchUsers.add(patchUser1);
+        }
+
+        dmRoleService.initPatchDmRole(repositoryId, patchUsers, "teston");
+    }
+
 
 
 }
