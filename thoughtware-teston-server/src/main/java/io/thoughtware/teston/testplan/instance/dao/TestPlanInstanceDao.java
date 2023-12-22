@@ -1,7 +1,5 @@
 package io.thoughtware.teston.testplan.instance.dao;
 
-import io.thoughtware.teston.test.test.entity.TestCasesEntity;
-import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.teston.testplan.instance.entity.TestPlanInstanceEntity;
 import io.thoughtware.teston.testplan.instance.model.TestPlanInstanceQuery;
 import io.thoughtware.core.page.Pagination;
@@ -111,16 +109,25 @@ public class TestPlanInstanceDao{
 
     public Pagination<TestPlanInstanceEntity> findPlanCasePage(TestPlanInstanceQuery testPlanInstanceQuery){
         StringBuilder modelSqlBuilder = new StringBuilder();
-        modelSqlBuilder.append("SELECT * ")
+        modelSqlBuilder.append("SELECT teston_test_plan_instance.* ")
                 .append(" FROM teston_test_plan_instance ")
                 .append(" JOIN teston_test_plan on teston_test_plan_instance.test_plan_id = teston_test_plan.id");
 
+        if(testPlanInstanceQuery.getTestPlanId() != null){
+            modelSqlBuilder.append(" WHERE teston_test_plan_instance.test_plan_id = '").append(testPlanInstanceQuery.getTestPlanId()).append("'");
+        }
+
         if (testPlanInstanceQuery.getName() != null) {
-            modelSqlBuilder.append(" WHERE teston_test_plan.name LIKE '%").append(testPlanInstanceQuery.getName()).append("%'");
+            if (testPlanInstanceQuery.getTestPlanId() != null) {
+                modelSqlBuilder.append(" OR");
+            }else {
+                modelSqlBuilder.append(" WHERE");
+            }
+            modelSqlBuilder.append(" teston_test_plan.name LIKE '%").append(testPlanInstanceQuery.getName()).append("%'");
         }
 
         if(testPlanInstanceQuery.getCreateUser() !=null){
-            if (testPlanInstanceQuery.getName() != null) {
+            if (testPlanInstanceQuery.getName() != null||testPlanInstanceQuery.getTestPlanId() != null) {
                 modelSqlBuilder.append(" OR");
             }else {
                 modelSqlBuilder.append(" WHERE");

@@ -1,6 +1,9 @@
 package io.thoughtware.teston.test.apix.http.perf.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
@@ -20,7 +23,6 @@ import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfTestDataSe
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestRequest;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
 import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstanceQuery;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
@@ -36,6 +38,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -75,6 +78,10 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Autowired
     StepCommonService stepCommonService;
+
+    @Autowired
+    InstanceService instanceService;
+
 
     /**
      * rpc 远程调用
@@ -117,7 +124,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         List<ApiSceneTestRequest> apiSceneTestRequestList = processApiPerfTestData(apiPerfTestRequest);
 
         //如果没有场景直接结束
-        if(apiSceneTestRequestList==null||apiSceneTestRequestList.size()==0){
+        if(apiSceneTestRequestList==null|| apiSceneTestRequestList.isEmpty()){
             status=0;
             return;
         }
@@ -212,23 +219,56 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             apiPerfInstance.setApiPerfId(apiPerfId);
 
             //判断是否存在
-            if(apiPerfInstanceId==null){
-                //设置执行次数
-                ApiPerfInstanceQuery apiPerfInstanceQuery = new ApiPerfInstanceQuery();
-                apiPerfInstanceQuery.setApiPerfId(apiPerfId);
-                List<ApiPerfInstance> apiPerfInstanceList = apiPerfInstanceService.findApiPerfInstanceList(apiPerfInstanceQuery);
-                if(apiPerfInstanceList!=null&&apiPerfInstanceList.size()>0){
-                    Integer executeNumber = apiPerfInstanceList.get(0).getExecuteNumber();
-
-                    apiPerfInstance.setExecuteNumber(++executeNumber);
-                }else {
-                    apiPerfInstance.setExecuteNumber(1);
-                }
+            if(apiPerfInstanceId==null&&apiPerfInstance.getTotal()>0){
 
                 apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfInstance);
+                ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
+
+                Instance instance = new Instance();
+                instance.setId(apiPerfInstanceId);
+                instance.setRepositoryId(apiPerfCase.getTestCase().getRepositoryId());
+                instance.setBelongId(apiPerfId);
+                instance.setType(MagicValue.CASE_TYPE_API_PERFORM);
+                instance.setName(apiPerfCase.getTestCase().getName());
+
+                InstanceQuery instanceQuery = new InstanceQuery();
+                instanceQuery.setBelongId(apiPerfId);
+                List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
+                if(instanceList!=null&& !instanceList.isEmpty()){
+                    Integer executeNumber = instanceList.get(0).getExecuteNumber();
+                    instance.setExecuteNumber(++executeNumber);
+                }else {
+                    instance.setExecuteNumber(1);
+                }
+
+                JSONObject instanceMap = new JSONObject();
+                instanceMap.put("result",apiPerfInstance.getResult().toString());
+                instanceMap.put("total",apiPerfInstance.getTotal().toString());
+                instanceMap.put("passNum",apiPerfInstance.getPassNum().toString());
+                instanceMap.put("passRate",apiPerfInstance.getPassRate());
+                instanceMap.put("failNum",apiPerfInstance.getFailNum().toString());
+                instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
+                instance.setContent(instanceMap.toString());
+
+                instanceService.createInstance(instance);
             }else {
                 apiPerfInstance.setId(apiPerfInstanceId);
                 apiPerfInstanceService.updateApiPerfInstance(apiPerfInstance);
+
+                // 更新公共实例
+                Instance instance = new Instance();
+                instance.setId(apiPerfInstanceId);
+
+                JSONObject instanceMap = new JSONObject();
+                instanceMap.put("result",apiPerfInstance.getResult().toString());
+                instanceMap.put("total",apiPerfInstance.getTotal().toString());
+                instanceMap.put("passNum",apiPerfInstance.getPassNum().toString());
+                instanceMap.put("passRate",apiPerfInstance.getPassRate());
+                instanceMap.put("failNum",apiPerfInstance.getFailNum().toString());
+                instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
+                instance.setContent(instanceMap.toString());
+
+                instanceService.updateInstance(instance);
             }
         }
 

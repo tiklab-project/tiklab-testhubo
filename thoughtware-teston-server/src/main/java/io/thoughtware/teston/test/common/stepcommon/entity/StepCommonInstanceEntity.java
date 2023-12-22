@@ -16,7 +16,14 @@ public class StepCommonInstanceEntity implements Serializable {
     @Column(name = "id")
     private String id;
 
-    // 所属断言
+    @Column(name = "name")
+    private String name;
+
+    // 所属id
+    @Column(name = "belong_id")
+    private String belongId;
+
+    // 所属
     @Column(name = "instance_id")
     private String instanceId;
 
@@ -70,5 +77,21 @@ public class StepCommonInstanceEntity implements Serializable {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBelongId() {
+        return belongId;
+    }
+
+    public void setBelongId(String belongId) {
+        this.belongId = belongId;
     }
 }

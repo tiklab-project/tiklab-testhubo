@@ -1,12 +1,18 @@
 package io.thoughtware.teston.testplan.execute.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.rpc.annotation.Exporter;
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.common.TestUtil;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.testplan.cases.model.TestPlan;
+import io.thoughtware.teston.testplan.cases.service.TestPlanService;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestResponse;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.model.TestPlanInstance;
-import io.thoughtware.teston.testplan.instance.model.TestPlanInstanceQuery;
 import io.thoughtware.teston.testplan.instance.service.TestPlanInstanceService;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
@@ -50,6 +56,12 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Autowired
     TestPlanInstanceService testPlanInstanceService;
 
+    @Autowired
+    TestPlanService testPlanService;
+
+    @Autowired
+    InstanceService instanceService;
+
 
     private ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList = new ArrayList<>();
 
@@ -89,28 +101,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
         testPlanId = testPlanTestData.getTestPlanId();
         String repositoryId = testPlanTestData.getRepositoryId();
-
-        //执行的时候先创建一个历史，里面没有数据，用于获取Id
-        TestPlanInstance testPlanInstance = new TestPlanInstance();
-
-        TestPlanInstanceQuery testPlanInstanceQuery = new TestPlanInstanceQuery();
-        testPlanInstanceQuery.setRepositoryId(testPlanTestData.getRepositoryId());
-        List<TestPlanInstance> testPlanInstanceList = testPlanInstanceService.findTestPlanInstanceList(testPlanInstanceQuery);
-
-        if(testPlanInstanceList.size()>0){
-            //获取上一条执行次数
-            Integer executeNumber = testPlanInstanceList.get(0).getExecuteNumber();
-            Integer addNumber=executeNumber+1;
-            testPlanInstance.setExecuteNumber(addNumber);
-        }else {
-            testPlanInstance.setExecuteNumber(1);
-        }
-
-        testPlanInstance.getTestPlan().setId(testPlanId);
-        testPlanInstance.setRepositoryId(repositoryId);
-        testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        testPlanInstance.setCreateUser(LoginContext.getLoginId());
-        testPlanInstanceId = testPlanInstanceService.createTestPlanInstance(testPlanInstance);
 
 
         //查询出当前测试计划的所有关联的测试用例
@@ -171,6 +161,10 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
                 }
             }
+
+
+            //执行的时候先创建一个历史，里面没有数据，用于获取Id
+            createPlanInstance(repositoryId);
         }
     }
 
@@ -275,7 +269,73 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanInstance.setId(testPlanInstanceId);
         testPlanInstanceService.updateTestPlanInstance(testPlanInstance);
 
+        Instance instance = new Instance();
+        instance.setId(testPlanInstanceId);
+
+        JSONObject instanceMap = new JSONObject();
+        instanceMap.put("result",testPlanInstance.getResult().toString());
+        instanceMap.put("total",testPlanInstance.getTotal().toString());
+        instanceMap.put("passNum",testPlanInstance.getPassNum().toString());
+        instanceMap.put("passRate",testPlanInstance.getPassRate());
+        instanceMap.put("failNum",testPlanInstance.getFailNum().toString());
+        instanceMap.put("errorRate",testPlanInstance.getErrorRate());
+        instance.setContent(instanceMap.toString());
+
+        instanceService.updateInstance(instance);
     }
+
+    /**
+     * 创建测试计划实例
+     * @param repositoryId
+     */
+    private void createPlanInstance(String repositoryId){
+        TestPlanInstance testPlanInstance = new TestPlanInstance();
+        testPlanInstance.getTestPlan().setId(testPlanId);
+        testPlanInstance.setRepositoryId(repositoryId);
+        testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        testPlanInstance.setCreateUser(LoginContext.getLoginId());
+        testPlanInstance.setTotal(exeCount);
+        testPlanInstance.setPassNum(0);
+        testPlanInstance.setPassRate("0.00%");
+        testPlanInstance.setFailNum(0);
+        testPlanInstance.setErrorRate("0.00%");
+        testPlanInstance.setResult(2);
+        testPlanInstanceId = testPlanInstanceService.createTestPlanInstance(testPlanInstance);
+
+
+        // 创建公共实例
+        Instance instance = new Instance();
+        instance.setId(testPlanInstanceId);
+
+        instance.setBelongId(testPlanId);
+        instance.setType(MagicValue.TEST_PLAN);
+
+        TestPlan testPlan = testPlanService.findTestPlan(testPlanId);
+        instance.setName(testPlan.getName());
+        instance.setRepositoryId(testPlan.getRepository().getId());
+
+        InstanceQuery instanceQuery = new InstanceQuery();
+        instanceQuery.setBelongId(testPlanId);
+        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
+        if(instanceList!=null&& !instanceList.isEmpty()){
+            Integer executeNumber = instanceList.get(0).getExecuteNumber();
+            instance.setExecuteNumber(++executeNumber);
+        }else {
+            instance.setExecuteNumber(1);
+        }
+
+        JSONObject instanceMap = new JSONObject();
+        instanceMap.put("result",testPlanInstance.getResult().toString());
+        instanceMap.put("total",testPlanInstance.getTotal().toString());
+        instanceMap.put("passNum",testPlanInstance.getPassNum().toString());
+        instanceMap.put("passRate",testPlanInstance.getPassRate());
+        instanceMap.put("failNum",testPlanInstance.getFailNum().toString());
+        instanceMap.put("errorRate",testPlanInstance.getErrorRate());
+        instance.setContent(instanceMap.toString());
+
+        instanceService.createInstance(instance);
+    }
+
 
 }
 

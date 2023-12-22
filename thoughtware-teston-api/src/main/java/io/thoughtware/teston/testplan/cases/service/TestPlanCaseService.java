@@ -3,6 +3,7 @@ package io.thoughtware.teston.testplan.cases.service;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.join.annotation.JoinProvider;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
+import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.core.page.Pagination;
@@ -71,7 +72,7 @@ public interface TestPlanCaseService {
      * @param testPlanCaseQuery
      * @return
      */
-    Pagination<TestCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery);
+    Pagination<PlanCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery);
 
     /**
      * 查询已经关联的用例

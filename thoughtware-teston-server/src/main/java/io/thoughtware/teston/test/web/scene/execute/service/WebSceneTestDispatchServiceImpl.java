@@ -183,19 +183,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         WebSceneInstance webSceneInstance = webSceneTestResponse.getWebSceneInstance();
         webSceneInstance.setWebSceneId(webSceneId);
 
-        //设置次数
-        WebSceneInstanceQuery webSceneInstanceQuery = new WebSceneInstanceQuery();
-        webSceneInstanceQuery.setWebSceneId(webSceneId);
-        List<WebSceneInstance> webSceneInstanceList = webSceneInstanceService.findWebSceneInstanceList(webSceneInstanceQuery);
-        if(webSceneInstanceList!=null&&webSceneInstanceList.size()>0){
-            Integer executeNumber = webSceneInstanceList.get(0).getExecuteNumber();
-
-            webSceneInstance.setExecuteNumber(++executeNumber);
-        }else {
-            webSceneInstance.setExecuteNumber(1);
-        }
-
-
         webSceneInstanceService.saveWebSceneInstanceToSql(webSceneInstance,webSceneTestResponse);
     }
 

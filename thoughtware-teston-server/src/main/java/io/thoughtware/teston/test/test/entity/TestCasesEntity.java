@@ -76,6 +76,7 @@ public class TestCasesEntity implements Serializable {
     @Column(name = "description",length = 128)
     private String desc;
 
+
     public String getId() {
         return id;
     }
@@ -203,4 +204,5 @@ public class TestCasesEntity implements Serializable {
     public void setPriorityLevel(Integer priorityLevel) {
         this.priorityLevel = priorityLevel;
     }
+
 }

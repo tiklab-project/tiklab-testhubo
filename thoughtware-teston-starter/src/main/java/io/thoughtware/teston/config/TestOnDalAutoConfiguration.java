@@ -78,6 +78,10 @@ public class TestOnDalAutoConfiguration {
         dsmConfig.newVersion("1.0.9", new String[]{
                 "teston_1.0.9",
         });
+        dsmConfig.newVersion("1.0.10", new String[]{
+                "teston_1.0.10",
+        });
+
 
         return dsmConfig;
     }

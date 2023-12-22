@@ -4,6 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.rpc.client.router.lookup.FixedLookup;
 import io.thoughtware.teston.agent.api.http.unit.ApiUnitTestService;
+import io.thoughtware.teston.common.MagicValue;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCase;
@@ -28,7 +32,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 接口单元测试调度 服务
@@ -65,6 +71,9 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
     @Autowired
     ApiUnitTestService apiUnitTestService;
+
+    @Autowired
+    InstanceService instanceService;
 
     /**
      *  环境中获取是否是内嵌agent
@@ -123,31 +132,51 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
 
     private void saveInstance(ApiUnitInstance apiUnitInstance, String apiUnitId){
-        //apiUnit 历史实例中间表,获取上次创建的实例
-        ApiUnitInstanceBindQuery apiUnitInstanceBindQuery = new ApiUnitInstanceBindQuery();
-        apiUnitInstanceBindQuery.setApiUnitId(apiUnitId);
-        List<ApiUnitInstanceBind> apiUnitInstanceBindList = apiUnitInstanceBindService.findApiUnitInstanceBindList(apiUnitInstanceBindQuery);
-        if(apiUnitInstanceBindList!=null&&apiUnitInstanceBindList.size()>0){
-            String instanceId = apiUnitInstanceBindList.get(0).getId();
-            //前一次的历史实例
-            ApiUnitInstance preApiUnitInstance = apiUnitInstanceService.findApiUnitInstance(instanceId);
-            //拿到执行的次数
-            Integer executeNumber =preApiUnitInstance.getExecuteNumber();
-            apiUnitInstance.setExecuteNumber(++executeNumber);
-        }else {
-            apiUnitInstance.setExecuteNumber(1);
-        }
-
-
         //执行后数据保存
         String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
 
-        //关联表，相当于中间表
-        ApiUnitInstanceBind apiUnitInstanceBind = new ApiUnitInstanceBind();
-        apiUnitInstanceBind.setId(apiUnitInstanceId);
-        apiUnitInstanceBind.setApiUnitInstance(new ApiUnitInstance().setId(apiUnitInstanceId));
-        apiUnitInstanceBind.setApiUnitId(apiUnitId);
-        apiUnitInstanceBindService.createApiUnitInstanceBind(apiUnitInstanceBind);
+        Instance instance = new Instance();
+        instance.setId(apiUnitInstanceId);
+        instance.setBelongId(apiUnitId);
+        instance.setType(MagicValue.CASE_TYPE_API_UNIT);
+
+        ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(apiUnitId);
+        instance.setName(apiUnitCase.getTestCase().getName());
+        instance.setRepositoryId(apiUnitCase.getTestCase().getRepositoryId());
+
+        InstanceQuery instanceQuery = new InstanceQuery();
+        instanceQuery.setBelongId(apiUnitId);
+        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
+        if(instanceList!=null&& !instanceList.isEmpty()){
+            Integer executeNumber = instanceList.get(0).getExecuteNumber();
+            instance.setExecuteNumber(++executeNumber);
+        }else {
+            instance.setExecuteNumber(1);
+        }
+
+
+        JSONObject instanceMap = new JSONObject();
+        instanceMap.put("url",apiUnitInstance.getRequestInstance().getRequestUrl());
+        instanceMap.put("requestType",apiUnitInstance.getRequestInstance().getRequestType());
+        instanceMap.put("result",apiUnitInstance.getResult().toString());
+
+        if(apiUnitInstance.getErrMessage()==null){
+            if(apiUnitInstance.getStatusCode()!=null){
+                instanceMap.put("statusCode",apiUnitInstance.getStatusCode().toString());
+            }
+
+            if(apiUnitInstance.getElapsedTime()!=null){
+                instanceMap.put("elapsedTime",apiUnitInstance.getElapsedTime().toString());
+            }
+
+        }else {
+            instanceMap.put("errMessage",apiUnitInstance.getStatusCode().toString());
+        }
+
+        instance.setContent(instanceMap.toString());
+
+        instanceService.createInstance(instance);
+
     }
 
 

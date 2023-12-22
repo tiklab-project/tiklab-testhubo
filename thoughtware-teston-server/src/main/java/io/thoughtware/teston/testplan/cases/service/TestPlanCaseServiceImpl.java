@@ -10,6 +10,7 @@ import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
 import io.thoughtware.beans.BeanMapper;
 import io.thoughtware.join.JoinTemplate;
 import io.thoughtware.teston.category.service.CategoryService;
+import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 
@@ -48,8 +49,6 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
 
     @Override
     public String createTestPlanCase(@NotNull @Valid TestPlanCase testPlanCase) {
-        testPlanCase.setId(testPlanCase.getTestCase().getId());
-
         TestPlanCaseEntity testPlanCaseEntity = BeanMapper.map(testPlanCase, TestPlanCaseEntity.class);
         //初始化 2为未执行
         testPlanCaseEntity.setStatus(2);
@@ -140,9 +139,9 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     }
 
     @Override
-    public Pagination<TestCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery) {
-        Pagination<TestCasesEntity> planCasePage = testPlanDetailDao.findPlanCasePage(testPlanCaseQuery);
-        List<TestCase> testCaseList = BeanMapper.mapList(planCasePage.getDataList(), TestCase.class);
+    public Pagination<PlanCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery) {
+        Pagination<PlanCaseEntity> planCasePage = testPlanDetailDao.findPlanCasePage(testPlanCaseQuery);
+        List<PlanCase> testCaseList = BeanMapper.mapList(planCasePage.getDataList(), PlanCase.class);
         joinTemplate.joinQuery(testCaseList);
         return PaginationBuilder.build(planCasePage, testCaseList);
     }

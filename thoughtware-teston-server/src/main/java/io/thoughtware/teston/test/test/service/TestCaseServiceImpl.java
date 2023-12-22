@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.test.service;
 
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
 import io.thoughtware.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
@@ -79,6 +80,9 @@ public class TestCaseServiceImpl implements TestCaseService {
 
     @Autowired
     JoinTemplate joinTemplate;
+
+    @Autowired
+    InstanceService instanceService;
 
     @Override
     public String createTestCase(TestCase testCase) {

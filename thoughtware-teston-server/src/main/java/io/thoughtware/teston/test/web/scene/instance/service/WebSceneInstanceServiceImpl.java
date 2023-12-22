@@ -1,11 +1,18 @@
 package io.thoughtware.teston.test.web.scene.instance.service;
 
+import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.common.MagicValue;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCase;
 import io.thoughtware.teston.test.common.ifjudgment.model.IfJudgmentInstance;
 import io.thoughtware.teston.test.common.ifjudgment.service.IfJudgmentInstanceService;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonInstanceService;
+import io.thoughtware.teston.test.web.scene.cases.model.WebSceneCase;
+import io.thoughtware.teston.test.web.scene.cases.service.WebSceneCaseService;
 import io.thoughtware.teston.test.web.scene.instance.dao.WebSceneInstanceDao;
 import io.thoughtware.teston.test.web.scene.instance.entity.WebSceneInstanceEntity;
 import io.thoughtware.beans.BeanMapper;
@@ -23,6 +30,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +54,12 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
 
     @Autowired
     IfJudgmentInstanceService ifJudgmentInstanceService;
+
+    @Autowired
+    WebSceneCaseService webSceneCaseService;
+
+    @Autowired
+    InstanceService instanceService;
 
     @Override
     public String createWebSceneInstance(@NotNull @Valid WebSceneInstance webSceneInstance) {
@@ -132,8 +146,39 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
 
     @Override
     public String saveWebSceneInstanceToSql(WebSceneInstance webSceneInstance, WebSceneTestResponse webSceneTestResponse) {
-
+        String webSceneId = webSceneInstance.getWebSceneId();
         String webSceneInstanceId= createWebSceneInstance(webSceneInstance);
+        // 创建公共实例
+        Instance instance = new Instance();
+        instance.setId(webSceneInstanceId);
+
+        instance.setBelongId(webSceneId);
+        instance.setType(MagicValue.CASE_TYPE_WEB);
+
+        WebSceneCase webSceneCase = webSceneCaseService.findWebSceneCase(webSceneId);
+        instance.setName(webSceneCase.getTestCase().getName());
+        instance.setRepositoryId(webSceneCase.getTestCase().getRepositoryId());
+
+        InstanceQuery instanceQuery = new InstanceQuery();
+        instanceQuery.setBelongId(webSceneId);
+        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
+        if(instanceList!=null&& !instanceList.isEmpty()){
+            Integer executeNumber = instanceList.get(0).getExecuteNumber();
+            instance.setExecuteNumber(++executeNumber);
+        }else {
+            instance.setExecuteNumber(1);
+        }
+
+        JSONObject instanceMap = new JSONObject();
+        instanceMap.put("result",webSceneInstance.getResult().toString());
+        instanceMap.put("stepNum",webSceneInstance.getStepNum().toString());
+        instanceMap.put("passNum",webSceneInstance.getPassNum().toString());
+        instanceMap.put("passRate",webSceneInstance.getPassRate());
+        instanceMap.put("failNum",webSceneInstance.getFailNum().toString());
+        instanceMap.put("totalDuration",webSceneInstance.getTotalDuration().toString());
+        instance.setContent(instanceMap.toString());
+
+        instanceService.createInstance(instance);
 
         //保存单个步骤
         if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
