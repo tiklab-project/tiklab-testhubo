@@ -108,6 +108,9 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanCaseQuery.setTestPlanId(testPlanId);
         List<TestPlanCase> testPlanCaseList = testPlanCaseService.findTestPlanCaseList(testPlanCaseQuery);
 
+        //执行的时候先创建一个历史，里面没有数据，用于获取Id
+        createPlanInstance(repositoryId);
+
         if(CollectionUtils.isNotEmpty(testPlanCaseList)){
             //首先获取能执行的用例总数
             for(TestPlanCase testPlanCase : testPlanCaseList){
@@ -161,10 +164,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
                 }
             }
-
-
-            //执行的时候先创建一个历史，里面没有数据，用于获取Id
-            createPlanInstance(repositoryId);
         }
     }
 
@@ -265,7 +264,9 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      */
     private void saveToSql(TestPlanInstance testPlanInstance) {
 
-        testPlanInstance.getTestPlan().setId(testPlanId);
+        TestPlan testPlan = new TestPlan();
+        testPlan.setId(testPlanId);
+        testPlanInstance.setTestPlan(testPlan);
         testPlanInstance.setId(testPlanInstanceId);
         testPlanInstanceService.updateTestPlanInstance(testPlanInstance);
 
@@ -290,7 +291,9 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      */
     private void createPlanInstance(String repositoryId){
         TestPlanInstance testPlanInstance = new TestPlanInstance();
-        testPlanInstance.getTestPlan().setId(testPlanId);
+        TestPlan testPlan1 = new TestPlan();
+        testPlan1.setId(testPlanId);
+        testPlanInstance.setTestPlan(testPlan1);
         testPlanInstance.setRepositoryId(repositoryId);
         testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
         testPlanInstance.setCreateUser(LoginContext.getLoginId());

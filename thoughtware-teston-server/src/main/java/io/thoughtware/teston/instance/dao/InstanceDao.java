@@ -83,6 +83,8 @@ public class InstanceDao {
         QueryCondition queryCondition = QueryBuilders.createQuery(InstanceEntity.class)
                 .eq("belongId",instanceQuery.getBelongId())
                 .eq("type",instanceQuery.getType())
+                .eq("createUser",instanceQuery.getCreateUser())
+                .like("name",instanceQuery.getName())
                 .orders(instanceQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, InstanceEntity.class);
@@ -97,6 +99,8 @@ public class InstanceDao {
         QueryCondition queryCondition = QueryBuilders.createQuery(InstanceEntity.class)
                 .eq("belongId",instanceQuery.getBelongId())
                 .eq("type",instanceQuery.getType())
+                .eq("createUser",instanceQuery.getCreateUser())
+                .like("name",instanceQuery.getName())
                 .pagination(instanceQuery.getPageParam())
                 .orders(instanceQuery.getOrderParams())
                 .get();

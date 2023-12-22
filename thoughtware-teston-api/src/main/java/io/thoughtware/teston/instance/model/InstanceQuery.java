@@ -24,6 +24,12 @@ public class InstanceQuery {
     @ApiProperty(name ="type",desc = "类型")
     private String type;
 
+    @ApiProperty(name ="name",desc = "name")
+    private String name;
+
+    @ApiProperty(name ="createUser",desc = "创建人")
+    private String createUser;
+
     public List<Order> getOrderParams() {
         return orderParams;
     }
@@ -54,5 +60,21 @@ public class InstanceQuery {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 }
