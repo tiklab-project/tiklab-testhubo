@@ -20,5 +20,12 @@ CREATE TABLE teston_instance(
       content TEXT
 );
 
-delete from teston_api_unit_instance
+delete from teston_api_unit_instance;
+delete from teston_api_scene_instance;
+delete from teston_api_perf_instance;
+delete from teston_app_scene_instance;
+delete from teston_web_scene_instance;
+delete from teston_test_plan_instance;
+delete from teston_test_plan_case_instance_bind;
+
 
