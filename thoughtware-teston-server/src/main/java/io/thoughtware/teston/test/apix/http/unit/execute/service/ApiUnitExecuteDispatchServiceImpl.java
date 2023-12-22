@@ -170,7 +170,7 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
             }
 
         }else {
-            instanceMap.put("errMessage",apiUnitInstance.getStatusCode().toString());
+            instanceMap.put("errMessage",apiUnitInstance.getErrMessage());
         }
 
         instance.setContent(instanceMap.toString());
