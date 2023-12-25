@@ -20,7 +20,7 @@ import java.util.Map;
  * 测试计划中绑定的用例 模型
  */
 @ApiModel
-@Mapper(targetName = "io.thoughtware.teston.testplan.cases.service.PlanCaseEntity")
+@Mapper(targetName = "io.thoughtware.teston.testplan.cases.entity.PlanCaseEntity")
 @Join
 public class PlanCase extends BaseModel{
 
@@ -37,7 +37,10 @@ public class PlanCase extends BaseModel{
     @JoinQuery(key = "id")
     private Category category;
 
-    @ApiProperty(name="caseType",desc="用例类型，例：api-unit,api-scene",required = true)
+    @ApiProperty(name="testType",desc="类型，例：api,ui")
+    private String testType;
+
+    @ApiProperty(name="caseType",desc="用例类型，例：api-unit,api-scene")
     private String caseType;
     @ApiProperty(name="user",desc="创建人")
     @Mappings({
@@ -85,6 +88,14 @@ public class PlanCase extends BaseModel{
 
     public void setCaseType(String caseType) {
         this.caseType = caseType;
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
     }
 
     public User getCreateUser() {

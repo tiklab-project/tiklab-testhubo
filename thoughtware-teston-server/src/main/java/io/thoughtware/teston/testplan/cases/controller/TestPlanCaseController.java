@@ -80,27 +80,8 @@ public class TestPlanCaseController {
         return Result.ok(testPlanCaseList);
     }
 
-    @RequestMapping(path = "/findTestPlanCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestPlanCaseList",desc = "通过查询对象查询")
-    @ApiParam(name = "testPlanCaseQuery",desc = "testPlanCaseQuery",required = true)
-    public Result<List<TestPlanCase>> findTestPlanCaseList(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
-        List<TestPlanCase> testPlanCaseList = testPlanCaseService.findTestPlanCaseList(testPlanCaseQuery);
-
-        return Result.ok(testPlanCaseList);
-    }
-
-    @RequestMapping(path = "/findTestPlanCasePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findTestPlanCasePage",desc = "通过查询对象分页查询")
-    @ApiParam(name = "testPlanCaseQuery",desc = "testPlanCaseQuery",required = true)
-    public Result<Pagination<TestPlanCase>> findTestPlanCasePage(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
-        Pagination<TestPlanCase> pagination = testPlanCaseService.findTestPlanCasePage(testPlanCaseQuery);
-
-        return Result.ok(pagination);
-    }
-
-
     @RequestMapping(path = "/findPlanCasePage",method = RequestMethod.POST)
-    @ApiMethod(name = "findPlanCasePage",desc = "测试计划绑定的用例添加用例弹窗列表")
+    @ApiMethod(name = "findPlanCasePage",desc = "测试计划已绑定的用例")
     @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
     public Result<Pagination<PlanCase>> findPlanCasePage(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
         Pagination<PlanCase> pagination = testPlanCaseService.findPlanCasePage(testPlanCaseQuery);
@@ -108,11 +89,11 @@ public class TestPlanCaseController {
         return Result.ok(pagination);
     }
 
-    @RequestMapping(path = "/findBindTestCaseList",method = RequestMethod.POST)
-    @ApiMethod(name = "findReleTesCase",desc = "查询测试计划关联的用例列表")
-    @ApiParam(name = "testPlanCaseQuery",desc = "testPlanCaseQuery",required = true)
-    public Result<Pagination<TestPlanCase>> findBindTestCaseList(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
-        Pagination<TestPlanCase> pagination = testPlanCaseService.findBindTestCaseList(testPlanCaseQuery);
+    @RequestMapping(path = "/findTestCasePage",method = RequestMethod.POST)
+    @ApiMethod(name = "findPlanCasePage",desc = "查询关联的用例，剔除已关联的用例")
+    @ApiParam(name = "testCaseQuery",desc = "testCaseQuery",required = true)
+    public Result<Pagination<PlanCase>> findBindTestCaseList(@RequestBody @Valid @NotNull TestPlanCaseQuery testPlanCaseQuery){
+        Pagination<PlanCase> pagination =  testPlanCaseService.findTestCasePage(testPlanCaseQuery);
 
         return Result.ok(pagination);
     }

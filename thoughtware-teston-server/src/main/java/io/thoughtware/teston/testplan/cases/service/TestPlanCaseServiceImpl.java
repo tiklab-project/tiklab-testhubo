@@ -1,11 +1,9 @@
 package io.thoughtware.teston.testplan.cases.service;
 
-import io.thoughtware.teston.test.test.entity.TestCasesEntity;
-import io.thoughtware.teston.test.test.model.TestCase;
-import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.teston.category.model.Category;
 import io.thoughtware.teston.testplan.cases.dao.TestPlanCaseDao;
+import io.thoughtware.teston.testplan.cases.entity.PlanCaseEntity;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
 import io.thoughtware.beans.BeanMapper;
 import io.thoughtware.join.JoinTemplate;
@@ -148,11 +146,13 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
 
 
     @Override
-    public Pagination<TestPlanCase> findBindTestCaseList(TestPlanCaseQuery testPlanCaseQuery) {
-        Pagination<TestPlanCase> testPlanDetailPage = findTestPlanCasePage(testPlanCaseQuery);
-
-        return testPlanDetailPage;
+    public Pagination<PlanCase> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery) {
+        Pagination<PlanCaseEntity> planCasePage = testPlanDetailDao.findTestCasePage(testPlanCaseQuery);
+        List<PlanCase> testCaseList = BeanMapper.mapList(planCasePage.getDataList(), PlanCase.class);
+        joinTemplate.joinQuery(testCaseList);
+        return PaginationBuilder.build(planCasePage, testCaseList);
     }
+
 
     @Override
     public void planBindCase(List<TestPlanCase> testPlanCaseList) {

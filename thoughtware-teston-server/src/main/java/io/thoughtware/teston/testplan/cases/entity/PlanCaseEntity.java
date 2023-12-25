@@ -1,4 +1,4 @@
-package io.thoughtware.teston.testplan.cases.service;
+package io.thoughtware.teston.testplan.cases.entity;
 
 
 import io.thoughtware.dal.jpa.annotation.Column;
@@ -23,18 +23,22 @@ public class PlanCaseEntity implements Serializable {
     private String name;
 
     // 所属模块
-    @Column(name = "category_id",length = 32)
+    @Column(name = "category_id")
     private String categoryId;
 
     // 用例类型，例：api-unit,api-scene
-    @Column(name = "case_type",length = 64,notNull = true)
+    @Column(name = "case_type")
     private String caseType;
 
+    @Column(name = "testType")
+    private String testType;
+
+
     // 创建人
-    @Column(name = "create_user",length = 64)
+    @Column(name = "create_user")
     private String createUser;
 
-    @Column(name = "create_time",length = 64)
+    @Column(name = "create_time")
     private Timestamp createTime;
 
     //用于plan 绑定的case，返回的id做映射
@@ -71,6 +75,14 @@ public class PlanCaseEntity implements Serializable {
 
     public void setCaseType(String caseType) {
         this.caseType = caseType;
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
     }
 
     public String getCreateUser() {

@@ -75,11 +75,11 @@ public interface TestPlanCaseService {
     Pagination<PlanCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery);
 
     /**
-     * 查询已经关联的用例
+     * 关联用例，剔除已关联的用例
      * @param testPlanCaseQuery
      * @return
      */
-    Pagination<TestPlanCase> findBindTestCaseList(TestPlanCaseQuery testPlanCaseQuery);
+    Pagination<PlanCase> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery);
 
 
     /**
