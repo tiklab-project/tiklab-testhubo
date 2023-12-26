@@ -1,7 +1,5 @@
 package io.thoughtware.teston.testplan.cases.dao;
 
-import io.thoughtware.teston.test.test.entity.TestCasesEntity;
-import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
@@ -9,6 +7,7 @@ import io.thoughtware.dal.jpa.criterial.condition.QueryCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.dal.jpa.JpaTemplate;
+import io.thoughtware.teston.testplan.cases.entity.PlanCaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,9 +105,9 @@ public class TestPlanCaseDao {
         return jpaTemplate.findPage(queryCondition, TestPlanCaseEntity.class);
     }
 
-    public Pagination<TestCasesEntity> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery){
+    public Pagination<PlanCaseEntity> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery){
         StringBuilder modelSqlBuilder = new StringBuilder();
-        modelSqlBuilder.append("SELECT teston_test_plan_detail.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type, teston_testcase.category_id, teston_testcase.name ")
+        modelSqlBuilder.append("SELECT teston_test_plan_detail.id AS plan_case_id,teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type,teston_testcase.test_type, teston_testcase.category_id, teston_testcase.name ")
                 .append("FROM teston_test_plan_detail ")
                 .append("JOIN teston_testcase ON teston_testcase.id = teston_test_plan_detail.test_case_id ")
                 .append("JOIN teston_test_plan ON teston_test_plan.id = teston_test_plan_detail.test_plan_id ")
@@ -129,9 +128,28 @@ public class TestPlanCaseDao {
 
         String modelSql = modelSqlBuilder.toString();
 
-        Pagination<TestCasesEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(TestCasesEntity.class));
+        Pagination<PlanCaseEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(PlanCaseEntity.class));
         return page;
     }
 
+
+
+    public Pagination<PlanCaseEntity> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery) {
+        StringBuilder modelSqlBuilder = new StringBuilder();
+        modelSqlBuilder.append("SELECT  teston_testcase.id AS plan_case_id, teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type, teston_testcase.category_id, teston_testcase.name ")
+                .append(" FROM teston_testcase ")
+                .append(" WHERE teston_testcase.repository_id = '").append(testPlanCaseQuery.getRepositoryId()).append("'")
+                .append(" AND NOT EXISTS (  ")
+                .append(" SELECT 1   ")
+                .append(" FROM teston_test_plan_detail  ")
+                .append(" JOIN teston_test_plan ON teston_test_plan.id = teston_test_plan_detail.test_plan_id ")
+                .append(" WHERE teston_test_plan_detail.test_case_id = teston_testcase.id ")
+                .append(" AND teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("')");
+
+        String modelSql = modelSqlBuilder.toString();
+
+        Pagination<PlanCaseEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(PlanCaseEntity.class));
+        return page;
+    }
 
 }

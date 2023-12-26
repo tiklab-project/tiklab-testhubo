@@ -61,9 +61,9 @@ teston-agent:
   embbed:
     enable: true
   chromedriver:
-    path: C:\Users\JacksonSun\.cache\selenium\chromedriver\win32\chromedriver_win32\chromedriver.exe
+    path: /Users/admin/Desktop/project/chrome/chromedriver_mac64
   chrome:
-    path: C:\Users\JacksonSun\AppData\Local\Chromium\Application\chrome.exe
+    path: /Users/admin/Desktop/project/chrome/chrome-mac
 
 postin:
   enable: false

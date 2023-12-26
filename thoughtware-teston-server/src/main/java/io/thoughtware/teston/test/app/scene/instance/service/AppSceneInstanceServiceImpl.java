@@ -1,5 +1,11 @@
 package io.thoughtware.teston.test.app.scene.instance.service;
 
+import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
+import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
@@ -16,6 +22,7 @@ import io.thoughtware.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.teston.test.web.scene.cases.model.WebSceneCase;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +30,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +54,12 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
 
     @Autowired
     IfJudgmentInstanceService ifJudgmentInstanceService;
+
+    @Autowired
+    InstanceService instanceService;
+
+    @Autowired
+    AppSceneCaseService appSceneCaseService;
 
     @Override
     public String createAppSceneInstance(@NotNull @Valid AppSceneInstance appSceneInstance) {
@@ -133,8 +147,40 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
 
     @Override
     public String saveAppSceneInstanceToSql(AppSceneInstance appSceneInstance, AppSceneTestResponse appSceneTestResponse) {
-
+        String appSceneId = appSceneInstance.getAppSceneId();
         String appSceneInstanceId = createAppSceneInstance(appSceneInstance);
+
+        // 创建公共实例
+        Instance instance = new Instance();
+        instance.setId(appSceneInstanceId);
+
+        instance.setBelongId(appSceneId);
+        instance.setType(MagicValue.CASE_TYPE_APP);
+
+        AppSceneCase appSceneCase = appSceneCaseService.findAppSceneCase(appSceneId);
+        instance.setName(appSceneCase.getTestCase().getName());
+        instance.setRepositoryId(appSceneCase.getTestCase().getRepositoryId());
+
+        InstanceQuery instanceQuery = new InstanceQuery();
+        instanceQuery.setBelongId(appSceneId);
+        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
+        if(instanceList!=null&& !instanceList.isEmpty()){
+            Integer executeNumber = instanceList.get(0).getExecuteNumber();
+            instance.setExecuteNumber(++executeNumber);
+        }else {
+            instance.setExecuteNumber(1);
+        }
+
+        JSONObject instanceMap = new JSONObject();
+        instanceMap.put("result",appSceneInstance.getResult().toString());
+        instanceMap.put("stepNum",appSceneInstance.getStepNum().toString());
+        instanceMap.put("passNum",appSceneInstance.getPassNum().toString());
+        instanceMap.put("passRate",appSceneInstance.getPassRate());
+        instanceMap.put("failNum",appSceneInstance.getFailNum().toString());
+        instance.setContent(instanceMap.toString());
+
+        instanceService.createInstance(instance);
+
 
         //保存单个步骤
         if(CollectionUtils.isNotEmpty(appSceneTestResponse.getStepCommonInstanceList())){

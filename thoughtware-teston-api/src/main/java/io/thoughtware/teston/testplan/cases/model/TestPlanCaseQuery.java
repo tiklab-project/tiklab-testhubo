@@ -19,6 +19,9 @@ public class TestPlanCaseQuery {
     @ApiProperty(name = "testPlanId", desc = "测试计划id")
     private String testPlanId;
 
+    @ApiProperty(name = "repositoryId", desc = "项目id")
+    private String repositoryId;
+
     @ApiProperty(name = "name", desc = "用例名称")
     private String name;
 
@@ -64,5 +67,13 @@ public class TestPlanCaseQuery {
 
     public void setCaseType(String caseType) {
         this.caseType = caseType;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }

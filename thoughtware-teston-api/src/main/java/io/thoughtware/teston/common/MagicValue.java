@@ -22,12 +22,14 @@ public class MagicValue {
     //元素不存在
     public static final int ELEMENT_NOT_EXIST = 3;
 
-    //步骤类型
+    //类型
     public static final String CASE_TYPE_API_UNIT = "api-unit";
     public static final String CASE_TYPE_API_SCENE = "api-scene";
-    public static final String CASE_TYPE_APP = "app";
-    public static final String CASE_TYPE_WEB = "web";
+    public static final String CASE_TYPE_API_PERFORM = "api-perform";
+    public static final String CASE_TYPE_APP = "app-scene";
+    public static final String CASE_TYPE_WEB = "web-scene";
     public static final String CASE_TYPE_FUNCTION = "function";
     public static final String CASE_TYPE_IF = "if";
+    public static final String TEST_PLAN = "test-plan";
 
 }

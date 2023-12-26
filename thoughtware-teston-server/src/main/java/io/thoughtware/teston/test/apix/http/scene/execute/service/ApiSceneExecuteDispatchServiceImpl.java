@@ -130,18 +130,6 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         ApiSceneInstance apiSceneInstance = apiSceneTestResponse.getApiSceneInstance();
         apiSceneInstance.setApiSceneId(apiSceneId);
 
-        //设置次数
-        ApiSceneInstanceQuery apiSceneInstanceQuery = new ApiSceneInstanceQuery();
-        apiSceneInstanceQuery.setApiSceneId(apiSceneId);
-        List<ApiSceneInstance> apiSceneInstanceList = apiSceneInstanceService.findApiSceneInstanceList(apiSceneInstanceQuery);
-        if(apiSceneInstanceList!=null&&apiSceneInstanceList.size()>0){
-            Integer executeNumber = apiSceneInstanceList.get(0).getExecuteNumber();
-
-            apiSceneInstance.setExecuteNumber(++executeNumber);
-        }else {
-            apiSceneInstance.setExecuteNumber(1);
-        }
-
         apiSceneInstanceService.saveApiSceneInstanceToSql(apiSceneInstance,apiSceneTestResponse);
     }
 

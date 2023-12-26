@@ -1,5 +1,10 @@
 package io.thoughtware.teston.test.test.service;
 
+import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.common.MagicValue;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
 import io.thoughtware.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
@@ -79,6 +84,9 @@ public class TestCaseServiceImpl implements TestCaseService {
 
     @Autowired
     JoinTemplate joinTemplate;
+
+    @Autowired
+    InstanceService instanceService;
 
     @Override
     public String createTestCase(TestCase testCase) {
@@ -219,115 +227,20 @@ public class TestCaseServiceImpl implements TestCaseService {
 
                     switch (testCase.getCaseType()) {
                         case "api-unit":
-                            ApiUnitInstanceBindQuery apiUnitInstanceBindQuery = new ApiUnitInstanceBindQuery();
-                            apiUnitInstanceBindQuery.setApiUnitId(testCase.getId());
-
-                            List<ApiUnitInstanceBind> apiUnitInstanceBindList = apiUnitInstanceBindService.findApiUnitInstanceBindList(apiUnitInstanceBindQuery);
-
-                            if(apiUnitInstanceBindList!=null&&apiUnitInstanceBindList.size()>0){
-                                ApiUnitInstanceBind apiUnitInstanceBind = apiUnitInstanceBindList.get(0);
-                                recentInstance.put("result",apiUnitInstanceBind.getApiUnitInstance().getResult());
-                                recentInstance.put("executeNumber",apiUnitInstanceBind.getApiUnitInstance().getExecuteNumber());
-                                recentInstance.put("instanceId",apiUnitInstanceBind.getId());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
+                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_API_UNIT, testCase.getId());
                             break;
                         case "api-scene":
-                            ApiSceneInstanceQuery apiSceneInstanceQuery = new ApiSceneInstanceQuery();
-                            apiSceneInstanceQuery.setApiSceneId(testCase.getId());
-                            List<ApiSceneInstance> apiSceneInstanceList = apiSceneInstanceService.findApiSceneInstanceList(apiSceneInstanceQuery);
-                            if(apiSceneInstanceList!=null&&apiSceneInstanceList.size()>0){
-                                ApiSceneInstance apiSceneInstance = apiSceneInstanceList.get(0);
-                                recentInstance.put("result",apiSceneInstance.getResult());
-                                recentInstance.put("executeNumber",apiSceneInstance.getExecuteNumber());
-                                recentInstance.put("instanceId",apiSceneInstance.getId());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
+                            recentInstance = getInstanceInfo( MagicValue.CASE_TYPE_API_SCENE, testCase.getId());
                             break;
                         case "api-perform":
-                            ApiPerfInstanceQuery apiPerfInstanceQuery = new ApiPerfInstanceQuery();
-                            apiPerfInstanceQuery.setApiPerfId(testCase.getId());
-                            List<ApiPerfInstance> apiPerfInstanceList = apiPerfInstanceService.findApiPerfInstanceList(apiPerfInstanceQuery);
-                            if(apiPerfInstanceList!=null&&apiPerfInstanceList.size()>0){
-                                ApiPerfInstance apiPerfInstance = apiPerfInstanceList.get(0);
-                                recentInstance.put("result",apiPerfInstance.getResult());
-                                recentInstance.put("instanceId",apiPerfInstance.getId());
-                                recentInstance.put("executeNumber",apiPerfInstance.getExecuteNumber());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
+                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_API_PERFORM, testCase.getId());
                             break;
                         case "web-scene":
-                            WebSceneInstanceQuery webSceneInstanceQuery = new WebSceneInstanceQuery();
-                            webSceneInstanceQuery.setWebSceneId(testCase.getId());
-                            List<WebSceneInstance> webSceneInstanceList = webSceneInstanceService.findWebSceneInstanceList(webSceneInstanceQuery);
-                            if(webSceneInstanceList!=null&&webSceneInstanceList.size()>0){
-                                WebSceneInstance webSceneInstance = webSceneInstanceList.get(0);
-                                recentInstance.put("result",webSceneInstance.getResult());
-                                recentInstance.put("instanceId",webSceneInstance.getId());
-                                recentInstance.put("executeNumber",webSceneInstance.getExecuteNumber());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
+                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_WEB, testCase.getId());
                             break;
-                        case "web-perform":
-                            WebPerfInstanceQuery webPerfInstanceQuery = new WebPerfInstanceQuery();
-                            webPerfInstanceQuery.setWebPerfId(testCase.getId());
-                            List<WebPerfInstance> webPerfInstanceList = webPerfInstanceService.findWebPerfInstanceList(webPerfInstanceQuery);
-                            if(webPerfInstanceList!=null&&webPerfInstanceList.size()>0){
-                                WebPerfInstance webPerfInstance = webPerfInstanceList.get(0);
-                                recentInstance.put("result",webPerfInstance.getResult());
-                                recentInstance.put("instanceId",webPerfInstance.getId());
-                                recentInstance.put("executeNumber",webPerfInstance.getExecuteNumber());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
-                            break;
-
                         case "app-scene":
-                            AppSceneInstanceQuery appSceneInstanceQuery = new AppSceneInstanceQuery();
-                            appSceneInstanceQuery.setAppSceneId(testCase.getId());
-                            List<AppSceneInstance> appSceneInstanceList = appSceneInstanceService.findAppSceneInstanceList(appSceneInstanceQuery);
-                            if(appSceneInstanceList!=null&&appSceneInstanceList.size()>0){
-                                AppSceneInstance appSceneInstance = appSceneInstanceList.get(0);
-                                recentInstance.put("result",appSceneInstance.getResult());
-                                recentInstance.put("instanceId",appSceneInstance.getId());
-                                recentInstance.put("executeNumber",appSceneInstance.getExecuteNumber());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
+                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_APP, testCase.getId());
                             break;
-
-                        case "app-perform":
-                            AppPerfInstanceQuery appPerfInstanceQuery = new AppPerfInstanceQuery();
-                            appPerfInstanceQuery.setAppPerfId(testCase.getId());
-                            List<AppPerfInstance> appPerfInstanceList = appPerfInstanceService.findAppPerfInstanceList(appPerfInstanceQuery);
-                            if(appPerfInstanceList!=null&&appPerfInstanceList.size()>0){
-                                AppPerfInstance appPerfInstance = appPerfInstanceList.get(0);
-                                recentInstance.put("result",appPerfInstance.getResult());
-                                recentInstance.put("instanceId",appPerfInstance.getId());
-                                recentInstance.put("executeNumber",appPerfInstance.getExecuteNumber());
-                            }else {
-                                recentInstance.put("result",2);
-                                recentInstance.put("instanceId",null);
-                                recentInstance.put("executeNumber",null);
-                            }
-                            break;
-
                         default:
                             break;
                     }
@@ -346,6 +259,39 @@ public class TestCaseServiceImpl implements TestCaseService {
     }
 
 
+    // 函数用于获取实例信息
+    private HashMap<Object, Object> getInstanceInfo(String instanceType, String testCaseId) {
+        InstanceQuery instanceQuery = new InstanceQuery();
+        instanceQuery.setBelongId(testCaseId);
+        instanceQuery.setType(instanceType);
 
+        Pagination<Instance> instancePage = instanceService.findInstancePage(instanceQuery);
+
+        HashMap<Object, Object> recentInstance = new HashMap<>();
+        if (instancePage != null && !instancePage.getDataList().isEmpty()) {
+            Instance instance = instancePage.getDataList().get(0);
+            JSONObject jsonObject = JSONObject.parseObject(instance.getContent());
+            // 从 JSON 中获取结果字段的字符串值
+            String resultStr = jsonObject.getString("result");
+
+            // 检查字符串是否是数字
+            if (resultStr.matches("\\d+")) {
+                // 如果是数字，将字符串转换为整数
+                int result = Integer.parseInt(resultStr);
+                recentInstance.put("result", result);
+            } else {
+                // 如果不是数字，进行相应的处理，例如将其设为默认值
+                recentInstance.put("result", 2);
+            }
+
+            recentInstance.put("executeNumber", instance.getExecuteNumber());
+            recentInstance.put("instanceId", instance.getId());
+        } else {
+            recentInstance.put("result", 2);
+            recentInstance.put("instanceId", null);
+            recentInstance.put("executeNumber", null);
+        }
+        return recentInstance;
+    }
 
 }

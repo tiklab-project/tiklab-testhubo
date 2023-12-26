@@ -1,5 +1,11 @@
 package io.thoughtware.teston.test.apix.http.scene.instance.service;
 
+import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCase;
+import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneCaseService;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestResponse;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
@@ -25,6 +31,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,6 +54,12 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Autowired
     IfJudgmentInstanceService ifJudgmentInstanceService;
+
+    @Autowired
+    ApiSceneCaseService apiSceneCaseService;
+
+    @Autowired
+    InstanceService instanceService;
 
     @Override
     public String createApiSceneInstance(@NotNull @Valid ApiSceneInstance scenInstance) {
@@ -135,9 +148,43 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Override
     public String saveApiSceneInstanceToSql(ApiSceneInstance apiSceneInstance, ApiSceneTestResponse apiSceneTestResponse) {
+        String apiSceneId = apiSceneInstance.getApiSceneId();
         String apiSceneInstanceId = createApiSceneInstance(apiSceneInstance);
 
-        //所有ApiUnitInstance设置apiSceneInstanceId创建
+        // 创建公共实例
+        Instance instance = new Instance();
+        instance.setId(apiSceneInstanceId);
+
+        instance.setBelongId(apiSceneId);
+        instance.setType(MagicValue.CASE_TYPE_API_SCENE);
+
+        ApiSceneCase apiSceneCase = apiSceneCaseService.findApiSceneCase(apiSceneId);
+        instance.setName(apiSceneCase.getTestCase().getName());
+        instance.setRepositoryId(apiSceneCase.getTestCase().getRepositoryId());
+
+        InstanceQuery instanceQuery = new InstanceQuery();
+        instanceQuery.setBelongId(apiSceneId);
+        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
+        if(instanceList!=null&& !instanceList.isEmpty()){
+            Integer executeNumber = instanceList.get(0).getExecuteNumber();
+            instance.setExecuteNumber(++executeNumber);
+        }else {
+            instance.setExecuteNumber(1);
+        }
+
+        JSONObject instanceMap = new JSONObject();
+        instanceMap.put("result",apiSceneInstance.getResult().toString());
+        instanceMap.put("testNumber",apiSceneInstance.getTestNumber().toString());
+        instanceMap.put("passNumber",apiSceneInstance.getPassNumber().toString());
+        instanceMap.put("failNumber",apiSceneInstance.getFailNumber().toString());
+        instanceMap.put("elapsedTime",apiSceneInstance.getElapsedTime().toString());
+        instanceMap.put("passRate",apiSceneInstance.getPassRate());
+        instance.setContent(instanceMap.toString());
+
+        instanceService.createInstance(instance);
+
+
+        // 所有ApiUnitInstance设置apiSceneInstanceId创建
         List<StepCommonInstance> stepCommonInstanceList = apiSceneTestResponse.getStepCommonInstanceList();
         stepCommonInstanceList.forEach(stepCommonInstance -> {
             //公共的历史创建

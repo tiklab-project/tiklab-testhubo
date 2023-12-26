@@ -78,7 +78,7 @@ public class TestOnUnit {
         sendMessageNotice.setLink(map.get("link"));
         sendMessageNotice.setAction(map.get("name"));
 
-        sendMessageNoticeService.createMessageItem(sendMessageNotice);
+        sendMessageNoticeService.sendMessageNotice(sendMessageNotice);
     }
 
     /**

@@ -1,10 +1,12 @@
 package io.thoughtware.teston.test.app.scene.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
 import io.thoughtware.teston.support.variable.service.VariableService;
+import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
 import io.thoughtware.teston.test.app.scene.cases.service.AppSceneStepService;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestRequest;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
@@ -62,6 +64,8 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Autowired
     StepCommonService stepCommonService;
+
+
 
     /**
      *  环境中获取是否是内嵌agent
@@ -186,18 +190,6 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         //保存历史总详情
         AppSceneInstance appSceneInstance = appSceneTestResponse.getAppSceneInstance();
         appSceneInstance.setAppSceneId(appSceneId);
-
-        //设置次数
-        AppSceneInstanceQuery appSceneInstanceQuery = new AppSceneInstanceQuery();
-        appSceneInstanceQuery.setAppSceneId(appSceneId);
-        List<AppSceneInstance> appSceneInstanceList = appSceneInstanceService.findAppSceneInstanceList(appSceneInstanceQuery);
-        if(appSceneInstanceList!=null&&appSceneInstanceList.size()>0){
-            Integer executeNumber = appSceneInstanceList.get(0).getExecuteNumber();
-
-            appSceneInstance.setExecuteNumber(++executeNumber);
-        }else {
-            appSceneInstance.setExecuteNumber(1);
-        }
 
         appSceneInstanceService.saveAppSceneInstanceToSql(appSceneInstance,appSceneTestResponse);
     }
