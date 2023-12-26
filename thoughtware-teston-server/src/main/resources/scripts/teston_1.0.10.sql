@@ -1,8 +1,16 @@
-UPDATE teston_assert_step_common
+UPDATE teston_case_step_common
 SET type = 'web-scene'
 WHERE type = 'web';
 
-UPDATE teston_assert_step_common
+UPDATE teston_case_step_common
+SET type = 'app-scene'
+WHERE type = 'app';
+
+UPDATE teston_case_step_instance_common
+SET type = 'web-scene'
+WHERE type = 'web';
+
+UPDATE teston_case_step_instance_common
 SET type = 'app-scene'
 WHERE type = 'app';
 
@@ -17,6 +25,7 @@ CREATE TABLE teston_instance(
       name VARCHAR(256),
       create_time timestamp,
       create_user varchar(32),
+      execute_number int,
       content TEXT
 );
 

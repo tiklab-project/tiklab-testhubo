@@ -5,6 +5,7 @@ import io.thoughtware.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
 import io.thoughtware.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
 import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
+import io.thoughtware.teston.test.apix.http.unit.mock.JsonGenerator;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -297,7 +298,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
             }else {
                 switch (bodyType.getBodyType()){
                     case "formdata":
-                        mediaType.put("mediaType","application/form-data");
+                        mediaType.put("mediaType","multipart/form-data");
                         break;
                     case "formUrlencoded":
                         mediaType.put("mediaType","application/x-www-form-urlencoded");
@@ -340,8 +341,8 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
                 case "formUrlencoded":
                     return getFormUrlencoded(apiUnitCase,bodyStr);
 
-//                case "json":
-//                    return getJson(apiUnitCase,bodyStr);
+                case "json":
+                    return getJson(apiUnitCase,bodyStr);
 
                 case "raw":
                     return getRaw(apiUnitCase,bodyStr);
@@ -362,8 +363,12 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         List<FormParamUnit> formParamUnitList = formParamService.findFormParamList(formParamUnitQuery);
 
         if (CollectionUtils.isNotEmpty(formParamUnitList)){
-            for (FormParamUnit formParamUnit : formParamUnitList){
-                bodyStr = bodyStr + formParamUnit.getParamName() + "=" + formParamUnit.getValue() + "&";
+            for (int i = 0; i < formParamUnitList.size(); i++) {
+                FormParamUnit formParamUnit = formParamUnitList.get(i);
+                bodyStr += formParamUnit.getParamName() + "=" + formParamUnit.getValue();
+                if (i < formParamUnitList.size() - 1) {
+                    bodyStr += "&";
+                }
             }
         }
 
@@ -377,10 +382,13 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         FormUrlencodedUnitQuery formUrlencodedUnitQuery = new FormUrlencodedUnitQuery();
         formUrlencodedUnitQuery.setApiUnitId(apiUnitCase.getId());
         List<FormUrlEncodedUnit> formUrlEncodedUnitList = formUrlencodedService.findFormUrlencodedList(formUrlencodedUnitQuery);
+
         if (CollectionUtils.isNotEmpty(formUrlEncodedUnitList)){
+
             for (FormUrlEncodedUnit formUrlencodedUnit : formUrlEncodedUnitList){
                 bodyStr = bodyStr + formUrlencodedUnit.getParamName() + "=" + formUrlencodedUnit.getValue() + "&";
             }
+
         }
 
         return bodyStr;
@@ -390,7 +398,10 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
      * 获取JsonDataMap
      */
     private String getJson(ApiUnitCase apiUnitCase, String bodyStr){
+        JsonParamUnit jsonParam = jsonParamService.findJsonParam(apiUnitCase.getId());
 
+        JsonGenerator jsonGenerator = new JsonGenerator();
+        bodyStr = jsonGenerator.generateJson(jsonParam.getSchemaText());
         return bodyStr;
     }
 

@@ -32,4 +32,6 @@ public class MagicValue {
     public static final String CASE_TYPE_IF = "if";
     public static final String TEST_PLAN = "test-plan";
 
+
+
 }

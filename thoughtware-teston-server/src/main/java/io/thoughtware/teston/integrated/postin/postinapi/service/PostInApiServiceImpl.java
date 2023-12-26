@@ -89,6 +89,7 @@ public class PostInApiServiceImpl implements PostInApiService {
                 //通过空间id查询下面所有的接口
                 ApixQuery apixQuery = new ApixQuery();
                 apixQuery.setWorkspaceId(workspaceBind.getWorkspace().getId());
+                apixQuery.setProtocolType("http");
                 List<Apix> apixList = restTemplateUtils.requestPostList(apxUrl, apixQuery, Apix.class);
 
                 if(apixList==null&&apixList.size()==0){

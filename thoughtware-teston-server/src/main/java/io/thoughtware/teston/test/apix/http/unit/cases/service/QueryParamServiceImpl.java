@@ -115,9 +115,14 @@ public class QueryParamServiceImpl implements QueryParamService {
         QueryParamUnitQuery queryParamUnitQuery = new QueryParamUnitQuery();
         queryParamUnitQuery.setApiUnitId(apiUnitCase.getId());
         List<QueryParamUnit> queryParamUnitList = this.findQueryParamList(queryParamUnitQuery);
+
         if (CollectionUtils.isNotEmpty(queryParamUnitList)){
-            for (QueryParamUnit queryParamUnit : queryParamUnitList) {
-                param += queryParamUnit.getParamName() + "=" + queryParamUnit.getValue() + "&";
+            for (int i = 0; i < queryParamUnitList.size(); i++) {
+                QueryParamUnit queryParamUnit = queryParamUnitList.get(i);
+                param += queryParamUnit.getParamName() + "=" + queryParamUnit.getValue();
+                if (i < queryParamUnitList.size() - 1) {
+                    param += "&";
+                }
             }
         }
 
