@@ -1,9 +1,9 @@
 package io.thoughtware.teston.test.common.stepcommon.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.thoughtware.beans.annotation.Mapper;
+import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
-import io.thoughtware.join.annotation.Join;
+import io.thoughtware.toolkit.join.annotation.Join;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStep;

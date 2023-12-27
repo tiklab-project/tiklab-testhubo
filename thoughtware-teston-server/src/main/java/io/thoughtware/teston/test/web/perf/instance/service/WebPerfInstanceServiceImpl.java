@@ -1,9 +1,9 @@
 package io.thoughtware.teston.test.web.perf.instance.service;
 
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.teston.test.web.perf.instance.dao.WebPerfInstanceDao;
 import io.thoughtware.teston.test.web.perf.instance.entity.WebPerfInstanceEntity;

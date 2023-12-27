@@ -1,10 +1,10 @@
 package io.thoughtware.teston.support.updateSql.service;
 
 import io.thoughtware.teston.support.updateSql.UpdateSqlService;
-import io.thoughtware.beans.BeanMapper;
-import io.thoughtware.beans.annotation.Mapper;
-import io.thoughtware.beans.annotation.Mapping;
-import io.thoughtware.beans.annotation.Mappings;
+import io.thoughtware.toolkit.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.annotation.Mapper;
+import io.thoughtware.toolkit.beans.annotation.Mapping;
+import io.thoughtware.toolkit.beans.annotation.Mappings;
 import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.core.resolver.AnnotationResourceResolver;
 import io.thoughtware.dal.jpa.JpaTemplate;

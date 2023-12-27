@@ -1,10 +1,10 @@
 package io.thoughtware.teston.instance.service;
 
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.eam.common.context.LoginContext;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.instance.dao.InstanceDao;
 import io.thoughtware.teston.instance.entity.InstanceEntity;

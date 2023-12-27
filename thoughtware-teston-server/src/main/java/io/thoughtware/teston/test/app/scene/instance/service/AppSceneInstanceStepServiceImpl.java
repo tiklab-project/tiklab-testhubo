@@ -4,10 +4,10 @@ import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceStep;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceStepQuery;
 import io.thoughtware.teston.test.app.scene.instance.dao.AppSceneInstanceStepDao;
 import io.thoughtware.teston.test.app.scene.instance.entity.AppSceneInstanceStepEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

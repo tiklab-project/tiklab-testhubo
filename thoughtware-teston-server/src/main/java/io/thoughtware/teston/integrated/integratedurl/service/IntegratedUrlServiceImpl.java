@@ -2,10 +2,10 @@ package io.thoughtware.teston.integrated.integratedurl.service;
 
 import io.thoughtware.teston.integrated.integratedurl.model.IntegratedUrl;
 import io.thoughtware.teston.integrated.integratedurl.model.IntegratedUrlQuery;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.integrated.integratedurl.dao.IntegratedUrlDao;
 import io.thoughtware.teston.integrated.integratedurl.entity.IntegratedUrlEntity;
 import org.springframework.beans.factory.annotation.Autowired;

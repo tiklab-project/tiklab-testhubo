@@ -6,12 +6,12 @@ import io.thoughtware.teston.test.apix.http.unit.instance.model.RequestInstance;
 import io.thoughtware.teston.test.apix.http.unit.instance.model.ResponseInstance;
 import io.thoughtware.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
 import io.thoughtware.teston.test.apix.http.unit.instance.entity.ApiUnitInstanceEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.eam.common.context.LoginContext;
 

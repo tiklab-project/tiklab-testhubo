@@ -1,6 +1,6 @@
 package io.thoughtware.teston.test.common.stepassert.service;
 
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 import io.thoughtware.teston.test.common.stepassert.model.ElementAssert;
 
 import javax.validation.Valid;

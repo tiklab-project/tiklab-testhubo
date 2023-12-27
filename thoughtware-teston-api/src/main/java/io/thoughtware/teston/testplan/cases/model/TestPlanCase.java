@@ -1,14 +1,14 @@
 package io.thoughtware.teston.testplan.cases.model;
 
 import io.thoughtware.teston.test.test.model.TestCase;
-import io.thoughtware.beans.annotation.Mapper;
+import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
-import io.thoughtware.beans.annotation.Mapping;
-import io.thoughtware.beans.annotation.Mappings;
+import io.thoughtware.toolkit.beans.annotation.Mapping;
+import io.thoughtware.toolkit.beans.annotation.Mappings;
 import io.thoughtware.core.BaseModel;
-import io.thoughtware.join.annotation.Join;
-import io.thoughtware.join.annotation.JoinQuery;
+import io.thoughtware.toolkit.join.annotation.Join;
+import io.thoughtware.toolkit.join.annotation.JoinQuery;
 
 /**
  * 测试计划绑定的用例 模型

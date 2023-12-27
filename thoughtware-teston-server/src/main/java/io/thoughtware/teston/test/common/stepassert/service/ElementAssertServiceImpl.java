@@ -1,7 +1,7 @@
 package io.thoughtware.teston.test.common.stepassert.service;
 
-import io.thoughtware.beans.BeanMapper;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.beans.BeanMapper;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.test.common.stepassert.model.ElementAssert;
 import io.thoughtware.teston.test.common.stepassert.dao.ElementAssertDao;
 import io.thoughtware.teston.test.common.stepassert.entity.ElementAssertEntity;

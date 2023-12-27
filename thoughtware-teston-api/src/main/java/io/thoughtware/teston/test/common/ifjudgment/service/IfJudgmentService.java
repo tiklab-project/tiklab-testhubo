@@ -1,8 +1,8 @@
 package io.thoughtware.teston.test.common.ifjudgment.service;
 
 import io.thoughtware.teston.test.common.ifjudgment.model.IfJudgment;
-import io.thoughtware.join.annotation.FindOne;
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 import io.thoughtware.teston.test.common.ifjudgment.model.IfJudgmentQuery;
 
 import javax.validation.Valid;

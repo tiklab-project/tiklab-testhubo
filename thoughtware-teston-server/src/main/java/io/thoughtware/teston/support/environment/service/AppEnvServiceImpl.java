@@ -8,8 +8,8 @@ import io.thoughtware.teston.support.environment.entity.AppEnvEntity;
 import io.thoughtware.teston.support.environment.model.AppEnv;
 import io.thoughtware.teston.support.environment.model.AppEnvQuery;
 
-import io.thoughtware.beans.BeanMapper;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.beans.BeanMapper;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

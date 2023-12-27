@@ -3,8 +3,8 @@ package io.thoughtware.teston.test.apix.http.perf.instance.service;
 import io.thoughtware.core.page.PaginationBuilder;
 
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.beans.BeanMapper;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.beans.BeanMapper;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.teston.test.apix.http.perf.instance.entity.ApiPerfInstanceEntity;
 import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;

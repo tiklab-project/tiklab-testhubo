@@ -1,7 +1,7 @@
 package io.thoughtware.teston.test.web.scene.instance.model;
 
 import io.thoughtware.teston.test.common.stepassert.model.StepAssertCommon;
-import io.thoughtware.beans.annotation.Mapper;
+import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;

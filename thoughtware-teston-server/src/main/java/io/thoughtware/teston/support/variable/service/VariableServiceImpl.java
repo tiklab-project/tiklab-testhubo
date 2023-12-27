@@ -1,10 +1,10 @@
 package io.thoughtware.teston.support.variable.service;
 
 import com.alibaba.fastjson.JSONObject;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.support.variable.dao.VariableDao;
 import io.thoughtware.teston.support.variable.entity.VariableEntity;
 import io.thoughtware.teston.support.variable.model.Variable;

@@ -1,7 +1,7 @@
 package io.thoughtware.teston.test.common.stepassert.service;
 
-import io.thoughtware.join.annotation.FindOne;
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 import io.thoughtware.teston.test.common.stepassert.model.VariableAssert;
 
 import javax.validation.Valid;

@@ -9,10 +9,10 @@ import io.thoughtware.teston.category.model.Category;
 import io.thoughtware.teston.category.service.CategoryService;
 import io.thoughtware.teston.test.app.scene.cases.dao.AppSceneCaseDao;
 import io.thoughtware.teston.test.app.scene.cases.entity.AppSceneCaseEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.user.user.model.User;
 import io.thoughtware.user.user.service.UserService;

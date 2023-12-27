@@ -1,9 +1,9 @@
 package io.thoughtware.teston.integrated.teamwire.workItemBind.service;
 
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.join.annotation.FindAll;
-import io.thoughtware.join.annotation.FindList;
-import io.thoughtware.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.FindAll;
+import io.thoughtware.toolkit.join.annotation.FindList;
+import io.thoughtware.toolkit.join.annotation.FindOne;
 import io.thoughtware.teston.integrated.teamwire.workItemBind.model.WorkItemBind;
 import io.thoughtware.teston.integrated.teamwire.workItemBind.model.WorkItemBindQuery;
 

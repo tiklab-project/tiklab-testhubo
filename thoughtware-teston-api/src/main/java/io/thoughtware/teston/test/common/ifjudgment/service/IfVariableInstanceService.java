@@ -2,8 +2,8 @@ package io.thoughtware.teston.test.common.ifjudgment.service;
 
 import io.thoughtware.teston.test.common.ifjudgment.model.IfVariableInstance;
 import io.thoughtware.teston.test.common.ifjudgment.model.IfVariableInstanceQuery;
-import io.thoughtware.join.annotation.FindOne;
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

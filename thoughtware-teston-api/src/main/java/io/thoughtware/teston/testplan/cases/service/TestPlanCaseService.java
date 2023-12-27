@@ -1,7 +1,7 @@
 package io.thoughtware.teston.testplan.cases.service;
 
 import io.thoughtware.teston.test.test.model.TestCase;
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;

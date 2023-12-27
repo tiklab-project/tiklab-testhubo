@@ -2,10 +2,10 @@ package io.thoughtware.teston.test.apix.http.scene.instance.service;
 
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneStepInstanceBind;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneStepInstanceBindQuery;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.teston.test.apix.http.scene.instance.entity.ApiSceneStepInstanceBindEntity;
 import io.thoughtware.teston.test.apix.http.scene.instance.dao.ApiSceneStepInstanceBindDao;

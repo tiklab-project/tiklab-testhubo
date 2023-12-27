@@ -3,9 +3,9 @@ package io.thoughtware.teston.integrated.postin.workspaceBind.service;
 import io.thoughtware.teston.integrated.postin.workspaceBind.model.Workspace;
 import io.thoughtware.teston.integrated.postin.workspaceBind.model.WorkspaceQuery;
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.join.annotation.FindAll;
-import io.thoughtware.join.annotation.FindList;
-import io.thoughtware.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.FindAll;
+import io.thoughtware.toolkit.join.annotation.FindList;
+import io.thoughtware.toolkit.join.annotation.FindOne;
 import io.thoughtware.teston.integrated.postin.workspaceBind.model.WorkspaceBind;
 import io.thoughtware.teston.integrated.postin.workspaceBind.model.WorkspaceBindQuery;
 

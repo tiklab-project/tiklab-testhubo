@@ -8,8 +8,8 @@ import io.thoughtware.teston.repository.entity.RepositoryRecentEntity;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 
-import io.thoughtware.beans.BeanMapper;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.beans.BeanMapper;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.testplan.cases.model.TestPlan;
 import io.thoughtware.teston.testplan.cases.model.TestPlanQuery;
 import io.thoughtware.teston.testplan.cases.service.TestPlanService;

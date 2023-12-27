@@ -4,10 +4,10 @@ import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceB
 import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBindQuery;
 import io.thoughtware.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceBindDao;
 import io.thoughtware.teston.test.apix.http.unit.instance.entity.ApiUnitInstanceBindEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

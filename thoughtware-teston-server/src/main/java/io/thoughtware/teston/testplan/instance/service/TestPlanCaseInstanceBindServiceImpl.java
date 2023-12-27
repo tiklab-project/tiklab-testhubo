@@ -5,10 +5,10 @@ import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBindQuery;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.testplan.instance.entity.TestPlanCaseInstanceBindEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

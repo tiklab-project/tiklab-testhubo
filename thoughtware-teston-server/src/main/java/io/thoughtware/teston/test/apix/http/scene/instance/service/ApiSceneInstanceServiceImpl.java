@@ -16,10 +16,10 @@ import io.thoughtware.teston.test.common.ifjudgment.service.IfJudgmentInstanceSe
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonInstanceService;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.apix.http.scene.instance.entity.ApiSceneInstanceEntity;

@@ -6,10 +6,10 @@ import io.thoughtware.teston.test.web.perf.cases.model.WebPerfStep;
 import io.thoughtware.teston.test.web.perf.cases.model.WebPerfStepQuery;
 import io.thoughtware.teston.test.web.perf.cases.dao.WebPerfStepDao;
 import io.thoughtware.teston.test.web.perf.cases.entity.WebPerfStepEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

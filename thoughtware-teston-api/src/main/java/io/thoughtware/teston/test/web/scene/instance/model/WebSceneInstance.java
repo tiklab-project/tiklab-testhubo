@@ -2,7 +2,7 @@ package io.thoughtware.teston.test.web.scene.instance.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
-import io.thoughtware.beans.annotation.Mapper;
+import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;

@@ -18,10 +18,10 @@ import io.thoughtware.teston.test.common.stepcommon.service.StepCommonInstanceSe
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.app.scene.instance.dao.AppSceneInstanceDao;
 import io.thoughtware.teston.test.app.scene.instance.entity.AppSceneInstanceEntity;
-import io.thoughtware.beans.BeanMapper;
+import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.join.JoinTemplate;
+import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.test.web.scene.cases.model.WebSceneCase;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

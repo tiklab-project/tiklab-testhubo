@@ -5,10 +5,10 @@ import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCaseQuery;
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.join.annotation.FindAll;
-import io.thoughtware.join.annotation.FindList;
-import io.thoughtware.join.annotation.FindOne;
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.FindAll;
+import io.thoughtware.toolkit.join.annotation.FindList;
+import io.thoughtware.toolkit.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

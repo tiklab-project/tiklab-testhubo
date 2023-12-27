@@ -3,10 +3,10 @@ package io.thoughtware.teston.test.web.perf.cases.service;
 import io.thoughtware.teston.test.web.perf.cases.model.WebPerfCase;
 import io.thoughtware.teston.test.web.perf.cases.model.WebPerfCaseQuery;
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.join.annotation.FindAll;
-import io.thoughtware.join.annotation.FindList;
-import io.thoughtware.join.annotation.FindOne;
-import io.thoughtware.join.annotation.JoinProvider;
+import io.thoughtware.toolkit.join.annotation.FindAll;
+import io.thoughtware.toolkit.join.annotation.FindList;
+import io.thoughtware.toolkit.join.annotation.FindOne;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 
 import javax.validation.Valid;
