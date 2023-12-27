@@ -1,5 +1,8 @@
 package io.thoughtware.teston.test.apix.http.unit.instance.dao;
 
+import io.thoughtware.dal.jpa.criterial.condition.QueryCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
+import io.thoughtware.teston.test.apix.http.unit.cases.entity.AssertCaseEntity;
 import io.thoughtware.teston.test.apix.http.unit.instance.entity.AssertInstanceEntity;
 import io.thoughtware.teston.test.apix.http.unit.instance.model.AssertInstanceQuery;
 import io.thoughtware.core.page.Pagination;
@@ -79,7 +82,11 @@ public class AssertInstanceDao{
      * @return
      */
     public List<AssertInstanceEntity> findAssertInstanceList(AssertInstanceQuery assertInstanceQuery) {
-        return jpaTemplate.findList(assertInstanceQuery, AssertInstanceEntity.class);
+        QueryCondition queryCondition = QueryBuilders.createQuery(AssertInstanceEntity.class)
+                .eq("instanceId", assertInstanceQuery.getInstanceId())
+                .orders(assertInstanceQuery.getOrderParams())
+                .get();
+        return jpaTemplate.findList(queryCondition, AssertInstanceEntity.class);
     }
 
     /**
@@ -88,6 +95,11 @@ public class AssertInstanceDao{
      * @return
      */
     public Pagination<AssertInstanceEntity> findAssertInstancePage(AssertInstanceQuery assertInstanceQuery) {
-        return jpaTemplate.findPage(assertInstanceQuery, AssertInstanceEntity.class);
+        QueryCondition queryCondition = QueryBuilders.createQuery(AssertInstanceEntity.class)
+                .eq("instanceId", assertInstanceQuery.getInstanceId())
+                .pagination(assertInstanceQuery.getPageParam())
+                .orders(assertInstanceQuery.getOrderParams())
+                .get();
+        return jpaTemplate.findPage(queryCondition, AssertInstanceEntity.class);
     }
 }

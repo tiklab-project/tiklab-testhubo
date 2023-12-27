@@ -17,36 +17,32 @@ import java.io.Serializable;
 public class AssertInstanceEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
-    @Column(name = "id",length = 32)
+    @GeneratorValue(length = 12)
+    @Column(name = "id")
     private String id;
 
     //测试实例id
-    @Column(name = "instance_id",length = 32,notNull = true)
+    @Column(name = "instance_id")
     private String instanceId;
 
     //断言来源类型
     @Column(name = "source")
     private Integer source;
 
-    //属性名称
-    @Column(name = "property_name",length = 64)
-    private String propertyName;
-
-    //数据类型
-    @Column(name = "data_type",length = 32)
-    private String dataType;
+    //实际值
+    @Column(name = "actual_result")
+    private String actualResult;
 
     //比较符
-    @Column(name = "comparator",length = 32,notNull = true)
+    @Column(name = "comparator")
     private String comparator;
 
-    //值
-    @Column(name = "value",length = 128)
+    //比较的值
+    @Column(name = "value")
     private String value;
 
     //断言结果, 0失败  1成功
-    @Column(name = "result",length = 4)
+    @Column(name = "result")
     private Integer result;
 
     public String getId() {
@@ -73,20 +69,12 @@ public class AssertInstanceEntity implements Serializable {
         this.source = source;
     }
 
-    public String getPropertyName() {
-        return propertyName;
+    public String getActualResult() {
+        return actualResult;
     }
 
-    public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
-    }
-
-    public String getDataType() {
-        return dataType;
-    }
-
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
+    public void setActualResult(String actualResult) {
+        this.actualResult = actualResult;
     }
 
     public String getComparator() {

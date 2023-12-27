@@ -10,6 +10,7 @@ import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 接口单元
@@ -32,13 +33,13 @@ public class ResponseInstance extends BaseModel{
     @JoinQuery(key = "id")
     private ApiUnitInstance apiUnitInstance;
 
-
     @ApiProperty(name="responseHeader",desc="响应头数据")
     private String responseHeader;
 
-
     @ApiProperty(name="responseBody",desc="响应体数据")
     private String responseBody;
+
+    private List<AssertInstance> assertInstanceList;
 
     public String getId() {
         return id;
@@ -70,5 +71,13 @@ public class ResponseInstance extends BaseModel{
 
     public void setResponseBody(String responseBody) {
         this.responseBody = responseBody;
+    }
+
+    public List<AssertInstance> getAssertInstanceList() {
+        return assertInstanceList;
+    }
+
+    public void setAssertInstanceList(List<AssertInstance> assertInstanceList) {
+        this.assertInstanceList = assertInstanceList;
     }
 }

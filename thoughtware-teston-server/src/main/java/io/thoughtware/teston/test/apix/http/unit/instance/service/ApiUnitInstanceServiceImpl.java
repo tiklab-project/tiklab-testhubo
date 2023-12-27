@@ -1,9 +1,6 @@
 package io.thoughtware.teston.test.apix.http.unit.instance.service;
 
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceQuery;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.RequestInstance;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ResponseInstance;
+import io.thoughtware.teston.test.apix.http.unit.instance.model.*;
 import io.thoughtware.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
 import io.thoughtware.teston.test.apix.http.unit.instance.entity.ApiUnitInstanceEntity;
 import io.thoughtware.toolkit.beans.BeanMapper;
@@ -144,13 +141,14 @@ public class ApiUnitInstanceServiceImpl implements ApiUnitInstanceService {
 
         ResponseInstance responseInstance = responseInstanceService.findResponseInstance(id);
         if (responseInstance != null) {
+            AssertInstanceQuery assertInstanceQuery = new AssertInstanceQuery();
+            assertInstanceQuery.setInstanceId(id);
+            List<AssertInstance> assertInstanceList = assertInstanceService.findAssertInstanceList(assertInstanceQuery);
+            responseInstance.setAssertInstanceList(assertInstanceList);
+
             apiUnitInstance.setResponseInstance(responseInstance);
         }
 
-//        List<AssertInstance> assertInstanceList = assertInstanceService.findAssertInstanceList(new AssertInstanceQuery().setApiUnitInstanceId(id));
-//        if (assertInstanceList != null) {
-//
-//        }
 
         return apiUnitInstance;
     }
@@ -225,7 +223,17 @@ public class ApiUnitInstanceServiceImpl implements ApiUnitInstanceService {
             responseInstance.setId(apiUnitInstanceId);
             responseInstance.setApiUnitInstance(new ApiUnitInstance().setId(apiUnitInstanceId));
             responseInstanceService.createResponseInstance(responseInstance);
+
+
+            List<AssertInstance> assertInstanceList = responseInstance.getAssertInstanceList();
+            if(assertInstanceList!=null&&!assertInstanceList.isEmpty()){
+                for(AssertInstance assertInstance:assertInstanceList){
+                    assertInstance.setInstanceId(apiUnitInstanceId);
+                    assertInstanceService.createAssertInstance(assertInstance);
+                }
+            }
         }
+
 
         return apiUnitInstanceId;
     }

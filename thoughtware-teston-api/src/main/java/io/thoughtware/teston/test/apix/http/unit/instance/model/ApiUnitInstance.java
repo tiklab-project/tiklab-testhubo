@@ -14,6 +14,7 @@ import io.thoughtware.postin.annotation.ApiProperty;
 import io.thoughtware.user.user.model.User;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 用例实例或用例步骤记录 模型
@@ -71,6 +72,7 @@ public class ApiUnitInstance extends BaseModel{
 
     @ApiProperty(name="variableJson",desc="返回环境变量")
     private JSONObject variableJson;
+
 
     public String getId() {
         return id;
@@ -176,4 +178,5 @@ public class ApiUnitInstance extends BaseModel{
     public void setVariableJson(JSONObject variableJson) {
         this.variableJson = variableJson;
     }
+
 }
