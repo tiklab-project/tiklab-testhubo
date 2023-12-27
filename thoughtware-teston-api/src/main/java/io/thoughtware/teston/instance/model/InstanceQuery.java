@@ -30,6 +30,10 @@ public class InstanceQuery {
     @ApiProperty(name ="createUser",desc = "创建人")
     private String createUser;
 
+    @ApiProperty(name ="repositoryId",desc = "repositoryId")
+    private String repositoryId;
+
+
     public List<Order> getOrderParams() {
         return orderParams;
     }
@@ -76,5 +80,13 @@ public class InstanceQuery {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }

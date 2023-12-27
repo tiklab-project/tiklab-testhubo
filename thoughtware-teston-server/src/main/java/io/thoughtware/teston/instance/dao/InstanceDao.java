@@ -81,6 +81,7 @@ public class InstanceDao {
      */
     public List<InstanceEntity> findInstanceList(InstanceQuery instanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(InstanceEntity.class)
+                .eq("repositoryId",instanceQuery.getRepositoryId())
                 .eq("belongId",instanceQuery.getBelongId())
                 .eq("type",instanceQuery.getType())
                 .eq("createUser",instanceQuery.getCreateUser())
@@ -97,6 +98,7 @@ public class InstanceDao {
      */
     public Pagination<InstanceEntity> findInstancePage(InstanceQuery instanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(InstanceEntity.class)
+                .eq("repositoryId",instanceQuery.getRepositoryId())
                 .eq("belongId",instanceQuery.getBelongId())
                 .eq("type",instanceQuery.getType())
                 .eq("createUser",instanceQuery.getCreateUser())
