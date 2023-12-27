@@ -5,6 +5,7 @@ import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +31,8 @@ public class ApiUnitCaseDataConstruction extends BaseModel{
 
     //调用后置脚本
     private String afterScript;
+
+    private List<HashMap<String, Object>> assertList;
 
     public Map getHeaderMap() {
         return headerMap;
@@ -79,4 +82,11 @@ public class ApiUnitCaseDataConstruction extends BaseModel{
         this.preScript = preScript;
     }
 
+    public List<HashMap<String, Object>> getAssertList() {
+        return assertList;
+    }
+
+    public void setAssertList(List<HashMap<String, Object>> assertList) {
+        this.assertList = assertList;
+    }
 }

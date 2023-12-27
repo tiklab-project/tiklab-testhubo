@@ -39,12 +39,12 @@ dfs:
     bucket: ${app.name}
 
 
-darth:
+eas:
   embbed:
     enable: true
-#  address: http://darth.dev.thoughtware.net
+#  address: http://eas.dev.thoughtware.net
 #  web:
-#    address: http://darth.local.thoughtware.net
+#    address: http://eas.local.thoughtware.net
 
 #plugin
 plugin:

@@ -53,10 +53,10 @@ licences:
 base:
   url: http://teston-ce.demo.thoughtware.net
 
-darth:
+eas:
   embbed:
     enable: false
-  address: http://darth-ce.demo.thoughtware.net
+  address: http://eas-ce.demo.thoughtware.net
 
 postgresql:
   database: teston

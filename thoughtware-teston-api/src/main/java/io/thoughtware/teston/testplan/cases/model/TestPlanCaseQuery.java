@@ -28,6 +28,9 @@ public class TestPlanCaseQuery {
     @ApiProperty(name = "caseType", desc = "用例类型")
     private String caseType;
 
+    @ApiProperty(name = "testType", desc = "用例类型")
+    private String testType;
+
     public List<Order> getOrderParams() {
         return orderParams;
     }
@@ -75,5 +78,13 @@ public class TestPlanCaseQuery {
 
     public void setRepositoryId(String repositoryId) {
         this.repositoryId = repositoryId;
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
     }
 }

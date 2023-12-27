@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.apix.http.unit.cases.service;
 
+import io.thoughtware.postin.api.http.test.cases.model.AssertCaseQuery;
 import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
@@ -9,7 +10,6 @@ import io.thoughtware.teston.test.apix.http.unit.mock.JsonGenerator;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
-import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -74,6 +74,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
     @Autowired
     ResponseResultServiceImpl responseResultService;
+
+    @Autowired
+    AssertService assertService;
 
     @Autowired
     ApiUnitInstanceDao testInstanceDao;
@@ -261,8 +264,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         //获取前置脚本
         String preScript = getPreScript(apiUnitCase);
         //获取后置脚本
-        String afterScript = getAfterScript(apiUnitCase.getId());
-
+        String afterScript = getAfterScript(apiUnitCase);
+        //获取断言
+        List<HashMap<String, Object>> assertList = getAssert(apiUnitCase);
 
         ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = new ApiUnitCaseDataConstruction();
         apiUnitCaseDataConstruction.setHeaderMap(headerMap);
@@ -271,7 +275,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         apiUnitCaseDataConstruction.setBody(body);
         apiUnitCaseDataConstruction.setPreScript(preScript);
         apiUnitCaseDataConstruction.setAfterScript(afterScript);
-
+        apiUnitCaseDataConstruction.setAssertList(assertList);
 
         return apiUnitCaseDataConstruction;
     }
@@ -342,7 +346,8 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
                     return getFormUrlencoded(apiUnitCase,bodyStr);
 
                 case "json":
-                    return getJson(apiUnitCase,bodyStr);
+                    bodyStr=getJson(apiUnitCase);
+                    return bodyStr;
 
                 case "raw":
                     return getRaw(apiUnitCase,bodyStr);
@@ -385,10 +390,13 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
         if (CollectionUtils.isNotEmpty(formUrlEncodedUnitList)){
 
-            for (FormUrlEncodedUnit formUrlencodedUnit : formUrlEncodedUnitList){
-                bodyStr = bodyStr + formUrlencodedUnit.getParamName() + "=" + formUrlencodedUnit.getValue() + "&";
+            for (int i = 0; i < formUrlEncodedUnitList.size(); i++) {
+                FormUrlEncodedUnit formUrlencodedUnit = formUrlEncodedUnitList.get(i);
+                bodyStr += formUrlencodedUnit.getParamName() + "=" + formUrlencodedUnit.getValue();
+                if (i < formUrlEncodedUnitList.size() - 1) {
+                    bodyStr += "&";
+                }
             }
-
         }
 
         return bodyStr;
@@ -397,11 +405,11 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     /**
      * 获取JsonDataMap
      */
-    private String getJson(ApiUnitCase apiUnitCase, String bodyStr){
+    private String getJson(ApiUnitCase apiUnitCase){
         JsonParamUnit jsonParam = jsonParamService.findJsonParam(apiUnitCase.getId());
 
         JsonGenerator jsonGenerator = new JsonGenerator();
-        bodyStr = jsonGenerator.generateJson(jsonParam.getSchemaText());
+        String bodyStr = jsonGenerator.generateJson(jsonParam.getSchemaText());
         return bodyStr;
     }
 
@@ -451,13 +459,32 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     /**
      * 获取脚本
      */
-    private String getAfterScript(String caseId) {
-        AfterScriptUnit afterScriptUnit = afterScriptService.findAfterScript(caseId);
+    private String getAfterScript(ApiUnitCase apiUnitCase) {
+        AfterScriptUnit afterScriptUnit = afterScriptService.findAfterScript(apiUnitCase.getId());
         if (afterScriptUnit == null|| afterScriptUnit.getScriptex()==null) {
             return null;
         }
 
         return afterScriptUnit.getScriptex();
+    }
+
+    private List<HashMap<String,Object>> getAssert(ApiUnitCase apiUnitCase){
+        AssertUnitQuery assertUnitQuery = new AssertUnitQuery();
+        assertUnitQuery.setApiUnitId(apiUnitCase.getId());
+        List<AssertUnit> assertCaseList = assertService.findAssertCaseList(assertUnitQuery);
+
+        if(assertCaseList==null||assertCaseList.isEmpty()){return null;}
+
+        List<HashMap<String,Object>> assertList = new ArrayList<>();
+        for (AssertUnit assertUnit : assertCaseList) {
+            HashMap<String, Object> assertItem = new HashMap<>();
+            assertItem.put("source",assertUnit.getSource());
+            assertItem.put("propertyName",assertUnit.getPropertyName());
+            assertItem.put("value",assertUnit.getValue());
+            assertList.add(assertItem);
+        }
+
+        return assertList;
     }
 
 

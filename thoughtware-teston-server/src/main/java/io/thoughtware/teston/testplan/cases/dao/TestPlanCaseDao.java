@@ -114,17 +114,17 @@ public class TestPlanCaseDao {
                 .append("WHERE teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("'");
 
         if (testPlanCaseQuery.getName() != null) {
-            modelSqlBuilder.append(" WHERE teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
+            modelSqlBuilder.append(" OR teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
         }
 
         if (testPlanCaseQuery.getCaseType() != null) {
-            if (testPlanCaseQuery.getName() != null) {
-                modelSqlBuilder.append(" OR");
-            } else {
-                modelSqlBuilder.append(" WHERE");
-            }
-            modelSqlBuilder.append(" teston_testcase.case_type = '").append(testPlanCaseQuery.getCaseType()).append("'");
+            modelSqlBuilder.append(" OR teston_testcase.case_type = '").append(testPlanCaseQuery.getCaseType()).append("'");
         }
+
+        if (testPlanCaseQuery.getTestType() != null) {
+            modelSqlBuilder.append(" And teston_testcase.test_type = '").append(testPlanCaseQuery.getTestType()).append("'");
+        }
+
 
         String modelSql = modelSqlBuilder.toString();
 
