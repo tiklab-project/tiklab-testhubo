@@ -42,9 +42,9 @@ dfs:
 eas:
   embbed:
     enable: true
-#  address: http://eas.dev.thoughtware.net
+#  address: http://eas.dev.thoughtware.cn
 #  web:
-#    address: http://eas.local.thoughtware.net
+#    address: http://eas.local.thoughtware.cn
 
 #plugin
 plugin:

@@ -51,12 +51,12 @@ licences:
   path: ${DATA_HOME}/licences
 
 base:
-  url: http://teston-ce.demo.thoughtware.net
+  url: http://teston-ce.demo.thoughtware.cn
 
 eas:
   embbed:
     enable: false
-  address: http://eas-ce.demo.thoughtware.net
+  address: http://eas-ce.demo.thoughtware.cn
 
 postgresql:
   database: teston

@@ -52,12 +52,12 @@ licences:
   path: ${DATA_HOME}/licences
 
 base:
-  url:  http://bac.teston.thoughtware.net
+  url:  http://bac.teston.thoughtware.cn
 
 eas:
   embbed:
     enable: false
-  address:  http://bac.eas.thoughtware.net
+  address:  http://bac.eas.houghtware.cn
 
 postgresql:
   database: teston

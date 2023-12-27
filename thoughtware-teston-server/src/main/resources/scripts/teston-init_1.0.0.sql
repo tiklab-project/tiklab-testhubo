@@ -11,7 +11,7 @@ INSERT INTO  teston_testcase  ( id ,  name ,  repository_id ,  category_id ,  te
 INSERT INTO  teston_testcase  ( id ,  name ,  repository_id ,  category_id ,  test_type ,  case_type ,  create_user ,  update_user ,  create_time ,  update_time ,  description ,  sort ) VALUES ('b51c0d9b2c9d', 'Web场景', 'bd26c6ec5c6e', '3f3dbc6d8eb6', 'ui', 'web-scene', '111111', '111111', '2022-07-16 09:57:39', '2023-02-15 03:25:39', NULL, 0);
 INSERT INTO  teston_testcase  ( id ,  name ,  repository_id ,  category_id ,  test_type ,  case_type ,  create_user ,  update_user ,  create_time ,  update_time ,  description ,  sort ) VALUES ('f11a97c27b8f', '功能用例', 'bd26c6ec5c6e', '3f3dbc6d8eb6', 'function', 'function', '111111', '111111', '2022-07-14 15:05:04', '2023-02-15 03:25:51', NULL, 0);
 
-INSERT INTO  teston_env_api  VALUES ('8b0829b48e51', 'bd26c6ec5c6e', 'test', 'http://teston-ce.thoughtware.net');
+INSERT INTO  teston_env_api  VALUES ('8b0829b48e51', 'bd26c6ec5c6e', 'test', 'http://teston-ce.thoughtware.cn');
 
 INSERT INTO  teston_api_unit  ( id ,  testcase_id ,  path ,  method_type ) VALUES ('1614d5d7027b', '1614d5d7027b', '/eam/auth/login', 'post');
 INSERT INTO  teston_api_request_body  ( id ,  api_unit_id ,  body_type ) VALUES ('1614d5d7027b', '1614d5d7027b', 'raw');
