@@ -397,7 +397,7 @@
                             <descriptors>
                                 <descriptor>assembly/distribution-${assembly}.xml</descriptor>
                             </descriptors>
-                            <finalName>thoughtware-teston-${version}</finalName>
+                            <finalName>thoughtware-teston-${version}-${timestamp}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                         <phase>package</phase>

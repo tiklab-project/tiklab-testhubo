@@ -86,6 +86,7 @@ public class InstanceDao {
                 .eq("type",instanceQuery.getType())
                 .eq("createUser",instanceQuery.getCreateUser())
                 .like("name",instanceQuery.getName())
+                .in("type",instanceQuery.getTypeList())
                 .orders(instanceQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, InstanceEntity.class);
@@ -103,6 +104,7 @@ public class InstanceDao {
                 .eq("type",instanceQuery.getType())
                 .eq("createUser",instanceQuery.getCreateUser())
                 .like("name",instanceQuery.getName())
+                .in("type",instanceQuery.getTypeList())
                 .pagination(instanceQuery.getPageParam())
                 .orders(instanceQuery.getOrderParams())
                 .get();

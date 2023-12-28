@@ -33,6 +33,8 @@ public class InstanceQuery {
     @ApiProperty(name ="repositoryId",desc = "repositoryId")
     private String repositoryId;
 
+    private String[] typeList;
+
 
     public List<Order> getOrderParams() {
         return orderParams;
@@ -88,5 +90,13 @@ public class InstanceQuery {
 
     public void setRepositoryId(String repositoryId) {
         this.repositoryId = repositoryId;
+    }
+
+    public String[] getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(String[] typeList) {
+        this.typeList = typeList;
     }
 }
