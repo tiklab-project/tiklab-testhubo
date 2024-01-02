@@ -125,6 +125,19 @@ public class TestPlanCaseDao {
             modelSqlBuilder.append(" And teston_testcase.test_type = '").append(testPlanCaseQuery.getTestType()).append("'");
         }
 
+        if(testPlanCaseQuery.getCaseTypeList()!=null&&testPlanCaseQuery.getCaseTypeList().length>0){
+            StringBuilder caseTypeList = new StringBuilder();
+            for (int i = 0; i < testPlanCaseQuery.getCaseTypeList().length; i++) {
+                String s = testPlanCaseQuery.getCaseTypeList()[i];
+                caseTypeList.append("'").append(s).append("'");
+
+                if (i < testPlanCaseQuery.getCaseTypeList().length - 1) {
+                    caseTypeList.append(",");
+                }
+            }
+
+            modelSqlBuilder.append(" AND teston_testcase.case_type in (").append(caseTypeList).append(")");
+        }
 
         String modelSql = modelSqlBuilder.toString();
 
@@ -145,6 +158,7 @@ public class TestPlanCaseDao {
                 .append(" JOIN teston_test_plan ON teston_test_plan.id = teston_test_plan_detail.test_plan_id ")
                 .append(" WHERE teston_test_plan_detail.test_case_id = teston_testcase.id ")
                 .append(" AND teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("')");
+
 
         String modelSql = modelSqlBuilder.toString();
 

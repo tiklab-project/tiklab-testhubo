@@ -53,6 +53,7 @@
 
         <!--第三方-->
         <nashorn-core.version>15.4</nashorn-core.version>
+        <quartz.version>2.3.2</quartz.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -266,7 +267,11 @@
                 <artifactId>nashorn-core</artifactId>
                 <version>${nashorn-core.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

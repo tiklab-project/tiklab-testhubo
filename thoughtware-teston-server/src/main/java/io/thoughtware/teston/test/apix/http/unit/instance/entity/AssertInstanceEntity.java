@@ -4,7 +4,8 @@ package io.thoughtware.teston.test.apix.http.unit.instance.entity;
 import io.thoughtware.dal.jpa.annotation.Column;
 import io.thoughtware.dal.jpa.annotation.GeneratorValue;
 import io.thoughtware.dal.jpa.annotation.Id;
-import io.thoughtware.dal.jpa.annotation.Table;import io.thoughtware.dal.jpa.annotation.Entity;
+import io.thoughtware.dal.jpa.annotation.Table;
+import io.thoughtware.dal.jpa.annotation.Entity;
 
 import java.io.Serializable;
 
@@ -28,6 +29,10 @@ public class AssertInstanceEntity implements Serializable {
     //断言来源类型
     @Column(name = "source")
     private Integer source;
+
+    // 属性名称
+    @Column(name = "property_name")
+    private String propertyName;
 
     //实际值
     @Column(name = "actual_result")
@@ -67,6 +72,14 @@ public class AssertInstanceEntity implements Serializable {
 
     public void setSource(Integer source) {
         this.source = source;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
     public String getActualResult() {
