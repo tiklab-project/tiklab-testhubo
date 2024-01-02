@@ -11,5 +11,4 @@ import java.lang.annotation.*;
         TestOnServerAutoConfiguration.class
 })
 public @interface EnableTestOnServer {
-
 }
