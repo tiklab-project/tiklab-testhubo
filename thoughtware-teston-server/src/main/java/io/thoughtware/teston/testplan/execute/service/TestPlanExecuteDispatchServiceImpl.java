@@ -114,9 +114,13 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         if(CollectionUtils.isNotEmpty(testPlanCaseList)){
             //首先获取能执行的用例总数
             for(TestPlanCase testPlanCase : testPlanCaseList){
-                String testType = testPlanCase.getTestCase().getTestType();
+                String caseType = testPlanCase.getTestCase().getCaseType();
                 //只有自动化测试和性能测试执行
-                if(Objects.equals(testType,"api")||Objects.equals(testType,"perform")){
+                if(Objects.equals(caseType,"api-unit")
+                        ||Objects.equals(caseType,"api-scene")
+                        ||Objects.equals(caseType,"api-perform")
+//                        ||Objects.equals(caseType,"web-scene")
+                ) {
                     exeCount++;
                 }
             }
@@ -127,7 +131,11 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                 String caseType = testPlanCase.getTestCase().getCaseType();
 
                 //根据不同的测试类型进行测试
-                if(Objects.equals(testType,"api")||Objects.equals(testType,"perform")){
+                if(Objects.equals(caseType,"api-unit")
+                        ||Objects.equals(caseType,"api-scene")
+                        ||Objects.equals(caseType,"api-perform")
+//                        ||Objects.equals(caseType,"web-scene")
+                ){
 
                     switch (caseType) {
                         case "api-unit" -> {
@@ -187,8 +195,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         }
 
 //        if(webPerfCount!=0){
-//            if(testPlanTestDispatchWeb.webPerfStatus==1){
-//                TestPlanCaseInstanceBind webPerfResult = testPlanTestDispatchWeb.webPerfResult();
+//            if(testPlanExecuteWebDispatch.webPerfStatus==1){
+//                TestPlanCaseInstanceBind webPerfResult = testPlanExecuteWebDispatch.webPerfResult();
 //                testPlanCaseInstanceList.add(webPerfResult);
 //            }
 //        }

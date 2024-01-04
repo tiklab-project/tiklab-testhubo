@@ -1,13 +1,13 @@
-package io.thoughtware.teston.testplan.cases.controller;
+package io.thoughtware.teston.testplan.quartz.controller;
 
 import io.thoughtware.core.Result;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.postin.annotation.Api;
 import io.thoughtware.postin.annotation.ApiMethod;
 import io.thoughtware.postin.annotation.ApiParam;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlan;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlanQuery;
-import io.thoughtware.teston.testplan.cases.service.QuartzPlanService;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlan;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlanQuery;
+import io.thoughtware.teston.testplan.quartz.service.QuartzPlanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

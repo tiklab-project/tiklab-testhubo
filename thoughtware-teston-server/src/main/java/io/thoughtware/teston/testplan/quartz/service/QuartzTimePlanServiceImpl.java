@@ -1,13 +1,14 @@
-package io.thoughtware.teston.testplan.cases.service;
+package io.thoughtware.teston.testplan.quartz.service;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.common.TestOnUnit;
-import io.thoughtware.teston.testplan.cases.dao.QuartzTimePlanDao;
-import io.thoughtware.teston.testplan.cases.entity.QuartzTimePlanEntity;
-import io.thoughtware.teston.testplan.cases.model.QuartzTimePlan;
-import io.thoughtware.teston.testplan.cases.model.QuartzTimePlanQuery;
+import io.thoughtware.teston.testplan.quartz.config.SchedulerConfig;
+import io.thoughtware.teston.testplan.quartz.dao.QuartzTimePlanDao;
+import io.thoughtware.teston.testplan.quartz.entity.QuartzTimePlanEntity;
+import io.thoughtware.teston.testplan.quartz.model.QuartzTimePlan;
+import io.thoughtware.teston.testplan.quartz.model.QuartzTimePlanQuery;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import org.apache.commons.collections.CollectionUtils;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -33,12 +33,23 @@ public class QuartzTimePlanServiceImpl implements QuartzTimePlanService {
     @Autowired
     JoinTemplate joinTemplate;
 
+    @Autowired
+    SchedulerConfig schedulerConfig;
+
 
     @Override
     public String createQuartzTimePlan(@NotNull @Valid QuartzTimePlan quartzTimePlan) {
         String cron = TestOnUnit.weekCron(quartzTimePlan.getTime(), quartzTimePlan.getWeek());
         quartzTimePlan.setCron(cron);
         QuartzTimePlanEntity quartzTimePlanEntity = BeanMapper.map(quartzTimePlan, QuartzTimePlanEntity.class);
+
+        schedulerConfig.scheduler(
+                "test",
+                quartzTimePlan.getTestPlanId(),
+                quartzTimePlan.getQuartzPlanId(),
+                cron,
+                quartzTimePlan.getExeType()
+        );
 
         return quartzTimePlanDao.createQuartzTimePlan(quartzTimePlanEntity);
     }

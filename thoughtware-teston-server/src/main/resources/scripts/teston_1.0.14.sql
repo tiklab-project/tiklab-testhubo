@@ -14,3 +14,6 @@ CREATE TABLE teston_plan_quartz_time(
       time VARCHAR(32),
       week int
 );
+
+ALTER TABLE teston_test_plan
+ADD COLUMN api_env VARCHAR(256);

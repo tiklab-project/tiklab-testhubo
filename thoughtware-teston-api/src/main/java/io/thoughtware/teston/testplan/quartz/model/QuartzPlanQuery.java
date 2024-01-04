@@ -1,4 +1,4 @@
-package io.thoughtware.teston.testplan.cases.model;
+package io.thoughtware.teston.testplan.quartz.model;
 
 import io.thoughtware.core.order.Order;
 import io.thoughtware.core.order.OrderBuilders;
@@ -10,16 +10,16 @@ import java.io.Serializable;
 import java.util.List;
 
 @ApiModel
-public class QuartzTimePlanQuery implements Serializable {
+public class QuartzPlanQuery implements Serializable {
 
     @ApiProperty(name = "orderParams", desc = "排序参数")
-    private List<Order> orderParams = OrderBuilders.instance().asc("id").get();
+    private List<Order> orderParams = OrderBuilders.instance().asc("createTime").get();
 
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
 
     @ApiProperty(name = "testPlanId", desc = "testPlanId")
-    private String quartzPlanId;
+    private String testPlanId;
 
 
     public List<Order> getOrderParams() {
@@ -38,11 +38,11 @@ public class QuartzTimePlanQuery implements Serializable {
         this.pageParam = pageParam;
     }
 
-    public String getQuartzPlanId() {
-        return quartzPlanId;
+    public String getTestPlanId() {
+        return testPlanId;
     }
 
-    public void setQuartzPlanId(String quartzPlanId) {
-        this.quartzPlanId = quartzPlanId;
+    public void setTestPlanId(String testPlanId) {
+        this.testPlanId = testPlanId;
     }
 }

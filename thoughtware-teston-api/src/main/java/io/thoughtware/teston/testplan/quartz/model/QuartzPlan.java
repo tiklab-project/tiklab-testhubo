@@ -1,16 +1,11 @@
-package io.thoughtware.teston.testplan.cases.model;
+package io.thoughtware.teston.testplan.quartz.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
-import io.thoughtware.teston.repository.model.Repository;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
-import io.thoughtware.toolkit.beans.annotation.Mapping;
-import io.thoughtware.toolkit.beans.annotation.Mappings;
 import io.thoughtware.toolkit.join.annotation.Join;
-import io.thoughtware.toolkit.join.annotation.JoinQuery;
-import io.thoughtware.user.user.model.User;
 
 import java.sql.Timestamp;
 
@@ -28,6 +23,8 @@ public class QuartzPlan extends BaseModel{
     @ApiProperty(name="testPlanId",desc="testPlanId")
     private String testPlanId;
 
+
+
     @ApiProperty(name="exeType",desc="exeType")
     private Integer[] weekList;
 
@@ -44,7 +41,7 @@ public class QuartzPlan extends BaseModel{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-
+    private String repositoryId;
     private QuartzTimePlan quartzTimePlan;
 
     public String getId() {
@@ -109,5 +106,13 @@ public class QuartzPlan extends BaseModel{
 
     public void setQuartzTimePlan(QuartzTimePlan quartzTimePlan) {
         this.quartzTimePlan = quartzTimePlan;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }

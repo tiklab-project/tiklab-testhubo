@@ -1,4 +1,4 @@
-package io.thoughtware.teston.testplan.cases.entity;
+package io.thoughtware.teston.testplan.quartz.entity;
 
 
 import io.thoughtware.dal.jpa.annotation.*;

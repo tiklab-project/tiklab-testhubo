@@ -17,12 +17,12 @@ import java.util.Date;
 public class TestPlanEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
-    @Column(name = "id",length = 32)
+    @GeneratorValue(length = 12)
+    @Column(name = "id")
     private String id;
 
     //测试计划名称
-    @Column(name = "name",length = 32)
+    @Column(name = "name")
     private String name;
 
     // 开始时间
@@ -38,15 +38,15 @@ public class TestPlanEntity implements Serializable {
     private Integer state;
 
     // 负责人
-    @Column(name = "principals",length = 32)
+    @Column(name = "principals")
     private String principals;
 
     // 所属仓库
-    @Column(name = "repository_id",length = 32)
+    @Column(name = "repository_id")
     private String repositoryId;
 
     // 描述
-    @Column(name = "description",length = 64)
+    @Column(name = "description")
     private String desc;
 
     // 创建时间
@@ -60,6 +60,12 @@ public class TestPlanEntity implements Serializable {
     // 排序
     @Column(name = "sort")
     private Integer sort;
+
+
+    // 描述
+    @Column(name = "api_env")
+    private String apiEnv;
+
 
     public String getId() {
         return id;
@@ -148,5 +154,13 @@ public class TestPlanEntity implements Serializable {
 
     public void setRepositoryId(String repositoryId) {
         this.repositoryId = repositoryId;
+    }
+
+    public String getApiEnv() {
+        return apiEnv;
+    }
+
+    public void setApiEnv(String apiEnv) {
+        this.apiEnv = apiEnv;
     }
 }

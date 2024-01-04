@@ -1,4 +1,4 @@
-package io.thoughtware.teston.testplan.cases.model;
+package io.thoughtware.teston.testplan.quartz.model;
 
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
@@ -35,6 +35,9 @@ public class QuartzTimePlan extends BaseModel{
 
     @ApiProperty(name="showTime",desc="showTime")
     private String showTime;
+
+    private String repositoryId;
+    private String testPlanId;
 
     public String getId() {
         return id;
@@ -90,5 +93,21 @@ public class QuartzTimePlan extends BaseModel{
 
     public void setWeek(Integer week) {
         this.week = week;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
+
+    public String getTestPlanId() {
+        return testPlanId;
+    }
+
+    public void setTestPlanId(String testPlanId) {
+        this.testPlanId = testPlanId;
     }
 }

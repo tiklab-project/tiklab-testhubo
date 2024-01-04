@@ -1,8 +1,8 @@
-package io.thoughtware.teston.testplan.cases.service;
+package io.thoughtware.teston.testplan.quartz.service;
 
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlan;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlanQuery;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlan;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlanQuery;
 import io.thoughtware.toolkit.join.annotation.FindAll;
 import io.thoughtware.toolkit.join.annotation.FindList;
 import io.thoughtware.toolkit.join.annotation.FindOne;
@@ -30,6 +30,8 @@ public interface QuartzPlanService {
     * @param quartzPlan
     */
     void updateQuartzPlan(@NotNull @Valid QuartzPlan quartzPlan);
+
+    void updateQuartzPlanState(@NotNull @Valid QuartzPlan quartzPlan);
 
     /**
     * 删除定时任务

@@ -1,12 +1,12 @@
-package io.thoughtware.teston.testplan.cases.dao;
+package io.thoughtware.teston.testplan.quartz.dao;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.dal.jpa.JpaTemplate;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
 import io.thoughtware.dal.jpa.criterial.condition.QueryCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
-import io.thoughtware.teston.testplan.cases.entity.QuartzPlanEntity;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlanQuery;
+import io.thoughtware.teston.testplan.quartz.entity.QuartzPlanEntity;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlanQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

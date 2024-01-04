@@ -1,8 +1,8 @@
-package io.thoughtware.teston.testplan.cases.service;
+package io.thoughtware.teston.testplan.quartz.service;
 
 import io.thoughtware.core.page.Pagination;
-import io.thoughtware.teston.testplan.cases.model.QuartzTimePlan;
-import io.thoughtware.teston.testplan.cases.model.QuartzTimePlanQuery;
+import io.thoughtware.teston.testplan.quartz.model.QuartzTimePlan;
+import io.thoughtware.teston.testplan.quartz.model.QuartzTimePlanQuery;
 import io.thoughtware.toolkit.join.annotation.FindAll;
 import io.thoughtware.toolkit.join.annotation.FindList;
 import io.thoughtware.toolkit.join.annotation.FindOne;

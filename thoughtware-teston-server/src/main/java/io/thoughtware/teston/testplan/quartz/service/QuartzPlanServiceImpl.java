@@ -1,15 +1,15 @@
-package io.thoughtware.teston.testplan.cases.service;
+package io.thoughtware.teston.testplan.quartz.service;
 
 import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.rpc.annotation.Exporter;
-import io.thoughtware.teston.testplan.cases.dao.QuartzPlanDao;
-import io.thoughtware.teston.testplan.cases.entity.QuartzPlanEntity;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlan;
-import io.thoughtware.teston.testplan.cases.model.QuartzPlanQuery;
-import io.thoughtware.teston.testplan.cases.model.QuartzTimePlan;
-import io.thoughtware.teston.testplan.cases.model.QuartzTimePlanQuery;
+import io.thoughtware.teston.testplan.quartz.dao.QuartzPlanDao;
+import io.thoughtware.teston.testplan.quartz.entity.QuartzPlanEntity;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlan;
+import io.thoughtware.teston.testplan.quartz.model.QuartzPlanQuery;
+import io.thoughtware.teston.testplan.quartz.model.QuartzTimePlan;
+import io.thoughtware.teston.testplan.quartz.model.QuartzTimePlanQuery;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
 * 定时任务 服务
@@ -57,6 +56,8 @@ public class QuartzPlanServiceImpl implements QuartzPlanService {
             quartzTimePlan.setWeek(integer);
             quartzTimePlan.setExeType(quartzPlan.getExeType());
             quartzTimePlan.setTime(quartzPlan.getTime());
+            quartzTimePlan.setRepositoryId(quartzPlan.getRepositoryId());
+            quartzTimePlan.setTestPlanId(quartzPlan.getTestPlanId());
             quartzTimePlanService.createQuartzTimePlan(quartzTimePlan);
         }
 
@@ -79,9 +80,17 @@ public class QuartzPlanServiceImpl implements QuartzPlanService {
             quartzTimePlan.setWeek(integer);
             quartzTimePlan.setExeType(quartzPlan.getExeType());
             quartzTimePlan.setTime(quartzPlan.getTime());
+            quartzTimePlan.setRepositoryId(quartzPlan.getRepositoryId());
+            quartzTimePlan.setTestPlanId(quartzPlan.getTestPlanId());
             quartzTimePlanService.createQuartzTimePlan(quartzTimePlan);
         }
 
+        quartzPlanDao.updateQuartzPlan(quartzPlanEntity);
+    }
+
+    @Override
+    public void updateQuartzPlanState(@NotNull @Valid QuartzPlan quartzPlan) {
+        QuartzPlanEntity quartzPlanEntity = BeanMapper.map(quartzPlan, QuartzPlanEntity.class);
         quartzPlanDao.updateQuartzPlan(quartzPlanEntity);
     }
 
