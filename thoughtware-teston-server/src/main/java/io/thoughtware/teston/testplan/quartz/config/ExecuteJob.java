@@ -80,11 +80,12 @@ public class ExecuteJob implements Job {
         testPlanExecuteDispatchService.execute(testPlanTestData);
         loopExeResult();
 
-        logger.warn("组：{}，测试计划：{},定时任务触发完成",group,testPlanId);
+        logger.warn("组：{}，测试计划：{},当前定时任务: {}, 定时任务触发完成",group,testPlanId,quartzPlanId);
 
         schedulerConfig.removeJob(group,testPlanId,cron);
 
-        updateQuartz(group,quartzPlanId,testPlanId,cron,exeType);
+
+        updateQuartz(group,testPlanId,quartzPlanId,cron,exeType);
     }
 
     private void loopExeResult(){
@@ -100,6 +101,8 @@ public class ExecuteJob implements Job {
         quartzPlan.setTestPlanId(testPlanId);
         quartzPlan.setState(1);
         quartzPlanService.updateQuartzPlanState(quartzPlan);
+
+        logger.info("update ----  success");
 
         //1单次  2循环
         if(exeType==2){

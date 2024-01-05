@@ -28,15 +28,9 @@ public class SchedulerConfig {
         try {
             Scheduler scheduler = schedulerFactory.getScheduler();
 
-            Boolean isNewTrigger = false;
+            JobDetail jobDetail = jobDetailConfig.jobDetail(group, testPlanId, quartzPlanId,cron,exeType);
 
-            JobKey jobKey = JobKey.jobKey(group);
-            JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-            if (Objects.isNull(jobDetail)){
-                jobDetail = jobDetailConfig.jobDetail(group, testPlanId, quartzPlanId,cron,exeType);
-                isNewTrigger=true;
-            }
-
+            String triggerName = testPlanId + "_" + cron + "_" + quartzPlanId;
 
             scheduler.scheduleJob(
                     jobDetail,
@@ -44,7 +38,7 @@ public class SchedulerConfig {
                             jobDetail,
                             testPlanId,
                             cron,
-                            isNewTrigger
+                            triggerName
                     )
             );
 

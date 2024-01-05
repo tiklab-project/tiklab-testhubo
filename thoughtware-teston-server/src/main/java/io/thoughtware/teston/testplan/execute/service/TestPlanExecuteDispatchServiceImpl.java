@@ -278,8 +278,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanInstance.setId(testPlanInstanceId);
         testPlanInstanceService.updateTestPlanInstance(testPlanInstance);
 
-        Instance instance = new Instance();
-        instance.setId(testPlanInstanceId);
+
+        Instance instance = instanceService.findInstance(testPlanInstanceId);
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",testPlanInstance.getResult().toString());

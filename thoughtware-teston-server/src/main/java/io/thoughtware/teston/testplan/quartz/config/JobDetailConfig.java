@@ -22,11 +22,13 @@ public class JobDetailConfig {
         jobDataMap.put("weekTime",weekTime);
         jobDataMap.put("exeType",exeType);
 
+        String jobName = group + "_" + quartzPlanId+ "_" +testPlanId;
+
         //指定任务描述具体的实现类
         return JobBuilder.newJob(ExecuteJob.class)
                 .setJobData(jobDataMap)
                 // 指定任务的名称
-                .withIdentity(group+"_"+testPlanId+"_"+cron)
+                .withIdentity(jobName,group)
                 .build();
     }
 

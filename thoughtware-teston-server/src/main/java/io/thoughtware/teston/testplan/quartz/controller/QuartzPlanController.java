@@ -51,6 +51,17 @@ public class QuartzPlanController {
         return Result.ok();
     }
 
+
+    @RequestMapping(path="/updateQuartzPlanState",method = RequestMethod.POST)
+    @ApiMethod(name = "updateQuartzPlanState",desc = "修改定时任务")
+    @ApiParam(name = "quartzPlan",desc = "quartzPlan",required = true)
+    public Result<Void> updateQuartzPlanState(@RequestBody @NotNull @Valid QuartzPlan quartzPlan){
+        quartzPlanService.updateQuartzPlanState(quartzPlan);
+
+        return Result.ok();
+    }
+
+
     @RequestMapping(path="/deleteQuartzPlan",method = RequestMethod.POST)
     @ApiMethod(name = "deleteQuartzPlan",desc = "通过id删除定时任务")
     @ApiParam(name = "id",desc = "id",required = true)
