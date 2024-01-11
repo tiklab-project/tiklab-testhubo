@@ -144,10 +144,32 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
         return PaginationBuilder.build(pagination,webSceneInstanceList);
     }
 
+
+
     @Override
     public String saveWebSceneInstanceToSql(WebSceneInstance webSceneInstance, WebSceneTestResponse webSceneTestResponse) {
         String webSceneId = webSceneInstance.getWebSceneId();
         String webSceneInstanceId= createWebSceneInstance(webSceneInstance);
+
+        createInstance(webSceneInstance,webSceneInstanceId,webSceneId);
+
+        //保存单个步骤
+        if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
+            List<StepCommonInstance> stepCommonInstanceList = webSceneTestResponse.getStepCommonInstanceList();
+
+            createStepInstance(stepCommonInstanceList,webSceneInstanceId);
+        }
+
+        return webSceneInstanceId;
+    }
+
+    /**
+     * 创建公共实例
+     * @param webSceneInstance
+     * @param webSceneInstanceId
+     * @param webSceneId
+     */
+    private void createInstance(WebSceneInstance webSceneInstance,String webSceneInstanceId,String webSceneId){
         // 创建公共实例
         Instance instance = new Instance();
         instance.setId(webSceneInstanceId);
@@ -179,34 +201,34 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
         instance.setContent(instanceMap.toString());
 
         instanceService.createInstance(instance);
+    }
 
-        //保存单个步骤
-        if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
+    /**
+     * 保存单个步骤
+     */
+    @Override
+    public void createStepInstance(List<StepCommonInstance> stepCommonInstanceList,String webSceneInstanceId){
+        for(StepCommonInstance stepCommonInstance:stepCommonInstanceList){
+            //公共的历史创建
+            stepCommonInstance.setInstanceId(webSceneInstanceId);
+            String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
 
-            for(StepCommonInstance stepCommonInstance:webSceneTestResponse.getStepCommonInstanceList()){
-                //公共的历史创建
-                stepCommonInstance.setInstanceId(webSceneInstanceId);
-                String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
+            //web步骤历史创建
+            if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_WEB)){
+                WebSceneInstanceStep webSceneInstanceStep = stepCommonInstance.getWebSceneInstanceStep();
+                webSceneInstanceStep.setWebSceneInstanceId(webSceneInstanceId);
+                webSceneInstanceStep.setId(stepInstanceId);
+                webSceneInstanceStepService.createWebSceneInstanceStep(webSceneInstanceStep);
+            }
 
-                //web步骤历史创建
-                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_WEB)){
-                    WebSceneInstanceStep webSceneInstanceStep = stepCommonInstance.getWebSceneInstanceStep();
-                    webSceneInstanceStep.setWebSceneInstanceId(webSceneInstanceId);
-                    webSceneInstanceStep.setId(stepInstanceId);
-                    webSceneInstanceStepService.createWebSceneInstanceStep(webSceneInstanceStep);
-                }
-
-                //if判断历史创建
-                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_IF)){
-                    IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
-                    ifJudgmentInstance.setStepInstanceId(webSceneInstanceId);
-                    ifJudgmentInstance.setId(stepInstanceId);
-                    ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
-                }
+            //if判断历史创建
+            if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_IF)){
+                IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
+                ifJudgmentInstance.setStepInstanceId(webSceneInstanceId);
+                ifJudgmentInstance.setId(stepInstanceId);
+                ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
             }
         }
-
-        return webSceneInstanceId;
     }
 
 }

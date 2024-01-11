@@ -3,6 +3,7 @@ package io.thoughtware.teston.test.apix.http.scene.instance.service;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestResponse;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
 import io.thoughtware.core.page.Pagination;
+import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.thoughtware.toolkit.join.annotation.FindAll;
 import io.thoughtware.toolkit.join.annotation.FindList;
 import io.thoughtware.toolkit.join.annotation.FindOne;
@@ -80,5 +81,7 @@ public interface ApiSceneInstanceService {
      * @return
      */
     String saveApiSceneInstanceToSql(ApiSceneInstance apiSceneInstance, ApiSceneTestResponse apiSceneTestResponse);
+
+    void createWebStepInstance(List<StepCommonInstance> stepCommonInstanceList, String apiSceneInstanceId);
 
 }

@@ -78,7 +78,11 @@ public class ExecuteJob implements Job {
         testPlanTestData.setRepositoryId(apiEnv.getRepositoryId());
         testPlanTestData.setApiEnv(apiEnv.getPreUrl());
         testPlanExecuteDispatchService.execute(testPlanTestData);
+
+        //循环获取返回结果
         loopExeResult();
+        //执行完成再获取一下返回结果，用于更新历史数据
+        testPlanExecuteDispatchService.exeResult();
 
         logger.warn("组：{}，测试计划：{},当前定时任务: {}, 定时任务触发完成",group,testPlanId,quartzPlanId);
 

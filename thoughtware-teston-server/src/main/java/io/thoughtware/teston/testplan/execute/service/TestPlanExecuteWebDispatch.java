@@ -6,6 +6,10 @@ import io.thoughtware.teston.test.web.perf.cases.model.WebPerfCase;
 import io.thoughtware.teston.test.web.perf.execute.service.WebPerfTestDispatchService;
 import io.thoughtware.teston.test.web.perf.instance.model.WebPerfInstance;
 import io.thoughtware.teston.test.web.perf.instance.service.WebPerfInstanceService;
+import io.thoughtware.teston.test.web.scene.execute.model.WebSceneTestResponse;
+import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstance;
+import io.thoughtware.teston.testplan.cases.model.PlanCase;
+import io.thoughtware.teston.testplan.cases.model.TestPlan;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.service.TestPlanCaseInstanceBindService;
@@ -38,17 +42,15 @@ public class TestPlanExecuteWebDispatch {
     TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
 
 
-    public Integer webPerfStatus = 0;
+    public Integer webSceneStatus = 0;
 
-    private String webPerfInstanceId;
+
 
     private String planInstanceId;
 
-    private boolean isFirst=true;
+    private PlanCase testPlanCaseData;
 
-    private TestPlanCase testPlanCaseData;
-
-    private WebPerfTestRequest webPerfTestRequest = new WebPerfTestRequest();
+    private String caseId;
 
 
 
@@ -59,95 +61,52 @@ public class TestPlanExecuteWebDispatch {
      * @param testPlanInstanceId
      * @return
      */
-    public TestPlanCaseInstanceBind exeWebScene(TestPlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-        String caseType = testPlanCase.getTestCase().getCaseType();
-        String testType = testPlanCase.getTestCase().getTestType();
-        String name = testPlanCase.getTestCase().getName();
+    public void exeWebScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
+        testPlanCaseData = testPlanCase;
+        planInstanceId=testPlanInstanceId;
+        webSceneStatus=1;
+        caseId=testPlanCase.getId();
 
-        WebSceneTestRequest webSceneTestRequest = new WebSceneTestRequest();
-        webSceneTestRequest.setWebSceneId(testPlanCase.getTestCase().getId());
-        webSceneTestRequest.setExeType("testType");
+        WebSceneTestRequest webSceneTestRequest= new WebSceneTestRequest();
+        webSceneTestRequest.setRepositoryId(testPlanTestData.getRepositoryId());
+        webSceneTestRequest.setWebSceneId(caseId);
+
 
         //执行
         webSceneTestDispatchService.execute(webSceneTestRequest);
-
-
-        //todo webScene结构更改后续调整
-        //保存
-//        WebSceneInstance webSceneInstance = webSceneTestResponse.getWebSceneInstance();
-//        String webSceneInstanceId = webSceneInstanceService.saveWebSceneInstanceToSql(webSceneInstance, webSceneTestResponse);
-//
-//
-//        //测试计划历史 与 绑定用例的历史 公共历史表
-//        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-//        testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
-//        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-//        testPlanCaseInstanceBind.setName(name);
-//        testPlanCaseInstanceBind.setCaseType(caseType);
-//        testPlanCaseInstanceBind.setTestType(testType);
-//        testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
-//        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-
-//        return testPlanCaseInstanceBind;
-        return null;
     }
 
-    /**
-     * 执行web性能
-     * @param testPlanCase
-     * @param testPlanTestData
-     * @param testPlanInstanceId
-     */
-    public void exeWebPerform(TestPlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-        //如果之前执行过，初始化。
-        webPerfInstanceId=null;
-        isFirst=true;
-        testPlanCaseData = testPlanCase;
-        planInstanceId=testPlanInstanceId;
-        webPerfStatus=1;
 
+    public TestPlanCaseInstanceBind webSceneResult(){
+        WebSceneTestRequest webSceneTestRequest=new WebSceneTestRequest();
+        webSceneTestRequest.setWebSceneId(caseId);
+        WebSceneTestResponse webSceneTestResponse = webSceneTestDispatchService.result(webSceneTestRequest);
 
-        WebPerfCase webPerfCase = new WebPerfCase();
-        webPerfCase.setId(testPlanCase.getTestCase().getId());
-        webPerfTestRequest.setWebPerfCase(webPerfCase);
-        webPerfTestRequest.setExeType("testPlanTest");
+        webSceneStatus=webSceneTestDispatchService.status();
 
-        webPerfTestDispatchService.execute(webPerfTestRequest);
-
-    }
-
-    public TestPlanCaseInstanceBind webPerfResult(){
-        WebPerfTestResponse webPerfTestResponse = webPerfTestDispatchService.exeResult(webPerfTestRequest);
-
-        //测试计划历史 与 绑定用例的历史 公共历史表
         TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
+        String caseType = testPlanCaseData.getCaseType();
+        String testType = testPlanCaseData.getTestType();
+        String name = testPlanCaseData.getName();
+        testPlanCaseInstanceBind.setTestPlanInstanceId(planInstanceId);
+        testPlanCaseInstanceBind.setName(name);
+        testPlanCaseInstanceBind.setCaseType(caseType);
+        testPlanCaseInstanceBind.setTestType(testType);
+        testPlanCaseInstanceBind.setResult(webSceneTestDispatchService.status());
+        testPlanCaseInstanceBind.setCaseId(caseId);
 
-        //是否第一次创建
-        if (isFirst) {
-            String caseType = testPlanCaseData.getTestCase().getCaseType();
-            String testType = testPlanCaseData.getTestCase().getTestType();
-            String name = testPlanCaseData.getTestCase().getName();
-
-            webPerfInstanceId = webPerfInstanceService.createWebPerfInstance(new WebPerfInstance());
-
-            testPlanCaseInstanceBind.setCaseInstanceId(webPerfInstanceId);
-            testPlanCaseInstanceBind.setTestPlanInstanceId(planInstanceId);
-            testPlanCaseInstanceBind.setName(name);
-            testPlanCaseInstanceBind.setCaseType(caseType);
-            testPlanCaseInstanceBind.setTestType(testType);
+        if(webSceneStatus==0){
+            String webSceneInstanceId = webSceneInstanceService.createWebSceneInstance(webSceneTestResponse.getWebSceneInstance());
+            testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
+            testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
             testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-
-            isFirst=false;
-        }else {
-            WebPerfInstance webPerfInstance = webPerfTestResponse.getWebPerfInstance();
-            webPerfInstance.setId(webPerfInstanceId);
-            webPerfInstanceService.updateWebPerfInstance(webPerfInstance);
+            webSceneInstanceService.createStepInstance(webSceneTestResponse.getStepCommonInstanceList(),webSceneInstanceId);
         }
-
-        webPerfStatus=webPerfTestResponse.getStatus();
 
         return testPlanCaseInstanceBind;
     }
+
+
 
 
 

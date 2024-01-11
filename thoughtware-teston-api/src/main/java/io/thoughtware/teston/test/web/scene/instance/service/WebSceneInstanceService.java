@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.web.scene.instance.service;
 
+import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.thoughtware.teston.test.web.scene.execute.model.WebSceneTestResponse;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstance;
@@ -72,4 +73,11 @@ public interface WebSceneInstanceService {
      */
     String saveWebSceneInstanceToSql(WebSceneInstance webSceneInstance, WebSceneTestResponse webSceneTestResponse);
 
+
+    /**
+     * 创建步骤实例
+     * @param stepCommonInstanceList
+     * @param webSceneInstanceId
+     */
+    void createStepInstance(List<StepCommonInstance> stepCommonInstanceList, String webSceneInstanceId);
 }

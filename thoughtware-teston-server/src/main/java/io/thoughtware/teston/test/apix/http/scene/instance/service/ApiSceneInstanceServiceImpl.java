@@ -151,7 +151,50 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         String apiSceneId = apiSceneInstance.getApiSceneId();
         String apiSceneInstanceId = createApiSceneInstance(apiSceneInstance);
 
-        // 创建公共实例
+        createCommonInstance(apiSceneInstance,apiSceneId,apiSceneInstanceId);
+
+        createWebStepInstance(apiSceneTestResponse.getStepCommonInstanceList(),apiSceneInstanceId);
+
+        return apiSceneInstanceId;
+    }
+
+    /**
+     * 创建步骤实例
+     * @param stepCommonInstanceList
+     * @param apiSceneInstanceId
+     */
+    @Override
+    public void createWebStepInstance(List<StepCommonInstance> stepCommonInstanceList, String apiSceneInstanceId){
+        // 所有ApiUnitInstance设置apiSceneInstanceId创建
+        stepCommonInstanceList.forEach(stepCommonInstance -> {
+            //公共的历史创建
+            stepCommonInstance.setInstanceId(apiSceneInstanceId);
+            String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
+
+            if(stepCommonInstance.getApiUnitInstance() != null){
+                ApiUnitInstance apiUnitInstance = stepCommonInstance.getApiUnitInstance();
+                apiUnitInstance.setId(stepInstanceId);
+                apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
+            }
+
+            //if判断历史创建
+            if(stepCommonInstance.getIfJudgmentInstance()!=null){
+                IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
+                ifJudgmentInstance.setStepInstanceId(apiSceneInstanceId);
+                ifJudgmentInstance.setId(stepInstanceId);
+                ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
+            }
+        });
+
+    }
+
+    /**
+     * 创建公共实例
+     * @param apiSceneInstance
+     * @param apiSceneId
+     * @param apiSceneInstanceId
+     */
+    private void createCommonInstance(ApiSceneInstance apiSceneInstance,String apiSceneId,String apiSceneInstanceId){
         Instance instance = new Instance();
         instance.setId(apiSceneInstanceId);
 
@@ -180,33 +223,7 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         instanceMap.put("elapsedTime",apiSceneInstance.getElapsedTime().toString());
         instanceMap.put("passRate",apiSceneInstance.getPassRate());
         instance.setContent(instanceMap.toString());
-
         instanceService.createInstance(instance);
-
-
-        // 所有ApiUnitInstance设置apiSceneInstanceId创建
-        List<StepCommonInstance> stepCommonInstanceList = apiSceneTestResponse.getStepCommonInstanceList();
-        stepCommonInstanceList.forEach(stepCommonInstance -> {
-            //公共的历史创建
-            stepCommonInstance.setInstanceId(apiSceneInstanceId);
-            String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
-
-            if(stepCommonInstance.getApiUnitInstance() != null){
-                ApiUnitInstance apiUnitInstance = stepCommonInstance.getApiUnitInstance();
-                apiUnitInstance.setId(stepInstanceId);
-                apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
-            }
-
-            //if判断历史创建
-            if(stepCommonInstance.getIfJudgmentInstance()!=null){
-                IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
-                ifJudgmentInstance.setStepInstanceId(apiSceneInstanceId);
-                ifJudgmentInstance.setId(stepInstanceId);
-                ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
-            }
-        });
-
-        return apiSceneInstanceId;
     }
 
 

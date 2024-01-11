@@ -170,18 +170,17 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
 
 
         //测试计划中设置了执行类型，其他没设置
-//        if(webSceneTestRequest.getExeType()==null){
+        if(webSceneTestRequest.getExeType()==null){
 //            //返回的数据存入数据库
         //status为0执行结束，存入历史
-        if(status==0){
-            saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
-        }
+            if(status==0){
+                saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
+            }
 
-//        }
+        }
 
         return webSceneTestResponse;
     }
-
 
 
     /**

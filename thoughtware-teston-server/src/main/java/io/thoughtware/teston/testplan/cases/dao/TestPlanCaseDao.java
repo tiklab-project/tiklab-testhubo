@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -100,11 +101,63 @@ public class TestPlanCaseDao {
                 .eq("testPlanId", testPlanCaseQuery.getTestPlanId())
                 .orders(testPlanCaseQuery.getOrderParams())
                 .pagination(testPlanCaseQuery.getPageParam())
-
                 .get();
         return jpaTemplate.findPage(queryCondition, TestPlanCaseEntity.class);
     }
 
+    /**
+     * 查询测试计划绑定的用例总数
+     * @param testPlanId
+     * @return
+     */
+    public int findPlanCaseNum(String testPlanId) {
+        String sql = "Select count(1) as total from teston_test_plan_detail where test_plan_id = '" + testPlanId+ "'";
+        Integer total = jpaTemplate.getJdbcTemplate().queryForObject(sql, new Object[]{}, Integer.class);
+
+        return total;
+    }
+
+
+    /**
+     * 查询绑定的用例 列表
+     * @param testPlanCaseQuery
+     * @return
+     */
+    public List<PlanCaseEntity> findPlanCaseList(TestPlanCaseQuery testPlanCaseQuery) {
+        StringBuilder modelSqlBuilder = new StringBuilder();
+        modelSqlBuilder.append("SELECT teston_test_plan_detail.id AS plan_case_id,teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type,teston_testcase.test_type, teston_testcase.category_id, teston_testcase.name ")
+                .append("FROM teston_test_plan_detail ")
+                .append("JOIN teston_testcase ON teston_testcase.id = teston_test_plan_detail.test_case_id ")
+                .append("JOIN teston_test_plan ON teston_test_plan.id = teston_test_plan_detail.test_plan_id ")
+                .append("WHERE teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("'");
+
+        if(testPlanCaseQuery.getCaseTypeList()!=null&&testPlanCaseQuery.getCaseTypeList().length>0){
+            StringBuilder caseTypeList = new StringBuilder();
+            for (int i = 0; i < testPlanCaseQuery.getCaseTypeList().length; i++) {
+                String s = testPlanCaseQuery.getCaseTypeList()[i];
+                caseTypeList.append("'").append(s).append("'");
+
+                if (i < testPlanCaseQuery.getCaseTypeList().length - 1) {
+                    caseTypeList.append(",");
+                }
+            }
+
+            modelSqlBuilder.append(" AND teston_testcase.case_type in (").append(caseTypeList).append(")");
+        }
+
+        String modelSql = modelSqlBuilder.toString();
+        List<PlanCaseEntity> planCaseEntityList = jpaTemplate.getJdbcTemplate()
+                .query(modelSql,new BeanPropertyRowMapper<>(PlanCaseEntity.class));
+
+        return planCaseEntityList;
+    }
+
+
+    /**
+     * 按分页查询绑定的用例
+     * @param testPlanCaseQuery
+     * @return
+     */
     public Pagination<PlanCaseEntity> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery){
         StringBuilder modelSqlBuilder = new StringBuilder();
         modelSqlBuilder.append("SELECT teston_test_plan_detail.id AS plan_case_id,teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type,teston_testcase.test_type, teston_testcase.category_id, teston_testcase.name ")
@@ -146,7 +199,11 @@ public class TestPlanCaseDao {
     }
 
 
-
+    /**
+     * 查询未关联的用例
+     * @param testPlanCaseQuery
+     * @return
+     */
     public Pagination<PlanCaseEntity> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery) {
         StringBuilder modelSqlBuilder = new StringBuilder();
         modelSqlBuilder.append("SELECT  teston_testcase.id AS plan_case_id, teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type, teston_testcase.category_id, teston_testcase.name ")

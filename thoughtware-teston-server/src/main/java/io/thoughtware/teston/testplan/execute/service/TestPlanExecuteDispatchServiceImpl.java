@@ -7,6 +7,7 @@ import io.thoughtware.teston.common.TestUtil;
 import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.model.InstanceQuery;
 import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.cases.model.TestPlan;
 import io.thoughtware.teston.testplan.cases.service.TestPlanService;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +64,14 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Autowired
     InstanceService instanceService;
 
+    /**
+     * 可执行的用例
+     */
+    private List<PlanCase> planCaseList;
 
+    /**
+     * 测试计划执行实例
+     */
     private ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList = new ArrayList<>();
 
     private String testPlanId;
@@ -71,10 +80,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      * 需要执行的用例总数
      */
     private Integer exeCount=0;
-
-    private Integer apiPerfCount=0;
-    private Integer webPerfCount=0;
-    private Integer appPerfCount=0;
 
     /**
      * 执行时设置一个测试计划历史Id
@@ -91,9 +96,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     public void execute(TestPlanTestData testPlanTestData) {
         //如果之前执行过，先清空之前保留数据
         exeCount=0;
-        apiPerfCount=0;
-        webPerfCount=0;
-        appPerfCount=0;
         testPlanCaseInstanceList.clear();
 
         //执行把状态变为 1 正在进行
@@ -103,74 +105,59 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         String repositoryId = testPlanTestData.getRepositoryId();
 
 
-        //查询出当前测试计划的所有关联的测试用例
+        //查询出当前计划的关联的可执行用例
         TestPlanCaseQuery testPlanCaseQuery = new TestPlanCaseQuery();
         testPlanCaseQuery.setTestPlanId(testPlanId);
-        List<TestPlanCase> testPlanCaseList = testPlanCaseService.findTestPlanCaseList(testPlanCaseQuery);
+        String[] caseTypeList = {
+                MagicValue.CASE_TYPE_API_UNIT,
+                MagicValue.CASE_TYPE_API_SCENE,
+                MagicValue.CASE_TYPE_API_PERFORM,
+                MagicValue.CASE_TYPE_WEB,
+//                MagicValue.CASE_TYPE_APP
+        };
+        testPlanCaseQuery.setCaseTypeList(caseTypeList);
+        planCaseList = testPlanCaseService.findPlanCaseList(testPlanCaseQuery);
 
         //执行的时候先创建一个历史，里面没有数据，用于获取Id
-        createPlanInstance(repositoryId);
+        testPlanInstanceId = createPlanInstance(repositoryId);
 
-        if(CollectionUtils.isNotEmpty(testPlanCaseList)){
+        if(CollectionUtils.isNotEmpty(planCaseList)){
             //首先获取能执行的用例总数
-            for(TestPlanCase testPlanCase : testPlanCaseList){
-                String caseType = testPlanCase.getTestCase().getCaseType();
-                //只有自动化测试和性能测试执行
-                if(Objects.equals(caseType,"api-unit")
-                        ||Objects.equals(caseType,"api-scene")
-                        ||Objects.equals(caseType,"api-perform")
-//                        ||Objects.equals(caseType,"web-scene")
-                ) {
-                    exeCount++;
-                }
-            }
+            exeCount=planCaseList.size();
 
-            //循环 测试用例
-            for(TestPlanCase testPlanCase : testPlanCaseList){
-                String testType = testPlanCase.getTestCase().getTestType();
-                String caseType = testPlanCase.getTestCase().getCaseType();
+            //循环 执行用例
+            for(PlanCase testPlanCase : planCaseList){
+                String caseType = testPlanCase.getCaseType();
 
-                //根据不同的测试类型进行测试
-                if(Objects.equals(caseType,"api-unit")
-                        ||Objects.equals(caseType,"api-scene")
-                        ||Objects.equals(caseType,"api-perform")
-//                        ||Objects.equals(caseType,"web-scene")
-                ){
-
-                    switch (caseType) {
-                        case "api-unit" -> {
-                            TestPlanCaseInstanceBind testPlanCaseInstanceBind = testPlanExecuteApiDispatch.exeApiUnit(testPlanCase, testPlanTestData, testPlanInstanceId);
-                            testPlanCaseInstanceList.add(testPlanCaseInstanceBind);
-                        }
-                        case "api-scene" -> {
-                            TestPlanCaseInstanceBind apiSceneInstance = testPlanExecuteApiDispatch.exeApiScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-                            testPlanCaseInstanceList.add(apiSceneInstance);
-                        }
-                        case "api-perform" -> {
-                            apiPerfCount++;
-                            testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        }
-                        case "web-scene" -> {
-                            TestPlanCaseInstanceBind webSceneInstance = testPlanExecuteWebDispatch.exeWebScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-                            testPlanCaseInstanceList.add(webSceneInstance);
-                        }
-                        case "web-perform" -> {
-                            webPerfCount++;
-                            testPlanExecuteWebDispatch.exeWebPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        }
-                        case "app-scene" -> {
-                            TestPlanCaseInstanceBind appSceneInstance = testPlanExecuteAppDispatch.exeAppScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-                            testPlanCaseInstanceList.add(appSceneInstance);
-                        }
-                        case "app-perform" -> {
-                            appPerfCount++;
-                            testPlanExecuteAppDispatch.exeAppPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        }
-                        default -> {
-                        }
+                switch (caseType) {
+                    case MagicValue.CASE_TYPE_API_UNIT -> {
+                        TestPlanCaseInstanceBind testPlanCaseInstanceBind = testPlanExecuteApiDispatch.exeApiUnit(testPlanCase, testPlanTestData, testPlanInstanceId);
+                        testPlanCaseInstanceList.add(testPlanCaseInstanceBind);
+                        break;
                     }
-
+                    case MagicValue.CASE_TYPE_API_SCENE -> {
+                        TestPlanCaseInstanceBind apiSceneInstance = testPlanExecuteApiDispatch.exeApiScene(testPlanCase, testPlanTestData, testPlanInstanceId);
+                        testPlanCaseInstanceList.add(apiSceneInstance);
+                        break;
+                    }
+                    case MagicValue.CASE_TYPE_API_PERFORM -> {
+                        testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
+                        break;
+                    }
+                    case MagicValue.CASE_TYPE_WEB -> {
+                        testPlanExecuteWebDispatch.exeWebScene(testPlanCase, testPlanTestData, testPlanInstanceId);
+                        break;
+                    }
+//                    case "app-scene" -> {
+//                        TestPlanCaseInstanceBind appSceneInstance = testPlanExecuteAppDispatch.exeAppScene(testPlanCase, testPlanTestData, testPlanInstanceId);
+//                        testPlanCaseInstanceList.add(appSceneInstance);
+//                        break;
+//                    }
+                    default -> {
+                    }
                 }
+
+
             }
         }
     }
@@ -179,39 +166,54 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Override
     public TestPlanTestResponse exeResult() {
 
-        TestPlanTestResponse testPlanTestResponse = new TestPlanTestResponse();
-        //处理数据
-        TestPlanInstance testPlanInstance = processInstance(testPlanCaseInstanceList);
+        ArrayList<Integer> resultList = new ArrayList<>();
+        if(CollectionUtils.isNotEmpty(planCaseList)){
+            //循环
+            for(PlanCase testPlanCase : planCaseList){
+                String caseType = testPlanCase.getCaseType();
 
-        testPlanTestResponse.setTestPlanInstance(testPlanInstance);
-        testPlanTestResponse.setTestPlanCaseInstanceList(testPlanCaseInstanceList);
+                switch (caseType) {
+                    case MagicValue.CASE_TYPE_API_PERFORM:
+                        if(testPlanExecuteApiDispatch.apiPerfStatus==1){
+                            TestPlanCaseInstanceBind apiPerfInstance = testPlanExecuteApiDispatch.apiPerfResult();
+                            testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), apiPerfInstance.getCaseId()));
+                            testPlanCaseInstanceList.add(apiPerfInstance);
+                        }
+                        resultList.add(testPlanExecuteApiDispatch.apiPerfStatus);
+                        break;
+                    case MagicValue.CASE_TYPE_WEB:
+                        if(testPlanExecuteWebDispatch.webSceneStatus==1){
+                            TestPlanCaseInstanceBind webSceneResult = testPlanExecuteWebDispatch.webSceneResult();
+                            // 前一次执行的有，就删了，添加新的返回结果
+                            testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), webSceneResult.getCaseId()));
+                            testPlanCaseInstanceList.add(webSceneResult);
+                        }
+                        resultList.add(testPlanExecuteWebDispatch.webSceneStatus);
+                        break;
 
-
-        if(apiPerfCount!=0){
-            if(testPlanExecuteApiDispatch.apiPerfStatus==1){
-                TestPlanCaseInstanceBind apiPerfInstance = testPlanExecuteApiDispatch.apiPerfResult();
-                testPlanCaseInstanceList.add(apiPerfInstance);
+                    default:
+                        break;
+                }
             }
         }
 
-//        if(webPerfCount!=0){
-//            if(testPlanExecuteWebDispatch.webPerfStatus==1){
-//                TestPlanCaseInstanceBind webPerfResult = testPlanExecuteWebDispatch.webPerfResult();
-//                testPlanCaseInstanceList.add(webPerfResult);
-//            }
-//        }
-//
-//        if(appPerfCount!=0){
-//            if(testPlanTestDispatchApp.appPerfStatus==1){
-//                TestPlanCaseInstanceBind appPerfResult = testPlanTestDispatchApp.appPerfResult();
-//                testPlanCaseInstanceList.add(appPerfResult);
-//            }
-//        }
+
+        TestPlanTestResponse testPlanTestResponse = new TestPlanTestResponse();
+        //处理数据
+        TestPlanInstance testPlanInstance = processInstance(testPlanCaseInstanceList);
+        testPlanTestResponse.setTestPlanInstance(testPlanInstance);
+        testPlanTestResponse.setTestPlanCaseInstanceList(testPlanCaseInstanceList);
 
         //如果用例个数 和 执行的总个数一样，证明执行了所有
         if(Objects.equals(testPlanCaseInstanceList.size(),exeCount)){
-            //执行结束
-            status=0;
+            if(resultList.contains(1)){
+                status=1;
+            }else {
+                //执行结束
+                status=0;
+
+            }
+
             testPlanTestResponse.setStatus(status);
         }else {
             status=1;
@@ -297,7 +299,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      * 创建测试计划实例
      * @param repositoryId
      */
-    private void createPlanInstance(String repositoryId){
+    private String createPlanInstance(String repositoryId){
         TestPlanInstance testPlanInstance = new TestPlanInstance();
         TestPlan testPlan1 = new TestPlan();
         testPlan1.setId(testPlanId);
@@ -311,12 +313,12 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanInstance.setFailNum(0);
         testPlanInstance.setErrorRate("0.00%");
         testPlanInstance.setResult(2);
-        testPlanInstanceId = testPlanInstanceService.createTestPlanInstance(testPlanInstance);
+        String planInstanceId = testPlanInstanceService.createTestPlanInstance(testPlanInstance);
 
 
         // 创建公共实例
         Instance instance = new Instance();
-        instance.setId(testPlanInstanceId);
+        instance.setId(planInstanceId);
 
         instance.setBelongId(testPlanId);
         instance.setType(MagicValue.TEST_PLAN);
@@ -345,6 +347,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         instance.setContent(instanceMap.toString());
 
         instanceService.createInstance(instance);
+
+        return planInstanceId;
     }
 
 

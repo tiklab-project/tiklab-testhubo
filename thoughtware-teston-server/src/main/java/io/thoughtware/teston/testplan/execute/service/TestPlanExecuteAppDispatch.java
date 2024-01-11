@@ -10,6 +10,7 @@ import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestRequest;
 import io.thoughtware.teston.test.app.scene.execute.model.AppTestConfig;
 import io.thoughtware.teston.test.app.scene.execute.service.AppSceneTestDispatchService;
 import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceService;
+import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.service.TestPlanCaseInstanceBindService;
@@ -65,10 +66,10 @@ public class TestPlanExecuteAppDispatch {
      * @param testPlanInstanceId
      * @return
      */
-    public TestPlanCaseInstanceBind exeAppScene(TestPlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-        String caseType = testPlanCase.getTestCase().getCaseType();
-        String testType = testPlanCase.getTestCase().getTestType();
-        String name = testPlanCase.getTestCase().getName();
+    public TestPlanCaseInstanceBind exeAppScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
+        String caseType = testPlanCase.getCaseType();
+        String testType = testPlanCase.getTestType();
+        String name = testPlanCase.getName();
 
 
         String appEnvId = testPlanTestData.getAppEnv();

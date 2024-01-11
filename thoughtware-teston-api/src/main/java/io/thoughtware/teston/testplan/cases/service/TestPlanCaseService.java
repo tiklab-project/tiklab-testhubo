@@ -62,6 +62,15 @@ public interface TestPlanCaseService {
     List<TestPlanCase> findTestPlanCaseList(TestPlanCaseQuery testPlanCaseQuery);
 
     /**
+     * 查询绑定的用例 数量
+     * @param testPlanId
+     * @return
+     */
+    int findPlanCaseNum(String testPlanId);
+
+    List<PlanCase> findPlanCaseList(TestPlanCaseQuery testPlanCaseQuery);
+
+    /**
     * 按分页查询绑定的用例
     * @param testPlanCaseQuery
     * @return

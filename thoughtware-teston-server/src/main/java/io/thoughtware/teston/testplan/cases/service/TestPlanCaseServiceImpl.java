@@ -111,6 +111,13 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     }
 
     @Override
+    public int findPlanCaseNum(String testPlanId) {
+        int planCaseNum = testPlanDetailDao.findPlanCaseNum(testPlanId);
+
+        return planCaseNum;
+    }
+
+    @Override
     public Pagination<TestPlanCase> findTestPlanCasePage(TestPlanCaseQuery testPlanCaseQuery) {
         Pagination<TestPlanCaseEntity>  pagination = testPlanDetailDao.findTestPlanCasePage(testPlanCaseQuery);
         List<TestPlanCase> testPlanCaseList = BeanMapper.mapList(pagination.getDataList(), TestPlanCase.class);
@@ -135,6 +142,17 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
         }
         return PaginationBuilder.build(pagination, testPlanCaseList);
     }
+
+
+
+    @Override
+    public List<PlanCase> findPlanCaseList(TestPlanCaseQuery testPlanCaseQuery) {
+        List<PlanCaseEntity> planCaseEntityList= testPlanDetailDao.findPlanCaseList(testPlanCaseQuery);
+        List<PlanCase> planCaseList = BeanMapper.mapList(planCaseEntityList, PlanCase.class);
+        joinTemplate.joinQuery(planCaseList);
+        return planCaseList;
+    }
+
 
     @Override
     public Pagination<PlanCase> findPlanCasePage(TestPlanCaseQuery testPlanCaseQuery) {
