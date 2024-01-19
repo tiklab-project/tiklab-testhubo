@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.apix.http.scene.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
@@ -97,16 +98,22 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         ApiSceneTestResponse apiSceneTestResponse = null;
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        if(enable){
-            //执行测试步骤返回数据
-            apiSceneTestResponse = apiSceneTestService.execute(apiSceneTestRequest);
-        }else {
-            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-            if(CollectionUtils.isNotEmpty(agentConfigList)){
-                AgentConfig agentConfig = agentConfigList.get(0);
+        try{
+            if(enable){
+                //执行测试步骤返回数据
+                apiSceneTestResponse = apiSceneTestService.execute(apiSceneTestRequest);
+            }else {
+                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+                if(CollectionUtils.isNotEmpty(agentConfigList)){
+                    AgentConfig agentConfig = agentConfigList.get(0);
 
-                apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
+                    apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
+                }else {
+                    throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
+                }
             }
+        }catch (Exception e){
+            throw new ApplicationException(e);
         }
 
 

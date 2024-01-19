@@ -120,7 +120,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
             status = 0;
             throw new ApplicationException(e);
         }
-
     }
 
 
@@ -138,6 +137,8 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 if(CollectionUtils.isNotEmpty(agentConfigList)) {
                     agentConfig = agentConfigList.get(0);
                     status = webSceneTestServiceRPC(agentConfig.getUrl()).status();
+                }else {
+                    throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
                 }
             }
 

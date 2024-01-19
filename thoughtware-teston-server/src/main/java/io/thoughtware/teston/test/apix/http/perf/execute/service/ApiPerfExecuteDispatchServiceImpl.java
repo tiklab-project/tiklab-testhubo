@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.apix.http.perf.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.model.InstanceQuery;
 import io.thoughtware.teston.instance.service.InstanceService;
@@ -142,35 +143,40 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             apiPerfTestRequest.setExeNum(executeCount);
             apiPerfTestService.execute(apiPerfTestRequest);
         } else {
-            agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-            //agent数量
-            int agentSize = agentConfigList.size();
 
-            //执行方式,循环或随机
-            Integer executeType = apiPerfCase.getExecuteType();
+            if( CollectionUtils.isNotEmpty(agentConfigList)) {
+                //agent数量
+                int agentSize = agentConfigList.size();
 
-            //先分配好各个agent所需的次数
-            List<Integer> distributionList = new ArrayList<>();
+                //执行方式,循环或随机
+                Integer executeType = apiPerfCase.getExecuteType();
 
-            //执行方式循环
-            if(executeType==1){
-                distributionList = testApixUtil.loop(executeCount, agentSize);
-            }
+                //先分配好各个agent所需的次数
+                List<Integer> distributionList = new ArrayList<>();
 
-            if(executeType==2){
-                distributionList = testApixUtil.random(executeCount, agentSize);
-            }
+                //执行方式循环
+                if (executeType == 1) {
+                    distributionList = testApixUtil.loop(executeCount, agentSize);
+                }
 
-            for(int i = 0; i<agentSize;i++){
-                //
-                apiPerfTestRequest.setExeNum(distributionList.get(i));
+                if (executeType == 2) {
+                    distributionList = testApixUtil.random(executeCount, agentSize);
+                }
 
-                //获取agentId，agentList index 从0开始
-                AgentConfig agentConfig = agentConfigList.get(i);
-                String agentUrl = agentConfig.getUrl();
+                for (int i = 0; i < agentSize; i++) {
+                    //
+                    apiPerfTestRequest.setExeNum(distributionList.get(i));
 
-                //执行测试
-                apiPerfTestServiceRPC(agentUrl).execute(apiPerfTestRequest);
+                    //获取agentId，agentList index 从0开始
+                    AgentConfig agentConfig = agentConfigList.get(i);
+                    String agentUrl = agentConfig.getUrl();
+
+                    //执行测试
+                    apiPerfTestServiceRPC(agentUrl).execute(apiPerfTestRequest);
+                }
+
+            }else {
+                throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
             }
         }
     }
@@ -188,12 +194,15 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             response = apiPerfTestService.exeResult();
             arrayList.addAll(response.getApiSceneInstanceList());
         }else {
-            for(int i = 0;i<agentConfigList.size();i++){
-                response = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).exeResult();
 
-                //获取每个agent的实例
-                if(CollectionUtils.isNotEmpty(response.getApiSceneInstanceList())){
-                    arrayList.addAll(response.getApiSceneInstanceList());
+            if(CollectionUtils.isNotEmpty(agentConfigList)){
+                for(int i = 0;i<agentConfigList.size();i++){
+                    response = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).exeResult();
+
+                    //获取每个agent的实例
+                    if(CollectionUtils.isNotEmpty(response.getApiSceneInstanceList())){
+                        arrayList.addAll(response.getApiSceneInstanceList());
+                    }
                 }
             }
         }
@@ -284,10 +293,24 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         }else {
             int processStatus=0;
 
-            for(int i = 0;i<agentConfigList.size();i++) {
-                Integer status = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).status();
-                processStatus=status;
+            try {
+                AgentConfigQuery agentConfigQuery = new AgentConfigQuery();
+//            agentConfigQuery.setRepositoryId(apiPerfTestRequest.get);
+                agentConfigList = agentConfigService.findAgentConfigList(agentConfigQuery);
+                if(CollectionUtils.isNotEmpty(agentConfigList)){
+                    for(int i = 0;i<agentConfigList.size();i++) {
+                        Integer status = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).status();
+                        processStatus=status;
+                    }
+                }else {
+                    throw new ApplicationException("未设置agent，请到设置中配置agent");
+                }
+
+            }catch (Exception e){
+                status=0;
+                throw new ApplicationException(e);
             }
+
 
             status=processStatus;
         }
@@ -404,11 +427,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         }
 
         return variable;
-    }
-
-    @Override
-    public void stop(ApiPerfTestRequest apiPerfTestRequest) {
-
     }
 
 }

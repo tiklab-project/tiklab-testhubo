@@ -140,6 +140,8 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
                 if(CollectionUtils.isNotEmpty(agentConfigList)) {
                     agentConfig = agentConfigList.get(0);
                     status = appSceneTestServiceRPC(agentConfig.getUrl()).status();
+                }else {
+                    throw new ApplicationException("未设置agent，请到设置中配置agent");
                 }
             }
         }catch (Exception e){

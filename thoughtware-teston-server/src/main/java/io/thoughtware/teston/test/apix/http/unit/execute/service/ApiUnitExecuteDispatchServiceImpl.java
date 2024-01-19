@@ -16,8 +16,6 @@ import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseServic
 import io.thoughtware.teston.test.apix.http.unit.cases.service.AssertService;
 import io.thoughtware.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
 import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBind;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBindQuery;
 import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceBindService;
 import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
 import io.thoughtware.teston.test.apix.http.unit.instance.service.AssertInstanceService;
@@ -31,10 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 接口单元测试调度 服务
@@ -95,7 +90,7 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         ApiUnitTestRequest processData = setApiUnitTestRequestData(apiUnitId, apiUnitTestRequest.getApiEnv());
 
         ApiUnitInstance apiUnitInstance = null;
-        logger.info("api-----");
+
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try {
@@ -104,16 +99,20 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
                 apiUnitInstance = apiUnitTestService.execute(processData);
                 logger.info("api-enable----end");
             }else {
-                logger.info("api-not-enable----");
+                logger.info("api-not-enable");
+
                 List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
                 if( CollectionUtils.isNotEmpty(agentConfigList)){
                     AgentConfig agentConfig = agentConfigList.get(0);
                     apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(processData);
+                }else {
+                    throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
                 }
+
                 logger.info("api-not-enable----end");
             }
         }catch (Exception e){
-            logger.info("api-enable----error");
+            logger.info("api-execute----error");
             throw new ApplicationException(e);
         }
 

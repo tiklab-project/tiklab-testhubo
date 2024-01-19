@@ -33,11 +33,5 @@ public interface ApiPerfExecuteDispatchService {
     Integer status();
 
 
-    /**
-     * 停止性能测试
-     * @param
-     * @return
-     */
-    void stop(ApiPerfTestRequest apiPerfTestRequest);
 
 }

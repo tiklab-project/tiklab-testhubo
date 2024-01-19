@@ -55,13 +55,6 @@ public class ApiPerfTestDispatchController {
         return Result.ok(status);
     }
 
-    @RequestMapping(path = "/endOrPause", method = RequestMethod.POST)
-    @ApiMethod(name = "endOrPause", desc = "停止或暂停性能测试")
-    @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数 testCaseId  executeType ", required = true)
-    public Result<Void> endOrPause(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
-        apiPerfExecuteDispatchService.stop(apiPerfTestRequest);
 
-        return Result.ok();
-    }
 
 }
