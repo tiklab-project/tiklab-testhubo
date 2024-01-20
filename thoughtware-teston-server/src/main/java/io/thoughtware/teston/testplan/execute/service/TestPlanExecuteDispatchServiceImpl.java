@@ -1,6 +1,7 @@
 package io.thoughtware.teston.testplan.execute.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.common.TestUtil;
@@ -121,45 +122,51 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         //执行的时候先创建一个历史，里面没有数据，用于获取Id
         testPlanInstanceId = createPlanInstance(repositoryId);
 
-        if(CollectionUtils.isNotEmpty(planCaseList)){
-            //首先获取能执行的用例总数
-            exeCount=planCaseList.size();
+        try{
+            if(CollectionUtils.isNotEmpty(planCaseList)){
+                //首先获取能执行的用例总数
+                exeCount=planCaseList.size();
 
-            //循环 执行用例
-            for(PlanCase testPlanCase : planCaseList){
-                String caseType = testPlanCase.getCaseType();
+                //循环 执行用例
+                for(PlanCase testPlanCase : planCaseList){
+                    String caseType = testPlanCase.getCaseType();
 
-                switch (caseType) {
-                    case MagicValue.CASE_TYPE_API_UNIT -> {
-                        TestPlanCaseInstanceBind testPlanCaseInstanceBind = testPlanExecuteApiDispatch.exeApiUnit(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        testPlanCaseInstanceList.add(testPlanCaseInstanceBind);
-                        break;
-                    }
-                    case MagicValue.CASE_TYPE_API_SCENE -> {
-                        TestPlanCaseInstanceBind apiSceneInstance = testPlanExecuteApiDispatch.exeApiScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        testPlanCaseInstanceList.add(apiSceneInstance);
-                        break;
-                    }
-                    case MagicValue.CASE_TYPE_API_PERFORM -> {
-                        testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        break;
-                    }
-                    case MagicValue.CASE_TYPE_WEB -> {
-                        testPlanExecuteWebDispatch.exeWebScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-                        break;
-                    }
+                    switch (caseType) {
+                        case MagicValue.CASE_TYPE_API_UNIT -> {
+                            TestPlanCaseInstanceBind testPlanCaseInstanceBind = testPlanExecuteApiDispatch.exeApiUnit(testPlanCase, testPlanTestData, testPlanInstanceId);
+                            testPlanCaseInstanceList.add(testPlanCaseInstanceBind);
+                            break;
+                        }
+                        case MagicValue.CASE_TYPE_API_SCENE -> {
+                            TestPlanCaseInstanceBind apiSceneInstance = testPlanExecuteApiDispatch.exeApiScene(testPlanCase, testPlanTestData, testPlanInstanceId);
+                            testPlanCaseInstanceList.add(apiSceneInstance);
+                            break;
+                        }
+                        case MagicValue.CASE_TYPE_API_PERFORM -> {
+                            testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
+                            break;
+                        }
+                        case MagicValue.CASE_TYPE_WEB -> {
+                            testPlanExecuteWebDispatch.exeWebScene(testPlanCase, testPlanTestData, testPlanInstanceId);
+                            break;
+                        }
 //                    case "app-scene" -> {
 //                        TestPlanCaseInstanceBind appSceneInstance = testPlanExecuteAppDispatch.exeAppScene(testPlanCase, testPlanTestData, testPlanInstanceId);
 //                        testPlanCaseInstanceList.add(appSceneInstance);
 //                        break;
 //                    }
-                    default -> {
+                        default -> {
+                        }
                     }
+
+
                 }
-
-
             }
+        }catch (Exception e) {
+            status=0;
+            throw new ApplicationException(e);
         }
+
     }
 
 
@@ -211,7 +218,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             }else {
                 //执行结束
                 status=0;
-
             }
 
             testPlanTestResponse.setStatus(status);
@@ -282,10 +288,12 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
 
         Instance instance = instanceService.findInstance(testPlanInstanceId);
+        int planCaseNum = testPlanCaseService.findPlanCaseNum(testPlanId);
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",testPlanInstance.getResult().toString());
-        instanceMap.put("total",testPlanInstance.getTotal().toString());
+        instanceMap.put("total",planCaseNum);
+        instanceMap.put("executableCaseNum",testPlanInstance.getTotal().toString());
         instanceMap.put("passNum",testPlanInstance.getPassNum().toString());
         instanceMap.put("passRate",testPlanInstance.getPassRate());
         instanceMap.put("failNum",testPlanInstance.getFailNum().toString());
@@ -307,7 +315,9 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanInstance.setRepositoryId(repositoryId);
         testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
         testPlanInstance.setCreateUser(LoginContext.getLoginId());
-        testPlanInstance.setTotal(exeCount);
+        int planCaseNum = testPlanCaseService.findPlanCaseNum(testPlanId);
+        testPlanInstance.setTotal(planCaseNum);
+        testPlanInstance.setExecutableCaseNum(exeCount);
         testPlanInstance.setPassNum(0);
         testPlanInstance.setPassRate("0.00%");
         testPlanInstance.setFailNum(0);
@@ -339,7 +349,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",testPlanInstance.getResult().toString());
-        instanceMap.put("total",testPlanInstance.getTotal().toString());
+        instanceMap.put("total",planCaseNum);
+        instanceMap.put("executableCaseNum",testPlanInstance.getTotal().toString());
         instanceMap.put("passNum",testPlanInstance.getPassNum().toString());
         instanceMap.put("passRate",testPlanInstance.getPassRate());
         instanceMap.put("failNum",testPlanInstance.getFailNum().toString());

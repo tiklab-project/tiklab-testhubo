@@ -32,9 +32,13 @@ public class TestPlanInstanceEntity implements Serializable {
     @Column(name = "result")
     private Integer result;
 
-    // 测试总次数
+    // 总用例
     @Column(name = "total")
     private Integer total;
+
+    // 可执行用例
+    @Column(name = "executable_case_num")
+    private Integer executableCaseNum;
 
     // 通过数
     @Column(name = "pass_num")
@@ -116,6 +120,14 @@ public class TestPlanInstanceEntity implements Serializable {
         this.total = total;
     }
 
+    public Integer getExecutableCaseNum() {
+        return executableCaseNum;
+    }
+
+    public void setExecutableCaseNum(Integer executableCaseNum) {
+        this.executableCaseNum = executableCaseNum;
+    }
+
     public String getPassRate() {
         return passRate;
     }
@@ -155,4 +167,7 @@ public class TestPlanInstanceEntity implements Serializable {
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
+
+
+
 }

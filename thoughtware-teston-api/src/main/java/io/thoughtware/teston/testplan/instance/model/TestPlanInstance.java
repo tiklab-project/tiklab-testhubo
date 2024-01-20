@@ -38,8 +38,11 @@ public class TestPlanInstance extends BaseModel {
     @ApiProperty(name="result",desc="结果")
     private java.lang.Integer result;
 
-    @ApiProperty(name="total",desc="测试总次数")
+    @ApiProperty(name="total",desc="总用例")
     private java.lang.Integer total;
+
+    @ApiProperty(name="total",desc="可执行用例")
+    private java.lang.Integer executableCaseNum;
 
     @ApiProperty(name="passNum",desc="通过数")
     private java.lang.Integer passNum;
@@ -157,5 +160,13 @@ public class TestPlanInstance extends BaseModel {
 
     public void setBindCase(TestPlanCaseInstanceBind bindCase) {
         this.bindCase = bindCase;
+    }
+
+    public Integer getExecutableCaseNum() {
+        return executableCaseNum;
+    }
+
+    public void setExecutableCaseNum(Integer executableCaseNum) {
+        this.executableCaseNum = executableCaseNum;
     }
 }
