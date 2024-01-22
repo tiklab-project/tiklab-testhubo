@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.web.scene.cases.service;
 
+import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -46,6 +47,9 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    StepCommonService stepCommonService;
 
     @Override
     public String createWebSceneCase(@NotNull @Valid WebSceneCase webSceneCase) {
@@ -101,6 +105,9 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
         WebSceneCase webSceneCase = findOne(id);
 
         joinTemplate.joinQuery(webSceneCase);
+
+        int webSceneStepNum = stepCommonService.findStepNum(id);
+        webSceneCase.setStepNum(webSceneStepNum);
 
         //手动添加字段
         TestCase testCase = webSceneCase.getTestCase();

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -94,6 +95,16 @@ public class TestCaseController {
         Pagination<TestCase> pagination = testCaseService.findTestCasePage(testCaseQuery);
 
         return Result.ok(pagination);
+    }
+
+
+    @RequestMapping(path = "/findDiffTypeCaseNum",method = RequestMethod.POST)
+    @ApiMethod(name = "findDiffTypeCaseNum",desc = "查询不同测试类型的数量，功能，接口，ui，性能")
+    @ApiParam(name = "repositoryId",desc = "repositoryId",required = true)
+    public Result<HashMap<String, Integer>> findDiffTypeCaseNum(@NotNull String repositoryId){
+        HashMap<String, Integer> diffTypeCaseNum = testCaseService.findDiffTypeCaseNum(repositoryId);
+
+        return Result.ok(diffTypeCaseNum);
     }
 
 }

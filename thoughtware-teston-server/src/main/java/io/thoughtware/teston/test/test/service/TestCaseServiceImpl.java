@@ -164,6 +164,12 @@ public class TestCaseServiceImpl implements TestCaseService {
     }
 
     @Override
+    public HashMap<String, Integer> findDiffTypeCaseNum(String repositoryId) {
+        HashMap<String, Integer> diffTypeCaseNum = testCaseDao.findDiffTypeCaseNum(repositoryId);
+        return diffTypeCaseNum;
+    }
+
+    @Override
     public TestCase findTestCase(@NotNull String id) {
         TestCase testCase = findOne(id);
 

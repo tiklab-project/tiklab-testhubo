@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.app.scene.cases.service;
 
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCaseQuery;
+import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -45,6 +46,9 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    StepCommonService stepCommonService;
 
     @Override
     public String createAppSceneCase(@NotNull @Valid AppSceneCase appSceneCase) {
@@ -99,6 +103,9 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
         AppSceneCase appSceneCase = findOne(id);
 
         joinTemplate.joinQuery(appSceneCase);
+
+        int appSceneStepNum = stepCommonService.findStepNum(id);
+        appSceneCase.setStepNum(appSceneStepNum);
 
         //手动添加字段
         TestCase testCase = appSceneCase.getTestCase();

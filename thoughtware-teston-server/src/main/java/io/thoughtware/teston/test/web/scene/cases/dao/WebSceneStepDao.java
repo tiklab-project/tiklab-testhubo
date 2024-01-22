@@ -63,6 +63,7 @@ public class WebSceneStepDao{
         return jpaTemplate.findOne(WebSceneStepEntity.class,id);
     }
 
+
     /**
     * 查找所有web场景下步骤
     * @return
@@ -70,6 +71,7 @@ public class WebSceneStepDao{
     public List<WebSceneStepEntity> findAllWebSceneStep() {
         return jpaTemplate.findAll(WebSceneStepEntity.class);
     }
+
 
     public List<WebSceneStepEntity> findWebSceneStepList(List<String> idList) {
         return jpaTemplate.findList(WebSceneStepEntity.class,idList);

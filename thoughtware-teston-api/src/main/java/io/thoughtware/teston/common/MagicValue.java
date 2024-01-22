@@ -22,7 +22,7 @@ public class MagicValue {
     //元素不存在
     public static final int ELEMENT_NOT_EXIST = 3;
 
-    //类型
+    //用例类型
     public static final String CASE_TYPE_API_UNIT = "api-unit";
     public static final String CASE_TYPE_API_SCENE = "api-scene";
     public static final String CASE_TYPE_API_PERFORM = "api-perform";
@@ -32,6 +32,14 @@ public class MagicValue {
     public static final String CASE_TYPE_IF = "if";
     public static final String TEST_PLAN = "test-plan";
 
-
+    //测试类型
+    //接口 单元/场景
+    public static final String TEST_TYPE_API = "api";
+    //功能
+    public static final String TEST_TYPE_FUNCTION = "function";
+    //ui  web/app
+    public static final String TEST_TYPE_UI = "ui";
+    //性能
+    public static final String TEST_TYPE_PERFORM = "perform";
 
 }

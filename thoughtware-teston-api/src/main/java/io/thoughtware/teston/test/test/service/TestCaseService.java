@@ -10,6 +10,7 @@ import io.thoughtware.toolkit.join.annotation.JoinProvider;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -50,11 +51,18 @@ public interface TestCaseService {
     List<TestCase> findList(List<String> idList);
 
     /**
-     * 查询分组总数
+     * 查询测试用例总数
      * @param repositoryId
      * @return
      */
     int findTestCaseNum(String repositoryId);
+
+    /**
+     * 查询不同测试类型的数量，功能，接口，ui，性能
+     * @param repositoryId
+     * @return
+     */
+    HashMap<String, Integer> findDiffTypeCaseNum(String repositoryId);
 
     /**
     * 根据id查找测试用例

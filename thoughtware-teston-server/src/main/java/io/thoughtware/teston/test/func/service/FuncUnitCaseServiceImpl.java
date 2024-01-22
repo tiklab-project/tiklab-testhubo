@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.func.service;
 
+import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.func.model.FuncUnitCase;
 import io.thoughtware.teston.test.func.model.FuncUnitCaseQuery;
 import io.thoughtware.teston.test.test.model.TestCase;
@@ -45,6 +46,9 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    StepCommonService stepCommonService;
 
     @Override
     public String createFuncUnitCase(@NotNull @Valid FuncUnitCase funcUnitCase) {
@@ -99,6 +103,9 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
         FuncUnitCase funcUnitCase = findOne(id);
 
         joinTemplate.joinQuery(funcUnitCase);
+
+        int funcSceneStepNum = stepCommonService.findStepNum(id);
+        funcUnitCase.setStepNum(funcSceneStepNum);
 
         //手动添加字段
         TestCase testCase = funcUnitCase.getTestCase();

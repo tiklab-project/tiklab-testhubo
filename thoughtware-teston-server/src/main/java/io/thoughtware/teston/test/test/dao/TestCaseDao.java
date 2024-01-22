@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -78,6 +79,35 @@ public class TestCaseDao {
         return caseTotal;
     }
 
+    /**
+     * 查询不同用例类型的数量，功能，接口，ui，性能
+     * @param repositoryId
+     * @return
+     */
+    public HashMap<String, Integer> findDiffTypeCaseNum(String repositoryId) {
+        HashMap<String, Integer> diffTypeCaseNum = new HashMap<>();
+
+        int testCaseNum = findTestCaseNum(repositoryId);
+        diffTypeCaseNum.put("all",testCaseNum);
+
+        String functionSql = "Select count(1) as total from teston_testcase where repository_id = '" + repositoryId+ "'" + " AND test_type = 'function'";
+        Integer functionTotal = jpaTemplate.getJdbcTemplate().queryForObject(functionSql, new Object[]{}, Integer.class);
+        diffTypeCaseNum.put("function", functionTotal);
+
+        String apiSql = "Select count(1) as total from teston_testcase where repository_id = '" + repositoryId+ "'" + " AND test_type = 'api'";
+        Integer apiTotal = jpaTemplate.getJdbcTemplate().queryForObject(apiSql, new Object[]{}, Integer.class);
+        diffTypeCaseNum.put("api", apiTotal);
+
+        String uiSql = "Select count(1) as total from teston_testcase where repository_id = '" + repositoryId+ "'" + " AND test_type = 'ui'";
+        Integer uiTotal = jpaTemplate.getJdbcTemplate().queryForObject(uiSql, new Object[]{}, Integer.class);
+        diffTypeCaseNum.put("ui", uiTotal);
+
+        String performSql = "Select count(1) as total from teston_testcase where repository_id = '" + repositoryId+ "'" + " AND test_type = 'perform'";
+        Integer performTotal = jpaTemplate.getJdbcTemplate().queryForObject(performSql, new Object[]{}, Integer.class);
+        diffTypeCaseNum.put("perform", performTotal);
+
+        return diffTypeCaseNum;
+    }
 
     /**
     * 查找所有测试用例

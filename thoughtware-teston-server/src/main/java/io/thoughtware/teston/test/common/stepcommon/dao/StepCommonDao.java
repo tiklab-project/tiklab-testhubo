@@ -64,6 +64,20 @@ public class StepCommonDao {
     }
 
     /**
+     * 查询步骤数量
+     * @param caseId
+     * @return
+     */
+    public int findStepNum(String caseId) {
+        String stepSql = "Select count(1) as total from teston_case_step_common where case_id = '" + caseId+ "'";
+        Integer stepNum = jpaTemplate.getJdbcTemplate().queryForObject(stepSql, new Object[]{}, Integer.class);
+
+        return stepNum;
+    }
+
+
+
+    /**
     * 查找所有公共步骤
     * @return
     */

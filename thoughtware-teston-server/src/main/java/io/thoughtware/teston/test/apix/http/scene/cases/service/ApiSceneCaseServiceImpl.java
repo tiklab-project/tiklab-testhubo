@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.apix.http.scene.cases.service;
 
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCase;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCaseQuery;
+import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -45,7 +46,9 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
 
     @Autowired
     UserService userService;
-    
+
+    @Autowired
+    StepCommonService stepCommonService;
 
     @Override
     public String createApiSceneCase(@NotNull @Valid ApiSceneCase apiSceneCase) {
@@ -117,6 +120,10 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
     public ApiSceneCase findApiSceneCase(@NotNull String id) {
         ApiSceneCase apiSceneCase = findOne(id);
         joinTemplate.joinQuery(apiSceneCase);
+
+        //步骤数量
+        int apiSceneStepNum = stepCommonService.findStepNum(id);
+        apiSceneCase.setStepNum(apiSceneStepNum);
 
         //手动添加字段
         TestCase testCase = apiSceneCase.getTestCase();

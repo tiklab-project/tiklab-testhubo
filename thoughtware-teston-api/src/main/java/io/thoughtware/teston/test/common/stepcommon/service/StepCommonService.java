@@ -45,6 +45,13 @@ public interface StepCommonService {
     */
     StepCommon findStepCommon(@NotNull String id);
 
+    /**
+     * 查询步骤数量
+     * @param caseId
+     * @return
+     */
+    int findStepNum(String caseId);
+
 
     /**
     * 根据查询参数查询步骤公共列表

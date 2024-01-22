@@ -194,7 +194,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             response = apiPerfTestService.exeResult();
             arrayList.addAll(response.getApiSceneInstanceList());
         }else {
-
+            agentConfigList = getAgentList();
             if(CollectionUtils.isNotEmpty(agentConfigList)){
                 for(int i = 0;i<agentConfigList.size();i++){
                     response = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).exeResult();
@@ -294,9 +294,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             int processStatus=0;
 
             try {
-                AgentConfigQuery agentConfigQuery = new AgentConfigQuery();
-//            agentConfigQuery.setRepositoryId(apiPerfTestRequest.get);
-                agentConfigList = agentConfigService.findAgentConfigList(agentConfigQuery);
+                agentConfigList = getAgentList();
                 if(CollectionUtils.isNotEmpty(agentConfigList)){
                     for(int i = 0;i<agentConfigList.size();i++) {
                         Integer status = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).status();
@@ -427,6 +425,16 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         }
 
         return variable;
+    }
+
+    /**
+     * 获取agent
+     */
+    private List<AgentConfig> getAgentList(){
+        AgentConfigQuery agentConfigQuery = new AgentConfigQuery();
+//        agentConfigQuery.setRepositoryId(repositoryId);
+        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(agentConfigQuery);
+        return agentConfigList;
     }
 
 }

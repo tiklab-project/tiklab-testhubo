@@ -166,6 +166,13 @@ public class StepCommonServiceImpl implements StepCommonService {
     }
 
     @Override
+    public int findStepNum(String caseId) {
+        int stepNum = stepCommonDao.findStepNum(caseId);
+        return stepNum;
+    }
+
+
+    @Override
     public List<StepCommon> findStepCommonList(StepCommonQuery stepCommonQuery) {
         List<StepCommonEntity> stepCommonEntityList = stepCommonDao.findStepCommonList(stepCommonQuery);
         List<StepCommon> stepCommonList = BeanMapper.mapList(stepCommonEntityList, StepCommon.class);

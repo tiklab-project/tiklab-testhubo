@@ -28,6 +28,9 @@ public class AppSceneCase extends BaseModel {
     @JoinQuery(key = "id")
     private TestCase testCase;
 
+    @ApiProperty(name="stepNum",desc="步骤数量")
+    private int stepNum;
+
     public String getId() {
         return id;
     }
@@ -42,5 +45,13 @@ public class AppSceneCase extends BaseModel {
 
     public void setTestCase(TestCase testCase) {
         this.testCase = testCase;
+    }
+
+    public int getStepNum() {
+        return stepNum;
+    }
+
+    public void setStepNum(int stepNum) {
+        this.stepNum = stepNum;
     }
 }
