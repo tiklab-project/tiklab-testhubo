@@ -10,6 +10,7 @@ import io.thoughtware.teston.instance.model.InstanceQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -111,5 +112,18 @@ public class InstanceDao {
         return jpaTemplate.findPage(queryCondition, InstanceEntity.class);
     }
 
+    /**
+     * 获取最近一次执行次数
+     * @param belongId
+     * @return
+     */
+    public int getRecentExecuteNum(String belongId) {
+        try {
+            String exeSql = "SELECT COALESCE(execute_number, 0) AS execute_number FROM teston_instance WHERE belong_id = '" + belongId+ "' ORDER BY execute_number DESC LIMIT 1;";
+            return jpaTemplate.getJdbcTemplate().queryForObject(exeSql, new Object[]{}, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
+    }
 
 }

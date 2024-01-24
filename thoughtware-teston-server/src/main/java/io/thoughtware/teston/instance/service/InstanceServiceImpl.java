@@ -112,6 +112,15 @@ public class InstanceServiceImpl implements InstanceService {
         return PaginationBuilder.build(pagination, instanceList);
     }
 
+    @Override
+    public int getRecentExecuteNum(String belongId) {
+        int recentExecuteNum = instanceDao.getRecentExecuteNum(belongId);
+        if(recentExecuteNum==0){
+            return 1;
+        }else {
+            return ++recentExecuteNum;
+        }
+    }
 
 
 }

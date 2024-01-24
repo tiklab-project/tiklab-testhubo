@@ -72,5 +72,12 @@ public interface InstanceService {
     */
     Pagination<Instance> findInstancePage(InstanceQuery instanceQuery);
 
+    /**
+     * 获取最近一次执行次数
+     * @param belongId
+     * @return
+     */
+    int getRecentExecuteNum(String belongId);
+
 
 }

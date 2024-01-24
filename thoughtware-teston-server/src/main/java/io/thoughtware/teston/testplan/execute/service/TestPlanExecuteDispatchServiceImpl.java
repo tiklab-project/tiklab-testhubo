@@ -214,6 +214,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         //如果用例个数 和 执行的总个数一样，证明执行了所有
         if(Objects.equals(testPlanCaseInstanceList.size(),exeCount)){
             if(resultList.contains(1)){
+                //如果是1继续执行
                 status=1;
             }else {
                 //执行结束

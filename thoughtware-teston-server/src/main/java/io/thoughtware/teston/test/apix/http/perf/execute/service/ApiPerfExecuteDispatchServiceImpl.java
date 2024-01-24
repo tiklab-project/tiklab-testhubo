@@ -3,7 +3,6 @@ package io.thoughtware.teston.test.apix.http.perf.execute.service;
 import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.teston.instance.model.Instance;
-import io.thoughtware.teston.instance.model.InstanceQuery;
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
@@ -143,7 +142,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             apiPerfTestRequest.setExeNum(executeCount);
             apiPerfTestService.execute(apiPerfTestRequest);
         } else {
-
+            agentConfigList = getAgentList();
             if( CollectionUtils.isNotEmpty(agentConfigList)) {
                 //agent数量
                 int agentSize = agentConfigList.size();
@@ -240,15 +239,10 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
                 instance.setType(MagicValue.CASE_TYPE_API_PERFORM);
                 instance.setName(apiPerfCase.getTestCase().getName());
 
-                InstanceQuery instanceQuery = new InstanceQuery();
-                instanceQuery.setBelongId(apiPerfId);
-                List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
-                if(instanceList!=null&& !instanceList.isEmpty()){
-                    Integer executeNumber = instanceList.get(0).getExecuteNumber();
-                    instance.setExecuteNumber(++executeNumber);
-                }else {
-                    instance.setExecuteNumber(1);
-                }
+                //获取当前执行次数
+                int executeNum = instanceService.getRecentExecuteNum(apiPerfId);
+                instance.setExecuteNumber(executeNum);
+
 
                 JSONObject instanceMap = new JSONObject();
                 instanceMap.put("result",apiPerfInstance.getResult().toString());
@@ -264,10 +258,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
                 apiPerfInstance.setId(apiPerfInstanceId);
                 apiPerfInstanceService.updateApiPerfInstance(apiPerfInstance);
 
+                Instance instance = instanceService.findInstance(apiPerfInstanceId);
                 // 更新公共实例
-                Instance instance = new Instance();
-                instance.setId(apiPerfInstanceId);
-
                 JSONObject instanceMap = new JSONObject();
                 instanceMap.put("result",apiPerfInstance.getResult().toString());
                 instanceMap.put("total",apiPerfInstance.getTotal().toString());
@@ -379,14 +371,10 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
 
         int size = apiPerfTestResponse.getApiSceneInstanceList().size();
-        apiPerfInstance.setTotal(size);
 
-        int passCount = 0;
-        for (ApiSceneInstance apiSceneInstance : apiPerfTestResponse.getApiSceneInstanceList()) {
-            if(apiSceneInstance.getResult().equals(1)){
-                passCount++;
-            }
-        }
+        int passCount = (int) apiPerfTestResponse.getApiSceneInstanceList()
+                .stream().filter(instance -> instance.getResult() == 1)
+                .count();
 
         String passRate = testApixUtil.processRate(passCount, size);
         apiPerfInstance.setPassRate(passRate);
@@ -394,6 +382,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiPerfInstance.setFailNum(size-passCount);
         String errorRate = testApixUtil.processRate(size - passCount, size);
         apiPerfInstance.setErrorRate(errorRate);
+        apiPerfInstance.setTotal(executeCount);
+
 
         if(size==passCount){
             apiPerfInstance.setResult(1);
