@@ -59,11 +59,14 @@ base:
 
 teston-agent:
   embbed:
-    enable: false
+    enable: true
   chromedriver:
     path: D:\a-dk-sever\chrome\chromedriver.exe
   chrome:
     path: D:\a-dk-sever\chrome\chrome-win\chrome.exe
+  appium:
+    server: 127.0.0.1
+    port: 4723
 
 
 postin:

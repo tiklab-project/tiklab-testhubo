@@ -17,6 +17,10 @@ public class TestAppUtil {
      * 百分比计算
      * */
     public String processRate(Integer num, Integer totalNum) {
+        if(num==null||totalNum==null){
+            return "0.00%";
+        }
+
         double rate = Double.valueOf(num) / Double.valueOf(totalNum);
 
         DecimalFormat df = new DecimalFormat("0.00%");
