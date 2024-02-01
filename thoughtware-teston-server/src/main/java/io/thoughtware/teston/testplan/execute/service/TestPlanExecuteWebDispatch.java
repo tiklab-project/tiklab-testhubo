@@ -66,14 +66,16 @@ public class TestPlanExecuteWebDispatch {
         testPlanCaseInstanceBind.setName(name);
         testPlanCaseInstanceBind.setCaseType(caseType);
         testPlanCaseInstanceBind.setTestType(testType);
-        testPlanCaseInstanceBind.setResult(webSceneTestDispatchService.status(caseId));
+        if(webSceneTestResponse.getWebSceneInstance()!=null){
+            testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
+        }else {
+            testPlanCaseInstanceBind.setResult(0);
+        }
+
         testPlanCaseInstanceBind.setCaseId(caseId);
+        testPlanCaseInstanceBind.setStatus(webSceneTestResponse.getStatus());
 
-        int webSceneStatus=webSceneTestDispatchService.status(caseId);
-        testPlanCaseInstanceBind.setStatus(webSceneStatus);
-
-
-        if(webSceneStatus==0&&webSceneTestResponse!=null){
+        if(webSceneTestResponse.getWebSceneInstance()!=null&&webSceneTestResponse.getStatus()==0){
             String webSceneInstanceId = webSceneInstanceService.createWebSceneInstance(webSceneTestResponse.getWebSceneInstance());
             testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
             testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());

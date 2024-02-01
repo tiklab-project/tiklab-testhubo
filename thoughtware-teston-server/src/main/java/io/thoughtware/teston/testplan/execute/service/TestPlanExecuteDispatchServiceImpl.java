@@ -244,6 +244,10 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             for(PlanCase testPlanCase : executableCaseList){
                 String caseType = testPlanCase.getCaseType();
 
+                if(testPlanCaseInstanceList==null){
+                    testPlanCaseInstanceList=new ArrayList<>();
+                }
+
                 switch (caseType) {
                     case MagicValue.CASE_TYPE_API_PERFORM:
                         if(testPlanExecuteApiDispatch.apiPerfStatus==1){
@@ -259,8 +263,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                             Integer status = webSceneResult.getStatus();
                             if(status==1){
                                 testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), webSceneResult.getCaseId()));
-                                testPlanCaseInstanceList.add(webSceneResult);
                             }
+                            testPlanCaseInstanceList.add(webSceneResult);
                             resultList.add(status);
                         break;
 

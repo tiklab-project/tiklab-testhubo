@@ -32,16 +32,16 @@ public class AppSceneTestDispatchController {
     @ApiParam(name = "appSceneTestRequest",desc = "appSceneTestRequest",required = true)
     public Result<AppSceneTestResponse> execute(@RequestBody @NotNull @Valid AppSceneTestRequest appSceneTestRequest) {
         //通过controller执行的为手动执行
-        Integer reslut = appSceneTestDispatchService.execute(appSceneTestRequest);
+       appSceneTestDispatchService.execute(appSceneTestRequest);
 
-        return Result.ok(reslut);
+        return Result.ok();
     }
 
 
     @RequestMapping(path="/status",method = RequestMethod.POST)
     @ApiMethod(name = "status",desc = "当前执行的状态")
-    public Result<Integer> execute() {
-        Integer status = appSceneTestDispatchService.status();
+    public Result<Integer> execute( @Valid String appSceneId) {
+        Integer status = appSceneTestDispatchService.status(appSceneId);
 
         return Result.ok(status);
     }

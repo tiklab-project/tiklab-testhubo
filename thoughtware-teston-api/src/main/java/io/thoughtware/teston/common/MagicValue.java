@@ -42,4 +42,14 @@ public class MagicValue {
     //性能
     public static final String TEST_TYPE_PERFORM = "perform";
 
+
+    //测试步骤中的if判断关系，并且
+    public static final String IF_RELATION_AND = "and";
+    //测试步骤中的if判断关系，或者
+    public static final String IF_RELATION_OR = "or";
+
+    //app 测试平台
+    public static final String PLATFORM_ANDROID = "Android";
+    public static final String PLATFORM_IOS= "Ios";
+
 }

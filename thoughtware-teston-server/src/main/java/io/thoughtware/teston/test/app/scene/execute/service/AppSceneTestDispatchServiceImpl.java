@@ -82,19 +82,15 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     private AgentConfig agentConfig = null;
 
-    private Integer status;
+
 
     @Override
-    public Integer execute(AppSceneTestRequest appSceneTestRequest) {
-        status=1;
+    public void execute(AppSceneTestRequest appSceneTestRequest) {
         try {
             executeStart(appSceneTestRequest);
         }catch (Exception e){
-            status = 0;
             throw new ApplicationException(e);
         }
-
-        return 1;
     }
 
     private void executeStart(AppSceneTestRequest appSceneTestRequest){
@@ -128,24 +124,25 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
 
     @Override
-    public Integer status() {
+    public Integer status(String appSceneId) {
+
+        int status;
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try {
             if(enable) {
                 //调用执行方法返回结果数据
-                status = appSceneTestService.status();
+                status = appSceneTestService.status(appSceneId);
             }else {
                 List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
                 if(CollectionUtils.isNotEmpty(agentConfigList)) {
                     agentConfig = agentConfigList.get(0);
-                    status = appSceneTestServiceRPC(agentConfig.getUrl()).status();
+                    status = appSceneTestServiceRPC(agentConfig.getUrl()).status(appSceneId);
                 }else {
                     throw new ApplicationException("未设置agent，请到设置中配置agent");
                 }
             }
         }catch (Exception e){
-            status = 0;
             throw new ApplicationException(e);
         }
 
@@ -154,31 +151,31 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Override
     public AppSceneTestResponse result(AppSceneTestRequest appSceneTestRequest) {
-        AppSceneTestResponse appSceneTestResponse;
+        AppSceneTestResponse appSceneTestResponse = new AppSceneTestResponse();
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        if(enable) {
-            //调用执行方法返回结果数据
-            appSceneTestResponse = appSceneTestService.result();
-        }else {
-            appSceneTestResponse = appSceneTestServiceRPC(agentConfig.getUrl()).result();
+
+        try{
+            if(enable) {
+                //调用执行方法返回结果数据
+                appSceneTestResponse = appSceneTestService.result(appSceneTestRequest);
+            }else {
+                appSceneTestResponse = appSceneTestServiceRPC(agentConfig.getUrl()).result(appSceneTestRequest);
+            }
+        }catch (Exception e){
+            appSceneTestResponse.setStatus(0);
+            throw new ApplicationException(e);
         }
 
-        if(appSceneTestResponse==null){
-            return null;
-        }
 
-        String appSceneId = appSceneTestRequest.getAppSceneId();
         //测试计划中设置了值
-//        if(appSceneTestRequest.getExeType()==null){
-//            //errorMessage 是启动系统失败
-//            if(appSceneTestResponse!=null&&ObjectUtils.isEmpty(appSceneTestResponse.getErrMsg())){
-        if(status==0) {
-            saveToSQL(appSceneTestResponse, appSceneId);
-        }
-//            }
-//        }
+        if(appSceneTestRequest.getExeType()==null){
 
+            if(appSceneTestResponse!=null&&appSceneTestResponse.getStatus()==0&&appSceneTestResponse.getAppSceneInstance()!=null) {
+                String appSceneId = appSceneTestRequest.getAppSceneId();
+                saveToSQL(appSceneTestResponse, appSceneId);
+            }
+        }
 
         return appSceneTestResponse;
     }
