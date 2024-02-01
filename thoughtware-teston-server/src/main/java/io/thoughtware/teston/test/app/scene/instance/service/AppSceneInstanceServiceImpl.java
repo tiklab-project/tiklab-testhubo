@@ -161,15 +161,9 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
         instance.setName(appSceneCase.getTestCase().getName());
         instance.setRepositoryId(appSceneCase.getTestCase().getRepositoryId());
 
-        InstanceQuery instanceQuery = new InstanceQuery();
-        instanceQuery.setBelongId(appSceneId);
-        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
-        if(instanceList!=null&& !instanceList.isEmpty()){
-            Integer executeNumber = instanceList.get(0).getExecuteNumber();
-            instance.setExecuteNumber(++executeNumber);
-        }else {
-            instance.setExecuteNumber(1);
-        }
+        //获取当前执行次数
+        int executeNum = instanceService.getRecentExecuteNum(appSceneId);
+        instance.setExecuteNumber(executeNum);
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",appSceneInstance.getResult().toString());

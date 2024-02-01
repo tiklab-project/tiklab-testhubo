@@ -181,15 +181,9 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
         instance.setName(webSceneCase.getTestCase().getName());
         instance.setRepositoryId(webSceneCase.getTestCase().getRepositoryId());
 
-        InstanceQuery instanceQuery = new InstanceQuery();
-        instanceQuery.setBelongId(webSceneId);
-        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
-        if(instanceList!=null&& !instanceList.isEmpty()){
-            Integer executeNumber = instanceList.get(0).getExecuteNumber();
-            instance.setExecuteNumber(++executeNumber);
-        }else {
-            instance.setExecuteNumber(1);
-        }
+        //获取当前执行次数
+        int executeNum = instanceService.getRecentExecuteNum(webSceneId);
+        instance.setExecuteNumber(executeNum);
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",webSceneInstance.getResult().toString());

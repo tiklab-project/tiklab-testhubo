@@ -57,10 +57,17 @@ public class TestPlanTestDispatchController {
      */
     @RequestMapping(path = "/exeResult", method = RequestMethod.POST)
     @ApiMethod(name = "exeResult", desc = "获取测试结果")
-    public Result<TestPlanTestResponse> exeResult() {
-        TestPlanTestResponse testPlanTestResponse = testPlanExecuteDispatchService.exeResult();
+    public Result<TestPlanTestResponse> exeResult(@NotNull String testPlanId) {
+        TestPlanTestResponse testPlanTestResponse = testPlanExecuteDispatchService.exeResult(testPlanId);
         return Result.ok(testPlanTestResponse);
     }
 
+
+    @RequestMapping(path = "/cleanUpExecutionData", method = RequestMethod.POST)
+    @ApiMethod(name = "cleanUpExecutionData", desc = "清楚测试数据")
+    public Result<Void> cleanUpExecutionData(@NotNull String testPlanId) {
+        testPlanExecuteDispatchService.cleanUpExecutionData(testPlanId);
+        return Result.ok();
+    }
 
 }

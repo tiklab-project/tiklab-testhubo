@@ -205,15 +205,8 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         instance.setName(apiSceneCase.getTestCase().getName());
         instance.setRepositoryId(apiSceneCase.getTestCase().getRepositoryId());
 
-        InstanceQuery instanceQuery = new InstanceQuery();
-        instanceQuery.setBelongId(apiSceneId);
-        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
-        if(instanceList!=null&& !instanceList.isEmpty()){
-            Integer executeNumber = instanceList.get(0).getExecuteNumber();
-            instance.setExecuteNumber(++executeNumber);
-        }else {
-            instance.setExecuteNumber(1);
-        }
+        int executeNum = instanceService.getRecentExecuteNum(apiSceneId);
+        instance.setExecuteNumber(executeNum);
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",apiSceneInstance.getResult().toString());

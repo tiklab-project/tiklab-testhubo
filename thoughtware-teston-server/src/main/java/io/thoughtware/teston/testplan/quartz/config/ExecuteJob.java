@@ -80,9 +80,9 @@ public class ExecuteJob implements Job {
         testPlanExecuteDispatchService.execute(testPlanTestData);
 
         //循环获取返回结果
-        loopExeResult();
+        loopExeResult(testPlanId);
         //执行完成再获取一下返回结果，用于更新历史数据
-        testPlanExecuteDispatchService.exeResult();
+        testPlanExecuteDispatchService.exeResult(testPlanId);
 
         logger.warn("组：{}，测试计划：{},当前定时任务: {}, 定时任务触发完成",group,testPlanId,quartzPlanId);
 
@@ -92,10 +92,10 @@ public class ExecuteJob implements Job {
         updateQuartz(group,testPlanId,quartzPlanId,cron,exeType);
     }
 
-    private void loopExeResult(){
-        TestPlanTestResponse testPlanTestResponse = testPlanExecuteDispatchService.exeResult();
+    private void loopExeResult(String testPlanId){
+        TestPlanTestResponse testPlanTestResponse = testPlanExecuteDispatchService.exeResult(testPlanId);
         if(testPlanTestResponse.getStatus()==1){
-            loopExeResult();
+            loopExeResult(testPlanId);
         }
     }
 

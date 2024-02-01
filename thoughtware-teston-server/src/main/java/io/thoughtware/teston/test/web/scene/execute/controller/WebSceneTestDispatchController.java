@@ -31,17 +31,16 @@ public class WebSceneTestDispatchController {
     @ApiMethod(name = "execute",desc = "执行web测试用例")
     @ApiParam(name = "webSceneTestRequest",desc = "webSceneTestRequest",required = true)
     public Result<Void> execute(@RequestBody @NotNull @Valid WebSceneTestRequest webSceneTestRequest) {
-        Integer execute = webSceneTestDispatchService.execute(webSceneTestRequest);
-
-        return Result.ok(execute);
+        webSceneTestDispatchService.execute(webSceneTestRequest);
+        return Result.ok();
     }
 
 
     @RequestMapping(path="/status",method = RequestMethod.POST)
     @ApiMethod(name = "status",desc = "当前执行的状态")
     @ApiParam(name = "status",desc = "status",required = true)
-    public Result<Integer> execute() {
-        Integer status = webSceneTestDispatchService.status();
+    public Result<Integer> execute(@Valid String webSceneId) {
+        Integer status = webSceneTestDispatchService.status(webSceneId);
 
         return Result.ok(status);
     }

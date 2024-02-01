@@ -24,9 +24,9 @@ public class TestPlanInstanceEntity implements Serializable {
     @Column(name = "repository_id")
     private String repositoryId;
 
-    // 执行次数
-    @Column(name = "execute_number")
-    private Integer executeNumber;
+    // 状态，0：未执行，1：正在执行
+    @Column(name = "status")
+    private Integer status;
 
     // 结果
     @Column(name = "result")
@@ -80,12 +80,12 @@ public class TestPlanInstanceEntity implements Serializable {
         this.repositoryId = repositoryId;
     }
 
-    public Integer getExecuteNumber() {
-        return executeNumber;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getPassNum() {

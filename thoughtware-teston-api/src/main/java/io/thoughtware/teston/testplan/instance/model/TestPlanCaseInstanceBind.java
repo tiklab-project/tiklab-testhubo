@@ -33,6 +33,9 @@ public class TestPlanCaseInstanceBind extends BaseModel {
     @ApiProperty(name="result",desc="结果")
     private java.lang.Integer result;
 
+    @ApiProperty(name="status",desc="执行状态")
+    private java.lang.Integer status;
+
     private String caseId;
 
     public java.lang.String getId() {
@@ -93,5 +96,13 @@ public class TestPlanCaseInstanceBind extends BaseModel {
 
     public void setCaseId(String caseId) {
         this.caseId = caseId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

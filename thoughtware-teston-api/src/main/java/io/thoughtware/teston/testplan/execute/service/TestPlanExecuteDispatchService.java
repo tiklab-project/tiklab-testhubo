@@ -20,6 +20,9 @@ public interface TestPlanExecuteDispatchService {
      * 获取测试的测试数据
      * @return
      */
-    TestPlanTestResponse exeResult();
+    TestPlanTestResponse exeResult(String testPlanId);
+
+
+    void cleanUpExecutionData(String testPlanId);
 
 }

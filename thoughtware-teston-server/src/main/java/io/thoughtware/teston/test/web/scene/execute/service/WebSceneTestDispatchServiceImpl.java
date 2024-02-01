@@ -66,24 +66,16 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         return rpcClientWebUtil.rpcClient().getBean(WebSceneTestService.class, new FixedLookup(agentUrl));
     }
 
-
     private AgentConfig agentConfig = null;
 
-    //状态  0未开始，1进行中
-    private Integer status;
-
     @Override
-    public Integer execute(WebSceneTestRequest webSceneTestRequest) {
-        status=1;
-
+    public void execute(WebSceneTestRequest webSceneTestRequest) {
         //执行
         try {
             executeStart(webSceneTestRequest);
         } catch (Exception e){
-            status = 0;
             throw new ApplicationException(e);
         }
-        return 1;
     }
 
     private void executeStart(WebSceneTestRequest webSceneTestRequest){
@@ -117,33 +109,30 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 }
             }
         }catch (Exception e){
-            status = 0;
             throw new ApplicationException(e);
         }
     }
 
 
     @Override
-    public Integer status() {
-
+    public Integer status(String webSceneId) {
+        int status;
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try {
             if(enable) {
                 //调用执行方法返回结果数据
-                status = webSceneTestService.status();
+                status = webSceneTestService.status(webSceneId);
             }else {
                 List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
                 if(CollectionUtils.isNotEmpty(agentConfigList)) {
                     agentConfig = agentConfigList.get(0);
-                    status = webSceneTestServiceRPC(agentConfig.getUrl()).status();
+                    status = webSceneTestServiceRPC(agentConfig.getUrl()).status(webSceneId);
                 }else {
                     throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
                 }
             }
-
         }catch (Exception e){
-            status = 0;
             throw new ApplicationException(e);
         }
 
@@ -153,31 +142,30 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     @Override
     public WebSceneTestResponse result(WebSceneTestRequest webSceneTestRequest) {
 
-        WebSceneTestResponse webSceneTestResponse;
+        WebSceneTestResponse webSceneTestResponse = new WebSceneTestResponse();
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try{
             if(enable) {
                 //调用执行方法返回结果数据
-                webSceneTestResponse = webSceneTestService.result();
+                webSceneTestResponse = webSceneTestService.result(webSceneTestRequest);
             }else {
-                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result();
+                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result(webSceneTestRequest);
             }
         }catch (Exception e){
-            status=0;
+            webSceneTestResponse.setStatus(0);
             throw new ApplicationException(e);
         }
 
 
         //测试计划中设置了执行类型，其他没设置
         if(webSceneTestRequest.getExeType()==null){
-//            //返回的数据存入数据库
-        //status为0执行结束，存入历史
-            if(status==0){
+
+             //status为0执行结束，存入历史
+            if(webSceneTestResponse!=null&&webSceneTestResponse.getStatus()==0&&webSceneTestResponse.getWebSceneInstance()!=null){
                 saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
             }
-
         }
 
         return webSceneTestResponse;

@@ -32,8 +32,8 @@ public class TestPlanInstance extends BaseModel {
     @ApiProperty(name="repositoryId",desc="所属仓库")
     private java.lang.String repositoryId;
 
-    @ApiProperty(name="executeNumber",desc="执行次数")
-    private java.lang.Integer executeNumber;
+    @ApiProperty(name="status",desc="状态，0：未执行，1：正在执行")
+    private java.lang.Integer status;
 
     @ApiProperty(name="result",desc="结果")
     private java.lang.Integer result;
@@ -89,12 +89,12 @@ public class TestPlanInstance extends BaseModel {
         this.repositoryId = repositoryId;
     }
 
-    public Integer getExecuteNumber() {
-        return executeNumber;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public java.lang.Integer getResult() {

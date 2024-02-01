@@ -143,15 +143,9 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         instance.setName(apiUnitCase.getTestCase().getName());
         instance.setRepositoryId(apiUnitCase.getTestCase().getRepositoryId());
 
-        InstanceQuery instanceQuery = new InstanceQuery();
-        instanceQuery.setBelongId(apiUnitId);
-        List<Instance> instanceList = instanceService.findInstanceList(instanceQuery);
-        if(instanceList!=null&& !instanceList.isEmpty()){
-            Integer executeNumber = instanceList.get(0).getExecuteNumber();
-            instance.setExecuteNumber(++executeNumber);
-        }else {
-            instance.setExecuteNumber(1);
-        }
+        //获取当前执行次数
+        int executeNum = instanceService.getRecentExecuteNum(apiUnitId);
+        instance.setExecuteNumber(executeNum);
 
 
         JSONObject instanceMap = new JSONObject();
