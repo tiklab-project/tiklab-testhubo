@@ -113,6 +113,52 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         }
     }
 
+    @Override
+    public WebSceneTestResponse result(WebSceneTestRequest webSceneTestRequest) {
+
+        WebSceneTestResponse webSceneTestResponse = new WebSceneTestResponse();
+
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        try{
+            if(enable) {
+                //调用执行方法返回结果数据
+                webSceneTestResponse = webSceneTestService.result(webSceneTestRequest);
+            }else {
+                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result(webSceneTestRequest);
+            }
+        }catch (Exception e){
+            webSceneTestResponse.setStatus(0);
+            throw new ApplicationException(e);
+        }
+
+
+        //测试计划中设置了执行类型，其他没设置
+        if(webSceneTestRequest.getExeType()==null){
+
+            //status为0执行结束，存入历史
+            if(webSceneTestResponse!=null&&webSceneTestResponse.getStatus()==0&&webSceneTestResponse.getWebSceneInstance()!=null){
+                saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
+            }
+        }
+
+        return webSceneTestResponse;
+    }
+
+
+    /**
+     * 历史记录 存入数据库
+     * @param webSceneTestResponse
+     * @param webSceneId
+     */
+    private void saveToSql(WebSceneTestResponse webSceneTestResponse, String webSceneId) {
+        //保存历史总详情
+        WebSceneInstance webSceneInstance = webSceneTestResponse.getWebSceneInstance();
+        webSceneInstance.setWebSceneId(webSceneId);
+
+        webSceneInstanceService.saveWebSceneInstanceToSql(webSceneInstance,webSceneTestResponse);
+    }
+
 
     @Override
     public Integer status(String webSceneId) {
@@ -139,51 +185,7 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         return status;
     }
 
-    @Override
-    public WebSceneTestResponse result(WebSceneTestRequest webSceneTestRequest) {
 
-        WebSceneTestResponse webSceneTestResponse = new WebSceneTestResponse();
-
-        //根据环境配置是否为内嵌
-        //如果不是内嵌走rpc
-        try{
-            if(enable) {
-                //调用执行方法返回结果数据
-                webSceneTestResponse = webSceneTestService.result(webSceneTestRequest);
-            }else {
-                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result(webSceneTestRequest);
-            }
-        }catch (Exception e){
-            webSceneTestResponse.setStatus(0);
-            throw new ApplicationException(e);
-        }
-
-
-        //测试计划中设置了执行类型，其他没设置
-        if(webSceneTestRequest.getExeType()==null){
-
-             //status为0执行结束，存入历史
-            if(webSceneTestResponse!=null&&webSceneTestResponse.getStatus()==0&&webSceneTestResponse.getWebSceneInstance()!=null){
-                saveToSql(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
-            }
-        }
-
-        return webSceneTestResponse;
-    }
-
-
-    /**
-     * 历史记录 存入数据库
-     * @param webSceneTestResponse
-     * @param webSceneId
-     */
-    private void saveToSql(WebSceneTestResponse webSceneTestResponse, String webSceneId) {
-        //保存历史总详情
-        WebSceneInstance webSceneInstance = webSceneTestResponse.getWebSceneInstance();
-        webSceneInstance.setWebSceneId(webSceneId);
-
-        webSceneInstanceService.saveWebSceneInstanceToSql(webSceneInstance,webSceneTestResponse);
-    }
 
 
 }

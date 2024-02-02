@@ -281,7 +281,7 @@ public class TestCaseServiceImpl implements TestCaseService {
             String resultStr = jsonObject.getString("result");
 
             // 检查字符串是否是数字
-            if (resultStr.matches("\\d+")) {
+            if (resultStr!=null&&resultStr.matches("\\d+")) {
                 // 如果是数字，将字符串转换为整数
                 int result = Integer.parseInt(resultStr);
                 recentInstance.put("result", result);

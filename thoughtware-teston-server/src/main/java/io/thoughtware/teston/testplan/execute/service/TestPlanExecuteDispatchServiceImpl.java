@@ -250,13 +250,14 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
                 switch (caseType) {
                     case MagicValue.CASE_TYPE_API_PERFORM:
-                        if(testPlanExecuteApiDispatch.apiPerfStatus==1){
                             TestPlanCaseInstanceBind apiPerfInstance = testPlanExecuteApiDispatch.apiPerfResult();
-                            // 前一次执行的有，就删了，添加新的返回结果
-                            testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), apiPerfInstance.getCaseId()));
+                            Integer apiPerfStatus = apiPerfInstance.getStatus();
+                            if(apiPerfStatus==1){
+                                // 前一次执行的有，就删了，添加新的返回结果
+                                testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), apiPerfInstance.getCaseId()));
+                            }
                             testPlanCaseInstanceList.add(apiPerfInstance);
-                        }
-                        resultList.add(testPlanExecuteApiDispatch.apiPerfStatus);
+                            resultList.add(testPlanExecuteApiDispatch.apiPerfStatus);
                         break;
                     case MagicValue.CASE_TYPE_WEB:
                             TestPlanCaseInstanceBind webSceneResult = testPlanExecuteWebDispatch.webSceneResult(testPlanCase,testPlanInstanceId);

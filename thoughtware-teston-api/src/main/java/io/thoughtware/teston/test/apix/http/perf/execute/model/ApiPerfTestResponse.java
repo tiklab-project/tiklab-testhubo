@@ -20,7 +20,7 @@ public class ApiPerfTestResponse extends BaseModel {
     @ApiProperty(name="apiSceneInstanceList",desc="api 场景测试实例列表")
     private List<ApiSceneInstance> apiSceneInstanceList;
 
-    @ApiProperty(name="status",desc="状态： 0:未开始 1:进行中 2:结束")
+    @ApiProperty(name="status",desc="状态： 0:未开始 1:完成 ")
     private Integer status;
 
     public ApiPerfInstance getApiPerfInstance() {
