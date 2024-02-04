@@ -101,6 +101,8 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
     @Override
     public WebSceneInstance findWebSceneInstance(@NotNull String id) {
         WebSceneInstance webSceneInstance = findOne(id);
+        Instance instance = instanceService.findInstance(id);
+        webSceneInstance.setInstance(instance);
 
         StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();
         stepCommonInstanceQuery.setInstanceId(id);
@@ -144,58 +146,6 @@ public class WebSceneInstanceServiceImpl implements WebSceneInstanceService {
         return PaginationBuilder.build(pagination,webSceneInstanceList);
     }
 
-
-
-    @Override
-    public String saveWebSceneInstanceToSql(WebSceneInstance webSceneInstance, WebSceneTestResponse webSceneTestResponse) {
-        String webSceneId = webSceneInstance.getWebSceneId();
-        String webSceneInstanceId= createWebSceneInstance(webSceneInstance);
-
-        createInstance(webSceneInstance,webSceneInstanceId,webSceneId);
-
-        //保存单个步骤
-        if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
-            List<StepCommonInstance> stepCommonInstanceList = webSceneTestResponse.getStepCommonInstanceList();
-
-            createStepInstance(stepCommonInstanceList,webSceneInstanceId);
-        }
-
-        return webSceneInstanceId;
-    }
-
-    /**
-     * 创建公共实例
-     * @param webSceneInstance
-     * @param webSceneInstanceId
-     * @param webSceneId
-     */
-    private void createInstance(WebSceneInstance webSceneInstance,String webSceneInstanceId,String webSceneId){
-        // 创建公共实例
-        Instance instance = new Instance();
-        instance.setId(webSceneInstanceId);
-
-        instance.setBelongId(webSceneId);
-        instance.setType(MagicValue.CASE_TYPE_WEB);
-
-        WebSceneCase webSceneCase = webSceneCaseService.findWebSceneCase(webSceneId);
-        instance.setName(webSceneCase.getTestCase().getName());
-        instance.setRepositoryId(webSceneCase.getTestCase().getRepositoryId());
-
-        //获取当前执行次数
-        int executeNum = instanceService.getRecentExecuteNum(webSceneId);
-        instance.setExecuteNumber(executeNum);
-
-        JSONObject instanceMap = new JSONObject();
-        instanceMap.put("result",webSceneInstance.getResult().toString());
-        instanceMap.put("stepNum",webSceneInstance.getStepNum().toString());
-        instanceMap.put("passNum",webSceneInstance.getPassNum().toString());
-        instanceMap.put("passRate",webSceneInstance.getPassRate());
-        instanceMap.put("failNum",webSceneInstance.getFailNum().toString());
-        instanceMap.put("totalDuration",webSceneInstance.getTotalDuration().toString());
-        instance.setContent(instanceMap.toString());
-
-        instanceService.createInstance(instance);
-    }
 
     /**
      * 保存单个步骤

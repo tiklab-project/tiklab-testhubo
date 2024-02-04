@@ -20,10 +20,6 @@ public class WebSceneInstanceEntity {
     @Column(name = "web_scene_id")
     private String webSceneId;
 
-    // 测试结果 成功:1 , 失败:0
-    @Column(name = "result")
-    private Integer result;
-
     // 测试步骤数量
     @Column(name = "step_num")
     private Integer stepNum;
@@ -48,10 +44,6 @@ public class WebSceneInstanceEntity {
     @Column(name = "create_time")
     private Timestamp createTime;
 
-     // 执行次数
-    @Column(name = "execute_number")
-    private Integer executeNumber;
-
     public String getId() {
         return id;
     }
@@ -66,14 +58,6 @@ public class WebSceneInstanceEntity {
 
     public void setWebSceneId(String webSceneId) {
         this.webSceneId = webSceneId;
-    }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public Integer getStepNum() {
@@ -122,13 +106,5 @@ public class WebSceneInstanceEntity {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getExecuteNumber() {
-        return executeNumber;
-    }
-
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
     }
 }

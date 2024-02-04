@@ -40,10 +40,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * api性能测试执行调度 服务
@@ -343,8 +340,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             //请求一次获取一次结果，存入数据库
             ApiPerfInstance apiPerfInstance = apiPerfTestResponse.getApiPerfInstance();
             apiPerfInstance.setApiPerfId(apiPerfId);
-
-            //判断是否存在
             apiPerfInstance.setId(apiPerfInstanceId);
             apiPerfInstanceService.updateApiPerfInstance(apiPerfInstance);
 
@@ -365,12 +360,12 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
             instanceService.updateInstance(instance);
         }else {
-            updateApiPerfInstanceStatus(apiPerfId,MagicValue.TEST_STATUS_SUCCESS);
+            updateApiPerfInstanceStatus(apiPerfId,MagicValue.TEST_STATUS_FAIL);
         }
     }
 
     /**
-     * 执行失败更改失败状态
+     * 状态更改
      * @param apiPerfInstanceId
      */
     private void updateApiPerfInstanceStatus(String apiPerfInstanceId,String status){

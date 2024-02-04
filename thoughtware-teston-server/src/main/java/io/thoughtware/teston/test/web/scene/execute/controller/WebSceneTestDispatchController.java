@@ -35,16 +35,6 @@ public class WebSceneTestDispatchController {
         return Result.ok();
     }
 
-
-    @RequestMapping(path="/status",method = RequestMethod.POST)
-    @ApiMethod(name = "status",desc = "当前执行的状态")
-    @ApiParam(name = "status",desc = "status",required = true)
-    public Result<Integer> execute(@Valid String webSceneId) {
-        Integer status = webSceneTestDispatchService.status(webSceneId);
-
-        return Result.ok(status);
-    }
-
     @RequestMapping(path="/result",method = RequestMethod.POST)
     @ApiMethod(name = "result",desc = "当前执行的结果")
     @ApiParam(name = "webSceneTestRequest",desc = "webSceneTestRequest",required = true)

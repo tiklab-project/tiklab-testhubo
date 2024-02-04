@@ -16,12 +16,6 @@ public interface WebSceneTestDispatchService {
     void execute(WebSceneTestRequest webSceneTestRequest);
 
     /**
-     * 获取当前执行的状态 0：未开始，1：进行中
-     * @return
-     */
-    Integer status(String webSceneId);
-
-    /**
      * 获取当前的执行后的数据
      * @return
      */

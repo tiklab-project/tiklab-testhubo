@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.web.scene.instance.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
@@ -44,12 +45,11 @@ public class WebSceneInstance extends BaseModel{
     @ApiProperty(name="stepList",desc="存放webUI测试步骤结果")
     private List<StepCommonInstance> stepList;
 
+    private Instance instance;
+
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
-
-    @ApiProperty(name="executeNumber",desc="执行次数")
-    private Integer executeNumber;
 
     public String getId() {
         return id;
@@ -65,14 +65,6 @@ public class WebSceneInstance extends BaseModel{
 
     public void setWebSceneId(String webSceneId) {
         this.webSceneId = webSceneId;
-    }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public Integer getStepNum() {
@@ -131,11 +123,19 @@ public class WebSceneInstance extends BaseModel{
         this.createTime = createTime;
     }
 
-    public Integer getExecuteNumber() {
-        return executeNumber;
+    public Integer getResult() {
+        return result;
     }
 
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    public Instance getInstance() {
+        return instance;
+    }
+
+    public void setInstance(Instance instance) {
+        this.instance = instance;
     }
 }
