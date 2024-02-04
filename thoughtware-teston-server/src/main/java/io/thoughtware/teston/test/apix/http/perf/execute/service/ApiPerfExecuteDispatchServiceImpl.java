@@ -106,9 +106,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     private List<AgentConfig> agentConfigList;
 
 
-    //性能测试id: 性能测试历史Id
-    public static final Map<String, String> apiPerfIdAndApiPerfInstanceId = new ConcurrentHashMap<>();
-
     @Override
     public void execute(ApiPerfTestRequest apiPerfTestRequest) {
         //开始执行
@@ -127,57 +124,81 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         //执行次数
         Integer executeCount = apiPerfCase.getExecuteCount();
 
-        //
-        String apiPerfInstanceId = createInitApiPerfInstance(executeCount,apiPerfId);
-        apiPerfIdAndApiPerfInstanceId.put(apiPerfId,apiPerfInstanceId);
+        //创建初始化性能测试实例
+        String apiPerfInstanceId = createInitApiPerfInstance(executeCount, apiPerfId);
 
         //执行测试
         //是否内嵌
-        if(enable){
-            apiPerfTestRequest.setExeNum(executeCount);
-            apiPerfTestService.execute(apiPerfTestRequest);
-        } else {
-            agentConfigList = getAgentList();
-            if( CollectionUtils.isNotEmpty(agentConfigList)) {
-                //agent数量
-                int agentSize = agentConfigList.size();
-
-                //执行方式,循环或随机
-                Integer executeType = apiPerfCase.getExecuteType();
-
-                //先分配好各个agent所需的次数
-                List<Integer> distributionList = new ArrayList<>();
-
-                //执行方式循环
-                if (executeType == 1) {
-                    distributionList = testApixUtil.loop(executeCount, agentSize);
-                }
-
-                if (executeType == 2) {
-                    distributionList = testApixUtil.random(executeCount, agentSize);
-                }
-
-                for (int i = 0; i < agentSize; i++) {
-                    //
-                    apiPerfTestRequest.setExeNum(distributionList.get(i));
-
-                    //获取agentId，agentList index 从0开始
-                    AgentConfig agentConfig = agentConfigList.get(i);
-                    String agentUrl = agentConfig.getUrl();
-
-                    //执行测试
-                    apiPerfTestServiceRPC(agentUrl).execute(apiPerfTestRequest);
-                }
-
-            }else {
-                throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
-            }
-        }
-
         try {
-            Thread.sleep(5000);
-            apiPerfIdAndApiPerfInstanceId.remove(apiPerfId);
+            if(enable){
+                apiPerfTestRequest.setExeNum(executeCount);
+                apiPerfTestService.execute(apiPerfTestRequest);
+
+            } else {
+                agentConfigList = getAgentList();
+                if( CollectionUtils.isNotEmpty(agentConfigList)) {
+                    //agent数量
+                    int agentSize = agentConfigList.size();
+
+                    //执行方式,循环或随机
+                    Integer executeType = apiPerfCase.getExecuteType();
+
+                    //先分配好各个agent所需的次数
+                    List<Integer> distributionList = new ArrayList<>();
+
+                    //执行方式循环
+                    if (executeType == 1) {
+                        distributionList = testApixUtil.loop(executeCount, agentSize);
+                    }
+
+                    if (executeType == 2) {
+                        distributionList = testApixUtil.random(executeCount, agentSize);
+                    }
+
+                    for (int i = 0; i < agentSize; i++) {
+                        //
+                        apiPerfTestRequest.setExeNum(distributionList.get(i));
+
+                        //获取agentId，agentList index 从0开始
+                        AgentConfig agentConfig = agentConfigList.get(i);
+                        String agentUrl = agentConfig.getUrl();
+
+                        //执行测试
+                        apiPerfTestServiceRPC(agentUrl).execute(apiPerfTestRequest);
+                    }
+
+                }else {
+                    throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
+                }
+            }
+
+            try {
+                //程序执行完，最后一次获取数据
+                result(apiPerfTestRequest);
+                Thread.sleep(3000);
+
+                logger.info("------------------------------------------数据清理------------------------------------------");
+
+                //清理数据
+                if(enable){
+                    apiPerfTestService.cleanUpData(apiPerfId);
+                }else {
+                    //agent数量
+                    int agentSize = agentConfigList.size();
+                    for (int i = 0; i < agentSize; i++) {
+                        //获取agentId，agentList index 从0开始
+                        AgentConfig agentConfig = agentConfigList.get(i);
+                        String agentUrl = agentConfig.getUrl();
+
+                        apiPerfTestServiceRPC(agentUrl).cleanUpData(apiPerfId);
+                    }
+                }
+            }catch (Exception e){
+                throw new ApplicationException(e);
+            }
         }catch (Exception e){
+            //更新状态为失败
+            updateApiPerfInstanceStatus(apiPerfInstanceId,MagicValue.TEST_STATUS_FAIL);
             throw new ApplicationException(e);
         }
 
@@ -196,7 +217,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiPerfInstance.setPassRate("0.00%");
         apiPerfInstance.setFailNum(0);
         apiPerfInstance.setErrorRate("0.00%");
-
         String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfInstance);
 
         ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
@@ -212,6 +232,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         int executeNum = instanceService.getRecentExecuteNum(apiPerfId);
         instance.setExecuteNumber(executeNum);
 
+        //设置状态,开始执行
+        instance.setStatus(MagicValue.TEST_STATUS_START);
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("total",apiPerfInstance.getTotal().toString());
@@ -251,29 +273,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
             //测试计划中设置了值
             if(apiPerfTestRequest.getExeType()==null){
-                if(apiPerfIdAndApiPerfInstanceId.get(apiPerfId)!=null){
-                    //请求一次获取一次结果，存入数据库
-                    ApiPerfInstance apiPerfInstance = apiPerfTestResponse.getApiPerfInstance();
-                    apiPerfInstance.setApiPerfId(apiPerfId);
-                    String apiPerfInstanceId = apiPerfIdAndApiPerfInstanceId.get(apiPerfId);
-
-                    //判断是否存在
-                    apiPerfInstance.setId(apiPerfInstanceId);
-                    apiPerfInstanceService.updateApiPerfInstance(apiPerfInstance);
-
-                    Instance instance = instanceService.findInstance(apiPerfInstanceId);
-                    // 更新公共实例
-                    JSONObject instanceMap = new JSONObject();
-                    instanceMap.put("total",apiPerfInstance.getTotal().toString());
-                    instanceMap.put("passNum",apiPerfInstance.getPassNum().toString());
-                    instanceMap.put("passRate",apiPerfInstance.getPassRate());
-                    instanceMap.put("failNum",apiPerfInstance.getFailNum().toString());
-                    instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
-                    instance.setContent(instanceMap.toString());
-
-                    instanceService.updateInstance(instance);
-
-                }
+                updateApiPerfInstance(apiPerfTestResponse,apiPerfId);
             }
         }catch (Exception e){
             apiPerfTestResponse.setStatus(0);
@@ -331,6 +331,54 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         return allApiPerfTestResponse;
     }
+
+    /**
+     * 更新实例
+     * @param apiPerfTestResponse
+     * @param apiPerfId
+     */
+    private void updateApiPerfInstance(ApiPerfTestResponse apiPerfTestResponse,String apiPerfId) {
+        String apiPerfInstanceId = instanceService.getRecentExecuteInstanceId(apiPerfId);
+        if(apiPerfInstanceId!=null&&apiPerfTestResponse.getApiPerfInstance()!=null){
+            //请求一次获取一次结果，存入数据库
+            ApiPerfInstance apiPerfInstance = apiPerfTestResponse.getApiPerfInstance();
+            apiPerfInstance.setApiPerfId(apiPerfId);
+
+            //判断是否存在
+            apiPerfInstance.setId(apiPerfInstanceId);
+            apiPerfInstanceService.updateApiPerfInstance(apiPerfInstance);
+
+            Instance instance = instanceService.findInstance(apiPerfInstanceId);
+            // 更新公共实例
+            JSONObject instanceMap = new JSONObject();
+            instanceMap.put("total",apiPerfInstance.getTotal().toString());
+            instanceMap.put("passNum",apiPerfInstance.getPassNum().toString());
+            instanceMap.put("passRate",apiPerfInstance.getPassRate());
+            instanceMap.put("failNum",apiPerfInstance.getFailNum().toString());
+            instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
+            instance.setContent(instanceMap.toString());
+
+            Integer status = apiPerfTestResponse.getStatus();
+            if(status==0){
+                instance.setStatus(MagicValue.TEST_STATUS_SUCCESS);
+            }
+
+            instanceService.updateInstance(instance);
+        }else {
+            updateApiPerfInstanceStatus(apiPerfId,MagicValue.TEST_STATUS_SUCCESS);
+        }
+    }
+
+    /**
+     * 执行失败更改失败状态
+     * @param apiPerfInstanceId
+     */
+    private void updateApiPerfInstanceStatus(String apiPerfInstanceId,String status){
+        Instance instance = instanceService.findInstance(apiPerfInstanceId);
+        instance.setStatus(status);
+        instanceService.updateInstance(instance);
+    }
+
 
     /**
      * 数据构造
@@ -418,38 +466,5 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     }
 
 
-
-    @Override
-    public Integer status() {
-        int status =0;
-        if(enable) {
-            //调用执行方法返回结果数据
-            status = apiPerfTestService.status();
-        }else {
-            int processStatus=0;
-
-            try {
-                agentConfigList = getAgentList();
-                if(CollectionUtils.isNotEmpty(agentConfigList)){
-                    for(int i = 0;i<agentConfigList.size();i++) {
-                        Integer s = apiPerfTestServiceRPC(agentConfigList.get(i).getUrl()).status();
-                        processStatus=s;
-                    }
-                }else {
-                    throw new ApplicationException("未设置agent，请到设置中配置agent");
-                }
-
-            }catch (Exception e){
-                status=0;
-                throw new ApplicationException(e);
-            }
-
-
-            status=processStatus;
-        }
-
-
-        return status;
-    }
 
 }

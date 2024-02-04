@@ -80,4 +80,12 @@ public interface InstanceService {
     int getRecentExecuteNum(String belongId);
 
 
+    /**
+     * 获取最近一次执行历史id
+     * @param belongId
+     * @return
+     */
+    String getRecentExecuteInstanceId(String belongId);
+
+
 }

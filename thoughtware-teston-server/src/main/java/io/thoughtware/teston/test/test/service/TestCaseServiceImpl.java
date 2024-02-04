@@ -47,6 +47,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
 * 测试用例 服务
@@ -219,51 +220,44 @@ public class TestCaseServiceImpl implements TestCaseService {
      * @param testCaseList
      * @return
      */
-    private List<TestCase> recentInstance(List<TestCase> testCaseList){
-
-        ArrayList<TestCase> newTestCaseList = new ArrayList<>();
-
-
-        if(testCaseList !=null&& testCaseList.size()>0){
-            for(TestCase testCase : testCaseList){
-                HashMap<Object, Object> recentInstance = new HashMap<>();
-
-                //根据不同的测试类型进行测试
-                if(Objects.equals(testCase.getTestType(),"api")||Objects.equals(testCase.getTestType(),"ui")||Objects.equals(testCase.getTestType(),"perform")){
-
-                    switch (testCase.getCaseType()) {
-                        case "api-unit":
-                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_API_UNIT, testCase.getId());
-                            break;
-                        case "api-scene":
-                            recentInstance = getInstanceInfo( MagicValue.CASE_TYPE_API_SCENE, testCase.getId());
-                            break;
-                        case "api-perform":
-                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_API_PERFORM, testCase.getId());
-                            break;
-                        case "web-scene":
-                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_WEB, testCase.getId());
-                            break;
-                        case "app-scene":
-                            recentInstance = getInstanceInfo(MagicValue.CASE_TYPE_APP, testCase.getId());
-                            break;
-                        default:
-                            break;
-                    }
-                }else {
-                    recentInstance.put("result",2);
-                    recentInstance.put("instanceId",null);
-                    recentInstance.put("executeNumber",null);
-                }
-
-                testCase.setRecentInstance(recentInstance);
-                newTestCaseList.add(testCase);
-            }
+    private List<TestCase> recentInstance(List<TestCase> testCaseList) {
+        // 提前处理空或空列表的情况
+        if (testCaseList == null || testCaseList.isEmpty()) {
+            return Collections.emptyList();
         }
 
-        return newTestCaseList;
+        Set<String> validTestTypes = new HashSet<>(Arrays.asList(
+                MagicValue.TEST_TYPE_API,
+                MagicValue.TEST_TYPE_UI,
+                MagicValue.TEST_TYPE_PERFORM
+        ));
+
+        return testCaseList.stream().map(testCase -> {
+            if (validTestTypes.contains(testCase.getTestType())) {
+                Map<Object, Object> recentInstance = getRecentInstanceByCaseType(testCase);
+                testCase.setRecentInstance(recentInstance);
+            } else {
+                testCase.setRecentInstance(createDefaultRecentInstance(2));
+            }
+            return testCase;
+        }).collect(Collectors.toList());
     }
 
+    private Map<Object, Object> getRecentInstanceByCaseType(TestCase testCase) {
+        Set<String> caseTypes = new HashSet<>(Arrays.asList(
+                MagicValue.CASE_TYPE_API_UNIT,
+                MagicValue.CASE_TYPE_API_SCENE,
+                MagicValue.CASE_TYPE_API_PERFORM,
+                MagicValue.CASE_TYPE_WEB,
+                MagicValue.CASE_TYPE_APP
+        ));
+
+        if (caseTypes.contains(testCase.getCaseType())) {
+            return getInstanceInfo(testCase.getCaseType(), testCase.getId());
+        } else {
+            return createDefaultRecentInstance(2);
+        }
+    }
 
     // 函数用于获取实例信息
     private HashMap<Object, Object> getInstanceInfo(String instanceType, String testCaseId) {
@@ -273,31 +267,44 @@ public class TestCaseServiceImpl implements TestCaseService {
 
         Pagination<Instance> instancePage = instanceService.findInstancePage(instanceQuery);
 
-        HashMap<Object, Object> recentInstance = new HashMap<>();
-        if (instancePage != null && !instancePage.getDataList().isEmpty()) {
-            Instance instance = instancePage.getDataList().get(0);
-            JSONObject jsonObject = JSONObject.parseObject(instance.getContent());
-            // 从 JSON 中获取结果字段的字符串值
-            String resultStr = jsonObject.getString("result");
-
-            // 检查字符串是否是数字
-            if (resultStr!=null&&resultStr.matches("\\d+")) {
-                // 如果是数字，将字符串转换为整数
-                int result = Integer.parseInt(resultStr);
-                recentInstance.put("result", result);
-            } else {
-                // 如果不是数字，进行相应的处理，例如将其设为默认值
-                recentInstance.put("result", 2);
-            }
-
-            recentInstance.put("executeNumber", instance.getExecuteNumber());
-            recentInstance.put("instanceId", instance.getId());
-        } else {
-            recentInstance.put("result", 2);
-            recentInstance.put("instanceId", null);
-            recentInstance.put("executeNumber", null);
+        // 如果未找到实例，直接返回包含默认值的Map
+        if (instancePage == null || instancePage.getDataList().isEmpty()) {
+            return createDefaultRecentInstance(2); // 使用2作为默认结果，表示没有找到实例
         }
-        return recentInstance;
+
+        Instance instance = instancePage.getDataList().get(0);
+        return extractInstanceDetails(instance);
     }
 
+    private HashMap<Object, Object> extractInstanceDetails(Instance instance) {
+        JSONObject jsonObject = JSONObject.parseObject(instance.getContent());
+        String resultStr = jsonObject.getString("result");
+
+        int result = 2; // 默认情况下，使用2作为结果
+        if (resultStr != null) {
+            if (resultStr.matches("\\d+")) {
+                result = Integer.parseInt(resultStr); // 如果结果是数字，使用该数字
+            } else {
+                result = 2;
+            }
+        }else {
+            // 如果结果字符串不是数字，使用3表示异常情况
+            result = 3;
+        }
+
+        HashMap<Object, Object> details = new HashMap<>();
+        details.put("result", result);
+        details.put("executeNumber", instance.getExecuteNumber());
+        details.put("instanceId", instance.getId());
+
+        return details;
+    }
+
+    private HashMap<Object, Object> createDefaultRecentInstance(int defaultResult) {
+        HashMap<Object, Object> recentInstance = new HashMap<>();
+        recentInstance.put("result", defaultResult);
+        recentInstance.put("instanceId", null);
+        recentInstance.put("executeNumber", null);
+        return recentInstance;
+    }
 }

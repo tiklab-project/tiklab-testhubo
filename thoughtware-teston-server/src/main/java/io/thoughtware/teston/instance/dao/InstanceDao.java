@@ -126,4 +126,18 @@ public class InstanceDao {
         }
     }
 
+    /**
+     * 获取最近一次执行历史id
+     * @param belongId
+     * @return
+     */
+    public String getRecentExecuteInstanceId(String belongId) {
+        try {
+            String exeSql = "SELECT id FROM teston_instance WHERE belong_id =  '" + belongId + "'  ORDER BY execute_number DESC LIMIT 1;";
+            return jpaTemplate.getJdbcTemplate().queryForObject(exeSql, new Object[]{}, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 }

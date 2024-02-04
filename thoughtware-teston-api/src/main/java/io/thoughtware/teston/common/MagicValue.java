@@ -52,4 +52,12 @@ public class MagicValue {
     public static final String PLATFORM_ANDROID = "Android";
     public static final String PLATFORM_IOS= "Ios";
 
+
+    //测试状态
+    //开始执行
+    public static final String TEST_STATUS_START = "start";
+    //执行完成
+    public static final String TEST_STATUS_SUCCESS= "success";
+    //执行失败
+    public static final String TEST_STATUS_FAIL = "fail";
 }

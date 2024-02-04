@@ -157,18 +157,18 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                     break;
                 }
                 case MagicValue.CASE_TYPE_API_PERFORM -> {
-                    testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData, testPlanInstanceId);
+                    testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData);
                     break;
                 }
                 case MagicValue.CASE_TYPE_WEB -> {
                     testPlanExecuteWebDispatch.exeWebScene(testPlanCase, testPlanTestData);
                     break;
                 }
-//                    case "app-scene" -> {
-//                        TestPlanCaseInstanceBind appSceneInstance = testPlanExecuteAppDispatch.exeAppScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-//                        testPlanCaseInstanceList.add(appSceneInstance);
-//                        break;
-//                    }
+                    case "app-scene" -> {
+                        TestPlanCaseInstanceBind appSceneInstance = testPlanExecuteAppDispatch.exeAppScene(testPlanCase, testPlanTestData, testPlanInstanceId);
+                        testPlanCaseInstanceList.add(appSceneInstance);
+                        break;
+                    }
                 default -> {
                 }
             }
@@ -238,48 +238,53 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
         ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList = planInstanceIdOrPlanCaseInstanceList.get(testPlanInstanceId);
 
-        ArrayList<Integer> resultList = new ArrayList<>();
-        if(CollectionUtils.isNotEmpty(executableCaseList)){
-            //循环获取结果
-            for(PlanCase testPlanCase : executableCaseList){
-                String caseType = testPlanCase.getCaseType();
-
-                if(testPlanCaseInstanceList==null){
-                    testPlanCaseInstanceList=new ArrayList<>();
-                }
-
-                switch (caseType) {
-                    case MagicValue.CASE_TYPE_API_PERFORM:
-                            TestPlanCaseInstanceBind apiPerfInstance = testPlanExecuteApiDispatch.apiPerfResult();
-                            Integer apiPerfStatus = apiPerfInstance.getStatus();
-                            if(apiPerfStatus==1){
-                                // 前一次执行的有，就删了，添加新的返回结果
-                                testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), apiPerfInstance.getCaseId()));
-                            }
-                            testPlanCaseInstanceList.add(apiPerfInstance);
-                            resultList.add(testPlanExecuteApiDispatch.apiPerfStatus);
-                        break;
-                    case MagicValue.CASE_TYPE_WEB:
-                            TestPlanCaseInstanceBind webSceneResult = testPlanExecuteWebDispatch.webSceneResult(testPlanCase,testPlanInstanceId);
-                            Integer status = webSceneResult.getStatus();
-                            if(status==1){
-                                testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), webSceneResult.getCaseId()));
-                            }
-                            testPlanCaseInstanceList.add(webSceneResult);
-                            resultList.add(status);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
+        // 如果testPlanCaseInstanceList为null，则初始化
+        if (testPlanCaseInstanceList == null) {
+            testPlanCaseInstanceList = new ArrayList<>();
         }
 
+        ArrayList<Integer> resultList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(executableCaseList)) {
+            for (PlanCase testPlanCase : executableCaseList) {
+                processCase(testPlanCase, testPlanInstanceId, testPlanCaseInstanceList, resultList);
+            }
+        }
 
         TestPlanTestResponse testPlanTestResponse = processResultData(executableCaseList, testPlanCaseInstanceList, resultList, testPlanId);
 
         return testPlanTestResponse;
     }
+
+    /**
+     * 根据caseType处理测试用例
+     */
+    private void processCase(PlanCase testPlanCase, String testPlanInstanceId,
+                             ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList,
+                             ArrayList<Integer> resultList) {
+        String caseType = testPlanCase.getCaseType();
+        TestPlanCaseInstanceBind caseInstance;
+        Integer status;
+
+        switch (caseType) {
+            case MagicValue.CASE_TYPE_API_PERFORM:
+                caseInstance = testPlanExecuteApiDispatch.apiPerfResult(testPlanCase, testPlanInstanceId);
+                break;
+            case MagicValue.CASE_TYPE_WEB:
+                caseInstance = testPlanExecuteWebDispatch.webSceneResult(testPlanCase, testPlanInstanceId);
+                break;
+            default:
+                return; // 如果caseType不匹配，则直接返回
+        }
+
+        status = caseInstance.getStatus();
+        // 通用逻辑，根据状态处理testPlanCaseInstanceList和resultList
+        if (status != null &&status == 1) {
+            testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), caseInstance.getCaseId()));
+        }
+        testPlanCaseInstanceList.add(caseInstance);
+        resultList.add(status);
+    }
+
 
 
     /**

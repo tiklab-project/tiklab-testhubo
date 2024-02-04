@@ -47,6 +47,9 @@ public class InstanceEntity implements Serializable {
     @Column(name = "execute_number")
     private int executeNumber;
 
+    @Column(name = "status")
+    private String status;
+
     public String getId() {
         return id;
     }
@@ -117,5 +120,13 @@ public class InstanceEntity implements Serializable {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

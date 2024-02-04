@@ -122,5 +122,11 @@ public class InstanceServiceImpl implements InstanceService {
         }
     }
 
+    @Override
+    public String getRecentExecuteInstanceId(String belongId) {
+        String recentExecuteInstanceId = instanceDao.getRecentExecuteInstanceId(belongId);
+        return recentExecuteInstanceId;
+    }
+
 
 }

@@ -46,13 +46,15 @@ public class Instance extends BaseModel {
     @JoinQuery(key = "id")
     private User createUser;
 
-
     @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
+
+    @ApiProperty(name="status",desc="执行状态")
+    private String status;
 
     public String getId() {
         return id;
@@ -124,5 +126,13 @@ public class Instance extends BaseModel {
 
     public void setCreateUser(User createUser) {
         this.createUser = createUser;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

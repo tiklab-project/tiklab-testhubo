@@ -48,13 +48,4 @@ public class ApiPerfTestDispatchController {
         return Result.ok(apiPerfTestResponse);
     }
 
-    @RequestMapping(path = "/status", method = RequestMethod.POST)
-    @ApiMethod(name = "status", desc = "获取性能测试状态")
-    public Result<Integer> status() {
-        Integer status = apiPerfExecuteDispatchService.status();
-        return Result.ok(status);
-    }
-
-
-
 }

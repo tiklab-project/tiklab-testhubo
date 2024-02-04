@@ -1,5 +1,6 @@
 package io.thoughtware.teston.testplan.execute.service;
 
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfCase;
 import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
@@ -52,18 +53,6 @@ public class TestPlanExecuteApiDispatch {
     @Autowired
     TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
 
-    private String apiPerfInstanceId;
-
-    private String planInstanceId;
-
-    private boolean isFirst=true;
-
-    private PlanCase testPlanCaseData;
-
-    private ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
-
-    public Integer apiPerfStatus = 0;
-    private String apiPerfId;
 
     /**
      * 执行接口单元用例
@@ -157,20 +146,14 @@ public class TestPlanExecuteApiDispatch {
      * 执行接口性能用例
      * @param testPlanCase
      * @param testPlanTestData
-     * @param testPlanInstanceId
      * @return
      */
-    public void exeApiPerform(PlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
+    public void exeApiPerform(PlanCase testPlanCase, TestPlanTestData testPlanTestData){
         //如果之前执行过，初始化。
-        apiPerfInstanceId=null;
-        isFirst=true;
-        testPlanCaseData = testPlanCase;
-        planInstanceId=testPlanInstanceId;
-        apiPerfStatus=1;
-        apiPerfId=testPlanCase.getId();
 
+        ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
         ApiPerfCase apiPerfCase = new ApiPerfCase();
-        apiPerfCase.setId(apiPerfId);
+        apiPerfCase.setId(testPlanCase.getId());
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
         apiPerfTestRequest.setExeType("testPlanTest");
         apiPerfTestRequest.setApiEnv(testPlanTestData.getApiEnv());
@@ -180,32 +163,40 @@ public class TestPlanExecuteApiDispatch {
     }
 
 
-    public TestPlanCaseInstanceBind apiPerfResult(){
+    public TestPlanCaseInstanceBind apiPerfResult(PlanCase testPlanCase, String testPlanInstanceId){
+        String apiPerfId = testPlanCase.getId();
+
+
+        ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
+        ApiPerfCase apiPerfCase = new ApiPerfCase();
+        apiPerfCase.setId(apiPerfId);
+        apiPerfTestRequest.setApiPerfCase(apiPerfCase);
         ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.result(apiPerfTestRequest);
 
         //测试计划历史 与 绑定用例的历史 公共历史表
         TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-        String caseType = testPlanCaseData.getCaseType();
-        String testType = testPlanCaseData.getTestType();
-        String name = testPlanCaseData.getName();
-        testPlanCaseInstanceBind.setTestPlanInstanceId(planInstanceId);
+        String caseType = testPlanCase.getCaseType();
+        String testType = testPlanCase.getTestType();
+        String name = testPlanCase.getName();
+
+        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
         testPlanCaseInstanceBind.setName(name);
         testPlanCaseInstanceBind.setCaseType(caseType);
         testPlanCaseInstanceBind.setTestType(testType);
         testPlanCaseInstanceBind.setCaseId(apiPerfId);
+        if(apiPerfTestResponse!=null){
+            if(apiPerfTestResponse.getStatus()==0) {
+                String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
+                testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
+                testPlanCaseInstanceBind.setResult(1);
+                testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            }
 
-        apiPerfStatus = apiPerfExecuteDispatchService.status();
-
-        if(apiPerfStatus==0) {
-            String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
-            testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
-            testPlanCaseInstanceBind.setResult(apiPerfTestResponse.getApiPerfInstance().getResult());
-            testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            testPlanCaseInstanceBind.setStatus(apiPerfTestResponse.getStatus());
+        }else {
+            testPlanCaseInstanceBind.setStatus(0);
         }
-
 
         return testPlanCaseInstanceBind;
     }
-
-
 }

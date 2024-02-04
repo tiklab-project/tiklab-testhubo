@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @Table(name="teston_api_perf_instance")
 public class ApiPerfInstanceEntity implements Serializable {
     @Id
-     @GeneratorValue(length = 12)
+    @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
@@ -46,14 +46,6 @@ public class ApiPerfInstanceEntity implements Serializable {
     // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
-
-    // 结果
-    @Column(name = "result")
-    private String result;
-
-    // 执行次数
-    @Column(name = "execute_number")
-    private Integer executeNumber;
 
 
     public Integer getPassNum() {
@@ -120,19 +112,4 @@ public class ApiPerfInstanceEntity implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public Integer getExecuteNumber() {
-        return executeNumber;
-    }
-
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
-    }
 }

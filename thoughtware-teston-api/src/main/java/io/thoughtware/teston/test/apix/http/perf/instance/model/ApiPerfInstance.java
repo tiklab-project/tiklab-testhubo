@@ -36,9 +36,6 @@ public class ApiPerfInstance extends BaseModel{
     @ApiProperty(name="total",desc="测试总次数")
     private Integer total;
 
-    @ApiProperty(name="result",desc="结果")
-    private Integer result;
-
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
@@ -108,14 +105,6 @@ public class ApiPerfInstance extends BaseModel{
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public Integer getExecuteNumber() {
