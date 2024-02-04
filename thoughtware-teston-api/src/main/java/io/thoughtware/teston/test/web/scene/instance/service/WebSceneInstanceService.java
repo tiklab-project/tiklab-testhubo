@@ -65,14 +65,6 @@ public interface WebSceneInstanceService {
     */
     Pagination<WebSceneInstance> findWebSceneInstancePage(WebSceneInstanceQuery scenInstanceQuery);
 
-    /**
-     * 保存web场景历史到数据库
-     * @param webSceneInstance
-     * @param webSceneTestResponse
-     * @return
-     */
-    String saveWebSceneInstanceToSql(WebSceneInstance webSceneInstance, WebSceneTestResponse webSceneTestResponse);
-
 
     /**
      * 创建步骤实例

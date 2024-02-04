@@ -166,7 +166,6 @@ public class TestPlanExecuteApiDispatch {
     public TestPlanCaseInstanceBind apiPerfResult(PlanCase testPlanCase, String testPlanInstanceId){
         String apiPerfId = testPlanCase.getId();
 
-
         ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
         ApiPerfCase apiPerfCase = new ApiPerfCase();
         apiPerfCase.setId(apiPerfId);

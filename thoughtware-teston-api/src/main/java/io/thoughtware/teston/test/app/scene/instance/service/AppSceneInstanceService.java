@@ -4,6 +4,7 @@ import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.thoughtware.core.page.Pagination;
+import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
 import io.thoughtware.toolkit.join.annotation.FindAll;
 import io.thoughtware.toolkit.join.annotation.FindList;
 import io.thoughtware.toolkit.join.annotation.FindOne;
@@ -74,11 +75,10 @@ public interface AppSceneInstanceService {
 
 
     /**
-     * 保存app场景实例
-     * @param appSceneInstance
-     * @param appSceneTestResponse
-     * @return
+     * 创建步骤实例
+     * @param stepCommonInstanceList
+     * @param appSceneInstanceId
      */
-    String saveAppSceneInstanceToSql(AppSceneInstance appSceneInstance, AppSceneTestResponse appSceneTestResponse);
+    void createAppSceneStepInstance(List<StepCommonInstance> stepCommonInstanceList, String appSceneInstanceId);
 
 }

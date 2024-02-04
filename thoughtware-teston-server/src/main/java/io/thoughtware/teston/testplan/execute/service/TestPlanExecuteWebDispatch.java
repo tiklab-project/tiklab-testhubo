@@ -59,6 +59,7 @@ public class TestPlanExecuteWebDispatch {
 
         WebSceneTestRequest webSceneTestRequest=new WebSceneTestRequest();
         webSceneTestRequest.setWebSceneId(caseId);
+        webSceneTestRequest.setExeType("plan");
         WebSceneTestResponse webSceneTestResponse = webSceneTestDispatchService.result(webSceneTestRequest);
 
         TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();

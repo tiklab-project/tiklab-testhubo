@@ -38,14 +38,6 @@ public class AppSceneTestDispatchController {
     }
 
 
-    @RequestMapping(path="/status",method = RequestMethod.POST)
-    @ApiMethod(name = "status",desc = "当前执行的状态")
-    public Result<Integer> execute( @Valid String appSceneId) {
-        Integer status = appSceneTestDispatchService.status(appSceneId);
-
-        return Result.ok(status);
-    }
-
     @RequestMapping(path="/result",method = RequestMethod.POST)
     @ApiMethod(name = "result",desc = "当前执行的结果")
     @ApiParam(name = "appSceneTestRequest",desc = "appSceneTestRequest",required = true)

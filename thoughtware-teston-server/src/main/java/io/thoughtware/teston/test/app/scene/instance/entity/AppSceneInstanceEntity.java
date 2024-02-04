@@ -19,10 +19,6 @@ public class AppSceneInstanceEntity {
     @Column(name = "app_scene_id")
     private String appSceneId;
 
-    // 测试结果 成功:1 , 失败:0
-    @Column(name = "result")
-    private Integer result;
-
     // 测试步骤数量
     @Column(name = "step_num")
     private Integer stepNum;
@@ -43,9 +39,6 @@ public class AppSceneInstanceEntity {
     @Column(name = "create_time")
     private Timestamp createTime;
 
-    // 执行次数
-    @Column(name = "execute_number")
-    private Integer executeNumber;
 
     public String getId() {
         return id;
@@ -61,14 +54,6 @@ public class AppSceneInstanceEntity {
 
     public void setAppSceneId(String appSceneId) {
         this.appSceneId = appSceneId;
-    }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public Integer getStepNum() {
@@ -109,13 +94,5 @@ public class AppSceneInstanceEntity {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getExecuteNumber() {
-        return executeNumber;
-    }
-
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
     }
 }

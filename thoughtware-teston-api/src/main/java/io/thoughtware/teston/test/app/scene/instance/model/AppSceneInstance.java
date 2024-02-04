@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.app.scene.instance.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.toolkit.join.annotation.Join;
@@ -47,8 +48,8 @@ public class AppSceneInstance extends BaseModel{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
 
-    @ApiProperty(name="executeNumber",desc="执行次数")
-    private Integer executeNumber;
+    private Instance instance;
+
 
     public String getId() {
         return id;
@@ -122,11 +123,11 @@ public class AppSceneInstance extends BaseModel{
         this.createTime = createTime;
     }
 
-    public Integer getExecuteNumber() {
-        return executeNumber;
+    public Instance getInstance() {
+        return instance;
     }
 
-    public void setExecuteNumber(Integer executeNumber) {
-        this.executeNumber = executeNumber;
+    public void setInstance(Instance instance) {
+        this.instance = instance;
     }
 }

@@ -58,8 +58,6 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
     @Autowired
     InstanceService instanceService;
 
-    @Autowired
-    AppSceneCaseService appSceneCaseService;
 
     @Override
     public String createAppSceneInstance(@NotNull @Valid AppSceneInstance appSceneInstance) {
@@ -101,6 +99,8 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
     @Override
     public AppSceneInstance findAppSceneInstance(@NotNull String id) {
         AppSceneInstance appSceneInstance = findOne(id);
+        Instance instance = instanceService.findInstance(id);
+        appSceneInstance.setInstance(instance);
 
         //历史回显把步骤列表带上
         StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();
@@ -146,62 +146,28 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
     }
 
     @Override
-    public String saveAppSceneInstanceToSql(AppSceneInstance appSceneInstance, AppSceneTestResponse appSceneTestResponse) {
-        String appSceneId = appSceneInstance.getAppSceneId();
-        String appSceneInstanceId = createAppSceneInstance(appSceneInstance);
+    public void createAppSceneStepInstance(List<StepCommonInstance> stepCommonInstanceList,String appSceneInstanceId){
+        for(StepCommonInstance stepCommonInstance:stepCommonInstanceList){
+            //公共的历史创建
+            stepCommonInstance.setInstanceId(appSceneInstanceId);
+            String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
 
-        // 创建公共实例
-        Instance instance = new Instance();
-        instance.setId(appSceneInstanceId);
+            //步骤历史创建
+            if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_APP)){
+                AppSceneInstanceStep appSceneInstanceStep = stepCommonInstance.getAppSceneInstanceStep();
+                appSceneInstanceStep.setAppSceneInstanceId(appSceneInstanceId);
+                appSceneInstanceStep.setId(stepInstanceId);
+                appSceneInstanceStepService.createAppSceneInstanceStep(appSceneInstanceStep);
+            }
 
-        instance.setBelongId(appSceneId);
-        instance.setType(MagicValue.CASE_TYPE_APP);
-
-        AppSceneCase appSceneCase = appSceneCaseService.findAppSceneCase(appSceneId);
-        instance.setName(appSceneCase.getTestCase().getName());
-        instance.setRepositoryId(appSceneCase.getTestCase().getRepositoryId());
-
-        //获取当前执行次数
-        int executeNum = instanceService.getRecentExecuteNum(appSceneId);
-        instance.setExecuteNumber(executeNum);
-
-        JSONObject instanceMap = new JSONObject();
-        instanceMap.put("result",appSceneInstance.getResult().toString());
-        instanceMap.put("stepNum",appSceneInstance.getStepNum().toString());
-        instanceMap.put("passNum",appSceneInstance.getPassNum().toString());
-        instanceMap.put("passRate",appSceneInstance.getPassRate());
-        instanceMap.put("failNum",appSceneInstance.getFailNum().toString());
-        instance.setContent(instanceMap.toString());
-
-        instanceService.createInstance(instance);
-
-
-        //保存单个步骤
-        if(CollectionUtils.isNotEmpty(appSceneTestResponse.getStepCommonInstanceList())){
-            for(StepCommonInstance stepCommonInstance:appSceneTestResponse.getStepCommonInstanceList()){
-                //公共的历史创建
-                stepCommonInstance.setInstanceId(appSceneInstanceId);
-                String stepInstanceId = stepCommonInstanceService.createStepCommonInstance(stepCommonInstance);
-
-                //步骤历史创建
-                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_APP)){
-                    AppSceneInstanceStep appSceneInstanceStep = stepCommonInstance.getAppSceneInstanceStep();
-                    appSceneInstanceStep.setAppSceneInstanceId(appSceneInstanceId);
-                    appSceneInstanceStep.setId(stepInstanceId);
-                    appSceneInstanceStepService.createAppSceneInstanceStep(appSceneInstanceStep);
-                }
-
-                //if判断历史创建
-                if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_IF)){
-                    IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
-                    ifJudgmentInstance.setStepInstanceId(appSceneInstanceId);
-                    ifJudgmentInstance.setId(stepInstanceId);
-                    ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
-                }
+            //if判断历史创建
+            if(Objects.equals(stepCommonInstance.getType(), MagicValue.CASE_TYPE_IF)){
+                IfJudgmentInstance ifJudgmentInstance = stepCommonInstance.getIfJudgmentInstance();
+                ifJudgmentInstance.setStepInstanceId(appSceneInstanceId);
+                ifJudgmentInstance.setId(stepInstanceId);
+                ifJudgmentInstanceService.createIfJudgmentInstance(ifJudgmentInstance);
             }
         }
-
-        return appSceneInstanceId;
     }
 
 
