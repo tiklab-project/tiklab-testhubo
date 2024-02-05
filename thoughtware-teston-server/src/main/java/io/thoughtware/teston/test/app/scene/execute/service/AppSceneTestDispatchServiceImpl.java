@@ -96,6 +96,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     @Override
     public void execute(AppSceneTestRequest appSceneTestRequest) {
         try {
+            logger.info("---------------app---------------");
             executeStart(appSceneTestRequest);
         }catch (Exception e){
             throw new ApplicationException(e);

@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class TestPlanCaseInstanceBindEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
+    @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.app.scene.execute.model;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.support.environment.model.AppEnv;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneStep;
 import io.thoughtware.core.BaseModel;
@@ -23,6 +24,9 @@ public class AppSceneTestRequest extends BaseModel {
 
     @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
     private AppTestConfig appTestConfig;
+
+    @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
+    private AppEnv appEnv;
 
     @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
     private List<AppTestConfig> appTestConfigList;
@@ -102,5 +106,13 @@ public class AppSceneTestRequest extends BaseModel {
 
     public void setVariableJson(JSONObject variableJson) {
         this.variableJson = variableJson;
+    }
+
+    public AppEnv getAppEnv() {
+        return appEnv;
+    }
+
+    public void setAppEnv(AppEnv appEnv) {
+        this.appEnv = appEnv;
     }
 }

@@ -7,6 +7,7 @@ import io.thoughtware.teston.test.app.perf.execute.service.AppPerfTestDispatchSe
 import io.thoughtware.teston.test.app.perf.instance.mode.AppPerfInstance;
 import io.thoughtware.teston.test.app.perf.instance.service.AppPerfInstanceService;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestRequest;
+import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
 import io.thoughtware.teston.test.app.scene.execute.model.AppTestConfig;
 import io.thoughtware.teston.test.app.scene.execute.service.AppSceneTestDispatchService;
 import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceService;
@@ -63,18 +64,12 @@ public class TestPlanExecuteAppDispatch {
      * 执行AppScene
      * @param testPlanCase
      * @param testPlanTestData
-     * @param testPlanInstanceId
      * @return
      */
-    public TestPlanCaseInstanceBind exeAppScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-        String caseType = testPlanCase.getCaseType();
-        String testType = testPlanCase.getTestType();
-        String name = testPlanCase.getName();
+    public void exeAppScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData){
+        String caseId = testPlanCase.getId();
 
-
-        String appEnvId = testPlanTestData.getAppEnv();
-        AppEnv appEnv = appEnvService.findAppEnv(appEnvId);
-
+        AppEnv appEnv = appEnvService.findAppEnv(testPlanTestData.getAppEnv());
         AppTestConfig appTestConfig = new AppTestConfig();
         appTestConfig.setPlatformName(appEnv.getPlatformName());
         appTestConfig.setAppiumSever(appEnv.getAppiumSever());
@@ -84,30 +79,45 @@ public class TestPlanExecuteAppDispatch {
 
         AppSceneTestRequest appSceneTestRequest = new AppSceneTestRequest();
         appSceneTestRequest.setAppTestConfig(appTestConfig);
-        appSceneTestRequest.setExeType("testPlanTest");
+        appSceneTestRequest.setAppSceneId(caseId);
 
-        //todo appScene结构更改后续调整
-        //执行
-//        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.execute(appSceneTestRequest);
-
-        //保存
-//        AppSceneInstance appSceneInstance = appSceneTestResponse.getAppSceneInstance();
-//        String appSceneInstanceId = appSceneInstanceService.saveAppSceneInstanceToSql(appSceneInstance, appSceneTestResponse);
-
-        //测试计划历史 与 绑定用例的历史 公共历史表
-//        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-//        testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
-//        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-//        testPlanCaseInstanceBind.setName(name);
-//        testPlanCaseInstanceBind.setCaseType(caseType);
-//        testPlanCaseInstanceBind.setTestType(testType);
-//        testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
-//        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-
-//        return testPlanCaseInstanceBind;
-        return null;
-
+        appSceneTestDispatchService.execute(appSceneTestRequest);
     }
+
+
+    public TestPlanCaseInstanceBind appSceneResult(TestPlanCaseInstanceBind testPlanCaseInstanceBind){
+        String caseId = testPlanCaseInstanceBind.getCaseId();
+
+        AppSceneTestRequest appSceneTestRequest = new AppSceneTestRequest();
+        appSceneTestRequest.setAppSceneId(caseId);
+        appSceneTestRequest.setExeType("plan");
+        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.result(appSceneTestRequest);
+
+        if(appSceneTestResponse.getAppSceneInstance()!=null){
+            testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
+        }else {
+            testPlanCaseInstanceBind.setResult(0);
+        }
+        testPlanCaseInstanceBind.setCaseId(caseId);
+        testPlanCaseInstanceBind.setStatus(appSceneTestResponse.getStatus());
+
+        if(appSceneTestResponse.getAppSceneInstance()!=null&&appSceneTestResponse.getStatus()==0){
+            String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneTestResponse.getAppSceneInstance());
+            testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
+            testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
+            testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            appSceneInstanceService.createAppSceneStepInstance(appSceneTestResponse.getStepCommonInstanceList(),appSceneInstanceId);
+        }
+
+        return testPlanCaseInstanceBind;
+    }
+
+
+
+
+
+
+
 
     
     public void exeAppPerform(TestPlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId) {

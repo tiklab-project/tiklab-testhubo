@@ -65,12 +65,13 @@ public class TestPlanExecuteApiDispatch {
         String caseType = testPlanCase.getCaseType();
         String testType = testPlanCase.getTestType();
         String name = testPlanCase.getName();
+        String caseId = testPlanCase.getId();
 
         //构造执行api 单元用例 所需的参数
         ApiUnitTestRequest apiUnitTestRequest = new ApiUnitTestRequest();
 
         ApiUnitCase apiUnitCase = new ApiUnitCase();
-        apiUnitCase.setId(testPlanCase.getId());
+        apiUnitCase.setId(caseId);
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
         apiUnitTestRequest.setApiEnv(testPlanTestData.getApiEnv());
         //设置一个执行的类型，如果是testPlanTest 则 执行后，apiUnitTestDispatchService里不保存历史，返回数据，这边保存历史。
@@ -90,6 +91,7 @@ public class TestPlanExecuteApiDispatch {
         testPlanCaseInstanceBind.setCaseType(caseType);
         testPlanCaseInstanceBind.setTestType(testType);
         testPlanCaseInstanceBind.setResult(apiUnitInstance.getResult());
+        testPlanCaseInstanceBind.setCaseId(caseId);
         testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
 
 
@@ -108,11 +110,12 @@ public class TestPlanExecuteApiDispatch {
         String caseType = testPlanCase.getCaseType();
         String testType = testPlanCase.getTestType();
         String name = testPlanCase.getName();
+        String caseId = testPlanCase.getId();
 
         ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
 
         ApiSceneCase apiSceneCase = new ApiSceneCase();
-        apiSceneCase.setId(testPlanCase.getId());
+        apiSceneCase.setId(caseId);
 
         apiSceneTestRequest.setApiSceneCase(apiSceneCase);
         apiSceneTestRequest.setApiEnv(testPlanTestData.getApiEnv());
@@ -136,6 +139,7 @@ public class TestPlanExecuteApiDispatch {
         testPlanCaseInstanceBind.setCaseType(caseType);
         testPlanCaseInstanceBind.setTestType(testType);
         testPlanCaseInstanceBind.setResult(apiSceneTestResponse.getApiSceneInstance().getResult());
+        testPlanCaseInstanceBind.setCaseId(caseId);
         testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
 
         return testPlanCaseInstanceBind;
@@ -163,8 +167,8 @@ public class TestPlanExecuteApiDispatch {
     }
 
 
-    public TestPlanCaseInstanceBind apiPerfResult(PlanCase testPlanCase, String testPlanInstanceId){
-        String apiPerfId = testPlanCase.getId();
+    public TestPlanCaseInstanceBind apiPerfResult(TestPlanCaseInstanceBind testPlanCaseInstanceBind){
+        String apiPerfId = testPlanCaseInstanceBind.getCaseId();
 
         ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
         ApiPerfCase apiPerfCase = new ApiPerfCase();
@@ -172,17 +176,6 @@ public class TestPlanExecuteApiDispatch {
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
         ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.result(apiPerfTestRequest);
 
-        //测试计划历史 与 绑定用例的历史 公共历史表
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-        String caseType = testPlanCase.getCaseType();
-        String testType = testPlanCase.getTestType();
-        String name = testPlanCase.getName();
-
-        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-        testPlanCaseInstanceBind.setName(name);
-        testPlanCaseInstanceBind.setCaseType(caseType);
-        testPlanCaseInstanceBind.setTestType(testType);
-        testPlanCaseInstanceBind.setCaseId(apiPerfId);
         if(apiPerfTestResponse!=null){
             if(apiPerfTestResponse.getStatus()==0) {
                 String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
