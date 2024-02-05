@@ -42,6 +42,7 @@ public class TestOnDalAutoConfiguration {
                 "oplog_1.0.1",
                 "message_1.0.1",
                 "apply-auth_1.0.1",
+                "privilege_1.0.1",
 
                 "teston_1.0.1",
                 "teston-platform_1.0.1",
