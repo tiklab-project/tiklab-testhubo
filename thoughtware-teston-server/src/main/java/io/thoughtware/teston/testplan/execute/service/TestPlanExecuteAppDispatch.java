@@ -62,12 +62,12 @@ public class TestPlanExecuteAppDispatch {
 
     /**
      * 执行AppScene
-     * @param testPlanCase
+     * @param testPlanCaseInstanceBind
      * @param testPlanTestData
      * @return
      */
-    public void exeAppScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData){
-        String caseId = testPlanCase.getId();
+    public void exeAppScene(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
+        String caseId = testPlanCaseInstanceBind.getCaseId();
 
         AppEnv appEnv = appEnvService.findAppEnv(testPlanTestData.getAppEnv());
         AppTestConfig appTestConfig = new AppTestConfig();
@@ -105,7 +105,8 @@ public class TestPlanExecuteAppDispatch {
             String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneTestResponse.getAppSceneInstance());
             testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
             testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
-            testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            testPlanCaseInstanceBind.setStatus(0);
+            testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
             appSceneInstanceService.createAppSceneStepInstance(appSceneTestResponse.getStepCommonInstanceList(),appSceneInstanceId);
         }
 

@@ -14,17 +14,16 @@ import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestResponse;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.model.TestPlanInstance;
+import io.thoughtware.teston.testplan.instance.service.TestPlanCaseInstanceBindService;
 import io.thoughtware.teston.testplan.instance.service.TestPlanInstanceService;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.teston.testplan.cases.service.TestPlanCaseService;
-import io.thoughtware.eam.common.context.LoginContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -63,6 +62,9 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Autowired
     InstanceService instanceService;
 
+    @Autowired
+    TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
+
 
     //任务线程池
     public final ExecutorService executorService = Executors.newCachedThreadPool();
@@ -86,18 +88,32 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             testPlanIdOrPlanCaseList.put(testPlanId,executableCaseList);
 
             //执行的时候先创建一个初始历史，用于获取Id
-            String testPlanInstanceId = createPlanInstance(repositoryId,testPlanId,executableCaseList.size());
+            String testPlanInstanceId = createPlanInstance(repositoryId,testPlanId,executableCaseList);
             testPlanIdOrPlanInstanceId.put(testPlanId,testPlanInstanceId);
+
+            ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList = createPlanCaseInstanceList(executableCaseList, testPlanInstanceId);
+            planInstanceIdOrPlanCaseInstanceList.put(testPlanInstanceId,planCaseInstanceList);
 
             if(CollectionUtils.isNotEmpty(executableCaseList)){
                 //并发执行
                 executorService.submit(() -> {
                     try{
-                        executeTestPlanCases(testPlanTestData,testPlanInstanceId,executableCaseList);
-                    }catch (Exception e) {
-                        updateStatus(0,testPlanId);
 
+                        executeTestPlanCases(testPlanTestData,testPlanInstanceId,planCaseInstanceList);
+                    }catch (Exception e) {
+                        updatePlanStatus(0,testPlanId);
+                        updateStatus(testPlanInstanceId,MagicValue.TEST_STATUS_FAIL);
                         throw new ApplicationException(e);
+                    }finally {
+                        try {
+                            Thread.sleep(3000);
+                        }catch (Exception e){
+                            throw new ApplicationException(e);
+                        }finally {
+                            testPlanIdOrPlanCaseList.remove(testPlanId);
+                            testPlanIdOrPlanInstanceId.remove(testPlanId);
+                            planInstanceIdOrPlanCaseInstanceList.remove(testPlanId);
+                        }
                     }
                 });
             }
@@ -134,46 +150,38 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      * 执行用例
      * @param testPlanTestData
      * @param testPlanInstanceId
-     * @param planCaseList
+     * @param planCaseInstanceList
      */
-    private void executeTestPlanCases(TestPlanTestData testPlanTestData,String testPlanInstanceId,List<PlanCase> planCaseList){
-        ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList = new ArrayList<>();
+    private void executeTestPlanCases(TestPlanTestData testPlanTestData,
+                                      String testPlanInstanceId,
+                                      ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList){
         //循环 执行用例
-        for(PlanCase testPlanCase : planCaseList){
-            String caseType = testPlanCase.getCaseType();
+        for(TestPlanCaseInstanceBind testPlanCaseInstanceBind : planCaseInstanceList){
+            String caseType = testPlanCaseInstanceBind.getCaseType();
 
             switch (caseType) {
                 case MagicValue.CASE_TYPE_API_UNIT -> {
-                    TestPlanCaseInstanceBind testPlanCaseInstanceBind = testPlanExecuteApiDispatch.exeApiUnit(testPlanCase, testPlanTestData, testPlanInstanceId);
-                    testPlanCaseInstanceList.add(testPlanCaseInstanceBind);
-                    planInstanceIdOrPlanCaseInstanceList.put(testPlanInstanceId, testPlanCaseInstanceList);
-                    break;
+                     testPlanExecuteApiDispatch.exeApiUnit(testPlanCaseInstanceBind, testPlanTestData);
+                     break;
                 }
                 case MagicValue.CASE_TYPE_API_SCENE -> {
-                    TestPlanCaseInstanceBind apiSceneInstance = testPlanExecuteApiDispatch.exeApiScene(testPlanCase, testPlanTestData, testPlanInstanceId);
-                    testPlanCaseInstanceList.add(apiSceneInstance);
-                    planInstanceIdOrPlanCaseInstanceList.put(testPlanInstanceId, testPlanCaseInstanceList);
+                    testPlanExecuteApiDispatch.exeApiScene(testPlanCaseInstanceBind, testPlanTestData, testPlanInstanceId);
                     break;
                 }
                 case MagicValue.CASE_TYPE_API_PERFORM -> {
-                    TestPlanCaseInstanceBind apiPerfInstance = initInstance(testPlanCase, testPlanInstanceId);
-                    testPlanCaseInstanceList.add(apiPerfInstance);
-                    planInstanceIdOrPlanCaseInstanceList.put(testPlanInstanceId, testPlanCaseInstanceList);
-                    testPlanExecuteApiDispatch.exeApiPerform(testPlanCase, testPlanTestData);
+                    testPlanExecuteApiDispatch.exeApiPerform(testPlanCaseInstanceBind, testPlanTestData);
+                    testPlanCaseInstanceBind.setStatus(1);
                     break;
                 }
                 case MagicValue.CASE_TYPE_WEB -> {
-                    TestPlanCaseInstanceBind webInstance = initInstance(testPlanCase, testPlanInstanceId);
-                    testPlanCaseInstanceList.add(webInstance);
-                    planInstanceIdOrPlanCaseInstanceList.put(testPlanInstanceId, testPlanCaseInstanceList);
-                    testPlanExecuteWebDispatch.exeWebScene(testPlanCase, testPlanTestData);
+                    testPlanExecuteWebDispatch.exeWebScene(testPlanCaseInstanceBind, testPlanTestData);
+                    testPlanCaseInstanceBind.setStatus(1);
                     break;
                 }
                 case MagicValue.CASE_TYPE_APP -> {
-                    planInstanceIdOrPlanCaseInstanceList.put(testPlanInstanceId, testPlanCaseInstanceList);
-                    testPlanExecuteAppDispatch.exeAppScene(testPlanCase, testPlanTestData);
-                    TestPlanCaseInstanceBind appInstance = initInstance(testPlanCase, testPlanInstanceId);
-                    testPlanCaseInstanceList.add(appInstance);
+
+                    testPlanExecuteAppDispatch.exeAppScene(testPlanCaseInstanceBind, testPlanTestData);
+                    testPlanCaseInstanceBind.setStatus(1);
                     break;
                 }
                 default -> {
@@ -186,46 +194,43 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
     /**
      * 创建测试计划实例
+     * @param executableCaseList
      * @param repositoryId
-     * @param size
+     * @param executableCaseList
      */
-    private String createPlanInstance(String repositoryId, String testPlanId, int size){
+    private String createPlanInstance(String repositoryId, String testPlanId, List<PlanCase> executableCaseList){
         TestPlanInstance testPlanInstance = new TestPlanInstance();
         TestPlan testPlan1 = new TestPlan();
         testPlan1.setId(testPlanId);
         testPlanInstance.setTestPlan(testPlan1);
         testPlanInstance.setRepositoryId(repositoryId);
-        testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        testPlanInstance.setCreateUser(LoginContext.getLoginId());
         int planCaseNum = testPlanCaseService.findPlanCaseNum(testPlanId);
         testPlanInstance.setTotal(planCaseNum);
+        int size = (executableCaseList!=null)?executableCaseList.size():0;
         testPlanInstance.setExecutableCaseNum(size);
         testPlanInstance.setPassNum(0);
         testPlanInstance.setPassRate("0.00%");
         testPlanInstance.setFailNum(0);
         testPlanInstance.setErrorRate("0.00%");
-        testPlanInstance.setResult(2);
-        testPlanInstance.setStatus(1);
         String planInstanceId = testPlanInstanceService.createTestPlanInstance(testPlanInstance);
-
 
         // 创建公共实例
         Instance instance = new Instance();
         instance.setId(planInstanceId);
-
         instance.setBelongId(testPlanId);
+        instance.setRepositoryId(repositoryId);
         instance.setType(MagicValue.TEST_PLAN);
-
         TestPlan testPlan = testPlanService.findTestPlan(testPlanId);
         instance.setName(testPlan.getName());
-        instance.setRepositoryId(testPlan.getRepository().getId());
 
         //获取当前执行次数
         int executeNum = instanceService.getRecentExecuteNum(testPlanId);
         instance.setExecuteNumber(executeNum);
 
+        //设置状态,开始执行
+        instance.setStatus(MagicValue.TEST_STATUS_START);
+
         JSONObject instanceMap = new JSONObject();
-        instanceMap.put("result",testPlanInstance.getResult().toString());
         instanceMap.put("total",planCaseNum);
         instanceMap.put("executableCaseNum",testPlanInstance.getTotal().toString());
         instanceMap.put("passNum",testPlanInstance.getPassNum().toString());
@@ -233,21 +238,27 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         instanceMap.put("failNum",testPlanInstance.getFailNum().toString());
         instanceMap.put("errorRate",testPlanInstance.getErrorRate());
         instance.setContent(instanceMap.toString());
-
         instanceService.createInstance(instance);
 
         return planInstanceId;
     }
 
-    private TestPlanCaseInstanceBind initInstance(PlanCase testPlanCase,  String testPlanInstanceId) {
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-        testPlanCaseInstanceBind.setCaseId(testPlanCase.getId());
-        testPlanCaseInstanceBind.setName(testPlanCase.getName());
-        testPlanCaseInstanceBind.setCaseType(testPlanCase.getCaseType());
-        testPlanCaseInstanceBind.setTestType(testPlanCase.getTestType());
-        testPlanCaseInstanceBind.setStatus(1);
-        return  testPlanCaseInstanceBind;
+    private ArrayList<TestPlanCaseInstanceBind> createPlanCaseInstanceList( List<PlanCase> executableCaseList,String testPlanInstanceId){
+        ArrayList<TestPlanCaseInstanceBind> arrayList = new ArrayList<>();
+        for(PlanCase testPlanCase : executableCaseList){
+            TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
+            testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
+            testPlanCaseInstanceBind.setCaseId(testPlanCase.getId());
+            testPlanCaseInstanceBind.setName(testPlanCase.getName());
+            testPlanCaseInstanceBind.setCaseType(testPlanCase.getCaseType());
+            testPlanCaseInstanceBind.setTestType(testPlanCase.getTestType());
+            testPlanCaseInstanceBind.setStatus(2);
+            String testPlanCaseInstanceBindId = testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            testPlanCaseInstanceBind.setId(testPlanCaseInstanceBindId);
+            arrayList.add(testPlanCaseInstanceBind);
+        }
+
+        return arrayList;
     }
 
     @Override
@@ -262,64 +273,40 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             testPlanCaseInstanceList = new ArrayList<>();
         }
 
-        ArrayList<Integer> resultList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(testPlanCaseInstanceList)) {
             for (TestPlanCaseInstanceBind testPlanCaseInstanceBind : testPlanCaseInstanceList) {
-                processCase(testPlanCaseInstanceBind,testPlanCaseInstanceList, resultList);
+                String caseType = testPlanCaseInstanceBind.getCaseType();
+                switch (caseType) {
+                    case MagicValue.CASE_TYPE_API_PERFORM:
+                        testPlanExecuteApiDispatch.apiPerfResult(testPlanCaseInstanceBind);
+                        break;
+                    case MagicValue.CASE_TYPE_WEB:
+                        testPlanExecuteWebDispatch.webSceneResult(testPlanCaseInstanceBind);
+                        break;
+                    case MagicValue.CASE_TYPE_APP:
+                        testPlanExecuteAppDispatch.appSceneResult(testPlanCaseInstanceBind);
+                        break;
+                    default:
+                        return null;
+                }
             }
         }
 
-        TestPlanTestResponse testPlanTestResponse = processResultData(executableCaseList, testPlanCaseInstanceList, resultList, testPlanId);
+        TestPlanTestResponse testPlanTestResponse = processResultData(executableCaseList, testPlanCaseInstanceList,  testPlanId);
 
         return testPlanTestResponse;
     }
-
-    /**
-     * 根据caseType处理测试用例
-     */
-    private void processCase(TestPlanCaseInstanceBind testPlanCaseInstanceBind,
-                             ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList,
-                             ArrayList<Integer> resultList) {
-        String caseType = testPlanCaseInstanceBind.getCaseType();
-        TestPlanCaseInstanceBind caseInstance;
-        Integer status;
-
-        switch (caseType) {
-            case MagicValue.CASE_TYPE_API_PERFORM:
-                caseInstance = testPlanExecuteApiDispatch.apiPerfResult(testPlanCaseInstanceBind);
-                break;
-            case MagicValue.CASE_TYPE_WEB:
-                caseInstance = testPlanExecuteWebDispatch.webSceneResult(testPlanCaseInstanceBind);
-                break;
-            case MagicValue.CASE_TYPE_APP:
-                caseInstance = testPlanExecuteAppDispatch.appSceneResult(testPlanCaseInstanceBind);
-                break;
-            default:
-                return; // 如果caseType不匹配，则直接返回
-        }
-
-        status = caseInstance.getStatus();
-        // 通用逻辑，根据状态处理testPlanCaseInstanceList和resultList
-        if (status != null &&status == 1) {
-            testPlanCaseInstanceList.removeIf(instance -> Objects.equals(instance.getCaseId(), caseInstance.getCaseId()));
-        }
-        testPlanCaseInstanceList.add(caseInstance);
-        resultList.add(status);
-    }
-
 
 
     /**
      * 处理测试结果
      * @param executableCaseList
      * @param testPlanCaseInstanceList
-     * @param resultList
      * @param testPlanId
      * @return
      */
     private TestPlanTestResponse processResultData(List<PlanCase> executableCaseList,
                                                    ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList,
-                                                   ArrayList<Integer> resultList,
                                                    String testPlanId){
 
         TestPlanTestResponse testPlanTestResponse = new TestPlanTestResponse();
@@ -327,14 +314,13 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         try {
             //处理数据
             int executableCaseCount = executableCaseList.size();
-            int executableCaseInstanceCount = testPlanCaseInstanceList.size();
 
             TestPlanInstance testPlanInstance = processInstance(testPlanCaseInstanceList,executableCaseCount);
             testPlanTestResponse.setTestPlanInstance(testPlanInstance);
             testPlanTestResponse.setTestPlanCaseInstanceList(testPlanCaseInstanceList);
 
             // 确定测试计划的状态
-            int status = getPlanStatus(executableCaseInstanceCount, executableCaseCount, resultList, testPlanId);
+            int status = getPlanStatus(testPlanCaseInstanceList, testPlanId);
             testPlanTestResponse.setStatus(status);
 
             //更新历史
@@ -342,7 +328,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         }catch (Exception e){
             logger.info("process ---------- {}",e);
         }
-
 
         return testPlanTestResponse;
     }
@@ -384,27 +369,25 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
     /**
      * 获取测试计划状态
-     * @param executableCaseInstanceCount
-     * @param executableCaseCount
-     * @param resultList
      * @param testPlanId
      * @return
      */
-    private int getPlanStatus(int executableCaseInstanceCount, int executableCaseCount, List<Integer> resultList, String testPlanId) {
-        if (executableCaseCount == executableCaseInstanceCount) {
-            boolean isContinuing = resultList.contains(1);
-            if (isContinuing) {
-                // 继续执行
-                return 1;
-            } else {
-                // 执行结束
-                updateStatus(0, testPlanId);
+    private int getPlanStatus(ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList,
+                              String testPlanId) {
+        ArrayList<Integer> resultList = new ArrayList<>();
+        for(TestPlanCaseInstanceBind testPlanCaseInstanceBind:testPlanCaseInstanceList){
+            resultList.add(testPlanCaseInstanceBind.getStatus());
+        }
 
-                return 0;
-            }
-        } else {
+        String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
+        if (resultList.contains(1)||resultList.contains(2)) {
             // 继续执行
             return 1;
+        } else {
+            // 执行结束
+            updatePlanStatus(0,testPlanId);
+            updateStatus(testPlanInstanceId,MagicValue.TEST_STATUS_SUCCESS);
+            return 0;
         }
     }
 
@@ -444,13 +427,21 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      * 更新测试计划历史中的执行状态 0 未执行， 1 执行中
      * @param status
      */
-    private void updateStatus(int status,String testPlanId){
+    private void updatePlanStatus(int status,String testPlanId){
         String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
         TestPlanInstance testPlanInstance = testPlanInstanceService.findTestPlanInstance(testPlanInstanceId);
         testPlanInstance.setStatus(status);
         testPlanInstanceService.updateTestPlanInstance(testPlanInstance);;
     }
 
+    /**
+     * 状态更改
+     */
+    private void updateStatus(String instanceId,String status){
+        Instance instance = instanceService.findInstance(instanceId);
+        instance.setStatus(status);
+        instanceService.updateInstance(instance);
+    }
 
     /**
      * 清楚数据

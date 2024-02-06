@@ -56,16 +56,12 @@ public class TestPlanExecuteApiDispatch {
 
     /**
      * 执行接口单元用例
-     * @param testPlanCase
+     * @param testPlanCaseInstanceBind
      * @param testPlanTestData
-     * @param testPlanInstanceId
      * @return
      */
-    public TestPlanCaseInstanceBind exeApiUnit(PlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-        String caseType = testPlanCase.getCaseType();
-        String testType = testPlanCase.getTestType();
-        String name = testPlanCase.getName();
-        String caseId = testPlanCase.getId();
+    public TestPlanCaseInstanceBind exeApiUnit(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
+        String caseId = testPlanCaseInstanceBind.getCaseId();
 
         //构造执行api 单元用例 所需的参数
         ApiUnitTestRequest apiUnitTestRequest = new ApiUnitTestRequest();
@@ -84,16 +80,10 @@ public class TestPlanExecuteApiDispatch {
         String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
 
         //测试计划历史 与 绑定用例的历史 公共历史表
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
         testPlanCaseInstanceBind.setCaseInstanceId(apiUnitInstanceId);
-        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-        testPlanCaseInstanceBind.setName(name);
-        testPlanCaseInstanceBind.setCaseType(caseType);
-        testPlanCaseInstanceBind.setTestType(testType);
         testPlanCaseInstanceBind.setResult(apiUnitInstance.getResult());
-        testPlanCaseInstanceBind.setCaseId(caseId);
-        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-
+        testPlanCaseInstanceBind.setStatus(0);
+        testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
 
         return testPlanCaseInstanceBind;
     }
@@ -101,16 +91,13 @@ public class TestPlanExecuteApiDispatch {
 
     /**
      * 执行接口场景用例
-     * @param testPlanCase
      * @param testPlanTestData
      * @param testPlanInstanceId
      * @return
      */
-    public TestPlanCaseInstanceBind exeApiScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-        String caseType = testPlanCase.getCaseType();
-        String testType = testPlanCase.getTestType();
-        String name = testPlanCase.getName();
-        String caseId = testPlanCase.getId();
+    public TestPlanCaseInstanceBind exeApiScene(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData, String testPlanInstanceId){
+
+        String caseId = testPlanCaseInstanceBind.getCaseId();
 
         ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
 
@@ -132,15 +119,10 @@ public class TestPlanExecuteApiDispatch {
         apiSceneInstanceService.createWebStepInstance(apiSceneTestResponse.getStepCommonInstanceList(),apiSceneInstanceId);
 
         //测试计划历史 与 绑定用例的历史 公共历史
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
         testPlanCaseInstanceBind.setCaseInstanceId(apiSceneInstanceId);
-        testPlanCaseInstanceBind.setTestPlanInstanceId(testPlanInstanceId);
-        testPlanCaseInstanceBind.setName(name);
-        testPlanCaseInstanceBind.setCaseType(caseType);
-        testPlanCaseInstanceBind.setTestType(testType);
         testPlanCaseInstanceBind.setResult(apiSceneTestResponse.getApiSceneInstance().getResult());
-        testPlanCaseInstanceBind.setCaseId(caseId);
-        testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+        testPlanCaseInstanceBind.setStatus(0);
+        testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
 
         return testPlanCaseInstanceBind;
     }
@@ -148,16 +130,16 @@ public class TestPlanExecuteApiDispatch {
 
     /**
      * 执行接口性能用例
-     * @param testPlanCase
+     * @param testPlanCaseInstanceBind
      * @param testPlanTestData
      * @return
      */
-    public void exeApiPerform(PlanCase testPlanCase, TestPlanTestData testPlanTestData){
+    public void exeApiPerform(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
         //如果之前执行过，初始化。
 
         ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
         ApiPerfCase apiPerfCase = new ApiPerfCase();
-        apiPerfCase.setId(testPlanCase.getId());
+        apiPerfCase.setId(testPlanCaseInstanceBind.getCaseId());
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
         apiPerfTestRequest.setExeType("testPlanTest");
         apiPerfTestRequest.setApiEnv(testPlanTestData.getApiEnv());
@@ -181,7 +163,8 @@ public class TestPlanExecuteApiDispatch {
                 String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
                 testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
                 testPlanCaseInstanceBind.setResult(1);
-                testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+                testPlanCaseInstanceBind.setStatus(0);
+                testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
             }
 
             testPlanCaseInstanceBind.setStatus(apiPerfTestResponse.getStatus());

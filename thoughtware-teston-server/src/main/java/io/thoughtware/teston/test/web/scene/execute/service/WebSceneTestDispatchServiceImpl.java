@@ -18,7 +18,6 @@ import io.thoughtware.rpc.client.router.lookup.FixedLookup;
 import io.thoughtware.teston.agent.web.scene.WebSceneTestService;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.support.variable.service.VariableService;
-import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
 import io.thoughtware.teston.test.web.scene.cases.service.WebSceneStepService;
 import io.thoughtware.teston.test.web.scene.execute.model.WebSceneTestRequest;
 import io.thoughtware.teston.test.web.scene.execute.model.WebSceneTestResponse;

@@ -1,5 +1,6 @@
 package io.thoughtware.teston.testplan.execute.service;
 
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.web.perf.execute.service.WebPerfTestDispatchService;
 import io.thoughtware.teston.test.web.perf.instance.service.WebPerfInstanceService;
 import io.thoughtware.teston.test.web.scene.execute.model.WebSceneTestResponse;
@@ -26,25 +27,19 @@ public class TestPlanExecuteWebDispatch {
     WebSceneInstanceService webSceneInstanceService;
 
     @Autowired
-    WebPerfTestDispatchService webPerfTestDispatchService;
-
-    @Autowired
-    WebPerfInstanceService webPerfInstanceService;
-
-    @Autowired
     TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
 
 
     /**
      * 执行web场景
-     * @param testPlanCase
+     * @param testPlanCaseInstanceBind
      * @param testPlanTestData
      * @return
      */
-    public void exeWebScene(PlanCase testPlanCase, TestPlanTestData testPlanTestData){
+    public void exeWebScene(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
         WebSceneTestRequest webSceneTestRequest= new WebSceneTestRequest();
         webSceneTestRequest.setRepositoryId(testPlanTestData.getRepositoryId());
-        webSceneTestRequest.setWebSceneId(testPlanCase.getId());
+        webSceneTestRequest.setWebSceneId(testPlanCaseInstanceBind.getCaseId());
 
         //执行
         webSceneTestDispatchService.execute(webSceneTestRequest);
@@ -71,7 +66,8 @@ public class TestPlanExecuteWebDispatch {
             String webSceneInstanceId = webSceneInstanceService.createWebSceneInstance(webSceneTestResponse.getWebSceneInstance());
             testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
             testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
-            testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            testPlanCaseInstanceBind.setStatus(0);
             webSceneInstanceService.createStepInstance(webSceneTestResponse.getStepCommonInstanceList(),webSceneInstanceId);
         }
 

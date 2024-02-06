@@ -1,5 +1,6 @@
 package io.thoughtware.teston.testplan.instance.service;
 
+import io.thoughtware.eam.common.context.LoginContext;
 import io.thoughtware.teston.testplan.instance.dao.TestPlanInstanceDao;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBindQuery;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -38,6 +40,9 @@ public class TestPlanInstanceServiceImpl implements TestPlanInstanceService {
 
     @Override
     public String createTestPlanInstance(@NotNull @Valid TestPlanInstance testPlanInstance) {
+        testPlanInstance.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        testPlanInstance.setCreateUser(LoginContext.getLoginId());
+
         TestPlanInstanceEntity testPlanInstanceEntity = BeanMapper.map(testPlanInstance, TestPlanInstanceEntity.class);
 
         return testPlanInstanceDao.createTestPlanInstance(testPlanInstanceEntity);
