@@ -64,16 +64,8 @@ public class TestPlanExecuteAppDispatch {
     public void exeAppScene(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
         String caseId = testPlanCaseInstanceBind.getCaseId();
 
-        AppEnv appEnv = appEnvService.findAppEnv(testPlanTestData.getAppEnv());
-        AppTestConfig appTestConfig = new AppTestConfig();
-        appTestConfig.setPlatformName(appEnv.getPlatformName());
-        appTestConfig.setAppiumSever(appEnv.getAppiumSever());
-        appTestConfig.setAppPackage(appEnv.getAppPackage());
-        appTestConfig.setAppActivity(appEnv.getAppActivity());
-        appTestConfig.setDeviceName(appEnv.getDeviceName());
-
         AppSceneTestRequest appSceneTestRequest = new AppSceneTestRequest();
-        appSceneTestRequest.setAppTestConfig(appTestConfig);
+        appSceneTestRequest.setAppEnvId(testPlanTestData.getAppEnv());
         appSceneTestRequest.setAppSceneId(caseId);
 
         appSceneTestDispatchService.executeStart(appSceneTestRequest);

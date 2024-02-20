@@ -24,6 +24,8 @@ import io.thoughtware.teston.test.web.scene.execute.model.WebSceneTestResponse;
 import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstance;
 import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceService;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,8 @@ import java.util.List;
  */
 @Service
 public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchService {
+
+    private static Logger logger = LoggerFactory.getLogger(WebSceneTestDispatchServiceImpl.class);
 
     @Autowired
     WebSceneStepService webSceneStepService;
@@ -85,6 +89,24 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         //执行
         try {
             executeStart(webSceneTestRequest);
+
+            try {
+                //执行完，保存最总结果
+                result(webSceneTestRequest);
+                Thread.sleep(3000);
+
+                logger.info("------------------------------------------数据清理------------------------------------------");
+
+                //清理数据
+                if(enable){
+                    webSceneTestService.cleanUpData(webSceneId);
+                }else {
+                    String agentUrl = getAgent();
+                    webSceneTestServiceRPC(agentUrl).cleanUpData(webSceneId);
+                }
+            }catch (Exception e){
+                throw new ApplicationException(e);
+            }
         } catch (Exception e){
             updateStatus(webSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
             throw new ApplicationException(e);
@@ -116,6 +138,8 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
             String agentUrl = getAgent();
             webSceneTestServiceRPC(agentUrl).execute(webSceneTestRequest);
         }
+
+
     }
 
     /**

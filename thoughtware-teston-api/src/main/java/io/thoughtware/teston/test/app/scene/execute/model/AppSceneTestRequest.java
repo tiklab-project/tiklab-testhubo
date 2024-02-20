@@ -22,14 +22,11 @@ public class AppSceneTestRequest extends BaseModel {
     @ApiProperty(name = "appSceneStep", desc = "app场景用例")
     private AppSceneStep appSceneStep;
 
-    @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
-    private AppTestConfig appTestConfig;
-
-    @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
+    @ApiProperty(name = "appEnv", desc = "app场景测试配置")
     private AppEnv appEnv;
 
-    @ApiProperty(name = "appTestConfig", desc = "app场景测试配置")
-    private List<AppTestConfig> appTestConfigList;
+    @ApiProperty(name = "appEnvId", desc = "app环境id")
+    private String appEnvId;
 
     @ApiProperty(name = "stepCommonList", desc = "app场景测试数据")
     private List<StepCommon> stepCommonList;
@@ -52,14 +49,6 @@ public class AppSceneTestRequest extends BaseModel {
         this.currentAgentId = currentAgentId;
     }
 
-    public List<AppTestConfig> getAppTestConfigList() {
-        return appTestConfigList;
-    }
-
-    public void setAppTestConfigList(List<AppTestConfig> appTestConfigList) {
-        this.appTestConfigList = appTestConfigList;
-    }
-
     public String getAppSceneId() {
         return appSceneId;
     }
@@ -74,14 +63,6 @@ public class AppSceneTestRequest extends BaseModel {
 
     public void setAppSceneStep(AppSceneStep appSceneStep) {
         this.appSceneStep = appSceneStep;
-    }
-
-    public AppTestConfig getAppTestConfig() {
-        return appTestConfig;
-    }
-
-    public void setAppTestConfig(AppTestConfig appTestConfig) {
-        this.appTestConfig = appTestConfig;
     }
 
     public List<StepCommon> getStepCommonList() {
@@ -114,5 +95,13 @@ public class AppSceneTestRequest extends BaseModel {
 
     public void setAppEnv(AppEnv appEnv) {
         this.appEnv = appEnv;
+    }
+
+    public String getAppEnvId() {
+        return appEnvId;
+    }
+
+    public void setAppEnvId(String appEnvId) {
+        this.appEnvId = appEnvId;
     }
 }

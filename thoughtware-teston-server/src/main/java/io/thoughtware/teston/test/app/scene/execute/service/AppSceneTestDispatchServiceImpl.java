@@ -6,6 +6,7 @@ import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
+import io.thoughtware.teston.support.environment.model.AppEnv;
 import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
 import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
@@ -89,9 +90,6 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         return rpcClientAppUtil.rpcClient().getBean(AppSceneTestService.class, new FixedLookup(agentUrl));
     }
 
-    private AgentConfig agentConfig = null;
-
-
 
     @Override
     public void execute(AppSceneTestRequest appSceneTestRequest) {
@@ -100,17 +98,41 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         String appSceneInstanceId = createInitInstance(appSceneId, stepNum);
 
         try {
-            logger.info("---------------app---------------");
             executeStart(appSceneTestRequest);
         }catch (Exception e){
             updateStatus(appSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
             throw new ApplicationException(e);
         }
+
+
+        try {
+            //执行完，保存最总结果
+            result(appSceneTestRequest);
+            Thread.sleep(3000);
+
+            logger.info("------------------------------------------数据清理------------------------------------------");
+
+            //清理数据
+            if(enable){
+                appSceneTestService.cleanUpData(appSceneId);
+            }else {
+                String agentUrl = getAgent();
+                appSceneTestServiceRPC(agentUrl).cleanUpData(appSceneId);
+            }
+        }catch (Exception e){
+            throw new ApplicationException(e);
+        }
+
     }
 
     @Override
     public void executeStart(AppSceneTestRequest appSceneTestRequest){
         String appSceneId = appSceneTestRequest.getAppSceneId();
+
+        //环境
+        String appEnvId = appSceneTestRequest.getAppEnvId();
+        AppEnv appEnv = appEnvService.findAppEnv(appEnvId);
+        appSceneTestRequest.setAppEnv(appEnv);
 
         //设置变量数据
         JSONObject variable = variableService.getVariable(appSceneId);
@@ -129,12 +151,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         if(enable) {
             appSceneTestService.execute(appSceneTestRequest);
         }else {
-            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-            if(CollectionUtils.isNotEmpty(agentConfigList)){
-                AgentConfig agentConfig = agentConfigList.get(0);
+            String agentUrl = getAgent();
+            appSceneTestServiceRPC(agentUrl).execute(appSceneTestRequest);
 
-                appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
-            }
         }
 
     }
@@ -206,7 +225,8 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
                 //调用执行方法返回结果数据
                 appSceneTestResponse = appSceneTestService.result(appSceneTestRequest);
             }else {
-                appSceneTestResponse = appSceneTestServiceRPC(agentConfig.getUrl()).result(appSceneTestRequest);
+                String agentUrl = getAgent();
+                appSceneTestResponse = appSceneTestServiceRPC(agentUrl).result(appSceneTestRequest);
             }
         }catch (Exception e){
             appSceneTestResponse.setStatus(0);
@@ -266,6 +286,18 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         Instance instance = instanceService.findInstance(instanceId);
         instance.setStatus(status);
         instanceService.updateInstance(instance);
+    }
+
+
+    private String getAgent(){
+        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+        if(CollectionUtils.isNotEmpty(agentConfigList)){
+            AgentConfig agentConfig = agentConfigList.get(0);
+            String url = agentConfig.getUrl();
+            return url;
+        }
+
+        return null;
     }
 
 }
