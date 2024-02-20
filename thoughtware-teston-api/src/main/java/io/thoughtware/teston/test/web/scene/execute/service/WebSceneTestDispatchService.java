@@ -15,10 +15,15 @@ public interface WebSceneTestDispatchService {
      */
     void execute(WebSceneTestRequest webSceneTestRequest);
 
+
+    void executeStart(WebSceneTestRequest webSceneTestRequest);
+
     /**
      * 获取当前的执行后的数据
      * @return
      */
     WebSceneTestResponse result(WebSceneTestRequest webSceneTestRequest);
+
+    WebSceneTestResponse getResult(WebSceneTestRequest webSceneTestRequest);
 
 }

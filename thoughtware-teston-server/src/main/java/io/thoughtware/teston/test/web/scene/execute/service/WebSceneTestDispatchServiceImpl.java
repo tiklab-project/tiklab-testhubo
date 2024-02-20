@@ -76,19 +76,23 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         return rpcClientWebUtil.rpcClient().getBean(WebSceneTestService.class, new FixedLookup(agentUrl));
     }
 
-    private AgentConfig agentConfig = null;
-
     @Override
     public void execute(WebSceneTestRequest webSceneTestRequest) {
+        String webSceneId = webSceneTestRequest.getWebSceneId();
+        int stepNum = stepCommonService.findStepNum(webSceneId);
+        String webSceneInstanceId = createInitInstance(webSceneId, stepNum);
+
         //执行
         try {
             executeStart(webSceneTestRequest);
         } catch (Exception e){
+            updateStatus(webSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
             throw new ApplicationException(e);
         }
     }
 
-    private void executeStart(WebSceneTestRequest webSceneTestRequest){
+    @Override
+    public void executeStart(WebSceneTestRequest webSceneTestRequest){
         String webSceneId = webSceneTestRequest.getWebSceneId();
 
         //设置变量数据
@@ -103,26 +107,14 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         //设置步骤数据
         webSceneTestRequest.setStepCommonList(stepCommonList);
 
-        int stepNum = (stepCommonList != null) ? stepCommonList.size() : 0;
-        String webSceneInstanceId = createInitInstance(webSceneId, stepNum);
-
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        try {
-            if(enable) {
-                //调用执行方法返回结果数据
-                webSceneTestService.execute(webSceneTestRequest);
-            }else {
-                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-                if(CollectionUtils.isNotEmpty(agentConfigList)){
-                    agentConfig = agentConfigList.get(0);
-
-                    webSceneTestServiceRPC(agentConfig.getUrl()).execute(webSceneTestRequest);
-                }
-            }
-        }catch (Exception e){
-            updateStatus(webSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
-            throw new ApplicationException(e);
+        if(enable) {
+            //调用执行方法返回结果数据
+            webSceneTestService.execute(webSceneTestRequest);
+        }else {
+            String agentUrl = getAgent();
+            webSceneTestServiceRPC(agentUrl).execute(webSceneTestRequest);
         }
     }
 
@@ -175,6 +167,16 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     @Override
     public WebSceneTestResponse result(WebSceneTestRequest webSceneTestRequest) {
 
+        //获取测试结果
+        WebSceneTestResponse webSceneTestResponse = getResult(webSceneTestRequest);
+
+        //status为0执行结束，存入历史
+        updateInstance(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
+        return webSceneTestResponse;
+    }
+
+    @Override
+    public WebSceneTestResponse getResult(WebSceneTestRequest webSceneTestRequest){
         WebSceneTestResponse webSceneTestResponse = new WebSceneTestResponse();
 
         //根据环境配置是否为内嵌
@@ -182,24 +184,19 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         try{
             if(enable) {
                 //调用执行方法返回结果数据
-                webSceneTestResponse = webSceneTestService.result(webSceneTestRequest);
+                webSceneTestResponse=  webSceneTestService.result(webSceneTestRequest);
             }else {
-                webSceneTestResponse = webSceneTestServiceRPC(agentConfig.getUrl()).result(webSceneTestRequest);
+                String agentUrl = getAgent();
+                webSceneTestResponse =  webSceneTestServiceRPC(agentUrl).result(webSceneTestRequest);
             }
         }catch (Exception e){
             webSceneTestResponse.setStatus(0);
             throw new ApplicationException(e);
         }
 
-        //测试计划中设置了执行类型，其他没设置
-        if(webSceneTestRequest.getExeType()==null){
-
-            //status为0执行结束，存入历史
-            updateInstance(webSceneTestResponse,webSceneTestRequest.getWebSceneId());
-        }
-
         return webSceneTestResponse;
     }
+
 
     /**
      * 更新历史
@@ -261,6 +258,17 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     }
 
 
+
+    private String getAgent(){
+        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+        if(CollectionUtils.isNotEmpty(agentConfigList)){
+            AgentConfig agentConfig = agentConfigList.get(0);
+            String url = agentConfig.getUrl();
+            return url;
+        }
+
+        return null;
+    }
 
 
 

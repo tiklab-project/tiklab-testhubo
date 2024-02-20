@@ -27,4 +27,8 @@ public interface ApiPerfExecuteDispatchService {
 
 
 
+    void executeStart(ApiPerfTestRequest apiPerfTestRequest);
+
+    ApiPerfTestResponse getResult(ApiPerfTestRequest apiPerfTestRequest);
+
 }

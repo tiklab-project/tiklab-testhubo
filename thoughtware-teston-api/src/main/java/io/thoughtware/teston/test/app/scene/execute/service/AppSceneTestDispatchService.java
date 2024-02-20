@@ -22,4 +22,20 @@ public interface AppSceneTestDispatchService {
     AppSceneTestResponse result(AppSceneTestRequest appSceneTestRequest);
 
 
+
+
+    /**
+     * 执行
+     * 公共方法，testplan也需要用
+     * @param appSceneTestRequest
+     */
+    void executeStart(AppSceneTestRequest appSceneTestRequest);
+
+    /**
+     * 获取当前的执行后的数据
+     * 公共方法，testplan也需要用
+     * @param appSceneTestRequest
+     * @return
+     */
+    AppSceneTestResponse getResult(AppSceneTestRequest appSceneTestRequest);
 }

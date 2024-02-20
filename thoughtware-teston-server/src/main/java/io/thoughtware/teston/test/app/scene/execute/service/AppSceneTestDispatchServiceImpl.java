@@ -95,15 +95,21 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Override
     public void execute(AppSceneTestRequest appSceneTestRequest) {
+        String appSceneId = appSceneTestRequest.getAppSceneId();
+        int stepNum = stepCommonService.findStepNum(appSceneId);
+        String appSceneInstanceId = createInitInstance(appSceneId, stepNum);
+
         try {
             logger.info("---------------app---------------");
             executeStart(appSceneTestRequest);
         }catch (Exception e){
+            updateStatus(appSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
             throw new ApplicationException(e);
         }
     }
 
-    private void executeStart(AppSceneTestRequest appSceneTestRequest){
+    @Override
+    public void executeStart(AppSceneTestRequest appSceneTestRequest){
         String appSceneId = appSceneTestRequest.getAppSceneId();
 
         //设置变量数据
@@ -118,27 +124,19 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         //设置步骤数据
         appSceneTestRequest.setStepCommonList(stepCommonList);
 
-        int stepNum = (stepCommonList != null) ? stepCommonList.size() : 0;
-        String appSceneInstanceId = createInitInstance(appSceneId, stepNum);
-
-
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
-        try {
-            if(enable) {
-                appSceneTestService.execute(appSceneTestRequest);
-            }else {
-                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-                if(CollectionUtils.isNotEmpty(agentConfigList)){
-                    AgentConfig agentConfig = agentConfigList.get(0);
+        if(enable) {
+            appSceneTestService.execute(appSceneTestRequest);
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)){
+                AgentConfig agentConfig = agentConfigList.get(0);
 
-                    appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
-                }
+                appSceneTestServiceRPC(agentConfig.getUrl()).execute(appSceneTestRequest);
             }
-        }catch (Exception e){
-            updateStatus(appSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
-            throw new ApplicationException(e);
         }
+
     }
 
     /**
@@ -189,6 +187,16 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Override
     public AppSceneTestResponse result(AppSceneTestRequest appSceneTestRequest) {
+        AppSceneTestResponse appSceneTestResponse = getResult(appSceneTestRequest);
+
+        //测试计划中设置了值
+        updateInstance(appSceneTestResponse,appSceneTestRequest.getAppSceneId());
+
+        return appSceneTestResponse;
+    }
+
+    @Override
+    public AppSceneTestResponse getResult(AppSceneTestRequest appSceneTestRequest) {
         AppSceneTestResponse appSceneTestResponse = new AppSceneTestResponse();
 
         //根据环境配置是否为内嵌
@@ -205,14 +213,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             throw new ApplicationException(e);
         }
 
-        //测试计划中设置了值
-        if(appSceneTestRequest.getExeType()==null){
-
-            updateInstance(appSceneTestResponse,appSceneTestRequest.getAppSceneId());
-        }
-
         return appSceneTestResponse;
     }
+
 
     private void updateInstance(AppSceneTestResponse appSceneTestResponse,String appSceneId){
         String instanceId = instanceService.getRecentExecuteInstanceId(appSceneId);

@@ -135,16 +135,13 @@ public class TestPlanExecuteApiDispatch {
      * @return
      */
     public void exeApiPerform(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
-        //如果之前执行过，初始化。
-
         ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
         ApiPerfCase apiPerfCase = new ApiPerfCase();
         apiPerfCase.setId(testPlanCaseInstanceBind.getCaseId());
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
-        apiPerfTestRequest.setExeType("testPlanTest");
         apiPerfTestRequest.setApiEnv(testPlanTestData.getApiEnv());
 
-        apiPerfExecuteDispatchService.execute(apiPerfTestRequest);
+        apiPerfExecuteDispatchService.executeStart(apiPerfTestRequest);
 
     }
 
@@ -156,7 +153,7 @@ public class TestPlanExecuteApiDispatch {
         ApiPerfCase apiPerfCase = new ApiPerfCase();
         apiPerfCase.setId(apiPerfId);
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.result(apiPerfTestRequest);
+        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.getResult(apiPerfTestRequest);
 
         if(apiPerfTestResponse!=null){
             if(apiPerfTestResponse.getStatus()==0) {

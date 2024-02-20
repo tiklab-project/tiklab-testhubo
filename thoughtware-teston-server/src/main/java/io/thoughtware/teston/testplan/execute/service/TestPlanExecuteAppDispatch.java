@@ -45,18 +45,13 @@ public class TestPlanExecuteAppDispatch {
     @Autowired
     AppPerfInstanceService appPerfInstanceService;
 
-    
-    public Integer appPerfStatus = 0;
 
-    private String appPerfInstanceId;
-
-    private String planInstanceId;
-
-    private boolean isFirst=true;
-
-    private TestPlanCase testPlanCaseData;
-
-    private AppPerfTestRequest appPerfTestRequest = new AppPerfTestRequest();
+//    public Integer appPerfStatus = 0;
+//    private String appPerfInstanceId;
+//    private String planInstanceId;
+//    private boolean isFirst=true;
+//    private TestPlanCase testPlanCaseData;
+//    private AppPerfTestRequest appPerfTestRequest = new AppPerfTestRequest();
 
 
 
@@ -81,7 +76,7 @@ public class TestPlanExecuteAppDispatch {
         appSceneTestRequest.setAppTestConfig(appTestConfig);
         appSceneTestRequest.setAppSceneId(caseId);
 
-        appSceneTestDispatchService.execute(appSceneTestRequest);
+        appSceneTestDispatchService.executeStart(appSceneTestRequest);
     }
 
 
@@ -90,8 +85,7 @@ public class TestPlanExecuteAppDispatch {
 
         AppSceneTestRequest appSceneTestRequest = new AppSceneTestRequest();
         appSceneTestRequest.setAppSceneId(caseId);
-        appSceneTestRequest.setExeType("plan");
-        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.result(appSceneTestRequest);
+        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.getResult(appSceneTestRequest);
 
         if(appSceneTestResponse.getAppSceneInstance()!=null){
             testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
@@ -119,73 +113,73 @@ public class TestPlanExecuteAppDispatch {
 
 
 
-
-    
-    public void exeAppPerform(TestPlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId) {
-        //如果之前执行过，初始化。
-        appPerfInstanceId=null;
-        isFirst=true;
-        testPlanCaseData = testPlanCase;
-        planInstanceId=testPlanInstanceId;
-        appPerfStatus=1;
-
-        AppPerfCase appPerfCase = new AppPerfCase();
-        appPerfCase.setId(testPlanCase.getTestCase().getId());
-        
-        appPerfTestRequest.setAppPerfCase(appPerfCase);
-
-        String appEnvId = testPlanTestData.getAppEnv();
-        AppEnv appEnv = appEnvService.findAppEnv(appEnvId);
-
-        AppTestConfig appTestConfig = new AppTestConfig();
-        appTestConfig.setPlatformName(appEnv.getPlatformName());
-        appTestConfig.setAppiumSever(appEnv.getAppiumSever());
-        appTestConfig.setAppPackage(appEnv.getAppPackage());
-        appTestConfig.setAppActivity(appEnv.getAppActivity());
-        appTestConfig.setDeviceName(appEnv.getDeviceName());
-
-        appPerfTestRequest.setAppTestConfig(appTestConfig);
-        appPerfTestRequest.setExeType("testPlanTest");
-
-
-        appPerfTestDispatchService.execute(appPerfTestRequest);
-    }
-
-
-
-    public TestPlanCaseInstanceBind appPerfResult(){
-        AppPerfTestResponse appPerfTestResponse = appPerfTestDispatchService.exeResult(appPerfTestRequest);
-
-        //测试计划历史 与 绑定用例的历史 公共历史表
-        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
-
-        //是否第一次创建
-        if (isFirst) {
-            String caseType = testPlanCaseData.getTestCase().getCaseType();
-            String testType = testPlanCaseData.getTestCase().getTestType();
-            String name = testPlanCaseData.getTestCase().getName();
-
-            appPerfInstanceId = appPerfInstanceService.createAppPerfInstance(new AppPerfInstance());
-
-            testPlanCaseInstanceBind.setCaseInstanceId(appPerfInstanceId);
-            testPlanCaseInstanceBind.setTestPlanInstanceId(planInstanceId);
-            testPlanCaseInstanceBind.setName(name);
-            testPlanCaseInstanceBind.setCaseType(caseType);
-            testPlanCaseInstanceBind.setTestType(testType);
-            testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-
-            isFirst=false;
-        }else {
-            AppPerfInstance appPerfInstance = appPerfTestResponse.getAppPerfInstance();
-            appPerfInstance.setId(appPerfInstanceId);
-            appPerfInstanceService.updateAppPerfInstance(appPerfInstance);
-        }
-
-        appPerfStatus=appPerfTestResponse.getStatus();
-
-        return testPlanCaseInstanceBind;
-    }
-
+//
+//
+//    public void exeAppPerform(TestPlanCase testPlanCase, TestPlanTestData testPlanTestData, String testPlanInstanceId) {
+//        //如果之前执行过，初始化。
+//        appPerfInstanceId=null;
+//        isFirst=true;
+//        testPlanCaseData = testPlanCase;
+//        planInstanceId=testPlanInstanceId;
+//        appPerfStatus=1;
+//
+//        AppPerfCase appPerfCase = new AppPerfCase();
+//        appPerfCase.setId(testPlanCase.getTestCase().getId());
+//
+//        appPerfTestRequest.setAppPerfCase(appPerfCase);
+//
+//        String appEnvId = testPlanTestData.getAppEnv();
+//        AppEnv appEnv = appEnvService.findAppEnv(appEnvId);
+//
+//        AppTestConfig appTestConfig = new AppTestConfig();
+//        appTestConfig.setPlatformName(appEnv.getPlatformName());
+//        appTestConfig.setAppiumSever(appEnv.getAppiumSever());
+//        appTestConfig.setAppPackage(appEnv.getAppPackage());
+//        appTestConfig.setAppActivity(appEnv.getAppActivity());
+//        appTestConfig.setDeviceName(appEnv.getDeviceName());
+//
+//        appPerfTestRequest.setAppTestConfig(appTestConfig);
+//        appPerfTestRequest.setExeType("testPlanTest");
+//
+//
+//        appPerfTestDispatchService.execute(appPerfTestRequest);
+//    }
+//
+//
+//
+//    public TestPlanCaseInstanceBind appPerfResult(){
+//        AppPerfTestResponse appPerfTestResponse = appPerfTestDispatchService.exeResult(appPerfTestRequest);
+//
+//        //测试计划历史 与 绑定用例的历史 公共历史表
+//        TestPlanCaseInstanceBind testPlanCaseInstanceBind = new TestPlanCaseInstanceBind();
+//
+//        //是否第一次创建
+//        if (isFirst) {
+//            String caseType = testPlanCaseData.getTestCase().getCaseType();
+//            String testType = testPlanCaseData.getTestCase().getTestType();
+//            String name = testPlanCaseData.getTestCase().getName();
+//
+//            appPerfInstanceId = appPerfInstanceService.createAppPerfInstance(new AppPerfInstance());
+//
+//            testPlanCaseInstanceBind.setCaseInstanceId(appPerfInstanceId);
+//            testPlanCaseInstanceBind.setTestPlanInstanceId(planInstanceId);
+//            testPlanCaseInstanceBind.setName(name);
+//            testPlanCaseInstanceBind.setCaseType(caseType);
+//            testPlanCaseInstanceBind.setTestType(testType);
+//            testPlanCaseInstanceBindService.createTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+//
+//            isFirst=false;
+//        }else {
+//            AppPerfInstance appPerfInstance = appPerfTestResponse.getAppPerfInstance();
+//            appPerfInstance.setId(appPerfInstanceId);
+//            appPerfInstanceService.updateAppPerfInstance(appPerfInstance);
+//        }
+//
+//        appPerfStatus=appPerfTestResponse.getStatus();
+//
+//        return testPlanCaseInstanceBind;
+//    }
+//
 
 
 

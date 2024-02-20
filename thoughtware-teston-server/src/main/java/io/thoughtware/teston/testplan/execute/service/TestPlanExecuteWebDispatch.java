@@ -42,7 +42,7 @@ public class TestPlanExecuteWebDispatch {
         webSceneTestRequest.setWebSceneId(testPlanCaseInstanceBind.getCaseId());
 
         //执行
-        webSceneTestDispatchService.execute(webSceneTestRequest);
+        webSceneTestDispatchService.executeStart(webSceneTestRequest);
     }
 
 
@@ -51,8 +51,7 @@ public class TestPlanExecuteWebDispatch {
 
         WebSceneTestRequest webSceneTestRequest=new WebSceneTestRequest();
         webSceneTestRequest.setWebSceneId(caseId);
-        webSceneTestRequest.setExeType("plan");
-        WebSceneTestResponse webSceneTestResponse = webSceneTestDispatchService.result(webSceneTestRequest);
+        WebSceneTestResponse webSceneTestResponse = webSceneTestDispatchService.getResult(webSceneTestRequest);
 
         if(webSceneTestResponse.getWebSceneInstance()!=null){
             testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
