@@ -10,11 +10,9 @@ import io.thoughtware.teston.support.environment.model.AppEnv;
 import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
 import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
-import io.thoughtware.teston.test.app.scene.cases.service.AppSceneStepService;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestRequest;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstance;
-import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceService;
 import io.thoughtware.teston.test.app.utils.RpcClientAppUtil;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
@@ -26,7 +24,6 @@ import io.thoughtware.rpc.client.router.lookup.FixedLookup;
 import io.thoughtware.teston.agent.app.scene.AppSceneTestService;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.support.environment.service.AppEnvService;
-import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +40,6 @@ import java.util.List;
 public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchService {
 
     private static Logger logger = LoggerFactory.getLogger(AppSceneTestDispatchServiceImpl.class);
-
-    @Autowired
-    AppSceneStepService appSceneStepService;
 
     @Autowired
     AppSceneInstanceService appSceneInstanceService;
@@ -65,7 +59,6 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
 
     @Autowired
     VariableService variableService;
-
 
     @Autowired
     StepCommonService stepCommonService;
