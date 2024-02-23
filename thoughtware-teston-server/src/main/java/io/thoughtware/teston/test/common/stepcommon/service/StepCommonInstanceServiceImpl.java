@@ -68,7 +68,32 @@ public class StepCommonInstanceServiceImpl implements StepCommonInstanceService 
     public void deleteStepCommonInstance(@NotNull String id,String caseType) {
         stepCommonInstanceDao.deleteStepCommonInstance(id);
 
+        switch (caseType){
+            case MagicValue.CASE_TYPE_API_SCENE :
+                apiUnitInstanceService.deleteApiUnitInstance(id);
+                break;
+            case MagicValue.CASE_TYPE_APP:
+                webSceneInstanceStepService.deleteWebSceneInstanceStep(id);
+                break;
+            case MagicValue.CASE_TYPE_WEB:
+                appSceneInstanceStepService.deleteAppSceneInstanceStep(id);
+                break;
+            case MagicValue.CASE_TYPE_IF:
+                ifJudgmentInstanceService.deleteIfJudgmentInstance(id);
+        }
+
     }
+
+    @Override
+    public void deleteAllStepCommonInstance( String instanceId) {
+        StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();
+        stepCommonInstanceQuery.setInstanceId(instanceId);
+        List<StepCommonInstance> stepCommonInstanceList = findStepCommonInstanceList(stepCommonInstanceQuery);
+        for(StepCommonInstance stepCommonInstance:stepCommonInstanceList){
+            deleteStepCommonInstance(stepCommonInstance.getId(),stepCommonInstance.getType());
+        }
+    }
+
 
     @Override
     public StepCommonInstance findOne(String id) {
@@ -99,6 +124,7 @@ public class StepCommonInstanceServiceImpl implements StepCommonInstanceService 
                     case MagicValue.CASE_TYPE_API_SCENE:
                         ApiUnitInstance apiUnitInstance = apiUnitInstanceService.findApiUnitInstance(stepCommonInstance.getId());
                         stepCommonInstance.setApiUnitInstance(apiUnitInstance);
+                        break;
                     case MagicValue.CASE_TYPE_APP:
                         AppSceneInstanceStep appSceneInstanceStep = appSceneInstanceStepService.findAppSceneInstanceStep(stepCommonInstance.getId());
                         stepCommonInstance.setAppSceneInstanceStep(appSceneInstanceStep);

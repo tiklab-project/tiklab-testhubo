@@ -32,6 +32,8 @@ public interface AssertService {
     */
     void deleteAssertCase(@NotNull String id);
 
+    void deleteAllAssertCase( String caseId);
+
     AssertUnit findOne(@NotNull String id);
 
     List<AssertUnit> findList(List<String> idList);

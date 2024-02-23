@@ -1,5 +1,7 @@
 package io.thoughtware.teston.category.service;
 
+import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -58,6 +60,14 @@ public class CategoryServiceImpl implements CategoryService {
         testCaseService.deleteTestCaseByCategoryId(id);
 
         categoryDao.deleteCategory(id);
+    }
+
+    @Override
+    public void deleteAllCategory(String repositoryId) {
+        DeleteCondition deleteCondition = DeleteBuilders.createDelete(CategoryEntity.class)
+                .eq("repositoryId",repositoryId)
+                .get();
+        categoryDao.deleteCategory(deleteCondition);
     }
 
     @Override

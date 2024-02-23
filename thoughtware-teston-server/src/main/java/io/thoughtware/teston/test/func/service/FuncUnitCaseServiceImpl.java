@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.func.service;
 
+import io.thoughtware.teston.integrated.teamwire.workItemBind.service.WorkItemBindService;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.func.model.FuncUnitCase;
 import io.thoughtware.teston.test.func.model.FuncUnitCaseQuery;
@@ -50,6 +51,9 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
     @Autowired
     StepCommonService stepCommonService;
 
+    @Autowired
+    WorkItemBindService workItemBindService;
+
     @Override
     public String createFuncUnitCase(@NotNull @Valid FuncUnitCase funcUnitCase) {
         FuncUnitCaseEntity funcUnitCaseEntity = BeanMapper.map(funcUnitCase, FuncUnitCaseEntity.class);
@@ -79,7 +83,9 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
     public void deleteFuncUnitCase(@NotNull String id) {
         funcUnitCaseDao.deleteFuncUnitCase(id);
 
-        testCaseService.deleteTestCase(id);
+        stepCommonService.deleteAllStepCommon(id);
+
+        workItemBindService.deleteAllWorkItemBind(id);
     }
 
     @Override

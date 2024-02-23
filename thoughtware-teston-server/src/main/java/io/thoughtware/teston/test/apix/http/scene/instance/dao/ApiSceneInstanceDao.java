@@ -31,7 +31,7 @@ public class ApiSceneInstanceDao {
      * @param testInstanceEntity
      * @return
      */
-    public String createTestInstance(ApiSceneInstanceEntity testInstanceEntity) {
+    public String createApiSceneInstance(ApiSceneInstanceEntity testInstanceEntity) {
         return jpaTemplate.save(testInstanceEntity,String.class);
     }
 
@@ -39,7 +39,7 @@ public class ApiSceneInstanceDao {
      * 更新
      * @param testInstanceEntity
      */
-    public void updateTestInstance(ApiSceneInstanceEntity testInstanceEntity){
+    public void updateApiSceneInstance(ApiSceneInstanceEntity testInstanceEntity){
         jpaTemplate.update(testInstanceEntity);
     }
 
@@ -47,11 +47,11 @@ public class ApiSceneInstanceDao {
      * 删除接口场景历史实例
      * @param id
      */
-    public void deleteTestInstance(String id){
+    public void deleteApiSceneInstance(String id){
         jpaTemplate.delete(ApiSceneInstanceEntity.class,id);
     }
 
-    public void deleteTestInstance(DeleteCondition deleteCondition){
+    public void deleteApiSceneInstance(DeleteCondition deleteCondition){
         jpaTemplate.delete(deleteCondition);
     }
 
@@ -60,7 +60,7 @@ public class ApiSceneInstanceDao {
      * @param id
      * @return
      */
-    public ApiSceneInstanceEntity findTestInstance(String id){
+    public ApiSceneInstanceEntity findApiSceneInstance(String id){
         return jpaTemplate.findOne(ApiSceneInstanceEntity.class,id);
     }
 
@@ -68,11 +68,11 @@ public class ApiSceneInstanceDao {
     * 查找所有接口场景历史实例
     * @return
     */
-    public List<ApiSceneInstanceEntity> findAllTestInstance() {
+    public List<ApiSceneInstanceEntity> findAllApiSceneInstance() {
         return jpaTemplate.findAll(ApiSceneInstanceEntity.class);
     }
 
-    public List<ApiSceneInstanceEntity> findTestInstanceList(List<String> idList) {
+    public List<ApiSceneInstanceEntity> findApiSceneInstanceList(List<String> idList) {
         return jpaTemplate.findList(ApiSceneInstanceEntity.class,idList);
     }
 
@@ -81,7 +81,7 @@ public class ApiSceneInstanceDao {
      * @param apiSceneInstanceQuery
      * @return
      */
-    public List<ApiSceneInstanceEntity> findTestInstanceList(ApiSceneInstanceQuery apiSceneInstanceQuery) {
+    public List<ApiSceneInstanceEntity> findApiSceneInstanceList(ApiSceneInstanceQuery apiSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneInstanceEntity.class)
                 .eq("apiSceneId", apiSceneInstanceQuery.getApiSceneId())
                 .orders(apiSceneInstanceQuery.getOrderParams())
@@ -94,7 +94,7 @@ public class ApiSceneInstanceDao {
      * @param apiSceneInstanceQuery
      * @return
      */
-    public Pagination<ApiSceneInstanceEntity> findTestInstancePage(ApiSceneInstanceQuery apiSceneInstanceQuery) {
+    public Pagination<ApiSceneInstanceEntity> findApiSceneInstancePage(ApiSceneInstanceQuery apiSceneInstanceQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiSceneInstanceEntity.class)
                 .eq("apiSceneId", apiSceneInstanceQuery.getApiSceneId())
                 .orders(apiSceneInstanceQuery.getOrderParams())

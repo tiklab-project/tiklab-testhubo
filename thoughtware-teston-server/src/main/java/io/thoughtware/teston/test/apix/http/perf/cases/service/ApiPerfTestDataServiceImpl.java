@@ -54,6 +54,16 @@ public class ApiPerfTestDataServiceImpl implements ApiPerfTestDataService {
     }
 
     @Override
+    public void deleteAllApiPerfTestData(String caseId) {
+        ApiPerfTestDataQuery apiPerfTestDataQuery = new ApiPerfTestDataQuery();
+        apiPerfTestDataQuery.setCaseId(caseId);
+        List<ApiPerfTestData> apiPerfTestDataList = findApiPerfTestDataList(apiPerfTestDataQuery);
+        for(ApiPerfTestData apiPerfTestData: apiPerfTestDataList){
+            deleteApiPerfTestData(apiPerfTestData.getId());
+        }
+    }
+
+    @Override
     public ApiPerfTestData findOne(String id) {
         ApiPerfTestDataEntity apiPerfTestDataEntity = apiPerfTestDataDao.findApiPerfTestData(id);
 

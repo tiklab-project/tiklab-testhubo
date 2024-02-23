@@ -1,5 +1,7 @@
 package io.thoughtware.teston.support.environment.service;
 
+import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.support.environment.dao.ApiEnvDao;
 import io.thoughtware.toolkit.beans.BeanMapper;
@@ -47,6 +49,16 @@ public class ApiEnvServiceImpl implements ApiEnvService {
     public void deleteApiEnv(@NotNull String id) {
         apiEnvDao.deleteApiEnv(id);
     }
+
+    @Override
+    public void deleteAllApiEnv(String repositoryId) {
+        DeleteCondition deleteCondition = DeleteBuilders.createDelete(ApiEnvEntity.class)
+                .eq("repositoryId", repositoryId)
+                .get();
+        apiEnvDao.deleteApiEnv(deleteCondition);
+    }
+
+
 
     @Override
     public ApiEnv findOne(String id) {

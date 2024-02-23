@@ -37,6 +37,9 @@ public interface VariableService {
     * @param id
     */
     void deleteVariable(@NotNull String id);
+
+    void deleteAllVariable(String caseId);
+
     @FindOne
     Variable findOne(@NotNull String id);
     @FindList

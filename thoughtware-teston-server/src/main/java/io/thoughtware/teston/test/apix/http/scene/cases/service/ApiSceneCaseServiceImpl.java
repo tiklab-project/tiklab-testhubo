@@ -1,5 +1,7 @@
 package io.thoughtware.teston.test.apix.http.scene.cases.service;
 
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCase;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCaseQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
@@ -50,6 +52,12 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
     @Autowired
     StepCommonService stepCommonService;
 
+    @Autowired
+    VariableService variableService;
+
+    @Autowired
+    InstanceService instanceService;
+
     @Override
     public String createApiSceneCase(@NotNull @Valid ApiSceneCase apiSceneCase) {
         ApiSceneCaseEntity apiSceneCaseEntity = BeanMapper.map(apiSceneCase, ApiSceneCaseEntity.class);
@@ -81,22 +89,13 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
 
     @Override
     public void deleteApiSceneCase(@NotNull String id) {
-        //删除测试用例下面的步骤 和子表
-        /*
-        DeleteCondition deleteCondition = DeleteBuilders.createDelete(AppApiSceneCaseEntity.class)
-                .eq("apiSceneCaseId", id)
-                .get();
-        apiSceneCaseAppDao.deleteApiSceneCaseApp(deleteCondition);
-
-        deleteCondition = DeleteBuilders.createDelete(ApiUnitCaseEntity.class)
-                .eq("apiSceneCaseId", id)
-                .get();
-        stepDao.deleteApiApiSceneCase(deleteCondition);
-         */
-
         apiSceneCaseDao.deleteApiSceneCase(id);
 
-        testCaseService.deleteTestCase(id);
+        stepCommonService.deleteAllStepCommon(id);
+
+        variableService.deleteAllVariable(id);
+
+        instanceService.deleteAllInstance(id);
     }
 
     @Override

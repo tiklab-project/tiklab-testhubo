@@ -32,6 +32,8 @@ public interface FormUrlencodedService {
     */
     void deleteFormUrlencoded(@NotNull String id);
 
+    void deleteAllFormUrlencoded( String caseId);
+
     FormUrlEncodedUnit findOne(@NotNull String id);
 
     List<FormUrlEncodedUnit> findList(List<String> idList);

@@ -58,6 +58,18 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     }
 
     @Override
+    public void deleteAllApiPerfStep( String caseId) {
+        ApiPerfStepQuery apiPerfStepQuery = new ApiPerfStepQuery();
+        apiPerfStepQuery.setApiPerfId(caseId);
+        List<ApiPerfStep> apiPerfStepList = findApiPerfStepList(apiPerfStepQuery);
+        for(ApiPerfStep apiPerfStep : apiPerfStepList){
+            apiPerfStepDao.deleteApiPerfStep(apiPerfStep.getId());
+        }
+
+    }
+
+
+    @Override
     public ApiPerfStep findOne(String id) {
         ApiPerfStepEntity apiPerfStepEntity = apiPerfStepDao.findApiPerfStep(id);
 

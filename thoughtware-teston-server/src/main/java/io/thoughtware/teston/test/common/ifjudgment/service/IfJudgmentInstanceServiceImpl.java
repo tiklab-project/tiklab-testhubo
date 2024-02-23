@@ -38,9 +38,11 @@ public class IfJudgmentInstanceServiceImpl implements IfJudgmentInstanceService 
         IfJudgmentInstanceEntity ifJudgmentInstanceEntity = BeanMapper.map(ifJudgmentInstance, IfJudgmentInstanceEntity.class);
         String id = ifJudgmentInstanceDao.createIfJudgmentInstance(ifJudgmentInstanceEntity);
 
-        for (IfVariableInstance ifVariableInstance : ifJudgmentInstance.getIfVariableInstanceList()) {
-            ifVariableInstance.setStepInstanceId(id);
-            ifVariableInstanceService.createIfVariableInstance(ifVariableInstance);
+        if(ifJudgmentInstance.getIfVariableInstanceList() != null){
+            for (IfVariableInstance ifVariableInstance : ifJudgmentInstance.getIfVariableInstanceList()) {
+                ifVariableInstance.setStepInstanceId(id);
+                ifVariableInstanceService.createIfVariableInstance(ifVariableInstance);
+            }
         }
 
         return id;
@@ -55,8 +57,9 @@ public class IfJudgmentInstanceServiceImpl implements IfJudgmentInstanceService 
 
     @Override
     public void deleteIfJudgmentInstance(@NotNull String id) {
-
         ifJudgmentInstanceDao.deleteIfJudgmentInstance(id);
+
+        ifVariableInstanceService.deleteAllIfVariableInstance(id);
     }
 
     @Override

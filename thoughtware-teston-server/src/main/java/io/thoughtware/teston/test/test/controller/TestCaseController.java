@@ -55,8 +55,8 @@ public class TestCaseController {
     @RequestMapping(path="/deleteTestCase",method = RequestMethod.POST)
     @ApiMethod(name = "deleteTestCase",desc = "删除测试用例")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<Void> deleteTestCase(@NotNull String id){
-        testCaseService.deleteTestCase(id);
+    public Result<Void> deleteTestCase(@NotNull String id,String caseType){
+        testCaseService.deleteTestCase(id,caseType);
 
         return Result.ok();
     }

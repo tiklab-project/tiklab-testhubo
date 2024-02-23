@@ -1,5 +1,7 @@
 package io.thoughtware.teston.test.web.scene.cases.service;
 
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
@@ -51,6 +53,12 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
     @Autowired
     StepCommonService stepCommonService;
 
+    @Autowired
+    VariableService variableService;
+
+    @Autowired
+    InstanceService instanceService;
+
     @Override
     public String createWebSceneCase(@NotNull @Valid WebSceneCase webSceneCase) {
         WebSceneCaseEntity webSceneCaseEntity = BeanMapper.map(webSceneCase, WebSceneCaseEntity.class);
@@ -80,7 +88,11 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
     public void deleteWebSceneCase(@NotNull String id) {
         webSceneCaseDao.deleteWebSceneCase(id);
 
-        testCaseService.deleteTestCase(id);
+        stepCommonService.deleteAllStepCommon(id);
+
+        variableService.deleteAllVariable(id);
+
+        instanceService.deleteAllInstance(id);
     }
 
     @Override

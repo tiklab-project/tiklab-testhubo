@@ -38,6 +38,12 @@ public interface TestPlanService {
     */
     void deleteTestPlan(@NotNull String id);
 
+    /**
+     * 通过repositoryId删除
+     * @param repositoryId
+     */
+    void deleteAllTestPlan(String repositoryId);
+
     @FindOne
     TestPlan findOne(@NotNull String id);
 

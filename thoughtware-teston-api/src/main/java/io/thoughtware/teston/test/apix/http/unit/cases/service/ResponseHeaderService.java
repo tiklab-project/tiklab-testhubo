@@ -32,6 +32,8 @@ public interface ResponseHeaderService {
     */
     void deleteResponseHeader(@NotNull String id);
 
+    void deleteAllResponseHeader( String caseId);
+
     ResponseHeaderUnit findOne(@NotNull String id);
 
     List<ResponseHeaderUnit> findList(List<String> idList);

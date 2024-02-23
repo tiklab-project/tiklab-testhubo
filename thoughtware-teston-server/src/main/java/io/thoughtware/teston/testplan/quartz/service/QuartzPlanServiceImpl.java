@@ -101,6 +101,17 @@ public class QuartzPlanServiceImpl implements QuartzPlanService {
     }
 
     @Override
+    public void deleteAllQuartzPlan(String testPlanId) {
+        QuartzPlanQuery quartzPlanQuery = new QuartzPlanQuery();
+        quartzPlanQuery.setTestPlanId(testPlanId);
+        List<QuartzPlan> quartzPlanList = findQuartzPlanList(quartzPlanQuery);
+        for(QuartzPlan quartzPlan:quartzPlanList){
+            deleteQuartzPlan(quartzPlan.getId());
+        }
+    }
+
+
+    @Override
     public QuartzPlan findOne(String id) {
         QuartzPlanEntity quartzPlanEntity = quartzPlanDao.findQuartzPlan(id);
 

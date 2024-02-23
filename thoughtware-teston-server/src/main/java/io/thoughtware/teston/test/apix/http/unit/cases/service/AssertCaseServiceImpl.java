@@ -49,6 +49,17 @@ public class AssertCaseServiceImpl implements AssertService {
     }
 
     @Override
+    public void deleteAllAssertCase( String caseId) {
+        AssertUnitQuery assertUnitQuery = new AssertUnitQuery();
+        assertUnitQuery.setApiUnitId(caseId);
+        List<AssertUnit> assertCaseList = findAssertCaseList(assertUnitQuery);
+        for (AssertUnit assertCase : assertCaseList) {
+            assertCaseDao.deleteAssertCase(assertCase.getId());
+        }
+
+    }
+
+    @Override
     public AssertUnit findOne(String id) {
         AssertCaseEntity assertCaseEntity = assertCaseDao.findAssertCase(id);
 

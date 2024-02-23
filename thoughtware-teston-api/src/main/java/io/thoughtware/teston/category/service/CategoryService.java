@@ -38,6 +38,13 @@ public interface CategoryService {
     * @param id
     */
     void deleteCategory(@NotNull String id);
+
+    /**
+     * 通过repositoryId删除所有目录
+     * @param repositoryId
+     */
+    void deleteAllCategory(@NotNull String repositoryId);
+
     @FindOne
     Category findOne(@NotNull String id);
     @FindList

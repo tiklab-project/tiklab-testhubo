@@ -2,6 +2,8 @@ package io.thoughtware.teston.support.environment.service;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
+import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.support.environment.dao.AppEnvDao;
 import io.thoughtware.teston.support.environment.entity.AppEnvEntity;
@@ -49,6 +51,16 @@ public class AppEnvServiceImpl implements AppEnvService {
     public void deleteAppEnv(@NotNull String id) {
         appEnvDao.deleteAppEnv(id);
     }
+
+
+    @Override
+    public void deleteAllAppEnv(String repositoryId) {
+        DeleteCondition deleteCondition = DeleteBuilders.createDelete(AppEnvEntity.class)
+                .eq("repositoryId", repositoryId)
+                .get();
+        appEnvDao.deleteAppEnv(deleteCondition);
+    }
+
 
     @Override
     public AppEnv findOne(String id) {

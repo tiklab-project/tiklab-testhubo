@@ -34,6 +34,8 @@ public interface IfVariableInstanceService {
     */
     void deleteIfVariableInstance(@NotNull String id);
 
+    void deleteAllIfVariableInstance(String stepInstanceId);
+
     @FindOne
     IfVariableInstance findOne(@NotNull String id);
 

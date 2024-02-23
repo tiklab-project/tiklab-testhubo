@@ -33,6 +33,8 @@ public interface QueryParamService {
     */
     void deleteQueryParam(@NotNull String id);
 
+    void deleteAllQueryParam( String caseId);
+
     QueryParamUnit findOne(@NotNull String id);
 
     List<QueryParamUnit> findList(List<String> idList);

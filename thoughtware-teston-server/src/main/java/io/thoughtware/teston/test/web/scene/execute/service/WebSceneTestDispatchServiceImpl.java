@@ -101,7 +101,7 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 if(enable){
                     webSceneTestService.cleanUpData(webSceneId);
                 }else {
-                    String agentUrl = getAgent();
+                    String agentUrl = agentConfigService.getAgent();
                     webSceneTestServiceRPC(agentUrl).cleanUpData(webSceneId);
                 }
             }catch (Exception e){
@@ -135,11 +135,9 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
             //调用执行方法返回结果数据
             webSceneTestService.execute(webSceneTestRequest);
         }else {
-            String agentUrl = getAgent();
+            String agentUrl = agentConfigService.getAgent();
             webSceneTestServiceRPC(agentUrl).execute(webSceneTestRequest);
         }
-
-
     }
 
     /**
@@ -210,7 +208,7 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 //调用执行方法返回结果数据
                 webSceneTestResponse=  webSceneTestService.result(webSceneTestRequest);
             }else {
-                String agentUrl = getAgent();
+                String agentUrl = agentConfigService.getAgent();
                 webSceneTestResponse =  webSceneTestServiceRPC(agentUrl).result(webSceneTestRequest);
             }
         }catch (Exception e){
@@ -279,19 +277,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         Instance instance = instanceService.findInstance(instanceId);
         instance.setStatus(status);
         instanceService.updateInstance(instance);
-    }
-
-
-
-    private String getAgent(){
-        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-        if(CollectionUtils.isNotEmpty(agentConfigList)){
-            AgentConfig agentConfig = agentConfigList.get(0);
-            String url = agentConfig.getUrl();
-            return url;
-        }
-
-        return null;
     }
 
 

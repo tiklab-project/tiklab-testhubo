@@ -146,8 +146,18 @@ public class StepCommonServiceImpl implements StepCommonService {
                 ifJudgmentService.deleteIfJudgment(id);
             }
         }
-
     }
+
+    @Override
+    public void deleteAllStepCommon(String caseId) {
+        StepCommonQuery stepCommonQuery = new StepCommonQuery();
+        stepCommonQuery.setCaseId(caseId);
+        List<StepCommon> stepCommonList = findStepCommonList(stepCommonQuery);
+        for(StepCommon stepCommon : stepCommonList){
+            deleteStepCommon(stepCommon.getId(),stepCommon.getType());
+        }
+    }
+
 
     @Override
     public StepCommon findOne(String id) {

@@ -34,6 +34,8 @@ public interface StepCommonInstanceService {
     */
     void deleteStepCommonInstance(@NotNull String id,String caseType);
 
+    void deleteAllStepCommonInstance( String instanceId);
+
     @FindOne
     StepCommonInstance findOne(@NotNull String id);
 

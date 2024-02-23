@@ -32,6 +32,8 @@ public interface ApiPerfStepService {
     */
     void deleteApiPerfStep(@NotNull String id);
 
+    void deleteAllApiPerfStep( String caseId);
+
     ApiPerfStep findOne(@NotNull String id);
 
     List<ApiPerfStep> findList(List<String> idList);

@@ -37,6 +37,8 @@ public interface WebEnvService {
     */
     void deleteWebEnv(@NotNull String id);
 
+    void deleteAllWebEnv(String repositoryId);
+
     @FindOne
     WebEnv findOne(@NotNull String id);
 

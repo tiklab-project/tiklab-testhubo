@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.apix.http.unit.cases.service;
 
+import io.thoughtware.postin.api.apix.model.RequestHeaderQuery;
 import io.thoughtware.teston.test.apix.http.unit.cases.dao.RequestHeaderDao;
 import io.thoughtware.teston.test.apix.http.unit.cases.entity.RequestHeaderEntity;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCase;
@@ -49,6 +50,18 @@ public class RequestHeaderServiceImpl implements RequestHeaderService {
     public void deleteRequestHeader(@NotNull String id) {
         requestHeaderDao.deleteRequestHeader(id);
     }
+
+    @Override
+    public void deleteAllRequestHeader(String caseId){
+        RequestHeaderUnitQuery requestHeaderQuery = new RequestHeaderUnitQuery();
+        requestHeaderQuery.setApiUnitId(caseId);
+        List<RequestHeaderUnit> requestHeaderList = findRequestHeaderList(requestHeaderQuery);
+        for(RequestHeaderUnit requestHeaderUnit:requestHeaderList){
+            deleteRequestHeader(requestHeaderUnit.getId());
+        }
+
+    }
+
 
     @Override
     public RequestHeaderUnit findOne(String id) {

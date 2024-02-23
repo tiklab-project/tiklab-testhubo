@@ -52,6 +52,17 @@ public class VariableServiceImpl implements VariableService {
     }
 
     @Override
+    public void deleteAllVariable(String caseId) {
+        VariableQuery variableQuery = new VariableQuery();
+        variableQuery.setBelongId(caseId);
+        List<Variable> variableList = findVariableList(variableQuery);
+        for(Variable variable:variableList){
+            deleteVariable(variable.getId());
+        }
+    }
+
+
+    @Override
     public Variable findOne(String id) {
         VariableEntity variableEntity = variableDao.findVariable(id);
 

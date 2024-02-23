@@ -35,7 +35,13 @@ public interface InstanceService {
     * 删除公共实例
     * @param id
     */
-    void deleteInstance(@NotNull String id);
+    void deleteInstance(@NotNull String id,String caseType);
+
+    /**
+     * 通过caseId删除
+     * @param caseId
+     */
+    void deleteAllInstance(String caseId);
 
     @FindOne
     Instance findOne(@NotNull String id);

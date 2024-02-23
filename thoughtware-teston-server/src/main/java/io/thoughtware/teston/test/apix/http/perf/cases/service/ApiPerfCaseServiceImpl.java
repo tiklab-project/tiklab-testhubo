@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.apix.http.perf.cases.service;
 
 import com.alibaba.fastjson.JSONObject;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -46,6 +47,15 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ApiPerfStepService apiPerfStepService;
+
+    @Autowired
+    ApiPerfTestDataService apiPerfTestDataService;
+
+    @Autowired
+    InstanceService instanceService;
+
     public List<JSONObject> testDataList = new ArrayList<>();
 
     @Override
@@ -81,6 +91,12 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Override
     public void deleteApiPerfCase(@NotNull String id) {
         apiPerfCaseDao.deleteApiPerfCase(id);
+
+        apiPerfStepService.deleteAllApiPerfStep(id);
+
+        apiPerfTestDataService.deleteAllApiPerfTestData(id);
+
+        instanceService.deleteAllInstance(id);
     }
 
     @Override

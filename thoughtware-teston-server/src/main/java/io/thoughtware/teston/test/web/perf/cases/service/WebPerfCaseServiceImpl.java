@@ -83,8 +83,6 @@ public class WebPerfCaseServiceImpl implements WebPerfCaseService {
     @Override
     public void deleteWebPerfCase(@NotNull String id) {
         webPerfCaseDao.deleteWebPerfCase(id);
-
-        testCaseService.deleteTestCase(id);
     }
 
     @Override

@@ -36,6 +36,7 @@ public interface TestPlanCaseService {
     * @param id
     */
     void deleteTestPlanCase(@NotNull String id);
+    void deleteAllTestPlanCase(String testPlanId);
 
     TestPlanCase findOne(@NotNull String id);
 

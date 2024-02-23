@@ -49,6 +49,18 @@ public class IfVariableInstanceServiceImpl implements IfVariableInstanceService 
     }
 
     @Override
+    public void deleteAllIfVariableInstance(String stepInstanceId) {
+
+        IfVariableInstanceQuery ifVariableInstanceQuery = new IfVariableInstanceQuery();
+        ifVariableInstanceQuery.setStepInstanceId(stepInstanceId);
+        List<IfVariableInstance> ifVariableInstanceList = findIfVariableInstanceList(ifVariableInstanceQuery);
+        for(IfVariableInstance ifVariableInstance: ifVariableInstanceList){
+            deleteIfVariableInstance(ifVariableInstance.getId());
+        }
+
+    }
+
+    @Override
     public IfVariableInstance findOne(String id) {
         IfVariableInstanceEntity ifVariableInstanceEntity = ifVariableInstanceDao.findIfVariableInstance(id);
 

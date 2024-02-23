@@ -49,6 +49,16 @@ public class ResponseHeaderServiceImpl implements ResponseHeaderService {
     }
 
     @Override
+    public void deleteAllResponseHeader( String caseId) {
+        ResponseHeaderUnitQuery responseHeaderUnitQuery = new ResponseHeaderUnitQuery();
+        responseHeaderUnitQuery.setApiUnitId(caseId);
+        List<ResponseHeaderUnit> responseHeaderList = findResponseHeaderList(responseHeaderUnitQuery);
+        for(ResponseHeaderUnit responseHeaderUnit : responseHeaderList){
+            responseHeaderDao.deleteResponseHeader(responseHeaderUnit.getId());
+        }
+    }
+
+    @Override
     public ResponseHeaderUnit findOne(String id) {
         ResponseHeaderEntity responseHeaderEntity = responseHeaderDao.findResponseHeader(id);
 

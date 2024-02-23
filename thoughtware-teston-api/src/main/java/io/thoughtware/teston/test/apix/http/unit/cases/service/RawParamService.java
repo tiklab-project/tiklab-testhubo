@@ -32,6 +32,8 @@ public interface RawParamService {
     */
     void deleteRawParam(@NotNull String id);
 
+    void deleteAllRawParam(String caseId);
+
     RawParamUnit findOne(@NotNull String id);
 
     List<RawParamUnit> findList(List<String> idList);

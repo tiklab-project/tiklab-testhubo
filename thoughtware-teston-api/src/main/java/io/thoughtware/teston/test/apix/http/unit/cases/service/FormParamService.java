@@ -32,6 +32,8 @@ public interface FormParamService {
     */
     void deleteFormParam(@NotNull String id);
 
+    void deleteAllFormParam( String caseId);
+
     FormParamUnit findOne(@NotNull String id);
 
     List<FormParamUnit> findList(List<String> idList);

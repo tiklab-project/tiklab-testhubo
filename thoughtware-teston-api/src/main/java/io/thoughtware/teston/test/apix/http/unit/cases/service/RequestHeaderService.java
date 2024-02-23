@@ -34,6 +34,8 @@ public interface RequestHeaderService {
     */
     void deleteRequestHeader(@NotNull String id);
 
+    void deleteAllRequestHeader(String caseId);
+
     RequestHeaderUnit findOne(@NotNull String id);
 
     List<RequestHeaderUnit> findList(List<String> idList);

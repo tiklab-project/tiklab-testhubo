@@ -69,24 +69,25 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         String userId = LoginContext.getLoginId();
         apiSceneInstanceEntity.setCreateUser(userId);
 
-        return apiSceneInstanceDao.createTestInstance(apiSceneInstanceEntity);
+        return apiSceneInstanceDao.createApiSceneInstance(apiSceneInstanceEntity);
     }
 
     @Override
     public void updateApiSceneInstance(@NotNull @Valid ApiSceneInstance scenInstance) {
         ApiSceneInstanceEntity testInstanceEntity = BeanMapper.map(scenInstance, ApiSceneInstanceEntity.class);
 
-        apiSceneInstanceDao.updateTestInstance(testInstanceEntity);
+        apiSceneInstanceDao.updateApiSceneInstance(testInstanceEntity);
     }
 
     @Override
     public void deleteApiSceneInstance(@NotNull String id) {
-        apiSceneInstanceDao.deleteTestInstance(id);
+        apiSceneInstanceDao.deleteApiSceneInstance(id);
+
     }
 
     @Override
     public ApiSceneInstance findOne(String id) {
-        ApiSceneInstanceEntity testInstanceEntity = apiSceneInstanceDao.findTestInstance(id);
+        ApiSceneInstanceEntity testInstanceEntity = apiSceneInstanceDao.findApiSceneInstance(id);
 
         ApiSceneInstance testInstance = BeanMapper.map(testInstanceEntity, ApiSceneInstance.class);
         return testInstance;
@@ -94,7 +95,7 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Override
     public List<ApiSceneInstance> findList(List<String> idList) {
-        List<ApiSceneInstanceEntity> testInstanceEntityList =  apiSceneInstanceDao.findTestInstanceList(idList);
+        List<ApiSceneInstanceEntity> testInstanceEntityList =  apiSceneInstanceDao.findApiSceneInstanceList(idList);
 
         List<ApiSceneInstance> testInstanceList =  BeanMapper.mapList(testInstanceEntityList, ApiSceneInstance.class);
         return testInstanceList;
@@ -116,7 +117,7 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Override
     public List<ApiSceneInstance> findAllApiSceneInstance() {
-        List<ApiSceneInstanceEntity> testInstanceEntities =  apiSceneInstanceDao.findAllTestInstance();
+        List<ApiSceneInstanceEntity> testInstanceEntities =  apiSceneInstanceDao.findAllApiSceneInstance();
 
         List<ApiSceneInstance> testInstanceList =  BeanMapper.mapList(testInstanceEntities, ApiSceneInstance.class);
 
@@ -126,7 +127,7 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Override
     public List<ApiSceneInstance> findApiSceneInstanceList(ApiSceneInstanceQuery apiSceneInstanceQuery) {
-        List<ApiSceneInstanceEntity> testInstanceEntities = apiSceneInstanceDao.findTestInstanceList(apiSceneInstanceQuery);
+        List<ApiSceneInstanceEntity> testInstanceEntities = apiSceneInstanceDao.findApiSceneInstanceList(apiSceneInstanceQuery);
 
         List<ApiSceneInstance> testInstanceList = BeanMapper.mapList(testInstanceEntities, ApiSceneInstance.class);
 
@@ -137,7 +138,7 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
 
     @Override
     public Pagination<ApiSceneInstance> findApiSceneInstancePage(ApiSceneInstanceQuery apiSceneInstanceQuery) {
-        Pagination<ApiSceneInstanceEntity>  pagination = apiSceneInstanceDao.findTestInstancePage(apiSceneInstanceQuery);
+        Pagination<ApiSceneInstanceEntity>  pagination = apiSceneInstanceDao.findApiSceneInstancePage(apiSceneInstanceQuery);
 
         List<ApiSceneInstance> testInstanceList = BeanMapper.mapList(pagination.getDataList(), ApiSceneInstance.class);
 

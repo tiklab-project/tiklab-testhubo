@@ -49,6 +49,17 @@ public class FormParamServiceImpl implements FormParamService {
     }
 
     @Override
+    public void deleteAllFormParam( String caseId) {
+        FormParamUnitQuery formParamUnitQuery = new FormParamUnitQuery();
+        formParamUnitQuery.setApiUnitId(caseId);
+        List<FormParamUnit> formParamList = findFormParamList(formParamUnitQuery);
+        for (FormParamUnit formParamUnit : formParamList) {
+            formParamDao.deleteFormParam(formParamUnit.getId());
+        }
+
+    }
+
+    @Override
     public FormParamUnit findOne(String id) {
         FormParamsEntity formParamsEntity = formParamDao.findFormParam(id);
 

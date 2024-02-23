@@ -49,6 +49,16 @@ public class FormUrlencodedServiceImpl implements FormUrlencodedService {
     }
 
     @Override
+    public void deleteAllFormUrlencoded( String caseId) {
+        FormUrlencodedUnitQuery formUrlencodedUnitQuery = new FormUrlencodedUnitQuery();
+        formUrlencodedUnitQuery.setApiUnitId(caseId);
+        List<FormUrlEncodedUnit> formUrlencodedList = findFormUrlencodedList(formUrlencodedUnitQuery);
+        for(FormUrlEncodedUnit formUrlencodedUnit : formUrlencodedList){
+            formUrlencodedDao.deleteFormUrlencoded(formUrlencodedUnit.getId());
+        }
+    }
+
+    @Override
     public FormUrlEncodedUnit findOne(String id) {
         FormUrlEncodedEntity formUrlencodedEntity = formUrlencodedDao.findFormUrlencoded(id);
 

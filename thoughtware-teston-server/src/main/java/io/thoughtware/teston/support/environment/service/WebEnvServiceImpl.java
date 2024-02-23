@@ -1,5 +1,7 @@
 package io.thoughtware.teston.support.environment.service;
 
+import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.support.environment.entity.WebEnvEntity;
 import io.thoughtware.core.page.Pagination;
@@ -48,6 +50,15 @@ public class WebEnvServiceImpl implements WebEnvService {
     public void deleteWebEnv(@NotNull String id) {
         webEnvDao.deleteWebEnv(id);
     }
+
+    @Override
+    public void deleteAllWebEnv(String repositoryId) {
+        DeleteCondition deleteCondition = DeleteBuilders.createDelete(WebEnvEntity.class)
+                .eq("repositoryId", repositoryId)
+                .get();
+        webEnvDao.deleteWebEnv(deleteCondition);
+    }
+
 
     @Override
     public WebEnv findOne(String id) {

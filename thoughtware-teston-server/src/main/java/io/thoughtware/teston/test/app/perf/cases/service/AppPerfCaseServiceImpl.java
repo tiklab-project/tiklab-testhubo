@@ -83,8 +83,6 @@ public class AppPerfCaseServiceImpl implements AppPerfCaseService {
     @Override
     public void deleteAppPerfCase(@NotNull String id) {
         appPerfCaseDao.deleteAppPerfCase(id);
-
-        testCaseService.deleteTestCase(id);
     }
 
     @Override

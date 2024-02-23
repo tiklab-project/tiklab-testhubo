@@ -9,6 +9,7 @@ import io.thoughtware.teston.support.agentconfig.dao.AgentConfigDao;
 
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -109,4 +110,18 @@ public class AgentConfigServiceImpl implements AgentConfigService {
 
         return PaginationBuilder.build(pagination,agentConfigList);
     }
+
+    @Override
+    public String getAgent(){
+        Pagination<AgentConfig> agentConfigPage = findAgentConfigPage(new AgentConfigQuery());
+        if(CollectionUtils.isNotEmpty(agentConfigPage.getDataList())){
+            List<AgentConfig> agentConfigList = agentConfigPage.getDataList();
+            AgentConfig agentConfig = agentConfigList.get(0);
+            String url = agentConfig.getUrl();
+            return url;
+        }
+
+        return null;
+    }
+
 }

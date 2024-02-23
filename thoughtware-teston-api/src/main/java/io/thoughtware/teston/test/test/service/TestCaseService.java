@@ -36,7 +36,14 @@ public interface TestCaseService {
     * 删除测试用例
     * @param id
     */
-    void deleteTestCase(@NotNull String id);
+    void deleteTestCase(@NotNull String id,String caseType);
+
+    /**
+     * 通过repositoryId删除用例
+     * @param repositoryId
+     */
+    void deleteAllTestCase( String repositoryId);
+
 
     /**
      * 通过目录id删除

@@ -48,6 +48,18 @@ public class RawParamServiceImpl implements RawParamService {
     }
 
     @Override
+    public void deleteAllRawParam(String caseId) {
+        RawParamUnitQuery rawParamUnitQuery = new RawParamUnitQuery();
+        rawParamUnitQuery.setApiUnitId(caseId);
+        List<RawParamUnit> rawParamList = findRawParamList(rawParamUnitQuery);
+        for(RawParamUnit rawParamUnit: rawParamList){
+            rawParamDao.deleteRawParam(rawParamUnit.getId());
+        }
+
+    }
+
+
+    @Override
     public RawParamUnit findOne(String id) {
         RawParamEntity rawParamEntity = rawParamDao.findRawParam(id);
 

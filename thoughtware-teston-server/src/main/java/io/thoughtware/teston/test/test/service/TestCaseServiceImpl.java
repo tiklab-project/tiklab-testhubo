@@ -5,41 +5,26 @@ import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.model.InstanceQuery;
 import io.thoughtware.teston.instance.service.InstanceService;
-import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
-import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
-import io.thoughtware.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBind;
-import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstanceBindQuery;
-import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceBindService;
-import io.thoughtware.teston.test.app.perf.instance.mode.AppPerfInstance;
-import io.thoughtware.teston.test.app.perf.instance.mode.AppPerfInstanceQuery;
-import io.thoughtware.teston.test.app.perf.instance.service.AppPerfInstanceService;
-import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstance;
-import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
-import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceService;
+import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfCaseService;
+import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneCaseService;
+import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
+import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
+import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
+import io.thoughtware.teston.test.func.service.FuncUnitCaseService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.model.TestCaseRecent;
 import io.thoughtware.teston.test.test.model.TestCaseRecentQuery;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.test.test.entity.TestCasesEntity;
-import io.thoughtware.teston.test.web.perf.instance.model.WebPerfInstance;
-import io.thoughtware.teston.test.web.perf.instance.model.WebPerfInstanceQuery;
-import io.thoughtware.teston.test.web.perf.instance.service.WebPerfInstanceService;
+import io.thoughtware.teston.test.web.scene.cases.service.WebSceneCaseService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.toolkit.join.JoinTemplate;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
 import io.thoughtware.teston.test.test.dao.TestCaseDao;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstanceQuery;
-import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
-
-import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstance;
-import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstanceQuery;
-import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceService;
 import io.thoughtware.eam.common.context.LoginContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,31 +48,28 @@ public class TestCaseServiceImpl implements TestCaseService {
     TestCaseRecentService testCaseRecentService;
 
     @Autowired
-    ApiUnitInstanceBindService apiUnitInstanceBindService;
-
-    @Autowired
-    ApiSceneInstanceService apiSceneInstanceService;
-
-    @Autowired
-    ApiPerfInstanceService apiPerfInstanceService;
-
-    @Autowired
-    WebSceneInstanceService webSceneInstanceService;
-
-    @Autowired
-    WebPerfInstanceService webPerfInstanceService;
-
-    @Autowired
-    AppSceneInstanceService appSceneInstanceService;
-
-    @Autowired
-    AppPerfInstanceService appPerfInstanceService;
-
-    @Autowired
     JoinTemplate joinTemplate;
 
     @Autowired
     InstanceService instanceService;
+
+    @Autowired
+    ApiUnitCaseService apiUnitCaseService;
+
+    @Autowired
+    ApiSceneCaseService apiSceneCaseService;
+
+    @Autowired
+    ApiPerfCaseService apiPerfCaseService;
+
+    @Autowired
+    WebSceneCaseService webSceneCaseService;
+
+    @Autowired
+    AppSceneCaseService appSceneCaseService;
+
+    @Autowired
+    FuncUnitCaseService funcUnitCaseService;
 
     @Override
     public String createTestCase(TestCase testCase) {
@@ -117,7 +99,7 @@ public class TestCaseServiceImpl implements TestCaseService {
     }
 
     @Override
-    public void deleteTestCase(@NotNull String id) {
+    public void deleteTestCase(@NotNull String id,String caseType) {
         //删除最近访问的TestCase
         //根据用例id 获取到最近访问id，删除
         TestCaseRecentQuery testCaseRecent = new TestCaseRecentQuery();
@@ -127,9 +109,52 @@ public class TestCaseServiceImpl implements TestCaseService {
             testCaseRecentService.deleteTestCaseRecent(testCaseRecentList.get(0).getId());
         }
 
-
+        //删除用例
         testCaseDao.deleteTestCase(id);
+
+        //删除对应的用例
+        switch (caseType) {
+            case MagicValue.CASE_TYPE_API_UNIT -> {
+                apiUnitCaseService.deleteApiUnitCase(id);
+                break;
+            }
+            case MagicValue.CASE_TYPE_API_SCENE -> {
+                apiSceneCaseService.deleteApiSceneCase(id);
+                break;
+            }
+            case MagicValue.CASE_TYPE_API_PERFORM -> {
+                apiPerfCaseService.deleteApiPerfCase(id);
+                break;
+            }
+            case MagicValue.CASE_TYPE_WEB -> {
+                webSceneCaseService.deleteWebSceneCase(id);
+                break;
+            }
+            case MagicValue.CASE_TYPE_APP -> {
+                appSceneCaseService.deleteAppSceneCase(id);
+                break;
+            }
+            case MagicValue.CASE_TYPE_FUNCTION -> {
+                funcUnitCaseService.deleteFuncUnitCase(id);
+                break;
+            }
+            default -> {
+            }
+        }
     }
+
+    @Override
+    public void deleteAllTestCase( String repositoryId) {
+        TestCaseQuery testCaseQuery = new TestCaseQuery();
+        testCaseQuery.setRepositoryId(repositoryId);
+        List<TestCase> testCaseList = findTestCaseList(testCaseQuery);
+        for(TestCase testCase:testCaseList){
+            deleteTestCase(testCase.getId(),testCase.getCaseType());
+        }
+    }
+
+
+
 
     @Override
     public void deleteTestCaseByCategoryId(String categoryId) {

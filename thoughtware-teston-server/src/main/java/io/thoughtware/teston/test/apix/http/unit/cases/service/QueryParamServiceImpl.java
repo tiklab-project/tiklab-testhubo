@@ -49,6 +49,17 @@ public class QueryParamServiceImpl implements QueryParamService {
     }
 
     @Override
+    public void deleteAllQueryParam( String caseId) {
+        QueryParamUnitQuery queryParamUnitQuery = new QueryParamUnitQuery();
+        queryParamUnitQuery.setApiUnitId(caseId);
+        List<QueryParamUnit> queryParamList = findQueryParamList(queryParamUnitQuery);
+        for(QueryParamUnit queryParamUnit : queryParamList){
+            deleteQueryParam(queryParamUnit.getId());
+        }
+    }
+
+
+    @Override
     public QueryParamUnit findOne(String id) {
         QueryParamsEntity queryParamsEntity = queryParamDao.findQueryParam(id);
 

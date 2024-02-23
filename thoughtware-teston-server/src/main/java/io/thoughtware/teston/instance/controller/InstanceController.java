@@ -53,8 +53,8 @@ public class InstanceController {
     @RequestMapping(path="/deleteInstance",method = RequestMethod.POST)
     @ApiMethod(name = "deleteInstance",desc = "删除公共实例")
     @ApiParam(name = "id",desc = "id",required = true)
-    public Result<Void> deleteInstance(@NotNull String id){
-        instanceService.deleteInstance(id);
+    public Result<Void> deleteInstance(@NotNull String id,String caseType){
+        instanceService.deleteInstance(id,caseType);
 
         return Result.ok();
     }

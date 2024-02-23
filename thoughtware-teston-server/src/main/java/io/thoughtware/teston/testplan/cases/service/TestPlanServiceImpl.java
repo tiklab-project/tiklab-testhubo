@@ -1,6 +1,9 @@
 package io.thoughtware.teston.testplan.cases.service;
 
+import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.rpc.annotation.Exporter;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.testplan.cases.dao.TestPlanCaseDao;
 import io.thoughtware.teston.testplan.cases.dao.TestPlanDao;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
@@ -11,6 +14,7 @@ import io.thoughtware.teston.testplan.cases.model.TestPlanQuery;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
+import io.thoughtware.teston.testplan.quartz.service.QuartzPlanService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import org.apache.commons.collections.CollectionUtils;
@@ -33,11 +37,16 @@ public class TestPlanServiceImpl implements TestPlanService {
     TestPlanDao testPlanDao;
 
     @Autowired
-    TestPlanCaseDao testPlanCaseDao;
+    TestPlanCaseService testPlanCaseService;
 
     @Autowired
     JoinTemplate joinTemplate;
 
+    @Autowired
+    InstanceService instanceService;
+
+    @Autowired
+    QuartzPlanService quartzPlanService;
 
     @Override
     public String createTestPlan(@NotNull @Valid TestPlan testPlan) {
@@ -59,7 +68,24 @@ public class TestPlanServiceImpl implements TestPlanService {
     @Override
     public void deleteTestPlan(@NotNull String id) {
         testPlanDao.deleteTestPlan(id);
+
+        testPlanCaseService.deleteAllTestPlanCase(id);
+
+        instanceService.deleteAllInstance(id);
+
+        quartzPlanService.deleteAllQuartzPlan(id);
     }
+
+    @Override
+    public void deleteAllTestPlan(String repositoryId) {
+        TestPlanQuery testPlanQuery = new TestPlanQuery();
+        testPlanQuery.setRepositoryId(repositoryId);
+        List<TestPlan> testPlanList = findTestPlanList(testPlanQuery);
+        for(TestPlan testPlan: testPlanList){
+            deleteTestPlan(testPlan.getId());
+        }
+    }
+
 
     @Override
     public TestPlan findOne(String id) {
@@ -119,12 +145,8 @@ public class TestPlanServiceImpl implements TestPlanService {
         List<TestPlan> testPlanList = BeanMapper.mapList(pagination.getDataList(),TestPlan.class);
         //添加测试计划关联的用例数
         for (TestPlan testPlan:testPlanList){
-            List<TestPlanCaseEntity> testPlanDetailList = testPlanCaseDao.findTestPlanCaseList(new TestPlanCaseQuery().setTestPlanId(testPlan.getId()));
-            if (CollectionUtils.isNotEmpty(testPlanDetailList)){
-                testPlan.setTestCaseNum(testPlanDetailList.size());
-            }else {
-                testPlan.setTestCaseNum(0);
-            }
+            int planCaseNum = testPlanCaseService.findPlanCaseNum(testPlan.getId());
+            testPlan.setTestCaseNum(planCaseNum);
         }
         joinTemplate.joinQuery(testPlanList);
 

@@ -49,6 +49,17 @@ public class JsonParamServiceImpl implements JsonParamService {
     }
 
     @Override
+    public void deleteAllJsonParam( String caseId) {
+        JsonParamUnitQuery jsonParamUnitQuery = new JsonParamUnitQuery();
+        jsonParamUnitQuery.setApiUnitId(caseId);
+        List<JsonParamUnit> jsonParamList = findJsonParamList(jsonParamUnitQuery);
+        for (JsonParamUnit jsonParamUnit : jsonParamList) {
+            deleteJsonParam(jsonParamUnit.getId());
+        }
+    }
+
+
+    @Override
     public JsonParamUnit findOne(String id) {
         JsonParamEntity jsonParamEntity = jsonParamDao.findJsonParam(id);
 

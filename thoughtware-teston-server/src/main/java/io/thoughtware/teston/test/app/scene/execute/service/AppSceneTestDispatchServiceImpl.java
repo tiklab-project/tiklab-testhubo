@@ -109,7 +109,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             if(enable){
                 appSceneTestService.cleanUpData(appSceneId);
             }else {
-                String agentUrl = getAgent();
+                String agentUrl = agentConfigService.getAgent();
                 appSceneTestServiceRPC(agentUrl).cleanUpData(appSceneId);
             }
         }catch (Exception e){
@@ -144,7 +144,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         if(enable) {
             appSceneTestService.execute(appSceneTestRequest);
         }else {
-            String agentUrl = getAgent();
+            String agentUrl = agentConfigService.getAgent();
             appSceneTestServiceRPC(agentUrl).execute(appSceneTestRequest);
 
         }
@@ -218,7 +218,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
                 //调用执行方法返回结果数据
                 appSceneTestResponse = appSceneTestService.result(appSceneTestRequest);
             }else {
-                String agentUrl = getAgent();
+                String agentUrl = agentConfigService.getAgent();
                 appSceneTestResponse = appSceneTestServiceRPC(agentUrl).result(appSceneTestRequest);
             }
         }catch (Exception e){
@@ -279,18 +279,6 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         Instance instance = instanceService.findInstance(instanceId);
         instance.setStatus(status);
         instanceService.updateInstance(instance);
-    }
-
-
-    private String getAgent(){
-        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-        if(CollectionUtils.isNotEmpty(agentConfigList)){
-            AgentConfig agentConfig = agentConfigList.get(0);
-            String url = agentConfig.getUrl();
-            return url;
-        }
-
-        return null;
     }
 
 }

@@ -38,6 +38,7 @@ public interface QuartzPlanService {
     * @param id
     */
     void deleteQuartzPlan(@NotNull String id);
+    void deleteAllQuartzPlan(String testPlanId);
 
     @FindOne
     QuartzPlan findOne(@NotNull String id);

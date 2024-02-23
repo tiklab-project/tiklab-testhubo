@@ -35,6 +35,9 @@ public interface JsonParamService {
     * @param id
     */
     void deleteJsonParam(@NotNull String id);
+
+    void deleteAllJsonParam( String caseId);
+
     @FindOne
     JsonParamUnit findOne(@NotNull String id);
     @FindList

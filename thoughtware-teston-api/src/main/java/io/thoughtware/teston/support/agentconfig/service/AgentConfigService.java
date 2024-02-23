@@ -63,4 +63,10 @@ public interface AgentConfigService {
     */
     Pagination<AgentConfig> findAgentConfigPage(AgentConfigQuery agentConfigQuery);
 
+
+    /**
+     * 获取单个agent
+     */
+    String getAgent();
+
 }

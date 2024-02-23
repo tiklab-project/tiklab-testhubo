@@ -37,6 +37,9 @@ public interface ApiEnvService {
     * @param id
     */
     void deleteApiEnv(@NotNull String id);
+
+    void deleteAllApiEnv(String repositoryId);
+
     @FindOne
     ApiEnv findOne(@NotNull String id);
     @FindList

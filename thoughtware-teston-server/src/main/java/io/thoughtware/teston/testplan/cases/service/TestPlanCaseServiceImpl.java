@@ -66,6 +66,17 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     }
 
     @Override
+    public void deleteAllTestPlanCase(String testPlanId) {
+        TestPlanCaseQuery testPlanCaseQuery = new TestPlanCaseQuery();
+        testPlanCaseQuery.setTestPlanId(testPlanId);
+        List<TestPlanCase> testPlanCaseList = findTestPlanCaseList(testPlanCaseQuery);
+        for(TestPlanCase testPlanCase:testPlanCaseList){
+            deleteTestPlanCase(testPlanCase.getId());
+        }
+    }
+
+
+    @Override
     public TestPlanCase findOne(String id) {
         TestPlanCaseEntity testPlanCaseEntity = testPlanDetailDao.findTestPlanCase(id);
 

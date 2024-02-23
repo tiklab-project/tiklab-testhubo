@@ -1,11 +1,8 @@
 package io.thoughtware.teston.test.apix.http.unit.cases.service;
 
-import io.thoughtware.postin.api.http.test.cases.model.AssertCaseQuery;
-import io.thoughtware.teston.support.variable.service.VariableService;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
-import io.thoughtware.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
-import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
 import io.thoughtware.teston.test.apix.http.unit.mock.JsonGenerator;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
@@ -64,9 +61,6 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     JsonParamService jsonParamService;
 
     @Autowired
-    VariableService variableService;
-
-    @Autowired
     PreScriptService preScriptService;
 
     @Autowired
@@ -76,13 +70,14 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     ResponseResultServiceImpl responseResultService;
 
     @Autowired
+    ResponseHeaderService responseHeaderService;
+
+    @Autowired
     AssertService assertService;
 
     @Autowired
-    ApiUnitInstanceDao testInstanceDao;
+    InstanceService instanceService;
 
-    @Autowired
-    ApiUnitInstanceService apiUnitInstanceService;
 
 
     @Override
@@ -137,10 +132,26 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         //删除下面instance所有子表
 //        apiUnitInstanceService.deleteApiUnitInstanceByApiUnitId(id);
 
+        //接口定义
         apiApiUnitCaseDao.deleteApiUnitCase(id);
+        requestHeaderService.deleteAllRequestHeader(id);
+        queryParamService.deleteAllQueryParam(id);
+        formParamService.deleteAllFormParam(id);
+        formUrlencodedService.deleteAllFormUrlencoded(id);
+        jsonParamService.deleteAllJsonParam(id);
+        rawParamService.deleteAllRawParam(id);
+        preScriptService.deletePreScript(id);
+        afterScriptService.deleteAfterScript(id);
+        assertService.deleteAllAssertCase(id);
+        requestBodyService.deleteRequestBody(id);
+        responseHeaderService.deleteAllResponseHeader(id);
+        responseResultService.deleteResponseResult(id);
 
-        testCaseService.deleteTestCase(id);
+        //历史
+        instanceService.deleteAllInstance(id);
+
     }
+
 
     @Override
     public ApiUnitCase findOne(String id) {

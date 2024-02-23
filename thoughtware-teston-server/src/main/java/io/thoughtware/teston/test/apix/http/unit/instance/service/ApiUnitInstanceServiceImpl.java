@@ -1,5 +1,6 @@
 package io.thoughtware.teston.test.apix.http.unit.instance.service;
 
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.unit.instance.model.*;
 import io.thoughtware.teston.test.apix.http.unit.instance.dao.ApiUnitInstanceDao;
 import io.thoughtware.teston.test.apix.http.unit.instance.entity.ApiUnitInstanceEntity;
@@ -46,6 +47,7 @@ public class ApiUnitInstanceServiceImpl implements ApiUnitInstanceService {
 
 
 
+
     @Override
     public String createApiUnitInstance(@NotNull @Valid ApiUnitInstance apiUnitInstance) {
         ApiUnitInstanceEntity apiUnitInstanceEntity = BeanMapper.map(apiUnitInstance, ApiUnitInstanceEntity.class);
@@ -83,6 +85,8 @@ public class ApiUnitInstanceServiceImpl implements ApiUnitInstanceService {
 
     @Override
     public void deleteApiUnitInstance(@NotNull String id) {
+
+
         //删除测试步骤的实例 要删除相关联的表数据
         //删除测试结果的请求数据
         requestInstanceService.deleteRequestInstance(id);
@@ -95,7 +99,11 @@ public class ApiUnitInstanceServiceImpl implements ApiUnitInstanceService {
 
 
         apiUnitInstanceDao.deleteApiUnitInstance(id);
+
     }
+
+
+
 
     @Override
     public void deleteApiUnitInstanceByApiUnitId(String apiUnitId){

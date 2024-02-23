@@ -1,5 +1,7 @@
 package io.thoughtware.teston.test.app.scene.cases.service;
 
+import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.support.variable.service.VariableService;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
 import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCaseQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
@@ -50,6 +52,12 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
     @Autowired
     StepCommonService stepCommonService;
 
+    @Autowired
+    VariableService variableService;
+
+    @Autowired
+    InstanceService instanceService;
+
     @Override
     public String createAppSceneCase(@NotNull @Valid AppSceneCase appSceneCase) {
         AppSceneCaseEntity appSceneCaseEntity = BeanMapper.map(appSceneCase, AppSceneCaseEntity.class);
@@ -79,7 +87,12 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
     public void deleteAppSceneCase(@NotNull String id) {
         appSceneCaseDao.deleteAppSceneCase(id);
 
-        testCaseService.deleteTestCase(id);
+        stepCommonService.deleteAllStepCommon(id);
+
+        variableService.deleteAllVariable(id);
+
+        instanceService.deleteAllInstance(id);
+
     }
 
     @Override

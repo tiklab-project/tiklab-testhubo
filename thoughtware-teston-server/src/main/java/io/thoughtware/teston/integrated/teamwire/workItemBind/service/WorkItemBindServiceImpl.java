@@ -63,6 +63,17 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
     }
 
     @Override
+    public void deleteAllWorkItemBind(String caseId) {
+        WorkItemBindQuery workItemBindQuery = new WorkItemBindQuery();
+        workItemBindQuery.setCaseId(caseId);
+        List<WorkItemBind> workItemBindList = findWorkItemBindList(workItemBindQuery);
+        for(WorkItemBind workItemBind : workItemBindList){
+            deleteWorkItemBind(workItemBind.getId());
+        }
+    }
+
+
+    @Override
     public WorkItemBind findOne(String id) {
         WorkItemBindEntity workItemBindEntity = workItemBindDao.findWorkItemBind(id);
 

@@ -39,6 +39,8 @@ public interface ApiPerfTestDataService {
     */
     void deleteApiPerfTestData(@NotNull String id);
 
+    void deleteAllApiPerfTestData(String caseId);
+
     @FindOne
     ApiPerfTestData findOne(@NotNull String id);
 

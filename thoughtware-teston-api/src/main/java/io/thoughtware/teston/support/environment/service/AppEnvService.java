@@ -36,6 +36,8 @@ public interface AppEnvService {
     */
     void deleteAppEnv(@NotNull String id);
 
+    void deleteAllAppEnv(String repositoryId);
+
     @FindOne
     AppEnv findOne(@NotNull String id);
 

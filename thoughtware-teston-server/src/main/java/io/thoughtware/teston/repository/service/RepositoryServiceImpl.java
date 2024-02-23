@@ -1,13 +1,19 @@
 package io.thoughtware.teston.repository.service;
 
 import io.thoughtware.privilege.role.model.PatchUser;
+import io.thoughtware.security.logging.service.LoggingService;
 import io.thoughtware.teston.common.TestOnUnit;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.repository.model.*;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.category.model.Category;
 import io.thoughtware.teston.common.MessageTemplateConstant;
 import io.thoughtware.teston.repository.dao.RepositoryDao;
 import io.thoughtware.teston.repository.entity.RepositoryEntity;
+import io.thoughtware.teston.support.environment.service.AppEnvService;
+import io.thoughtware.teston.support.environment.service.WebEnvService;
+import io.thoughtware.teston.test.test.service.TestCaseService;
+import io.thoughtware.teston.testplan.cases.service.TestPlanService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -63,9 +69,23 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Autowired
     TestOnUnit testOnUnit;
 
+    @Autowired
+    LoggingService loggingService;
+
+    @Autowired
+    AppEnvService appEnvService;
+
+    @Autowired
+    WebEnvService webEnvService;
 
     @Autowired
     ApiEnvService apiEnvService;
+
+    @Autowired
+    TestCaseService testCaseService;
+
+    @Autowired
+    TestPlanService testPlanService;
 
     @Value("${base.url:null}")
     String baseUrl;
@@ -162,6 +182,25 @@ public class RepositoryServiceImpl implements RepositoryService {
         //删除角色以及相关的关联表
         dmRoleService.deleteDmRoleByDomainId(id);
 
+        //删除目录
+        categoryService.deleteAllCategory(id);
+
+        //删除api环境
+        apiEnvService.deleteAllApiEnv(id);
+
+        //删除app环境
+        appEnvService.deleteAllAppEnv(id);
+
+        //删除web环境
+        webEnvService.deleteAllWebEnv(id);
+
+        // 删除用例
+        testCaseService.deleteAllTestCase(id);
+
+        // 删除计划
+        testPlanService.deleteAllTestPlan(id);
+
+
     }
 
     @Override
@@ -245,19 +284,24 @@ public class RepositoryServiceImpl implements RepositoryService {
 
         for(Repository repository : repositoryList){
 
-            //查询dmuser list
-            DmUserQuery dmUserQuery = new DmUserQuery();
-            dmUserQuery.setUserId(userId);
-            dmUserQuery.setDomainId(repository.getId());
-            List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
+            //如果是公共：0，都能查看
+            if(repository.getVisibility().equals(0)){
+                repositoryArrayList.add(repository);
+            }else {
+                //查询dmuser list
+                DmUserQuery dmUserQuery = new DmUserQuery();
+                dmUserQuery.setUserId(userId);
+                dmUserQuery.setDomainId(repository.getId());
+                List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
 
-            if(dmUserList==null||dmUserList.size()==0){
-                continue;
-            }
+                if(dmUserList==null||dmUserList.size()==0){
+                    continue;
+                }
 
-            for(DmUser dmUser: dmUserList){
-                if(Objects.equals(dmUser.getUser().getId(), userId)){
-                    repositoryArrayList.add(repository);
+                for(DmUser dmUser: dmUserList){
+                    if(Objects.equals(dmUser.getUser().getId(), userId)){
+                        repositoryArrayList.add(repository);
+                    }
                 }
             }
         }
@@ -297,45 +341,61 @@ public class RepositoryServiceImpl implements RepositoryService {
      * @param repositoryId
      */
     public void initProjectDmRole(List<PatchUser> userList, String repositoryId) {
-        List<PatchUser> patchUsers = new ArrayList<>();
+        String loginId = LoginContext.getLoginId();
 
-        boolean has111111 = false;
+        if (userList == null) {
+            userList = new ArrayList<>();
+        }
 
-        for (PatchUser patchUserItem : userList) {
-            String masterId = patchUserItem.getId();
+        Set<String> existingUserIds = new HashSet<>();
+        boolean foundLoginUser = false;
+        boolean foundAdmin = false;
 
-            if (!masterId.equals("111111")) {
-                // 初始化创建者
-                PatchUser patchUser = new PatchUser();
-                DmUser dmUser = new DmUser();
-                dmUser.setDomainId(repositoryId);
-                User user = new User();
-                user.setId(masterId);
-                dmUser.setUser(user);
-                patchUser.setId(masterId);
-                patchUser.setAdminRole(true);
-                patchUsers.add(patchUser);
-            } else {
-                has111111 = true;
+        // 遍历userList来更新当前用户或管理员的adminRole，同时收集已存在的用户ID
+        for (PatchUser user : userList) {
+            existingUserIds.add(user.getId());
+            // 如果用户是当前用户或管理员，确保其adminRole被设置为true
+            if (user.getId().equals(loginId) || "111111".equals(user.getId())) {
+                user.setAdminRole(true);
+                if (user.getId().equals(loginId)) {
+                    foundLoginUser = true;
+                }
+                if ("111111".equals(user.getId())) {
+                    foundAdmin = true;
+                }
             }
         }
 
-        // 如果列表中没有 "111111"，再添加默认用户
-        if (!has111111) {
-            PatchUser patchUser1 = new PatchUser();
-            DmUser dmUser1 = new DmUser();
-            dmUser1.setDomainId(repositoryId);
-            User user1 = new User();
-            user1.setId("111111");
-            dmUser1.setUser(user1);
-            patchUser1.setId("111111");
-            patchUser1.setAdminRole(true);
-            patchUsers.add(patchUser1);
+        // 如果当前用户未在列表中找到，将其添加为管理员
+        if (!foundLoginUser&&!"111111".equals(loginId)) {
+            userList.add(createPatchUser(loginId, repositoryId, true));
         }
 
-        dmRoleService.initPatchDmRole(repositoryId, patchUsers, "teston");
+        // 如果管理员未在列表中找到，将其添加为管理员
+        if (!foundAdmin) {
+            userList.add(createPatchUser("111111", repositoryId, true));
+        }
+
+        // 调用服务以初始化权限
+        dmRoleService.initPatchDmRole(repositoryId, userList, "teston");
     }
 
-
-
+    /**
+     * 创建一个新的PatchUser对象的辅助方法
+     * @param userId 用户ID
+     * @param repositoryId 仓库ID
+     * @param isAdmin 是否为管理员角色
+     * @return PatchUser对象
+     */
+    private PatchUser createPatchUser(String userId, String repositoryId, boolean isAdmin) {
+        PatchUser patchUser = new PatchUser();
+        DmUser dmUser = new DmUser();
+        dmUser.setDomainId(repositoryId);
+        User user = new User();
+        user.setId(userId);
+        dmUser.setUser(user);
+        patchUser.setId(userId);
+        patchUser.setAdminRole(isAdmin);
+        return patchUser;
+    }
 }
