@@ -1,15 +1,10 @@
 package io.thoughtware.teston.testplan.cases.service;
 
-import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
-import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.instance.service.InstanceService;
-import io.thoughtware.teston.testplan.cases.dao.TestPlanCaseDao;
 import io.thoughtware.teston.testplan.cases.dao.TestPlanDao;
-import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanEntity;
 import io.thoughtware.teston.testplan.cases.model.TestPlan;
-import io.thoughtware.teston.testplan.cases.model.TestPlanCaseQuery;
 import io.thoughtware.teston.testplan.cases.model.TestPlanQuery;
 
 import io.thoughtware.core.page.Pagination;
@@ -17,7 +12,6 @@ import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.teston.testplan.quartz.service.QuartzPlanService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
