@@ -8,6 +8,7 @@ import io.thoughtware.postin.annotation.ApiMethod;
 import io.thoughtware.postin.annotation.ApiParam;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStep;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepQuery;
+import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepWillBindCase;
 import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfStepService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,5 +107,10 @@ public class ApiPerfStepController {
         return Result.ok();
     }
 
+    @RequestMapping(path = "/findApiPerfStepWillBindCasePage",method = RequestMethod.POST)
+    public Result<Pagination<ApiPerfStepWillBindCase>> findApiPerfStepWillBindCasePage(@RequestBody @Valid @NotNull ApiPerfStepQuery apiPerfStepQuery){
+        Pagination<ApiPerfStepWillBindCase> pagination = apiPerfStepService.findApiPerfStepWillBindCasePage(apiPerfStepQuery);
 
+        return Result.ok(pagination);
+    }
 }

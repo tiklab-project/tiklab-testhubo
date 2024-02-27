@@ -3,6 +3,7 @@ package io.thoughtware.teston.test.apix.http.perf.cases.service;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStep;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepQuery;
+import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepWillBindCase;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -74,5 +75,6 @@ public interface ApiPerfStepService {
     void bindApiScene(List<ApiPerfStep> apiSceneStepList);
 
 
+    Pagination<ApiPerfStepWillBindCase> findApiPerfStepWillBindCasePage(ApiPerfStepQuery apiPerfStepQuery);
 
 }

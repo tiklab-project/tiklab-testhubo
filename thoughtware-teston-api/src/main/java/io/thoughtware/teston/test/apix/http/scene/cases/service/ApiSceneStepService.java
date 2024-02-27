@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.apix.http.scene.cases.service;
 
 import io.thoughtware.core.page.Pagination;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepWillBindCase;
 import io.thoughtware.toolkit.join.annotation.FindAll;
 import io.thoughtware.toolkit.join.annotation.FindList;
 import io.thoughtware.toolkit.join.annotation.FindOne;
@@ -78,5 +79,12 @@ public interface ApiSceneStepService {
      * @return
      */
     void bindApiUnit(List<ApiSceneStep> apiSceneStepList);
+
+    /**
+     * 查询接口场景步骤，将要关联的接口单元用例
+     * @param apiSceneStepQuery
+     * @return
+     */
+    Pagination<ApiSceneStepWillBindCase> findApiSceneStepWillBindCasePage(ApiSceneStepQuery apiSceneStepQuery);
 
 }

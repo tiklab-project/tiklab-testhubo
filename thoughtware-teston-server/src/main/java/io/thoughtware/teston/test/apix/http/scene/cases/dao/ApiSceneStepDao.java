@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.apix.http.scene.cases.dao;
 
 import io.thoughtware.teston.test.apix.http.scene.cases.entity.ApiSceneStepEntity;
+import io.thoughtware.teston.test.apix.http.scene.cases.entity.ApiSceneStepWillBindCaseEntity;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
 import io.thoughtware.dal.jpa.criterial.condition.QueryCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
@@ -10,6 +11,7 @@ import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class ApiSceneStepDao{
     public String createApiSceneStep(ApiSceneStepEntity apiSceneStepEntity) {
         return jpaTemplate.save(apiSceneStepEntity,String.class);
     }
+
 
     /**
      * 更新步骤
@@ -102,4 +105,35 @@ public class ApiSceneStepDao{
                 .get();
         return jpaTemplate.findPage(queryCondition,ApiSceneStepEntity.class);
     }
+
+    /**
+     * 查询未关联的用例
+     * @param apiSceneStepQuery
+     * @return
+     */
+    public Pagination<ApiSceneStepWillBindCaseEntity> findApiSceneStepWillBindCasePage(ApiSceneStepQuery apiSceneStepQuery) {
+        StringBuilder modelSqlBuilder = new StringBuilder();
+        modelSqlBuilder.append("SELECT teston_api_unit.id, teston_api_unit.path, teston_api_unit.method_type ,teston_testcase.name,teston_testcase.create_user,teston_testcase.case_type ")
+                .append(" FROM teston_api_unit ")
+                .append(" JOIN teston_testcase on teston_api_unit.testcase_id = teston_testcase.id ")
+                .append(" WHERE teston_testcase.repository_id = '").append(apiSceneStepQuery.getRepositoryId()).append("'");
+
+        if (apiSceneStepQuery.getName() != null) {
+            modelSqlBuilder.append(" And teston_testcase.name LIKE '%").append(apiSceneStepQuery.getName()).append("%'");
+        }
+
+        modelSqlBuilder .append(" AND NOT EXISTS (  ")
+                .append(" SELECT 1 FROM teston_api_scene_step  ")
+                .append(" JOIN teston_api_scene ON teston_api_scene.id = teston_api_scene_step.api_scene_id ")
+                .append(" WHERE teston_api_scene_step.api_unit_id = teston_testcase.id  ")
+                .append(" AND teston_api_scene.id =  '").append(apiSceneStepQuery.getApiSceneId()).append("')");
+
+        String modelSql = modelSqlBuilder.toString();
+
+        Pagination<ApiSceneStepWillBindCaseEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, apiSceneStepQuery.getPageParam(), new BeanPropertyRowMapper<>(ApiSceneStepWillBindCaseEntity.class));
+        return page;
+    }
+
+
+
 }

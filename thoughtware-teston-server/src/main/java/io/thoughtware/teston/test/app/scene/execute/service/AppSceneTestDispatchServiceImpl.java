@@ -3,8 +3,6 @@ package io.thoughtware.teston.test.app.scene.execute.service;
 import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.service.InstanceService;
-import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
-import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
 import io.thoughtware.teston.support.environment.model.AppEnv;
 import io.thoughtware.teston.support.variable.service.VariableService;

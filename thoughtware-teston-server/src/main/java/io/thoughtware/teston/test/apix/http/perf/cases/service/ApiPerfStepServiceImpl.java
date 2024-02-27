@@ -1,6 +1,10 @@
 package io.thoughtware.teston.test.apix.http.perf.cases.service;
 
 
+import io.thoughtware.teston.test.apix.http.perf.cases.entity.ApiPerfStepWillBindCaseEntity;
+import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepWillBindCase;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepWillBindCase;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.teston.test.apix.http.perf.cases.dao.ApiPerfStepDao;
@@ -146,4 +150,14 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
             createApiPerfStep(apiPerfStep);
         }
     }
+
+    @Override
+    public Pagination<ApiPerfStepWillBindCase> findApiPerfStepWillBindCasePage(ApiPerfStepQuery apiPerfStepQuery){
+        Pagination<ApiPerfStepWillBindCaseEntity> pagination = apiPerfStepDao.findApiPerfStepWillBindCasePage(apiPerfStepQuery);
+        List<ApiPerfStepWillBindCase> apiPerfStepWillBindCaseList = BeanMapper.mapList(pagination.getDataList(), ApiPerfStepWillBindCase.class);
+        joinTemplate.joinQuery(apiPerfStepWillBindCaseList);
+        return PaginationBuilder.build(pagination, apiPerfStepWillBindCaseList);
+
+    }
+
 }

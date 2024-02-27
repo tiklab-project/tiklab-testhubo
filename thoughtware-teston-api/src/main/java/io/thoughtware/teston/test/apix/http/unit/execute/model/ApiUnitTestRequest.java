@@ -44,11 +44,11 @@ public class ApiUnitTestRequest extends BaseModel {
         this.apiEnv = apiEnv;
     }
 
-    public ApiUnitCaseDataConstruction getApiUnitCaseExt() {
+    public ApiUnitCaseDataConstruction getApiUnitCaseDataConstruction() {
         return apiUnitCaseDataConstruction;
     }
 
-    public void setApiUnitCaseExt(ApiUnitCaseDataConstruction apiUnitCaseDataConstruction) {
+    public void setApiUnitCaseDataConstruction(ApiUnitCaseDataConstruction apiUnitCaseDataConstruction) {
         this.apiUnitCaseDataConstruction = apiUnitCaseDataConstruction;
     }
 

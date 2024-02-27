@@ -10,6 +10,10 @@ import java.util.List;
 
 @ApiModel
 public class ApiSceneStepQuery {
+
+    private String name;
+    private String repositoryId;
+
     @ApiProperty(name = "apiSceneId", desc = "apiSceneId精确匹配")
     private String apiSceneId;
 
@@ -41,5 +45,21 @@ public class ApiSceneStepQuery {
 
     public void setApiSceneId(String apiSceneId) {
         this.apiSceneId = apiSceneId;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

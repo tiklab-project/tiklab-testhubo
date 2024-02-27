@@ -10,6 +10,8 @@ import java.util.List;
 
 @ApiModel
 public class ApiPerfStepQuery {
+    private String name;
+    private String repositoryId;
 
     @ApiProperty(name = "apiSceneId", desc = "apiSceneId精确匹配")
     private String apiPerfId;
@@ -20,6 +22,21 @@ public class ApiPerfStepQuery {
     @ApiProperty(name ="pageParam",desc = "分页参数")
     private Page pageParam = new Page();
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
 
     public String getApiPerfId() {
         return apiPerfId;

@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.apix.http.scene.cases.controller;
 
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepWillBindCase;
 import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
 import io.thoughtware.postin.annotation.Api;
 import io.thoughtware.core.page.Pagination;
@@ -105,5 +106,13 @@ public class ApiSceneStepController {
 
         return Result.ok();
     }
+
+    @RequestMapping(path="/findApiSceneStepWillBindCasePage",method = RequestMethod.POST)
+    public Result<Pagination<ApiSceneStepWillBindCase>>  findApiSceneStepWillBindCasePage(@RequestBody @Valid @NotNull ApiSceneStepQuery apiSceneStepQuery){
+        Pagination<ApiSceneStepWillBindCase> pagination = apiSceneStepService.findApiSceneStepWillBindCasePage(apiSceneStepQuery);
+
+        return Result.ok(pagination);
+    }
+
 
 }

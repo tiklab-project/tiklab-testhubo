@@ -89,17 +89,17 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         //准备测试的数据
         ApiUnitTestRequest processData = setApiUnitTestRequestData(apiUnitId, apiUnitTestRequest.getApiEnv());
 
-        ApiUnitInstance apiUnitInstance = null;
+        ApiUnitInstance apiUnitInstance;
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try {
             if(enable){
-                logger.info("api-enable----");
+                logger.info("api-enable----test");
+
                 apiUnitInstance = apiUnitTestService.execute(processData);
-                logger.info("api-enable----end");
             }else {
-                logger.info("api-not-enable");
+                logger.info("api-not-enable----test");
 
                 List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
                 if( CollectionUtils.isNotEmpty(agentConfigList)){
@@ -108,11 +108,8 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
                 }else {
                     throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
                 }
-
-                logger.info("api-not-enable----end");
             }
         }catch (Exception e){
-            logger.info("api-execute----error");
             throw new ApplicationException(e);
         }
 
@@ -147,6 +144,12 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
         int executeNum = instanceService.getRecentExecuteNum(apiUnitId);
         instance.setExecuteNumber(executeNum);
 
+        //根据result设置成功还是失败
+        if(apiUnitInstance.getResult()==1){
+            instance.setStatus(MagicValue.TEST_STATUS_SUCCESS);
+        }else {
+            instance.setStatus(MagicValue.TEST_STATUS_FAIL);
+        }
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("url",apiUnitInstance.getRequestInstance().getRequestUrl());
@@ -188,7 +191,7 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
         apiUnitTestRequest.setVariableJson(variable);
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
-        apiUnitTestRequest.setApiUnitCaseExt(apiUnitCaseDataConstruction);
+        apiUnitTestRequest.setApiUnitCaseDataConstruction(apiUnitCaseDataConstruction);
         apiUnitTestRequest.setApiEnv(apiEnv);
 
         return apiUnitTestRequest;

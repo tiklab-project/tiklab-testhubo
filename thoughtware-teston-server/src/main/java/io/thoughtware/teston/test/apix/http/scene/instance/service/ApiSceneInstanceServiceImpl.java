@@ -209,6 +209,14 @@ public class ApiSceneInstanceServiceImpl implements ApiSceneInstanceService {
         int executeNum = instanceService.getRecentExecuteNum(apiSceneId);
         instance.setExecuteNumber(executeNum);
 
+
+        //根据result设置成功还是失败
+        if(apiSceneInstance.getResult()==1){
+            instance.setStatus(MagicValue.TEST_STATUS_SUCCESS);
+        }else {
+            instance.setStatus(MagicValue.TEST_STATUS_FAIL);
+        }
+
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("result",apiSceneInstance.getResult().toString());
         instanceMap.put("testNumber",apiSceneInstance.getTestNumber().toString());

@@ -2,6 +2,13 @@ package io.thoughtware.teston.common;
 
 public class MagicValue {
 
+    // api method
+    public static final String API_METHOD_TYPE_GET = "get";
+    public static final String API_METHOD_TYPE_POST = "post";
+//    public static final String API_METHOD_TYPE_PUT = "PUT";
+//    public static final String API_METHOD_TYPE_DELETE = "DELETE";
+
+
     //步骤断言的类型：变量，元素
     public static final String ASSERT_TYPE_VARIABLE = "variable";
     public static final String ASSERT_TYPE_ELEMENT = "element";

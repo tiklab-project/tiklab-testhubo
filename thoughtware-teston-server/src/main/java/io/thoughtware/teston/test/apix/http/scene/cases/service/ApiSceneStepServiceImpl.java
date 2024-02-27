@@ -1,8 +1,10 @@
 package io.thoughtware.teston.test.apix.http.scene.cases.service;
 
 import io.thoughtware.teston.common.MagicValue;
+import io.thoughtware.teston.test.apix.http.scene.cases.entity.ApiSceneStepWillBindCaseEntity;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepWillBindCase;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.test.model.TestCase;
@@ -145,4 +147,13 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
             createApiSceneStep(apiSceneStep);
         }
     }
+
+    @Override
+    public Pagination<ApiSceneStepWillBindCase> findApiSceneStepWillBindCasePage(ApiSceneStepQuery apiSceneStepQuery){
+        Pagination<ApiSceneStepWillBindCaseEntity> pagination = apiSceneStepDao.findApiSceneStepWillBindCasePage(apiSceneStepQuery);
+        List<ApiSceneStepWillBindCase> apiSceneStepWillBindCaseList = BeanMapper.mapList(pagination.getDataList(), ApiSceneStepWillBindCase.class);
+        joinTemplate.joinQuery(apiSceneStepWillBindCaseList);
+        return PaginationBuilder.build(pagination, apiSceneStepWillBindCaseList);
+    }
+
 }
