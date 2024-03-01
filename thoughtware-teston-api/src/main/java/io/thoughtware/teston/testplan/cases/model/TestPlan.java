@@ -68,8 +68,8 @@ public class TestPlan extends BaseModel{
     @ApiProperty(name="testCaseNum",desc="用例数量")
     private Integer testCaseNum;
 
-    private java.lang.String apiEnv;
-
+    private java.lang.String apiEnvId;
+    private java.lang.String appEnvId;
 
     public java.lang.String getId() {
         return id;
@@ -163,11 +163,19 @@ public class TestPlan extends BaseModel{
         this.repository = repository;
     }
 
-    public String getApiEnv() {
-        return apiEnv;
+    public String getApiEnvId() {
+        return apiEnvId;
     }
 
-    public void setApiEnv(String apiEnv) {
-        this.apiEnv = apiEnv;
+    public void setApiEnvId(String apiEnvId) {
+        this.apiEnvId = apiEnvId;
+    }
+
+    public String getAppEnvId() {
+        return appEnvId;
+    }
+
+    public void setAppEnvId(String appEnvId) {
+        this.appEnvId = appEnvId;
     }
 }

@@ -65,12 +65,12 @@ public class ExecuteJob implements Job {
         TestPlan testPlan = testPlanService.findTestPlan(testPlanId);
         if(testPlan==null){return;}
 
-        if(testPlan.getApiEnv()==null){
+        if(testPlan.getApiEnvId()==null){
             logger.error("Api Env is null");
             return;
         }
 
-        ApiEnv apiEnv = apiEnvService.findApiEnv(testPlan.getApiEnv());
+        ApiEnv apiEnv = apiEnvService.findApiEnv(testPlan.getAppEnvId());
         if(apiEnv==null){return;}
 
         TestPlanTestData testPlanTestData = new TestPlanTestData();

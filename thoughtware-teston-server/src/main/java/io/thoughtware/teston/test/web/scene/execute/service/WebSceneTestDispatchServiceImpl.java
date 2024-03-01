@@ -83,17 +83,18 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     @Override
     public void execute(WebSceneTestRequest webSceneTestRequest) {
         String webSceneId = webSceneTestRequest.getWebSceneId();
-        int stepNum = stepCommonService.findStepNum(webSceneId);
-        String webSceneInstanceId = createInitInstance(webSceneId, stepNum);
+        String webSceneInstanceId = createInitInstance(webSceneId);
 
         //执行
         try {
             executeStart(webSceneTestRequest);
 
             try {
-                //执行完，保存最总结果
-                result(webSceneTestRequest);
-                Thread.sleep(3000);
+                Thread.sleep(2000);
+                //执行完，保存最终结果
+                WebSceneTestResponse webSceneTestResponse = result(webSceneTestRequest);
+                createStepInstanceList(webSceneTestResponse,webSceneInstanceId);
+                Thread.sleep(2000);
 
                 logger.info("------------------------------------------数据清理------------------------------------------");
 
@@ -143,10 +144,10 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     /**
      * 开始执行创建初始历史
      * @param webSceneId
-     * @param stepNum
      * @return
      */
-    private String createInitInstance(String webSceneId,Integer stepNum){
+    private String createInitInstance(String webSceneId){
+        int stepNum = stepCommonService.findStepNum(webSceneId);
         WebSceneInstance webSceneInstance = new WebSceneInstance();
         webSceneInstance.setWebSceneId(webSceneId);
         webSceneInstance.setStepNum(stepNum);
@@ -251,13 +252,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
                 }else {
                     instance.setStatus(MagicValue.TEST_STATUS_FAIL);
                 }
-
-                //保存单个步骤
-                if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
-                    List<StepCommonInstance> stepCommonInstanceList = webSceneTestResponse.getStepCommonInstanceList();
-
-                    webSceneInstanceService.createStepInstance(stepCommonInstanceList,instanceId);
-                }
             }
 
             instanceService.updateInstance(instance);
@@ -265,6 +259,15 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
             webSceneInstance.setInstance(instance);
         }else {
             updateStatus(instanceId,MagicValue.TEST_STATUS_FAIL);
+        }
+    }
+
+    private void createStepInstanceList(WebSceneTestResponse webSceneTestResponse,String instanceId){
+        //保存单个步骤
+        if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
+            List<StepCommonInstance> stepCommonInstanceList = webSceneTestResponse.getStepCommonInstanceList();
+
+            webSceneInstanceService.createStepInstance(stepCommonInstanceList,instanceId);
         }
     }
 

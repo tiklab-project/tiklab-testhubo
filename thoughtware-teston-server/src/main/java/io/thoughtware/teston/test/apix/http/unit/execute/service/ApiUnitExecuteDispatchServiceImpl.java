@@ -56,9 +56,6 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
     AssertInstanceService assertInstanceService;
 
     @Autowired
-    ApiUnitInstanceBindService apiUnitInstanceBindService;
-
-    @Autowired
     AgentConfigService agentConfigService;
 
     @Autowired
@@ -86,29 +83,13 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
     @Override
     public ApiUnitInstance execute(ApiUnitTestRequest apiUnitTestRequest) {
         String apiUnitId = apiUnitTestRequest.getApiUnitCase().getId();
-        //准备测试的数据
-        ApiUnitTestRequest processData = setApiUnitTestRequestData(apiUnitId, apiUnitTestRequest.getApiEnv());
 
         ApiUnitInstance apiUnitInstance;
 
         //根据环境配置是否为内嵌
         //如果不是内嵌走rpc
         try {
-            if(enable){
-                logger.info("api-enable----test");
-
-                apiUnitInstance = apiUnitTestService.execute(processData);
-            }else {
-                logger.info("api-not-enable----test");
-
-                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-                if( CollectionUtils.isNotEmpty(agentConfigList)){
-                    AgentConfig agentConfig = agentConfigList.get(0);
-                    apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(processData);
-                }else {
-                    throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
-                }
-            }
+             apiUnitInstance = executeStart(apiUnitTestRequest);
         }catch (Exception e){
             throw new ApplicationException(e);
         }
@@ -117,14 +98,44 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
             return null;
         }
 
-        //测试计划中设置了执行类型，其他没设置
-        if(apiUnitTestRequest.getExeType()==null){
-            saveInstance(apiUnitInstance,apiUnitId);
+
+        saveInstance(apiUnitInstance,apiUnitId);
+
+
+        return apiUnitInstance;
+    }
+
+
+    @Override
+    public ApiUnitInstance executeStart(ApiUnitTestRequest apiUnitTestRequest) {
+        String apiUnitId = apiUnitTestRequest.getApiUnitCase().getId();
+        //准备测试的数据
+        ApiUnitTestRequest processData = setApiUnitTestRequestData(apiUnitId, apiUnitTestRequest.getApiEnv());
+
+        ApiUnitInstance apiUnitInstance;
+
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        if(enable){
+            logger.info("api-enable----test");
+
+            apiUnitInstance = apiUnitTestService.execute(processData);
+        }else {
+            logger.info("api-not-enable----test");
+
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if( CollectionUtils.isNotEmpty(agentConfigList)){
+                AgentConfig agentConfig = agentConfigList.get(0);
+                apiUnitInstance = apiUnitTestServiceRpc(agentConfig.getUrl()).execute(processData);
+            }else {
+                throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
+            }
         }
 
 
         return apiUnitInstance;
     }
+
 
 
     private void saveInstance(ApiUnitInstance apiUnitInstance, String apiUnitId){

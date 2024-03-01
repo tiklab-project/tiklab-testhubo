@@ -85,9 +85,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     @Override
     public void execute(AppSceneTestRequest appSceneTestRequest) {
         String appSceneId = appSceneTestRequest.getAppSceneId();
-        int stepNum = stepCommonService.findStepNum(appSceneId);
-        String appSceneInstanceId = createInitInstance(appSceneId, stepNum);
+        String appSceneInstanceId = createInitInstance(appSceneId);
 
+        // 执行
         try {
             executeStart(appSceneTestRequest);
         }catch (Exception e){
@@ -95,10 +95,10 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             throw new ApplicationException(e);
         }
 
-
         try {
             //执行完，保存最总结果
-            result(appSceneTestRequest);
+            AppSceneTestResponse appSceneTestResponse = result(appSceneTestRequest);
+            createStepInstanceList(appSceneTestResponse,appSceneInstanceId);
             Thread.sleep(3000);
 
             logger.info("------------------------------------------数据清理------------------------------------------");
@@ -152,10 +152,10 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
     /**
      * 开始执行创建初始历史
      * @param appSceneId
-     * @param stepNum
      * @return
      */
-    private String createInitInstance(String appSceneId, Integer stepNum){
+    private String createInitInstance(String appSceneId){
+        int stepNum = stepCommonService.findStepNum(appSceneId);
         AppSceneInstance appSceneInstance = new AppSceneInstance();
         appSceneInstance.setAppSceneId(appSceneId);
         appSceneInstance.setStepNum(stepNum);
@@ -252,12 +252,6 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
                 }else {
                     instance.setStatus(MagicValue.TEST_STATUS_FAIL);
                 }
-
-                if(CollectionUtils.isNotEmpty(appSceneTestResponse.getStepCommonInstanceList())){
-                    List<StepCommonInstance> stepCommonInstanceList = appSceneTestResponse.getStepCommonInstanceList();
-
-                    appSceneInstanceService.createAppSceneStepInstance(stepCommonInstanceList,instanceId);
-                }
             }
 
             instanceService.updateInstance(instance);
@@ -266,6 +260,14 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             appSceneInstance.setInstance(instance);
         }else {
             updateStatus(instanceId,MagicValue.TEST_STATUS_FAIL);
+        }
+    }
+
+    private void createStepInstanceList(AppSceneTestResponse appSceneTestResponse,String instanceId){
+        if(CollectionUtils.isNotEmpty(appSceneTestResponse.getStepCommonInstanceList())){
+            List<StepCommonInstance> stepCommonInstanceList = appSceneTestResponse.getStepCommonInstanceList();
+
+            appSceneInstanceService.createAppSceneStepInstance(stepCommonInstanceList,instanceId);
         }
     }
 

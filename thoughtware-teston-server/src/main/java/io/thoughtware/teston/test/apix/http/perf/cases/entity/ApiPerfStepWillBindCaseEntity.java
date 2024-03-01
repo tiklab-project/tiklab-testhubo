@@ -27,7 +27,6 @@ public class ApiPerfStepWillBindCaseEntity implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
-
     @Column(name = "case_type",length = 32)
     private String caseType;
 

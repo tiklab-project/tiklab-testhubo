@@ -155,7 +155,7 @@ public class TestPlanExecuteApiDispatch {
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
         ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.getResult(apiPerfTestRequest);
 
-        if(apiPerfTestResponse!=null){
+        if(apiPerfTestResponse!=null&&apiPerfTestResponse.getApiPerfInstance()!=null){
             if(apiPerfTestResponse.getStatus()==0) {
                 String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
                 testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);

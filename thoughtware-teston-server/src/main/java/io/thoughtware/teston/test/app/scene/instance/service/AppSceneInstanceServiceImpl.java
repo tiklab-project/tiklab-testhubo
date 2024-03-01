@@ -1,12 +1,7 @@
 package io.thoughtware.teston.test.app.scene.instance.service;
 
-import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.instance.model.Instance;
-import io.thoughtware.teston.instance.model.InstanceQuery;
 import io.thoughtware.teston.instance.service.InstanceService;
-import io.thoughtware.teston.test.app.scene.cases.model.AppSceneCase;
-import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
-import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstance;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceQuery;
 import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceStep;
@@ -22,15 +17,12 @@ import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
 import io.thoughtware.toolkit.join.JoinTemplate;
-import io.thoughtware.teston.test.web.scene.cases.model.WebSceneCase;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -100,7 +92,9 @@ public class AppSceneInstanceServiceImpl implements AppSceneInstanceService {
     public AppSceneInstance findAppSceneInstance(@NotNull String id) {
         AppSceneInstance appSceneInstance = findOne(id);
         Instance instance = instanceService.findInstance(id);
-        appSceneInstance.setInstance(instance);
+        if(instance!=null){
+            appSceneInstance.setInstance(instance);
+        }
 
         //历史回显把步骤列表带上
         StepCommonInstanceQuery stepCommonInstanceQuery = new StepCommonInstanceQuery();

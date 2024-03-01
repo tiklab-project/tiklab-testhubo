@@ -206,8 +206,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanInstance.setRepositoryId(repositoryId);
         int planCaseNum = testPlanCaseService.findPlanCaseNum(testPlanId);
         testPlanInstance.setTotal(planCaseNum);
-        int size = (executableCaseList!=null)?executableCaseList.size():0;
-        testPlanInstance.setExecutableCaseNum(size);
+        int executableCaseNum = (executableCaseList!=null)?executableCaseList.size():0;
+        testPlanInstance.setExecutableCaseNum(executableCaseNum);
         testPlanInstance.setPassNum(0);
         testPlanInstance.setPassRate("0.00%");
         testPlanInstance.setFailNum(0);
@@ -232,7 +232,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
         JSONObject instanceMap = new JSONObject();
         instanceMap.put("total",planCaseNum);
-        instanceMap.put("executableCaseNum",testPlanInstance.getTotal().toString());
+        instanceMap.put("executableCaseNum",executableCaseNum);
         instanceMap.put("passNum",testPlanInstance.getPassNum().toString());
         instanceMap.put("passRate",testPlanInstance.getPassRate());
         instanceMap.put("failNum",testPlanInstance.getFailNum().toString());
@@ -287,7 +287,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                         testPlanExecuteAppDispatch.appSceneResult(testPlanCaseInstanceBind);
                         break;
                     default:
-                        return null;
+                        break;
                 }
             }
         }

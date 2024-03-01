@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.app.scene.instance.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thoughtware.teston.instance.model.Instance;
+import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.toolkit.join.annotation.Join;
@@ -49,7 +50,7 @@ public class AppSceneInstance extends BaseModel{
     private Timestamp createTime;
 
     private Instance instance;
-
+    private TestPlanCaseInstanceBind testPlanCaseInstanceBind;
 
     public String getId() {
         return id;
@@ -129,5 +130,13 @@ public class AppSceneInstance extends BaseModel{
 
     public void setInstance(Instance instance) {
         this.instance = instance;
+    }
+
+    public TestPlanCaseInstanceBind getTestPlanCaseInstanceBind() {
+        return testPlanCaseInstanceBind;
+    }
+
+    public void setTestPlanCaseInstanceBind(TestPlanCaseInstanceBind testPlanCaseInstanceBind) {
+        this.testPlanCaseInstanceBind = testPlanCaseInstanceBind;
     }
 }

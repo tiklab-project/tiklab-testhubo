@@ -62,10 +62,11 @@ public class TestPlanEntity implements Serializable {
     private Integer sort;
 
 
-    // 描述
-    @Column(name = "api_env")
-    private String apiEnv;
+    @Column(name = "api_env_id")
+    private String apiEnvId;
 
+    @Column(name = "app_env_id")
+    private String appEnvId;
 
     public String getId() {
         return id;
@@ -156,11 +157,19 @@ public class TestPlanEntity implements Serializable {
         this.repositoryId = repositoryId;
     }
 
-    public String getApiEnv() {
-        return apiEnv;
+    public String getApiEnvId() {
+        return apiEnvId;
     }
 
-    public void setApiEnv(String apiEnv) {
-        this.apiEnv = apiEnv;
+    public void setApiEnvId(String apiEnvId) {
+        this.apiEnvId = apiEnvId;
+    }
+
+    public String getAppEnvId() {
+        return appEnvId;
+    }
+
+    public void setAppEnvId(String appEnvId) {
+        this.appEnvId = appEnvId;
     }
 }
