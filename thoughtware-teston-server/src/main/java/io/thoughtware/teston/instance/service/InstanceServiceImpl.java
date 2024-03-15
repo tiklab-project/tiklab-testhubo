@@ -152,6 +152,14 @@ public class InstanceServiceImpl implements InstanceService {
     }
 
     @Override
+    public Instance findRecentInstance(String belongId) {
+        InstanceEntity recentInstance = instanceDao.findRecentInstance(belongId);
+        Instance instance = BeanMapper.map(recentInstance, Instance.class);
+        return instance;
+    }
+
+
+    @Override
     public List<Instance> findAllInstance() {
         List<InstanceEntity> instanceEntityList =  instanceDao.findAllInstance();
 

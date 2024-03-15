@@ -31,6 +31,9 @@ public class FuncUnitCase extends BaseModel{
     @ApiProperty(name="stepNum",desc="步骤数量")
     private int stepNum;
 
+    @ApiProperty(name="stepNum",desc="缺陷数量")
+    private int defectNum;
+
     public String getId() {
         return id;
     }
@@ -53,5 +56,13 @@ public class FuncUnitCase extends BaseModel{
 
     public void setStepNum(int stepNum) {
         this.stepNum = stepNum;
+    }
+
+    public int getDefectNum() {
+        return defectNum;
+    }
+
+    public void setDefectNum(int defectNum) {
+        this.defectNum = defectNum;
     }
 }

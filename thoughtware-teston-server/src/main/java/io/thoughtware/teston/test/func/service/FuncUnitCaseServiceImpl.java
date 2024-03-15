@@ -113,6 +113,9 @@ public class FuncUnitCaseServiceImpl implements FuncUnitCaseService {
         int funcSceneStepNum = stepCommonService.findStepNum(id);
         funcUnitCase.setStepNum(funcSceneStepNum);
 
+        int totalNum = workItemBindService.findTotalNum(id);
+        funcUnitCase.setDefectNum(totalNum);
+
         //手动添加字段
         TestCase testCase = funcUnitCase.getTestCase();
         if(testCase.getCategory()!=null){

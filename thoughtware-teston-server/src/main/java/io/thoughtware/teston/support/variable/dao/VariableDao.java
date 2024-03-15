@@ -54,6 +54,13 @@ public class VariableDao {
         jpaTemplate.delete(deleteCondition);
     }
 
+    public int findVariableNum(String belongId) {
+        String stepSql = "Select count(1) as total from teston_variable where belong_id = '" + belongId+ "'";
+        Integer stepNum = jpaTemplate.getJdbcTemplate().queryForObject(stepSql, new Object[]{}, Integer.class);
+
+        return stepNum;
+    }
+
     /**
      * 根据id查找场景变量
      * @param id

@@ -58,6 +58,13 @@ public interface InstanceService {
     Instance findInstance(@NotNull String id);
 
     /**
+     * 查找最近一次的实例
+     * @param belongId
+     * @return
+     */
+    Instance findRecentInstance(String belongId);
+
+    /**
     * 查找所有公共实例
     * @return
     */

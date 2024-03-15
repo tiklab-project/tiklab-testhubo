@@ -120,6 +120,9 @@ public class AppSceneCaseServiceImpl implements AppSceneCaseService {
         int appSceneStepNum = stepCommonService.findStepNum(id);
         appSceneCase.setStepNum(appSceneStepNum);
 
+        int variableNum = variableService.findVariableNum(id);
+        appSceneCase.setVariableNum(variableNum);
+
         //手动添加字段
         TestCase testCase = appSceneCase.getTestCase();
         if(testCase.getCategory()!=null) {

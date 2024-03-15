@@ -7,10 +7,13 @@ import io.thoughtware.dal.jpa.criterial.condition.QueryCondition;
 import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import io.thoughtware.teston.instance.entity.InstanceEntity;
 import io.thoughtware.teston.instance.model.InstanceQuery;
+import io.thoughtware.teston.testplan.instance.entity.TestPlanInstanceEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -74,6 +77,23 @@ public class InstanceDao {
     public List<InstanceEntity> findInstanceList(List<String> idList) {
         return jpaTemplate.findList(InstanceEntity.class,idList);
     }
+
+    public InstanceEntity findRecentInstance(String belongId){
+        try {
+            String sql = "SELECT * FROM teston_instance WHERE belong_id = ? ORDER BY create_time DESC LIMIT 1";
+
+            InstanceEntity instanceEntity = jpaTemplate.getJdbcTemplate()
+                    .queryForObject(sql, new Object[]{belongId}, new BeanPropertyRowMapper<>(InstanceEntity.class));
+
+            return instanceEntity;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        } catch (DataAccessException e) {
+            return null;
+        }
+
+    }
+
 
     /**
      * 查询公共实例列表

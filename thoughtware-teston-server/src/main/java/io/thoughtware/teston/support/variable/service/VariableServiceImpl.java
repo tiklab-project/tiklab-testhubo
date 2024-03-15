@@ -61,6 +61,12 @@ public class VariableServiceImpl implements VariableService {
         }
     }
 
+    @Override
+    public int findVariableNum(String belongId) {
+        int variableNum = variableDao.findVariableNum(belongId);
+        return variableNum;
+    }
+
 
     @Override
     public Variable findOne(String id) {

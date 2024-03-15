@@ -96,6 +96,14 @@ public class TestPlanInstanceServiceImpl implements TestPlanInstanceService {
     }
 
     @Override
+    public TestPlanInstance findRecentPlanInstance(String testPlanId) {
+        TestPlanInstanceEntity recentPlanInstanceEntity = testPlanInstanceDao.findRecentPlanInstance(testPlanId);
+        TestPlanInstance planInstance = BeanMapper.map(recentPlanInstanceEntity, TestPlanInstance.class);
+
+        return planInstance;
+    }
+
+    @Override
     public List<TestPlanInstance> findAllTestPlanInstance() {
         List<TestPlanInstanceEntity> testPlanInstanceEntityList =  testPlanInstanceDao.findAllTestPlanInstance();
 

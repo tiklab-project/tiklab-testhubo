@@ -101,8 +101,7 @@ public class GatewayFilterAutoConfiguration {
                         "/ws",
                         "/socket",
                         "/images",
-                        "/sql",
-                        "/mockx"
+                        "/sql"
                 })
                 .get();
     }

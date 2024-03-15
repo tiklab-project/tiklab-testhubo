@@ -124,6 +124,9 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
         int apiSceneStepNum = stepCommonService.findStepNum(id);
         apiSceneCase.setStepNum(apiSceneStepNum);
 
+        int variableNum = variableService.findVariableNum(id);
+        apiSceneCase.setVariableNum(variableNum);
+
         //手动添加字段
         TestCase testCase = apiSceneCase.getTestCase();
         if(testCase.getCategory()!=null) {

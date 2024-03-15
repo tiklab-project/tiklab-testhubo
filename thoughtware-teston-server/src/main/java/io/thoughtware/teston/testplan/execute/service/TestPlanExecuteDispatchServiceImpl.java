@@ -99,7 +99,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                 executorService.submit(() -> {
                     try{
 
-                        executeTestPlanCases(testPlanTestData,testPlanInstanceId,planCaseInstanceList);
+                        executeTestPlanCases(testPlanTestData,planCaseInstanceList);
                     }catch (Exception e) {
                         updatePlanStatus(0,testPlanId);
                         updateStatus(testPlanInstanceId,MagicValue.TEST_STATUS_FAIL);
@@ -149,12 +149,9 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     /***
      * 执行用例
      * @param testPlanTestData
-     * @param testPlanInstanceId
      * @param planCaseInstanceList
      */
-    private void executeTestPlanCases(TestPlanTestData testPlanTestData,
-                                      String testPlanInstanceId,
-                                      ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList){
+    private void executeTestPlanCases(TestPlanTestData testPlanTestData, ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList){
         //循环 执行用例
         for(TestPlanCaseInstanceBind testPlanCaseInstanceBind : planCaseInstanceList){
             String caseType = testPlanCaseInstanceBind.getCaseType();
@@ -165,7 +162,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                      break;
                 }
                 case MagicValue.CASE_TYPE_API_SCENE -> {
-                    testPlanExecuteApiDispatch.exeApiScene(testPlanCaseInstanceBind, testPlanTestData, testPlanInstanceId);
+                    testPlanExecuteApiDispatch.exeApiScene(testPlanCaseInstanceBind, testPlanTestData);
                     break;
                 }
                 case MagicValue.CASE_TYPE_API_PERFORM -> {
@@ -179,7 +176,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                     break;
                 }
                 case MagicValue.CASE_TYPE_APP -> {
-
                     testPlanExecuteAppDispatch.exeAppScene(testPlanCaseInstanceBind, testPlanTestData);
                     testPlanCaseInstanceBind.setStatus(1);
                     break;

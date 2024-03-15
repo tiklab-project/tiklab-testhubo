@@ -14,4 +14,7 @@ public interface ApiSceneExecuteDispatchService {
      */
     ApiSceneTestResponse execute(ApiSceneTestRequest apiSceneTestRequest);
 
+
+    ApiSceneTestResponse executeStart(ApiSceneTestRequest apiSceneTestRequest);
+
 }

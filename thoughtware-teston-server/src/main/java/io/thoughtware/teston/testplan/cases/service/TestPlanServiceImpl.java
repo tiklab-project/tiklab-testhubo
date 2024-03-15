@@ -1,6 +1,7 @@
 package io.thoughtware.teston.testplan.cases.service;
 
 import io.thoughtware.rpc.annotation.Exporter;
+import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.testplan.cases.dao.TestPlanDao;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanEntity;
@@ -9,6 +10,8 @@ import io.thoughtware.teston.testplan.cases.model.TestPlanQuery;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
+import io.thoughtware.teston.testplan.instance.model.TestPlanInstance;
+import io.thoughtware.teston.testplan.instance.service.TestPlanInstanceService;
 import io.thoughtware.teston.testplan.quartz.service.QuartzPlanService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,6 +45,9 @@ public class TestPlanServiceImpl implements TestPlanService {
 
     @Autowired
     QuartzPlanService quartzPlanService;
+
+    @Autowired
+    TestPlanInstanceService testPlanInstanceService;
 
     @Override
     public String createTestPlan(@NotNull @Valid TestPlan testPlan) {
@@ -135,14 +142,23 @@ public class TestPlanServiceImpl implements TestPlanService {
     @Override
     public Pagination<TestPlan> findTestPlanPage(TestPlanQuery testPlanQuery) {
         Pagination<TestPlanEntity>  pagination = testPlanDao.findTestPlanPage(testPlanQuery);
-
         List<TestPlan> testPlanList = BeanMapper.mapList(pagination.getDataList(),TestPlan.class);
+        joinTemplate.joinQuery(testPlanList);
+
         //添加测试计划关联的用例数
         for (TestPlan testPlan:testPlanList){
             int planCaseNum = testPlanCaseService.findPlanCaseNum(testPlan.getId());
             testPlan.setTestCaseNum(planCaseNum);
+
+            Instance recentInstance = instanceService.findRecentInstance(testPlan.getId());
+            if(recentInstance!=null){
+                HashMap<String, Object> recent = new HashMap<>();
+                recent.put("status",recentInstance.getStatus());
+                recent.put("executeNumber",recentInstance.getExecuteNumber());
+
+                testPlan.setRecentInstance(recent);
+            }
         }
-        joinTemplate.joinQuery(testPlanList);
 
         return PaginationBuilder.build(pagination,testPlanList);
     }

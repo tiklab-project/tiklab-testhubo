@@ -37,6 +37,8 @@ public interface WorkItemBindService {
 
     void deleteAllWorkItemBind(String caseId);
 
+    int findTotalNum(String caseId);
+
     @FindOne
     WorkItemBind findOne(@NotNull String id);
 

@@ -51,6 +51,12 @@ public interface TestPlanInstanceService {
     TestPlanInstance findTestPlanInstance(@NotNull String id);
 
     /**
+     * 查询计划最近一次历史
+     * @param testPlanId
+     * @return
+     */
+    TestPlanInstance findRecentPlanInstance(String testPlanId);
+    /**
     * 查找所有测试计划实例
     * @return
     */

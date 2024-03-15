@@ -83,9 +83,19 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
      */
     @Override
     public ApiSceneTestResponse execute(ApiSceneTestRequest apiSceneTestRequest) {
+        //执行
+        ApiSceneTestResponse apiSceneTestResponse = executeStart(apiSceneTestRequest);
+
         String apiSceneId = apiSceneTestRequest.getApiSceneCase().getId();
-        //数据构造
-        //查询测试步骤
+        //保存实例，存入数据库
+        saveInstance( apiSceneTestResponse,apiSceneId);
+
+        return apiSceneTestResponse;
+    }
+
+    @Override
+    public ApiSceneTestResponse executeStart(ApiSceneTestRequest apiSceneTestRequest){
+        String apiSceneId = apiSceneTestRequest.getApiSceneCase().getId();
         StepCommonQuery stepCommonQuery = new StepCommonQuery();
         stepCommonQuery.setCaseId(apiSceneId);
         stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API_SCENE);
@@ -95,37 +105,24 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         JSONObject variable = variableService.getVariable(apiSceneTestRequest.getRepositoryId());
         apiSceneTestRequest.setVariableJson(variable);
 
-        ApiSceneTestResponse apiSceneTestResponse = null;
-        //根据环境配置是否为内嵌
-        //如果不是内嵌走rpc
-        try{
-            if(enable){
-                //执行测试步骤返回数据
-                apiSceneTestResponse = apiSceneTestService.execute(apiSceneTestRequest);
+        ApiSceneTestResponse apiSceneTestResponse;
+
+        if(enable){
+            //执行测试步骤返回数据
+            apiSceneTestResponse = apiSceneTestService.execute(apiSceneTestRequest);
+        }else {
+            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+            if(CollectionUtils.isNotEmpty(agentConfigList)){
+                AgentConfig agentConfig = agentConfigList.get(0);
+
+                apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
             }else {
-                List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-                if(CollectionUtils.isNotEmpty(agentConfigList)){
-                    AgentConfig agentConfig = agentConfigList.get(0);
-
-                    apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
-                }else {
-                    throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
-                }
+                throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
             }
-        }catch (Exception e){
-            throw new ApplicationException(e);
-        }
-
-
-        //测试计划中设置了执行类型，其他没设置
-        if(apiSceneTestRequest.getExeType()==null){
-            //保存实例，存入数据库
-            saveInstance( apiSceneTestResponse,apiSceneId);
         }
 
         return apiSceneTestResponse;
     }
-
 
     /**
      * 保存历史

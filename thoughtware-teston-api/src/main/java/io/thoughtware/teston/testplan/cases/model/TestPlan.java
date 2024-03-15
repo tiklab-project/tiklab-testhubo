@@ -13,6 +13,7 @@ import io.thoughtware.toolkit.join.annotation.JoinQuery;
 import io.thoughtware.user.user.model.User;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 /**
  * 测试计划 模型
@@ -36,6 +37,8 @@ public class TestPlan extends BaseModel{
 
     @ApiProperty(name="state",desc="状态  0 未开始  1进行中  2结束")
     private java.lang.Integer state;
+
+    private Map<String,Object> recentInstance;
 
     @ApiProperty(name="principal",desc="负责人")
     @Mappings({
@@ -105,6 +108,14 @@ public class TestPlan extends BaseModel{
 
     public void setState(java.lang.Integer state) {
         this.state = state;
+    }
+
+    public Map<String, Object> getRecentInstance() {
+        return recentInstance;
+    }
+
+    public void setRecentInstance(Map<String, Object> recentInstance) {
+        this.recentInstance = recentInstance;
     }
 
     public User getPrincipal() {

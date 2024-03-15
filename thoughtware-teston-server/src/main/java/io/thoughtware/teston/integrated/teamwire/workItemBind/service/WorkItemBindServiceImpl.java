@@ -72,6 +72,12 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
         }
     }
 
+    @Override
+    public int findTotalNum(String caseId){
+        int totalNum = workItemBindDao.findTotalNum(caseId);
+        return totalNum;
+    }
+
 
     @Override
     public WorkItemBind findOne(String id) {

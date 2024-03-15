@@ -206,7 +206,7 @@ public class TestPlanCaseDao {
      */
     public Pagination<PlanCaseEntity> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery) {
         StringBuilder modelSqlBuilder = new StringBuilder();
-        modelSqlBuilder.append("SELECT  teston_testcase.id AS plan_case_id, teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type, teston_testcase.category_id, teston_testcase.name ")
+        modelSqlBuilder.append("SELECT  teston_testcase.id AS plan_case_id, teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type,teston_testcase.test_type, teston_testcase.category_id, teston_testcase.name ")
                 .append(" FROM teston_testcase ")
                 .append(" WHERE teston_testcase.repository_id = '").append(testPlanCaseQuery.getRepositoryId()).append("'")
                 .append(" AND NOT EXISTS (  ")
@@ -216,6 +216,9 @@ public class TestPlanCaseDao {
                 .append(" WHERE teston_test_plan_detail.test_case_id = teston_testcase.id ")
                 .append(" AND teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("')");
 
+        if (testPlanCaseQuery.getTestType() != null) {
+            modelSqlBuilder.append(" And teston_testcase.test_type = '").append(testPlanCaseQuery.getTestType()).append("'");
+        }
 
         String modelSql = modelSqlBuilder.toString();
 

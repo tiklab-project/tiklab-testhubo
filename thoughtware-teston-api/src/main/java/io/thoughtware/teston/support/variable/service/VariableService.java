@@ -40,6 +40,8 @@ public interface VariableService {
 
     void deleteAllVariable(String caseId);
 
+    int findVariableNum(String belongId);
+
     @FindOne
     Variable findOne(@NotNull String id);
     @FindList

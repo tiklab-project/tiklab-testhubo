@@ -54,6 +54,14 @@ public class WorkItemBindDao {
         jpaTemplate.delete(deleteCondition);
     }
 
+    public int findTotalNum(String caseId) {
+        String stepSql = "Select count(1) as total from teston_workitem_bind where case_id = '" + caseId+ "'";
+        Integer stepNum = jpaTemplate.getJdbcTemplate().queryForObject(stepSql, new Object[]{}, Integer.class);
+
+        return stepNum;
+    }
+
+
     /**
      * 根据id查找缺陷
      * @param id

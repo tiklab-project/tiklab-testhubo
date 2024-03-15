@@ -121,6 +121,9 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
         int webSceneStepNum = stepCommonService.findStepNum(id);
         webSceneCase.setStepNum(webSceneStepNum);
 
+        int variableNum = variableService.findVariableNum(id);
+        webSceneCase.setVariableNum(variableNum);
+
         //手动添加字段
         TestCase testCase = webSceneCase.getTestCase();
         if(testCase.getCategory()!=null) {
@@ -131,7 +134,6 @@ public class WebSceneCaseServiceImpl implements WebSceneCaseService {
             User updateUser = userService.findUser(testCase.getUpdateUser().getId());
             webSceneCase.getTestCase().setUpdateUser(updateUser);
         }
-
 
         return webSceneCase;
     }

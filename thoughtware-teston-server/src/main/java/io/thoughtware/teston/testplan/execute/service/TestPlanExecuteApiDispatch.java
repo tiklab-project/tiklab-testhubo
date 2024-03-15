@@ -70,11 +70,9 @@ public class TestPlanExecuteApiDispatch {
         apiUnitCase.setId(caseId);
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
         apiUnitTestRequest.setApiEnv(testPlanTestData.getApiEnv());
-        //设置一个执行的类型，如果是testPlanTest 则 执行后，apiUnitTestDispatchService里不保存历史，返回数据，这边保存历史。
-        apiUnitTestRequest.setExeType("testPlanTest");
 
         //执行
-        ApiUnitInstance apiUnitInstance = apiUnitExecuteDispatchService.execute(apiUnitTestRequest);
+        ApiUnitInstance apiUnitInstance = apiUnitExecuteDispatchService.executeStart(apiUnitTestRequest);
 
         //保存历史
         String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
@@ -92,25 +90,20 @@ public class TestPlanExecuteApiDispatch {
     /**
      * 执行接口场景用例
      * @param testPlanTestData
-     * @param testPlanInstanceId
      * @return
      */
-    public TestPlanCaseInstanceBind exeApiScene(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData, String testPlanInstanceId){
-
-        String caseId = testPlanCaseInstanceBind.getCaseId();
-
+    public TestPlanCaseInstanceBind exeApiScene(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
         ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
 
         ApiSceneCase apiSceneCase = new ApiSceneCase();
+        String caseId = testPlanCaseInstanceBind.getCaseId();
         apiSceneCase.setId(caseId);
 
         apiSceneTestRequest.setApiSceneCase(apiSceneCase);
         apiSceneTestRequest.setApiEnv(testPlanTestData.getApiEnv());
-        apiSceneTestRequest.setExeType("testPlanTest");
-
 
         //执行
-        ApiSceneTestResponse apiSceneTestResponse = apiSceneExecuteDispatchService.execute(apiSceneTestRequest);
+        ApiSceneTestResponse apiSceneTestResponse = apiSceneExecuteDispatchService.executeStart(apiSceneTestRequest);
         ApiSceneInstance apiSceneInstance = apiSceneTestResponse.getApiSceneInstance();
 
         //保存历史

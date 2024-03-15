@@ -11,6 +11,8 @@ import io.thoughtware.dal.jpa.criterial.conditionbuilder.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -64,6 +66,23 @@ public class TestPlanInstanceDao{
     public TestPlanInstanceEntity findTestPlanInstance(String id){
         return jpaTemplate.findOne(TestPlanInstanceEntity.class,id);
     }
+
+    public TestPlanInstanceEntity findRecentPlanInstance(String testPlanId){
+        try {
+            String sql = "SELECT * FROM teston_test_plan_instance WHERE test_plan_id = ? ORDER BY create_time DESC LIMIT 1";
+
+            TestPlanInstanceEntity testPlanInstanceEntity = jpaTemplate.getJdbcTemplate()
+                    .queryForObject(sql, new Object[]{testPlanId}, new BeanPropertyRowMapper<>(TestPlanInstanceEntity.class));
+
+            return testPlanInstanceEntity;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        } catch (DataAccessException e) {
+            return null;
+        }
+
+    }
+
 
     /**
     * 查找所有测试计划实例

@@ -31,6 +31,9 @@ public class AppSceneCase extends BaseModel {
     @ApiProperty(name="stepNum",desc="步骤数量")
     private int stepNum;
 
+    @ApiProperty(name="variableNum",desc="变量数量")
+    private int variableNum;
+
     public String getId() {
         return id;
     }
@@ -53,5 +56,13 @@ public class AppSceneCase extends BaseModel {
 
     public void setStepNum(int stepNum) {
         this.stepNum = stepNum;
+    }
+
+    public int getVariableNum() {
+        return variableNum;
+    }
+
+    public void setVariableNum(int variableNum) {
+        this.variableNum = variableNum;
     }
 }

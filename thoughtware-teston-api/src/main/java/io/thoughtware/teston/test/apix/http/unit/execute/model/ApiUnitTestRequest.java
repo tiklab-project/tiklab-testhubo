@@ -25,8 +25,6 @@ public class ApiUnitTestRequest extends BaseModel {
     @ApiProperty(name="variableJson",desc="环境变量")
     private JSONObject variableJson;
 
-    @ApiProperty(name="exeType",desc="当前执行的类型，用于测试计划中")
-    private String exeType;
 
     public ApiUnitCase getApiUnitCase() {
         return apiUnitCase;
@@ -60,11 +58,4 @@ public class ApiUnitTestRequest extends BaseModel {
         this.variableJson = variableJson;
     }
 
-    public String getExeType() {
-        return exeType;
-    }
-
-    public void setExeType(String exeType) {
-        this.exeType = exeType;
-    }
 }
