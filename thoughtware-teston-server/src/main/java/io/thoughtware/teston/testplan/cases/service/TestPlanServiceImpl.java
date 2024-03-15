@@ -155,7 +155,7 @@ public class TestPlanServiceImpl implements TestPlanService {
                 HashMap<String, Object> recent = new HashMap<>();
                 recent.put("status",recentInstance.getStatus());
                 recent.put("executeNumber",recentInstance.getExecuteNumber());
-
+                recent.put("instanceId",recentInstance.getId());
                 testPlan.setRecentInstance(recent);
             }
         }
