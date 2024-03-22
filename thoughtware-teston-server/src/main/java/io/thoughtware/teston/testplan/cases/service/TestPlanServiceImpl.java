@@ -10,7 +10,6 @@ import io.thoughtware.teston.testplan.cases.model.TestPlanQuery;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
-import io.thoughtware.teston.testplan.instance.model.TestPlanInstance;
 import io.thoughtware.teston.testplan.instance.service.TestPlanInstanceService;
 import io.thoughtware.teston.testplan.quartz.service.QuartzPlanService;
 import io.thoughtware.toolkit.beans.BeanMapper;
