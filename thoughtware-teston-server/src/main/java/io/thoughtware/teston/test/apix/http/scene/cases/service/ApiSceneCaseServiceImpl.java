@@ -2,6 +2,8 @@ package io.thoughtware.teston.test.apix.http.scene.cases.service;
 
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.variable.service.VariableService;
+import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfCaseService;
+import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfStepService;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCase;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCaseQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
@@ -12,6 +14,7 @@ import io.thoughtware.teston.category.model.Category;
 import io.thoughtware.teston.category.service.CategoryService;
 import io.thoughtware.teston.test.apix.http.scene.cases.dao.ApiSceneCaseDao;
 import io.thoughtware.teston.test.apix.http.scene.cases.entity.ApiSceneCaseEntity;
+import io.thoughtware.teston.testplan.cases.service.TestPlanCaseService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -57,6 +60,12 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
 
     @Autowired
     InstanceService instanceService;
+
+    @Autowired
+    ApiPerfStepService apiPerfStepService;
+
+    @Autowired
+    TestPlanCaseService testPlanCaseService;
 
     @Override
     public String createApiSceneCase(@NotNull @Valid ApiSceneCase apiSceneCase) {
@@ -180,6 +189,18 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
         }
 
         return apiSceneCaseList;
+    }
+
+    @Override
+    public Boolean isApiSceneBind(String id) {
+        Boolean apiSceneExist = apiPerfStepService.isApiSceneExist(id);
+        Boolean caseExist = testPlanCaseService.isCaseExist(id);
+
+        if(apiSceneExist&&caseExist){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

@@ -156,4 +156,15 @@ public class ApiSceneStepServiceImpl implements ApiSceneStepService {
         return PaginationBuilder.build(pagination, apiSceneStepWillBindCaseList);
     }
 
+    @Override
+    public Boolean isApiUnitExist(String apiUnitId) {
+        Integer apiUnitExist = apiSceneStepDao.isApiUnitExist(apiUnitId);
+
+        if(apiUnitExist!=null&&apiUnitExist > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

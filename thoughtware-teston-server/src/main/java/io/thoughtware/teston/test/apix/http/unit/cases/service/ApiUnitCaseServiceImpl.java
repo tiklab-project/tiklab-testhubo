@@ -1,12 +1,14 @@
 package io.thoughtware.teston.test.apix.http.unit.cases.service;
 
 import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
 import io.thoughtware.teston.test.apix.http.unit.cases.dao.ApiUnitCaseDao;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
 import io.thoughtware.teston.test.apix.http.unit.mock.JsonGenerator;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
+import io.thoughtware.teston.testplan.cases.service.TestPlanCaseService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -78,7 +80,11 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
     @Autowired
     InstanceService instanceService;
 
+    @Autowired
+    ApiSceneStepService apiSceneStepService;
 
+    @Autowired
+    TestPlanCaseService testPlanCaseService;
 
     @Override
     public String createApiUnitCase(@NotNull @Valid ApiUnitCase apiUnitCase) {
@@ -152,7 +158,6 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
     }
 
-
     @Override
     public ApiUnitCase findOne(String id) {
         ApiUnitCaseEntity apiUnitCase = apiApiUnitCaseDao.findApiUnitCase(id);
@@ -197,10 +202,23 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         List<ApiUnitCaseEntity> apiUnitCaseList = apiApiUnitCaseDao.findApiUnitCaseList(apiUnitCaseQuery);
 
         List<ApiUnitCase> testCases = BeanMapper.mapList(apiUnitCaseList, ApiUnitCase.class);
-       // addApiUnitCase(testCases);
+
         joinTemplate.joinQuery(testCases);
 
         return testCases;
+    }
+
+    @Override
+    public Boolean isApiUnitBind(String id){
+        Boolean apiSceneStepExist = apiSceneStepService.isApiUnitExist(id);
+
+        Boolean caseExist = testPlanCaseService.isCaseExist(id);
+
+        if(apiSceneStepExist&&caseExist){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
@@ -230,34 +248,12 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         Pagination<ApiUnitCaseEntity>  pagination = apiApiUnitCaseDao.findApiUnitCasePage(testCaseQuery);
 
         List<ApiUnitCase> apiUnitCaseList = BeanMapper.mapList(pagination.getDataList(), ApiUnitCase.class);
-        //addApiUnitCase(apiUnitCaseList);
+
         joinTemplate.joinQuery(apiUnitCaseList);
 
         return PaginationBuilder.build(pagination,apiUnitCaseList);
     }
 
-
-
-
-//    public void addApiUnitCase(List<ApiUnitCase> caseList){
-//        if (CollectionUtils.isNotEmpty(caseList)){
-//            //将测试结果放测试步骤方法里面
-//            for (ApiUnitCase apiUnitCase:caseList){
-//                ApiUnitInstanceQuery testInstanceQuery = new ApiUnitInstanceQuery();
-//                testInstanceQuery.setId(apiUnitCase.getId());
-//                List<ApiUnitInstanceEntity> testInstanceList = testInstanceDao.findTestStepInstanceList(testInstanceQuery);
-//                if (CollectionUtils.isNotEmpty(testInstanceList)){
-//                    List<ApiUnitInstance> testInstances = BeanMapper.mapList(testInstanceList, ApiUnitInstance.class);
-//                    //创建时间最近的
-//                    ApiUnitInstance testInstance = testInstances.get(testInstances.size() - 1);
-////                    apiUnitCase.setTestResult(testInstance.getResult());  //添加最近的测试步骤的测试结果
-//                }
-//            }
-//        }
-//    }
-    
-    
-    
 
 
 

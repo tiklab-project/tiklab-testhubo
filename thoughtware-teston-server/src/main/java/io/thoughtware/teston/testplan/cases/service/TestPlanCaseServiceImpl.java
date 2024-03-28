@@ -189,4 +189,27 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
             createTestPlanCase(testPlanCase);
         }
     }
+
+    @Override
+    public Boolean isCaseExist(String caseId){
+        Integer caseExist = testPlanDetailDao.isCaseExist(caseId);
+
+        if(caseExist!=null&&caseExist>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    @Override
+    public Map<String,Integer> getCaseTypeNum(String testPlanId){
+        List<Map<String, Object>> resultList = testPlanDetailDao.getCaseTypeNum(testPlanId);
+        Map<String, Integer> resultMap = new HashMap<>();
+        for (Map<String, Object> row : resultList) {
+            String caseType = (String) row.get("case_type");
+            int total = ((Number) row.get("total")).intValue();
+            resultMap.put(caseType, total);
+        }
+        return resultMap;
+    }
+
 }

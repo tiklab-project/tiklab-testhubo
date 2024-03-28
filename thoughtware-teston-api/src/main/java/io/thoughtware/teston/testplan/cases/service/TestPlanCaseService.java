@@ -11,6 +11,7 @@ import io.thoughtware.core.page.Pagination;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
 * 测试计划绑定的用例 服务接口
@@ -96,5 +97,19 @@ public interface TestPlanCaseService {
      * 测试计划中关联用例
      * @param testPlanCaseList
      */
-    void  planBindCase(List<TestPlanCase> testPlanCaseList);
+    void planBindCase(List<TestPlanCase> testPlanCaseList);
+
+    /**
+     * 判断用例是否被绑定
+     * @param caseId
+     * @return
+     */
+    Boolean isCaseExist(String caseId);
+
+    /**
+     * 获取不同类型的用例数量
+     * @param testPlanId
+     * @return
+     */
+    Map<String,Integer> getCaseTypeNum(String testPlanId);
 }

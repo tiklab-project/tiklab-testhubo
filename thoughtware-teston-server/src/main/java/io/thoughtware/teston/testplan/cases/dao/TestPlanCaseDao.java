@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 测试计划绑定的用例 服务接口
@@ -225,5 +226,36 @@ public class TestPlanCaseDao {
         Pagination<PlanCaseEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(PlanCaseEntity.class));
         return page;
     }
+
+    /**
+     * 通过用例id，判断是否用例被绑定
+     * @param caseId
+     * @return
+     */
+    public Integer isCaseExist(String caseId) {
+        String sql = "Select count(1) as total from teston_test_plan_detail where test_case_id = '" + caseId + "'";
+        Integer modelTotal = jpaTemplate.getJdbcTemplate().queryForObject(sql, new Object[]{}, Integer.class);
+
+        return modelTotal;
+    }
+
+    /**
+     * 获取不同用例类型的数量
+     * @param testPlanId
+     * @return
+     */
+    public List<Map<String, Object>> getCaseTypeNum(String testPlanId){
+        String sql = "SELECT tc.case_type, COUNT(*) AS total " +
+                "FROM teston_test_plan_detail AS tpd " +
+                "INNER JOIN teston_testcase AS tc ON tpd.test_case_id = tc.id " +
+                "INNER JOIN teston_test_plan AS tp ON tpd.test_plan_id = tp.id " +
+                "WHERE tp.id = ? " +
+                "GROUP BY tc.case_type";
+
+        List<Map<String, Object>> maps = jpaTemplate.getJdbcTemplate().queryForList(sql, testPlanId);
+
+        return maps;
+    }
+
 
 }

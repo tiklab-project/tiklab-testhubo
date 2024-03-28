@@ -61,6 +61,17 @@ public class ApiUnitCaseController {
         return Result.ok();
     }
 
+    @RequestMapping(path="/isApiUnitBind",method = RequestMethod.POST)
+    @ApiMethod(name = "isApiUnitBind",desc = "判断接口单元用例是否被绑定")
+    @ApiParam(name = "id",desc = "id",required = true)
+    public Result<Boolean> isApiUnitBind(@NotNull String id){
+        Boolean apiUnitBind = apiUnitCaseService.isApiUnitBind(id);
+
+        return Result.ok(apiUnitBind);
+    }
+
+
+
     @RequestMapping(path="/findApiUnitCase",method = RequestMethod.POST)
     @ApiMethod(name = "findApiUnitCase",desc = "通过id查找接口单元")
     @ApiParam(name = "id",desc = "id",required = true)
@@ -105,5 +116,7 @@ public class ApiUnitCaseController {
 
         return Result.ok(apiUnitCaseList);
     }
+
+
 
 }

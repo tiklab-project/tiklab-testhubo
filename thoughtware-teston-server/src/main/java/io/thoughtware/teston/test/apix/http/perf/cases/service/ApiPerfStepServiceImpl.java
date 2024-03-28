@@ -99,6 +99,17 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     }
 
     @Override
+    public Boolean isApiSceneExist(String caseId) {
+        Integer apiSceneExist = apiPerfStepDao.isApiSceneExist(caseId);
+
+        if(apiSceneExist!=null&& apiSceneExist>0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
     public List<ApiPerfStep> findAllApiPerfStep() {
         List<ApiPerfStepEntity> apiPerfStepEntityList =  apiPerfStepDao.findAllApiPerfStep();
 

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 测试计划绑定的用例 控制器
@@ -62,6 +63,7 @@ public class TestPlanCaseController {
 
         return Result.ok();
     }
+
 
     @RequestMapping(path="/findTestPlanCase",method = RequestMethod.POST)
     @ApiMethod(name = "findTestPlanCase",desc = "通过id查询")
@@ -107,4 +109,24 @@ public class TestPlanCaseController {
         return Result.ok();
 
     }
+
+
+    @RequestMapping(path="/isCaseExist",method = RequestMethod.POST)
+    @ApiMethod(name = "isCaseExist",desc = "判断用例是否被绑定")
+    @ApiParam(name = "caseId",desc = "caseId",required = true)
+    public Result<Boolean> isCaseExist(@NotNull String caseId){
+        Boolean isBind = testPlanCaseService.isCaseExist(caseId);
+
+        return Result.ok(isBind);
+    }
+
+    @RequestMapping(path="/getCaseTypeNum",method = RequestMethod.POST)
+    @ApiMethod(name = "getCaseTypeNum",desc = "判断用例是否被绑定")
+    @ApiParam(name = "testPlanId",desc = "testPlanId",required = true)
+    public Result<Map<String, Integer>> getCaseTypeNum(@NotNull String testPlanId){
+        Map<String, Integer> caseTypeNum = testPlanCaseService.getCaseTypeNum(testPlanId);
+
+        return Result.ok(caseTypeNum);
+    }
+
 }

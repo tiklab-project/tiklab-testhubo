@@ -65,6 +65,15 @@ public class ApiPerfStepDao {
         return jpaTemplate.findOne(ApiPerfStepEntity.class,id);
     }
 
+
+    public Integer isApiSceneExist(String caseId) {
+        String sql = " Select count(1) as total from teston_api_perf_step where api_scene_id = '" + caseId + "'";
+        Integer modelTotal = jpaTemplate.getJdbcTemplate().queryForObject(sql, new Object[]{}, Integer.class);
+
+        return modelTotal;
+    }
+
+
     /**
     * 查找所有接口性能场景步骤
     * @return

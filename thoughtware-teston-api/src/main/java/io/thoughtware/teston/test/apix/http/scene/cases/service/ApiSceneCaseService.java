@@ -80,4 +80,11 @@ public interface ApiSceneCaseService {
     List<ApiSceneCase> findApiSceneCaseListByTestCase(TestCaseQuery testCaseQuery);
 
 
+    /**
+     * 判断接口场景是否被绑定
+     * @param id
+     * @return
+     */
+    Boolean isApiSceneBind(String id);
+
 }

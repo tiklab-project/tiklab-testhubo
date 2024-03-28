@@ -135,5 +135,12 @@ public class ApiSceneStepDao{
     }
 
 
+    public Integer isApiUnitExist(String apiUnitId) {
+        String sql = "Select count(1) as total from teston_api_scene_step where api_unit_id = '" + apiUnitId + "'";
+        Integer modelTotal = jpaTemplate.getJdbcTemplate().queryForObject(sql, new Object[]{}, Integer.class);
+
+        return modelTotal;
+    }
+
 
 }

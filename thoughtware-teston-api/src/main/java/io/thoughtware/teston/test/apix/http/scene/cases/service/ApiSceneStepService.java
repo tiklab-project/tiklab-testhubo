@@ -87,4 +87,7 @@ public interface ApiSceneStepService {
      */
     Pagination<ApiSceneStepWillBindCase> findApiSceneStepWillBindCasePage(ApiSceneStepQuery apiSceneStepQuery);
 
+
+    Boolean isApiUnitExist(String apiUnitId);
+
 }

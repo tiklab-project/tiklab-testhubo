@@ -47,6 +47,13 @@ public interface ApiPerfStepService {
     ApiPerfStep findApiPerfStep(@NotNull String id);
 
     /**
+     * 判断是否被接口性能绑定
+     * @param caseId
+     * @return
+     */
+    Boolean isApiSceneExist(String caseId);
+
+    /**
     * 查找所有接口性能场景步骤
     * @return
     */

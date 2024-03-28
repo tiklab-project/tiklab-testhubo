@@ -61,6 +61,16 @@ public class ApiSceneCaseController {
         return Result.ok();
     }
 
+
+    @RequestMapping(path="/isApiSceneBind",method = RequestMethod.POST)
+    @ApiMethod(name = "isApiSceneBind",desc = "判断接口场景用例是否被绑定")
+    @ApiParam(name = "id",desc = "id",required = true)
+    public Result<Boolean> isApiSceneBind(@NotNull String id){
+        Boolean isBind = apiSceneCaseService.isApiSceneBind(id);
+
+        return Result.ok(isBind);
+    }
+
     @RequestMapping(path="/findApiSceneCase",method = RequestMethod.POST)
     @ApiMethod(name = "findApiSceneCase",desc = "通过id查询测试用例")
     @ApiParam(name = "id",desc = "id",required = true)

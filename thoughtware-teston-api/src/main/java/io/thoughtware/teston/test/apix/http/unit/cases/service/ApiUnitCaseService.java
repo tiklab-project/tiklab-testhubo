@@ -67,6 +67,13 @@ public interface ApiUnitCaseService {
     List<ApiUnitCase> findApiUnitCaseList(ApiUnitCaseQuery apiUnitCaseQuery);
 
     /**
+     * 判断是否被接口场景绑定
+     * @param id
+     * @return
+     */
+    Boolean isApiUnitBind(String id);
+
+    /**
     * 根据查询参数按分页查询接口单元
     * @param apiUnitCaseQuery
     * @return
