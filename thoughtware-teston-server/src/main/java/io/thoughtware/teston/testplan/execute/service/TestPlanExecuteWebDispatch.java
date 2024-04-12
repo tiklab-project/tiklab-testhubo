@@ -14,6 +14,8 @@ import io.thoughtware.teston.test.web.scene.execute.service.WebSceneTestDispatch
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * 测试计划中web测试调度
  */
@@ -53,22 +55,35 @@ public class TestPlanExecuteWebDispatch {
         webSceneTestRequest.setWebSceneId(caseId);
         WebSceneTestResponse webSceneTestResponse = webSceneTestDispatchService.getResult(webSceneTestRequest);
 
+
         if(webSceneTestResponse.getWebSceneInstance()!=null){
-            testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
+            String status = webSceneTestResponse.getWebSceneInstance().getStatus();
+
+            if(Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                testPlanCaseInstanceBind.setStatus(1);
+            }else {
+                testPlanCaseInstanceBind.setStatus(0);
+            }
+
+            if(Objects.equals(status, MagicValue.TEST_STATUS_SUCCESS)){
+                testPlanCaseInstanceBind.setResult(1);
+            }
+            if(Objects.equals(status, MagicValue.TEST_STATUS_FAIL)){
+                testPlanCaseInstanceBind.setResult(0);
+            }
+
+            if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                String webSceneInstanceId = webSceneInstanceService.createWebSceneInstance(webSceneTestResponse.getWebSceneInstance());
+                testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
+                testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+                webSceneInstanceService.createStepInstance(webSceneTestResponse.getStepCommonInstanceList(),webSceneInstanceId);
+            }
         }else {
             testPlanCaseInstanceBind.setResult(0);
         }
 
-        testPlanCaseInstanceBind.setStatus(webSceneTestResponse.getStatus());
 
-        if(webSceneTestResponse.getWebSceneInstance()!=null&&webSceneTestResponse.getStatus()==0){
-            String webSceneInstanceId = webSceneInstanceService.createWebSceneInstance(webSceneTestResponse.getWebSceneInstance());
-            testPlanCaseInstanceBind.setCaseInstanceId(webSceneInstanceId);
-            testPlanCaseInstanceBind.setResult(webSceneTestResponse.getWebSceneInstance().getResult());
-            testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-            testPlanCaseInstanceBind.setStatus(0);
-            webSceneInstanceService.createStepInstance(webSceneTestResponse.getStepCommonInstanceList(),webSceneInstanceId);
-        }
+
 
         return testPlanCaseInstanceBind;
     }

@@ -258,4 +258,24 @@ public class TestPlanCaseDao {
     }
 
 
+    /**
+     * 获取不同测试类型的数量
+     * @param testPlanId
+     * @return
+     */
+    public List<Map<String, Object>> getTestTypeNum(String testPlanId){
+        String sql = "SELECT tc.test_type, COUNT(*) AS total " +
+                "FROM teston_test_plan_detail AS tpd " +
+                "INNER JOIN teston_testcase AS tc ON tpd.test_case_id = tc.id " +
+                "INNER JOIN teston_test_plan AS tp ON tpd.test_plan_id = tp.id " +
+                "WHERE tp.id = ? " +
+                "GROUP BY tc.test_type";
+
+        List<Map<String, Object>> maps = jpaTemplate.getJdbcTemplate().queryForList(sql, testPlanId);
+
+        return maps;
+    }
+
+
+
 }

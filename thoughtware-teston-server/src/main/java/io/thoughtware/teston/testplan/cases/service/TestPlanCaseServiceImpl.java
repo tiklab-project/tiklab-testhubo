@@ -212,4 +212,22 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
         return resultMap;
     }
 
+    @Override
+    public Map<String,Integer> getTestTypeNum(String testPlanId){
+        List<Map<String, Object>> resultList = testPlanDetailDao.getTestTypeNum(testPlanId);
+        Map<String, Integer> resultMap = new HashMap<>();
+        int allTotal = 0;
+        for (Map<String, Object> row : resultList) {
+            String caseType = (String) row.get("test_type");
+            int total = ((Number) row.get("total")).intValue();
+            allTotal+=total;
+            resultMap.put(caseType, total);
+        }
+
+        resultMap.put("all", allTotal);
+        return resultMap;
+    }
+
+
+
 }

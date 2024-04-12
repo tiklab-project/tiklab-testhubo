@@ -2,6 +2,8 @@ package io.thoughtware.teston.common;
 
 public class MagicValue {
 
+
+
     // api method
     public static final String API_METHOD_TYPE_GET = "get";
     public static final String API_METHOD_TYPE_POST = "post";
@@ -67,4 +69,5 @@ public class MagicValue {
     public static final String TEST_STATUS_SUCCESS= "success";
     //执行失败
     public static final String TEST_STATUS_FAIL = "fail";
+
 }

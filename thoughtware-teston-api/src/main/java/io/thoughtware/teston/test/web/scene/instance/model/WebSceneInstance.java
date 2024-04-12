@@ -27,6 +27,9 @@ public class WebSceneInstance extends BaseModel{
     @ApiProperty(name="result",desc="测试结果 成功:1 , 失败:0")
     private Integer result;
 
+    @ApiProperty(name="status",desc="测试结果 成功:success , 失败:fail")
+    private String status;
+
     @ApiProperty(name = "stepNum", desc = "测试步骤数量")
     private Integer stepNum;
 
@@ -137,5 +140,13 @@ public class WebSceneInstance extends BaseModel{
 
     public void setInstance(Instance instance) {
         this.instance = instance;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

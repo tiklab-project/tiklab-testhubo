@@ -110,9 +110,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                         }catch (Exception e){
                             throw new ApplicationException(e);
                         }finally {
-                            testPlanIdOrPlanCaseList.remove(testPlanId);
-                            testPlanIdOrPlanInstanceId.remove(testPlanId);
-                            planInstanceIdOrPlanCaseInstanceList.remove(testPlanId);
+                            cleanUpExecutionData(testPlanId);
                         }
                     }
                 });
@@ -336,7 +334,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      * @return
      */
     private TestPlanInstance processInstance(ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList, int executableCaseCount){
-
         TestPlanInstance testPlanInstance = new TestPlanInstance();
 
         int total = executableCaseCount;
@@ -352,7 +349,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         testPlanInstance.setFailNum(total-passNum);
         String errorRate = testUtil.processRate(total - passNum, total);
         testPlanInstance.setErrorRate(errorRate);
-
 
         if(Objects.equals(total,passNum)){
             testPlanInstance.setResult(1);

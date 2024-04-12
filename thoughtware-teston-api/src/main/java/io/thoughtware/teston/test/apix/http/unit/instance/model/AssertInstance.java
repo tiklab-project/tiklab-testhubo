@@ -34,7 +34,7 @@ public class AssertInstance extends BaseModel{
     private String propertyName;
 
     @ApiProperty(name="comparator",desc="比较符")
-    private String comparator;
+    private Integer comparator;
 
     @ApiProperty(name="value",desc="比较的值")
     private String value;
@@ -85,13 +85,14 @@ public class AssertInstance extends BaseModel{
         this.actualResult = actualResult;
     }
 
-    public String getComparator() {
+    public Integer getComparator() {
         return comparator;
     }
 
-    public void setComparator(String comparator) {
+    public void setComparator(Integer comparator) {
         this.comparator = comparator;
     }
+
     public String getValue() {
         return value;
     }

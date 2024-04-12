@@ -112,4 +112,12 @@ public interface TestPlanCaseService {
      * @return
      */
     Map<String,Integer> getCaseTypeNum(String testPlanId);
+
+
+    /**
+     * 获取不同测试类型的用例数量
+     * @param testPlanId
+     * @return
+     */
+    Map<String,Integer> getTestTypeNum(String testPlanId);
 }

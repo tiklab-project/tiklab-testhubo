@@ -17,8 +17,6 @@ public class WebSceneTestResponse extends BaseModel {
     @ApiProperty(name="webSceneInstance",desc="测试结果的list ")
     private WebSceneInstance webSceneInstance;
 
-    private Integer status;
-
     public List<StepCommonInstance> getStepCommonInstanceList() {
         return stepCommonInstanceList;
     }
@@ -35,11 +33,4 @@ public class WebSceneTestResponse extends BaseModel {
         this.webSceneInstance = webSceneInstance;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

@@ -1,5 +1,6 @@
 package io.thoughtware.teston.testplan.execute.service;
 
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.app.perf.cases.model.AppPerfCase;
 import io.thoughtware.teston.test.app.perf.execute.mode.AppPerfTestRequest;
 import io.thoughtware.teston.test.app.perf.execute.mode.AppPerfTestResponse;
@@ -20,6 +21,8 @@ import io.thoughtware.teston.support.environment.service.AppEnvService;
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * 测试计划中app的执行测试
@@ -65,20 +68,30 @@ public class TestPlanExecuteAppDispatch {
         AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.getResult(appSceneTestRequest);
 
         if(appSceneTestResponse.getAppSceneInstance()!=null){
-            testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
+            String status = appSceneTestResponse.getAppSceneInstance().getStatus();
+
+            if(Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                testPlanCaseInstanceBind.setStatus(1);
+            }else {
+                testPlanCaseInstanceBind.setStatus(0);
+            }
+
+            if(Objects.equals(status, MagicValue.TEST_STATUS_SUCCESS)){
+                testPlanCaseInstanceBind.setResult(1);
+            }
+            if(Objects.equals(status, MagicValue.TEST_STATUS_FAIL)){
+                testPlanCaseInstanceBind.setResult(0);
+            }
+
+            if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneTestResponse.getAppSceneInstance());
+                testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
+                testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+                appSceneInstanceService.createAppSceneStepInstance(appSceneTestResponse.getStepCommonInstanceList(),appSceneInstanceId);
+            }
+
         }else {
             testPlanCaseInstanceBind.setResult(0);
-        }
-        testPlanCaseInstanceBind.setCaseId(caseId);
-        testPlanCaseInstanceBind.setStatus(appSceneTestResponse.getStatus());
-
-        if(appSceneTestResponse.getAppSceneInstance()!=null&&appSceneTestResponse.getStatus()==0){
-            String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneTestResponse.getAppSceneInstance());
-            testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
-            testPlanCaseInstanceBind.setResult(appSceneTestResponse.getAppSceneInstance().getResult());
-            testPlanCaseInstanceBind.setStatus(0);
-            testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-            appSceneInstanceService.createAppSceneStepInstance(appSceneTestResponse.getStepCommonInstanceList(),appSceneInstanceId);
         }
 
         return testPlanCaseInstanceBind;

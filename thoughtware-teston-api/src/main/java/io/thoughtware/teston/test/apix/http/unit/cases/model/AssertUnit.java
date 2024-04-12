@@ -39,7 +39,7 @@ public class AssertUnit extends BaseModel{
     private String dataType;
 
     @ApiProperty(name="comparator",desc="比较符")
-    private String comparator;
+    private Integer comparator;
 
     @ApiProperty(name="value",desc="值")
     private String value;
@@ -84,13 +84,15 @@ public class AssertUnit extends BaseModel{
     public void setDataType(String dataType) {
         this.dataType = dataType;
     }
-    public String getComparator() {
+
+    public Integer getComparator() {
         return comparator;
     }
 
-    public void setComparator(String comparator) {
+    public void setComparator(Integer comparator) {
         this.comparator = comparator;
     }
+
     public String getValue() {
         return value;
     }

@@ -146,8 +146,43 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             appSceneTestServiceRPC(agentUrl).execute(appSceneTestRequest);
 
         }
-
     }
+
+    @Override
+    public AppSceneTestResponse result(AppSceneTestRequest appSceneTestRequest) {
+        AppSceneTestResponse appSceneTestResponse = getResult(appSceneTestRequest);
+
+        //测试计划中设置了值
+        updateInstance(appSceneTestResponse,appSceneTestRequest.getAppSceneId());
+
+        return appSceneTestResponse;
+    }
+
+    @Override
+    public AppSceneTestResponse getResult(AppSceneTestRequest appSceneTestRequest) {
+        AppSceneTestResponse appSceneTestResponse = new AppSceneTestResponse();
+
+        //根据环境配置是否为内嵌
+        //如果不是内嵌走rpc
+        try{
+            if(enable) {
+                //调用执行方法返回结果数据
+                appSceneTestResponse = appSceneTestService.result(appSceneTestRequest);
+            }else {
+                String agentUrl = agentConfigService.getAgent();
+                appSceneTestResponse = appSceneTestServiceRPC(agentUrl).result(appSceneTestRequest);
+            }
+        }catch (Exception e){
+            AppSceneInstance appSceneInstance = getAppSceneInstance(appSceneTestRequest.getAppSceneId());
+            appSceneInstance.setStatus(MagicValue.TEST_STATUS_FAIL);
+            appSceneTestResponse.setAppSceneInstance(appSceneInstance);
+            throw new ApplicationException(e);
+        }
+
+        return appSceneTestResponse;
+    }
+
+
 
     /**
      * 开始执行创建初始历史
@@ -155,13 +190,7 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
      * @return
      */
     private String createInitInstance(String appSceneId){
-        int stepNum = stepCommonService.findStepNum(appSceneId);
-        AppSceneInstance appSceneInstance = new AppSceneInstance();
-        appSceneInstance.setAppSceneId(appSceneId);
-        appSceneInstance.setStepNum(stepNum);
-        appSceneInstance.setFailNum(0);
-        appSceneInstance.setPassNum(0);
-        appSceneInstance.setPassRate("0.00%");
+        AppSceneInstance appSceneInstance = getAppSceneInstance(appSceneId);
         String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneInstance);
 
         // 创建公共实例
@@ -194,38 +223,19 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         return appSceneInstanceId;
     }
 
+    private AppSceneInstance getAppSceneInstance(String caseId){
+        int stepNum = stepCommonService.findStepNum(caseId);
+        AppSceneInstance appSceneInstance = new AppSceneInstance();
+        appSceneInstance.setAppSceneId(caseId);
+        appSceneInstance.setStepNum(stepNum);
+        appSceneInstance.setFailNum(0);
+        appSceneInstance.setPassNum(0);
+        appSceneInstance.setPassRate("0.00%");
 
-    @Override
-    public AppSceneTestResponse result(AppSceneTestRequest appSceneTestRequest) {
-        AppSceneTestResponse appSceneTestResponse = getResult(appSceneTestRequest);
-
-        //测试计划中设置了值
-        updateInstance(appSceneTestResponse,appSceneTestRequest.getAppSceneId());
-
-        return appSceneTestResponse;
+        return appSceneInstance;
     }
 
-    @Override
-    public AppSceneTestResponse getResult(AppSceneTestRequest appSceneTestRequest) {
-        AppSceneTestResponse appSceneTestResponse = new AppSceneTestResponse();
 
-        //根据环境配置是否为内嵌
-        //如果不是内嵌走rpc
-        try{
-            if(enable) {
-                //调用执行方法返回结果数据
-                appSceneTestResponse = appSceneTestService.result(appSceneTestRequest);
-            }else {
-                String agentUrl = agentConfigService.getAgent();
-                appSceneTestResponse = appSceneTestServiceRPC(agentUrl).result(appSceneTestRequest);
-            }
-        }catch (Exception e){
-            appSceneTestResponse.setStatus(0);
-            throw new ApplicationException(e);
-        }
-
-        return appSceneTestResponse;
-    }
 
 
     private void updateInstance(AppSceneTestResponse appSceneTestResponse,String appSceneId){
@@ -244,18 +254,8 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
             instanceMap.put("failNum",appSceneInstance.getFailNum().toString());
             instance.setContent(instanceMap.toString());
 
-            Integer status = appSceneTestResponse.getStatus();
-            if(status==0){
-                //根据result设置成功还是失败
-                if(appSceneInstance.getResult()==1){
-                    instance.setStatus(MagicValue.TEST_STATUS_SUCCESS);
-                }else {
-                    instance.setStatus(MagicValue.TEST_STATUS_FAIL);
-                }
-            }
-
+            instance.setStatus(appSceneInstance.getStatus());
             instanceService.updateInstance(instance);
-
 
             appSceneInstance.setInstance(instance);
         }else {
@@ -276,9 +276,9 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
      * @param instanceId
      */
     private void updateStatus(String instanceId,String status){
-        Instance instance = instanceService.findInstance(instanceId);
-        instance.setStatus(status);
-        instanceService.updateInstance(instance);
+        AppSceneInstance appSceneInstance = appSceneInstanceService.findAppSceneInstance(instanceId);
+        appSceneInstance.setStatus(status);
+        appSceneInstanceService.updateAppSceneInstance(appSceneInstance);
     }
 
 }

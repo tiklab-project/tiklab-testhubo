@@ -26,4 +26,14 @@ public interface WebSceneTestDispatchService {
 
     WebSceneTestResponse getResult(WebSceneTestRequest webSceneTestRequest);
 
+    /**
+     *  创建web实例
+     * @param belongId
+     * @return
+     */
+    String createInitWebInstance(String belongId);
+
+
+    void updateWebInstance(WebSceneTestResponse webSceneTestResponse, String webSceneId);
+
 }

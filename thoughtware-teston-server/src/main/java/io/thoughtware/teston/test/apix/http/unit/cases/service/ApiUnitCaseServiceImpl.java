@@ -487,6 +487,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
             HashMap<String, Object> assertItem = new HashMap<>();
             assertItem.put("source",assertUnit.getSource());
             assertItem.put("propertyName",assertUnit.getPropertyName());
+            assertItem.put("comparator",assertUnit.getComparator());
             assertItem.put("value",assertUnit.getValue());
             assertList.add(assertItem);
         }

@@ -28,23 +28,23 @@ public class AssertCaseEntity implements Serializable {
     private Integer source;
 
     // 属性名称
-    @Column(name = "property_name",length = 64)
+    @Column(name = "property_name")
     private String propertyName;
 
     // 数据类型
-    @Column(name = "data_type",length = 32)
+    @Column(name = "data_type")
     private String dataType;
 
     // 比较符
-    @Column(name = "comparator",length = 32)
-    private String comparator;
+    @Column(name = "comparator")
+    private Integer comparator;
 
     // 值
-    @Column(name = "value",length = 128)
+    @Column(name = "value")
     private String value;
 
     // 排序
-    @Column(name = "sort",length = 4)
+    @Column(name = "sort")
     private Integer sort;
 
     public String getId() {
@@ -79,11 +79,11 @@ public class AssertCaseEntity implements Serializable {
         this.dataType = dataType;
     }
 
-    public String getComparator() {
+    public Integer getComparator() {
         return comparator;
     }
 
-    public void setComparator(String comparator) {
+    public void setComparator(Integer comparator) {
         this.comparator = comparator;
     }
 

@@ -44,6 +44,10 @@ public class WebSceneInstanceEntity {
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 状态
+    @Column(name = "status")
+    private String status;
+
     public String getId() {
         return id;
     }
@@ -106,5 +110,13 @@ public class WebSceneInstanceEntity {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

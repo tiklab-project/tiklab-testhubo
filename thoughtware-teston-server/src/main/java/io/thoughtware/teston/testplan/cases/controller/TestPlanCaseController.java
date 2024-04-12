@@ -129,4 +129,13 @@ public class TestPlanCaseController {
         return Result.ok(caseTypeNum);
     }
 
+    @RequestMapping(path="/getTestTypeNum",method = RequestMethod.POST)
+    @ApiMethod(name = "getTestTypeNum",desc = "判断用例是否被绑定")
+    @ApiParam(name = "testPlanId",desc = "testPlanId",required = true)
+    public Result<Map<String, Integer>> getTestTypeNum(@NotNull String testPlanId){
+        Map<String, Integer> testTypeNum = testPlanCaseService.getTestTypeNum(testPlanId);
+
+        return Result.ok(testTypeNum);
+    }
+
 }

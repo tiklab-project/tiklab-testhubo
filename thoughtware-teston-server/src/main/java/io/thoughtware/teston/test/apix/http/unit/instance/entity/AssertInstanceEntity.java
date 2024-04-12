@@ -40,7 +40,7 @@ public class AssertInstanceEntity implements Serializable {
 
     //比较符
     @Column(name = "comparator")
-    private String comparator;
+    private Integer comparator;
 
     //比较的值
     @Column(name = "value")
@@ -90,11 +90,11 @@ public class AssertInstanceEntity implements Serializable {
         this.actualResult = actualResult;
     }
 
-    public String getComparator() {
+    public Integer getComparator() {
         return comparator;
     }
 
-    public void setComparator(String comparator) {
+    public void setComparator(Integer comparator) {
         this.comparator = comparator;
     }
 
