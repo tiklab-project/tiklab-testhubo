@@ -1,9 +1,10 @@
 package io.thoughtware.teston.repository.service;
 
 import io.thoughtware.privilege.role.model.PatchUser;
-import io.thoughtware.security.logging.service.LoggingService;
+import io.thoughtware.privilege.role.model.RoleUser;
+import io.thoughtware.privilege.role.service.RoleUserService;
+import io.thoughtware.security.logging.logging.service.LoggingService;
 import io.thoughtware.teston.common.TestOnUnit;
-import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.repository.model.*;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.category.model.Category;
@@ -86,6 +87,9 @@ public class RepositoryServiceImpl implements RepositoryService {
 
     @Autowired
     TestPlanService testPlanService;
+
+    @Autowired
+    RoleUserService roleUserService;
 
     @Value("${base.url:null}")
     String baseUrl;
@@ -347,55 +351,40 @@ public class RepositoryServiceImpl implements RepositoryService {
             userList = new ArrayList<>();
         }
 
-        Set<String> existingUserIds = new HashSet<>();
-        boolean foundLoginUser = false;
-        boolean foundAdmin = false;
+        //超级管理员
+        userList.add(createPatchUser(loginId, repositoryId, 2));
+        //管理员
+        RoleUser roleAdmin = roleUserService.findUserRoleAdmin();
+        String systemAdminId = roleAdmin.getUser().getId();
+        userList.add(createPatchUser(systemAdminId, repositoryId, 1));
 
         // 遍历userList来更新当前用户或管理员的adminRole，同时收集已存在的用户ID
         for (PatchUser user : userList) {
-            existingUserIds.add(user.getId());
-            // 如果用户是当前用户或管理员，确保其adminRole被设置为true
-            if (user.getId().equals(loginId) || "111111".equals(user.getId())) {
-                user.setAdminRole(true);
-                if (user.getId().equals(loginId)) {
-                    foundLoginUser = true;
-                }
-                if ("111111".equals(user.getId())) {
-                    foundAdmin = true;
-                }
+            if(!loginId.equals(user.getUserId())&&!systemAdminId.equals(user.getUserId())){
+                userList.add(createPatchUser(user.getUserId(), repositoryId, 0));
             }
         }
 
-        // 如果当前用户未在列表中找到，将其添加为管理员
-        if (!foundLoginUser&&!"111111".equals(loginId)) {
-            userList.add(createPatchUser(loginId, repositoryId, true));
-        }
-
-        // 如果管理员未在列表中找到，将其添加为管理员
-        if (!foundAdmin) {
-            userList.add(createPatchUser("111111", repositoryId, true));
-        }
-
         // 调用服务以初始化权限
-        dmRoleService.initPatchDmRole(repositoryId, userList, "teston");
+        dmRoleService.initPatchDmRole(repositoryId, userList);
     }
 
     /**
      * 创建一个新的PatchUser对象的辅助方法
      * @param userId 用户ID
      * @param repositoryId 仓库ID
-     * @param isAdmin 是否为管理员角色
+     * @param roleType 0.默认角色，1：管理员角色 2：超级管理员
      * @return PatchUser对象
      */
-    private PatchUser createPatchUser(String userId, String repositoryId, boolean isAdmin) {
+    private PatchUser createPatchUser(String userId, String repositoryId, Integer roleType) {
         PatchUser patchUser = new PatchUser();
         DmUser dmUser = new DmUser();
         dmUser.setDomainId(repositoryId);
         User user = new User();
         user.setId(userId);
         dmUser.setUser(user);
-        patchUser.setId(userId);
-        patchUser.setAdminRole(isAdmin);
+        patchUser.setUserId(userId);
+        patchUser.setRoleType(roleType);
         return patchUser;
     }
 }

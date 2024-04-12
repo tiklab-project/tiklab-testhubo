@@ -51,24 +51,30 @@ public class TestOnDalAutoConfiguration {
                 "teston_1.0.2",
                 "teston-platform_1.0.2",
 
+                "apply-auth_1.0.2",
+                "privilege_1.0.2",
                 "oplog_1.0.2",
                 "message_1.0.2",
         });
         dsmConfig.newVersion("1.0.3", new String[]{
                 "teston_1.0.3",
-
-                "message_1.0.3",
                 "teston-platform_1.0.3",
+
+                "apply-auth_1.0.3",
+                "message_1.0.3",
+                "oplog_1.0.3",
         });
         dsmConfig.newVersion("1.0.4", new String[]{
                 "teston_1.0.4",
                 "teston-platform_1.0.4",
 
                 "message_1.0.4",
-                "oplog_1.0.4"
+                "oplog_1.0.4",
+                "apply-auth_1.0.4",
         });
         dsmConfig.newVersion("1.0.5", new String[]{
                 "teston_1.0.5",
+                "teston-platform_1.0.5",
 
                 "message_1.0.5",
         });
