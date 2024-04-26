@@ -63,6 +63,7 @@ public class TestOnDalAutoConfiguration {
                 "apply-auth_1.0.3",
                 "message_1.0.3",
                 "oplog_1.0.3",
+                "privilege_1.0.3"
         });
         dsmConfig.newVersion("1.0.4", new String[]{
                 "teston_1.0.4",
@@ -90,6 +91,8 @@ public class TestOnDalAutoConfiguration {
         });
         dsmConfig.newVersion("1.0.8", new String[]{
                 "teston_1.0.8",
+
+                "message_1.0.8"
         });
         dsmConfig.newVersion("1.0.9", new String[]{
                 "teston_1.0.9",
