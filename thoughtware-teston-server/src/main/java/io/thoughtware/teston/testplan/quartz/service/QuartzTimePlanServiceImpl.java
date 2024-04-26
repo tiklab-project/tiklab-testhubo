@@ -2,6 +2,8 @@ package io.thoughtware.teston.testplan.quartz.service;
 
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
+import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
+import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.common.TestOnUnit;
 import io.thoughtware.teston.testplan.quartz.config.SchedulerConfig;
@@ -62,21 +64,16 @@ public class QuartzTimePlanServiceImpl implements QuartzTimePlanService {
     }
 
     @Override
-    public void deleteQuartzTimePlan(@NotNull String id) {
-        quartzTimePlanDao.deleteQuartzTimePlan(id);
+    public void deleteAllQuartzTimePlan(String quartzPlanId){
+        DeleteCondition deleteCondition = DeleteBuilders.createDelete(QuartzTimePlanEntity.class)
+                .eq("quartzPlanId",quartzPlanId)
+                .get();
+        quartzTimePlanDao.deleteQuartzTimePlan(deleteCondition);
     }
 
     @Override
-    public void deleteAllQuartzTimePlan(String quartzPlanId) {
-        QuartzTimePlanQuery quartzTimePlanQuery = new QuartzTimePlanQuery();
-        quartzTimePlanQuery.setQuartzPlanId(quartzPlanId);
-        List<QuartzTimePlan> quartzTimePlanList = findQuartzTimePlanList(quartzTimePlanQuery);
-
-        if(quartzTimePlanList!= null && !quartzTimePlanList.isEmpty()){
-            for(QuartzTimePlan quartzTimePlan : quartzTimePlanList){
-                deleteQuartzTimePlan(quartzTimePlan.getId());
-            }
-        }
+    public void deleteQuartzTimePlan(@NotNull String id) {
+        quartzTimePlanDao.deleteQuartzTimePlan(id);
     }
 
 

@@ -43,6 +43,9 @@ public class ApiPerfInstance extends BaseModel{
     @ApiProperty(name="executeNumber",desc="执行次数")
     private Integer executeNumber;
 
+    @ApiProperty(name="status",desc="状态结果")
+    private String status;
+
     public String getId() {
         return id;
     }
@@ -113,5 +116,13 @@ public class ApiPerfInstance extends BaseModel{
 
     public void setExecuteNumber(Integer executeNumber) {
         this.executeNumber = executeNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -1,5 +1,6 @@
 package io.thoughtware.teston.testplan.execute.service;
 
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfCase;
 import io.thoughtware.teston.testplan.cases.model.PlanCase;
@@ -25,6 +26,8 @@ import io.thoughtware.teston.test.apix.http.unit.execute.service.ApiUnitExecuteD
 import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * 测试计划中接口的执行测试
@@ -71,17 +74,21 @@ public class TestPlanExecuteApiDispatch {
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
         apiUnitTestRequest.setApiEnv(testPlanTestData.getApiEnv());
 
-        //执行
-        ApiUnitInstance apiUnitInstance = apiUnitExecuteDispatchService.executeStart(apiUnitTestRequest);
+        try {
+            //执行
+            ApiUnitInstance apiUnitInstance = apiUnitExecuteDispatchService.executeStart(apiUnitTestRequest);
 
-        //保存历史
-        String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
+            //保存历史
+            String apiUnitInstanceId = apiUnitInstanceService.saveApiUnitInstanceToSql(apiUnitInstance);
 
-        //测试计划历史 与 绑定用例的历史 公共历史表
-        testPlanCaseInstanceBind.setCaseInstanceId(apiUnitInstanceId);
-        testPlanCaseInstanceBind.setResult(apiUnitInstance.getResult());
-        testPlanCaseInstanceBind.setStatus(0);
-        testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            //测试计划历史 与 绑定用例的历史 公共历史表
+            testPlanCaseInstanceBind.setCaseInstanceId(apiUnitInstanceId);
+            testPlanCaseInstanceBind.setResult(apiUnitInstance.getResult());
+            testPlanCaseInstanceBind.setStatus(0);
+            testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+        }catch (Exception e){
+            testPlanCaseInstanceBind.setStatus(0);
+        }
 
         return testPlanCaseInstanceBind;
     }
@@ -102,20 +109,24 @@ public class TestPlanExecuteApiDispatch {
         apiSceneTestRequest.setApiSceneCase(apiSceneCase);
         apiSceneTestRequest.setApiEnv(testPlanTestData.getApiEnv());
 
-        //执行
-        ApiSceneTestResponse apiSceneTestResponse = apiSceneExecuteDispatchService.executeStart(apiSceneTestRequest);
-        ApiSceneInstance apiSceneInstance = apiSceneTestResponse.getApiSceneInstance();
+        try {
+            //执行
+            ApiSceneTestResponse apiSceneTestResponse = apiSceneExecuteDispatchService.executeStart(apiSceneTestRequest);
+            ApiSceneInstance apiSceneInstance = apiSceneTestResponse.getApiSceneInstance();
 
-        //保存历史
-        String apiSceneInstanceId = apiSceneInstanceService.createApiSceneInstance(apiSceneInstance);
-        //步骤历史
-        apiSceneInstanceService.createWebStepInstance(apiSceneTestResponse.getStepCommonInstanceList(),apiSceneInstanceId);
+            //保存历史
+            String apiSceneInstanceId = apiSceneInstanceService.createApiSceneInstance(apiSceneInstance);
+            //步骤历史
+            apiSceneInstanceService.createWebStepInstance(apiSceneTestResponse.getStepCommonInstanceList(),apiSceneInstanceId);
 
-        //测试计划历史 与 绑定用例的历史 公共历史
-        testPlanCaseInstanceBind.setCaseInstanceId(apiSceneInstanceId);
-        testPlanCaseInstanceBind.setResult(apiSceneTestResponse.getApiSceneInstance().getResult());
-        testPlanCaseInstanceBind.setStatus(0);
-        testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+            //测试计划历史 与 绑定用例的历史 公共历史
+            testPlanCaseInstanceBind.setCaseInstanceId(apiSceneInstanceId);
+            testPlanCaseInstanceBind.setResult(apiSceneTestResponse.getApiSceneInstance().getResult());
+            testPlanCaseInstanceBind.setStatus(0);
+            testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+        }catch (Exception e){
+            testPlanCaseInstanceBind.setStatus(0);
+        }
 
         return testPlanCaseInstanceBind;
     }
@@ -146,22 +157,43 @@ public class TestPlanExecuteApiDispatch {
         ApiPerfCase apiPerfCase = new ApiPerfCase();
         apiPerfCase.setId(apiPerfId);
         apiPerfTestRequest.setApiPerfCase(apiPerfCase);
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.getResult(apiPerfTestRequest);
+        try {
+            ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.getResult(apiPerfTestRequest);
 
-        if(apiPerfTestResponse!=null&&apiPerfTestResponse.getApiPerfInstance()!=null){
-            if(apiPerfTestResponse.getStatus()==0) {
-                String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
-                testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
-                testPlanCaseInstanceBind.setResult(1);
+            if(apiPerfTestResponse.getApiPerfInstance()!=null){
+                String status = apiPerfTestResponse.getApiPerfInstance().getStatus();
+
+                if(Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                    testPlanCaseInstanceBind.setStatus(1);
+                }else {
+                    testPlanCaseInstanceBind.setStatus(0);
+                }
+
+                if(Objects.equals(status, MagicValue.TEST_STATUS_SUCCESS)){
+                    testPlanCaseInstanceBind.setResult(1);
+                }
+                if(Objects.equals(status, MagicValue.TEST_STATUS_FAIL)){
+                    testPlanCaseInstanceBind.setResult(0);
+                }
+
+
+                if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                    String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
+                    testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
+                    testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+                }
+            }else {
                 testPlanCaseInstanceBind.setStatus(0);
-                testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
             }
-
-            testPlanCaseInstanceBind.setStatus(apiPerfTestResponse.getStatus());
-        }else {
+        }catch (Exception e){
             testPlanCaseInstanceBind.setStatus(0);
         }
 
         return testPlanCaseInstanceBind;
     }
+
+    public void cleanUpData(String apiPerfId){
+        apiPerfExecuteDispatchService.cleanUpData(apiPerfId);
+    }
+
 }

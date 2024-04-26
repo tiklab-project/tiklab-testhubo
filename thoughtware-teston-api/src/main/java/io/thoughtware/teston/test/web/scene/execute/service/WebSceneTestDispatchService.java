@@ -36,4 +36,12 @@ public interface WebSceneTestDispatchService {
 
     void updateWebInstance(WebSceneTestResponse webSceneTestResponse, String webSceneId);
 
+
+
+    /**
+     * 清楚数据
+     * @param webSceneId
+     */
+    void cleanUpData(String webSceneId);
+
 }

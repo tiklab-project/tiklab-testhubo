@@ -17,7 +17,6 @@ public interface ApiPerfExecuteDispatchService {
      */
     void execute(ApiPerfTestRequest apiPerfTestRequest);
 
-
     /**
      * 获取性能测试结果
      * @param
@@ -25,10 +24,13 @@ public interface ApiPerfExecuteDispatchService {
      */
     ApiPerfTestResponse result(ApiPerfTestRequest apiPerfAgentTestRequest);
 
-
-
     void executeStart(ApiPerfTestRequest apiPerfTestRequest);
 
     ApiPerfTestResponse getResult(ApiPerfTestRequest apiPerfTestRequest);
+
+    /**
+     * 清理数据
+     */
+    void cleanUpData(String apiPerfId);
 
 }

@@ -93,27 +93,21 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         }catch (Exception e){
             updateStatus(appSceneInstanceId,MagicValue.TEST_STATUS_FAIL);
             throw new ApplicationException(e);
-        }
+        }finally {
+            try {
+                //执行完，保存最总结果
+                AppSceneTestResponse appSceneTestResponse = result(appSceneTestRequest);
+                createStepInstanceList(appSceneTestResponse,appSceneInstanceId);
+                Thread.sleep(3000);
 
-        try {
-            //执行完，保存最总结果
-            AppSceneTestResponse appSceneTestResponse = result(appSceneTestRequest);
-            createStepInstanceList(appSceneTestResponse,appSceneInstanceId);
-            Thread.sleep(3000);
+                logger.info("------------------------------------------数据清理------------------------------------------");
 
-            logger.info("------------------------------------------数据清理------------------------------------------");
-
-            //清理数据
-            if(enable){
-                appSceneTestService.cleanUpData(appSceneId);
-            }else {
-                String agentUrl = agentConfigService.getAgent();
-                appSceneTestServiceRPC(agentUrl).cleanUpData(appSceneId);
+                //清理数据
+                cleanUpData(appSceneId);
+            }catch (Exception e){
+                throw new ApplicationException(e);
             }
-        }catch (Exception e){
-            throw new ApplicationException(e);
         }
-
     }
 
     @Override
@@ -280,5 +274,17 @@ public class AppSceneTestDispatchServiceImpl implements AppSceneTestDispatchServ
         appSceneInstance.setStatus(status);
         appSceneInstanceService.updateAppSceneInstance(appSceneInstance);
     }
+
+    @Override
+    public void cleanUpData(String appSceneId) {
+        if(enable){
+            appSceneTestService.cleanUpData(appSceneId);
+        }else {
+            String agentUrl = agentConfigService.getAgent();
+            appSceneTestServiceRPC(agentUrl).cleanUpData(appSceneId);
+        }
+    }
+
+
 
 }

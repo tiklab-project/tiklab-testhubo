@@ -47,6 +47,10 @@ public class ApiPerfInstanceEntity implements Serializable {
     @Column(name = "create_time")
     private Timestamp createTime;
 
+    // 状态
+    @Column(name = "status")
+    private String status;
+
 
     public Integer getPassNum() {
         return passNum;
@@ -112,4 +116,11 @@ public class ApiPerfInstanceEntity implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

@@ -66,8 +66,6 @@ public class QuartzPlanServiceImpl implements QuartzPlanService {
 
     @Override
     public void updateQuartzPlan(@NotNull @Valid QuartzPlan quartzPlan) {
-        QuartzPlanEntity quartzPlanEntity = BeanMapper.map(quartzPlan, QuartzPlanEntity.class);
-
         //删除原来的执行时间
         quartzTimePlanService.deleteAllQuartzTimePlan(quartzPlan.getId());
         if (quartzPlan.getWeekList() == null || quartzPlan.getWeekList().length == 0){
@@ -85,6 +83,7 @@ public class QuartzPlanServiceImpl implements QuartzPlanService {
             quartzTimePlanService.createQuartzTimePlan(quartzTimePlan);
         }
 
+        QuartzPlanEntity quartzPlanEntity = BeanMapper.map(quartzPlan, QuartzPlanEntity.class);
         quartzPlanDao.updateQuartzPlan(quartzPlanEntity);
     }
 

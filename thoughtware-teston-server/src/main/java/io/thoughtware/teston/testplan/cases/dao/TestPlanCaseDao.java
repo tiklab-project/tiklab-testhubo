@@ -168,11 +168,11 @@ public class TestPlanCaseDao {
                 .append("WHERE teston_test_plan.id = '").append(testPlanCaseQuery.getTestPlanId()).append("'");
 
         if (testPlanCaseQuery.getName() != null) {
-            modelSqlBuilder.append(" OR teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
+            modelSqlBuilder.append(" AND teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
         }
 
         if (testPlanCaseQuery.getCaseType() != null) {
-            modelSqlBuilder.append(" OR teston_testcase.case_type = '").append(testPlanCaseQuery.getCaseType()).append("'");
+            modelSqlBuilder.append(" AND teston_testcase.case_type = '").append(testPlanCaseQuery.getCaseType()).append("'");
         }
 
         if (testPlanCaseQuery.getTestType() != null) {
@@ -207,7 +207,7 @@ public class TestPlanCaseDao {
      */
     public Pagination<PlanCaseEntity> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery) {
         StringBuilder modelSqlBuilder = new StringBuilder();
-        modelSqlBuilder.append("SELECT  teston_testcase.id AS plan_case_id, teston_testcase.id, teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type,teston_testcase.test_type, teston_testcase.category_id, teston_testcase.name ")
+        modelSqlBuilder.append("SELECT  teston_testcase.id AS plan_case_id, teston_testcase.id, teston_testcase.director,  teston_testcase.create_user, teston_testcase.create_time, teston_testcase.case_type,teston_testcase.test_type, teston_testcase.category_id, teston_testcase.name, teston_testcase.status,teston_testcase.priority_level ")
                 .append(" FROM teston_testcase ")
                 .append(" WHERE teston_testcase.repository_id = '").append(testPlanCaseQuery.getRepositoryId()).append("'")
                 .append(" AND NOT EXISTS (  ")
@@ -219,6 +219,10 @@ public class TestPlanCaseDao {
 
         if (testPlanCaseQuery.getTestType() != null) {
             modelSqlBuilder.append(" And teston_testcase.test_type = '").append(testPlanCaseQuery.getTestType()).append("'");
+        }
+
+        if (testPlanCaseQuery.getName() != null) {
+            modelSqlBuilder.append(" AND teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
         }
 
         String modelSql = modelSqlBuilder.toString();

@@ -210,13 +210,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
      */
     private String createInitApiPerfInstance(String apiPerfId){
         ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
-
-        ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
-        apiPerfInstance.setTotal(apiPerfCase.getExecuteCount());
-        apiPerfInstance.setPassNum(0);
-        apiPerfInstance.setPassRate("0.00%");
-        apiPerfInstance.setFailNum(0);
-        apiPerfInstance.setErrorRate("0.00%");
+        ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId,apiPerfCase.getExecuteCount());
         String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfInstance);
 
         Instance instance = new Instance();
@@ -260,6 +254,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Override
     public ApiPerfTestResponse getResult(ApiPerfTestRequest apiPerfTestRequest){
+        String apiPerfId = apiPerfTestRequest.getApiPerfCase().getId();
         ApiPerfTestResponse apiPerfTestResponse = new ApiPerfTestResponse();
         try {
             //是否内嵌
@@ -280,11 +275,28 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             }
 
         }catch (Exception e){
-            apiPerfTestResponse.setStatus(0);
-            throw new ApplicationException(e);
+            ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
+            ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId, apiPerfCase.getExecuteCount());
+            apiPerfInstance.setStatus(MagicValue.TEST_STATUS_FAIL);
+            apiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
         }
 
         return apiPerfTestResponse;
+    }
+
+    /**
+     * 初始实例
+     */
+    private ApiPerfInstance getInitApiPerfInstance (String caseId,Integer executeCount){
+        ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
+        apiPerfInstance.setTotal(executeCount);
+        apiPerfInstance.setApiPerfId(caseId);
+        apiPerfInstance.setPassNum(0);
+        apiPerfInstance.setPassRate("0.00%");
+        apiPerfInstance.setFailNum(0);
+        apiPerfInstance.setErrorRate("0.00%");
+
+        return apiPerfInstance;
     }
 
 
@@ -360,11 +372,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             instanceMap.put("failNum",apiPerfInstance.getFailNum().toString());
             instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
             instance.setContent(instanceMap.toString());
-
-            Integer status = apiPerfTestResponse.getStatus();
-            if(status==0){
-                instance.setStatus(MagicValue.TEST_STATUS_SUCCESS);
-            }
+            instance.setStatus(apiPerfInstance.getStatus());
 
             instanceService.updateInstance(instance);
         }else {
@@ -377,9 +385,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
      * @param apiPerfInstanceId
      */
     private void updateApiPerfInstanceStatus(String apiPerfInstanceId,String status){
-        Instance instance = instanceService.findInstance(apiPerfInstanceId);
-        instance.setStatus(status);
-        instanceService.updateInstance(instance);
+        ApiPerfInstance apiPerfInstance = apiPerfInstanceService.findApiPerfInstance(apiPerfInstanceId);
+        apiPerfInstance.setStatus(status);
+        apiPerfInstanceService.updateApiPerfInstance(apiPerfInstance);
     }
 
 
@@ -468,6 +476,21 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         return agentConfigList;
     }
 
+    @Override
+    public void cleanUpData(String apiPerfId){
+        if(enable){
+            apiPerfTestService.cleanUpData(apiPerfId);
+        }else {
+            //agent数量
+            int agentSize = agentConfigList.size();
+            for (int i = 0; i < agentSize; i++) {
+                //获取agentId，agentList index 从0开始
+                AgentConfig agentConfig = agentConfigList.get(i);
+                String agentUrl = agentConfig.getUrl();
 
+                apiPerfTestServiceRPC(agentUrl).cleanUpData(apiPerfId);
+            }
+        }
+    }
 
 }

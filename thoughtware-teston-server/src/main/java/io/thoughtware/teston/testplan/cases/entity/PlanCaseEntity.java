@@ -19,7 +19,7 @@ public class PlanCaseEntity implements Serializable {
     private String id;
 
     // 用例名
-    @Column(name = "name",length = 64,notNull = true)
+    @Column(name = "name",length = 64)
     private String name;
 
     // 所属模块
@@ -33,10 +33,21 @@ public class PlanCaseEntity implements Serializable {
     @Column(name = "testType")
     private String testType;
 
-
     // 创建人
     @Column(name = "create_user")
     private String createUser;
+
+    // 负责人
+    @Column(name = "director",length = 32)
+    private String director;
+
+    // 状态
+    @Column(name = "status",length = 8)
+    private Integer status;
+
+    // 优先级
+    @Column(name = "priority_level",length = 8)
+    private Integer priorityLevel;
 
     @Column(name = "create_time")
     private Timestamp createTime;
@@ -107,5 +118,29 @@ public class PlanCaseEntity implements Serializable {
 
     public void setPlanCaseId(String planCaseId) {
         this.planCaseId = planCaseId;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public void setPriorityLevel(Integer priorityLevel) {
+        this.priorityLevel = priorityLevel;
     }
 }

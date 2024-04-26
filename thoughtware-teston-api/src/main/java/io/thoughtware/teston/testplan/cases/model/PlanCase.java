@@ -14,7 +14,6 @@ import io.thoughtware.user.user.model.User;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.Map;
 
 /**
  * 测试计划中绑定的用例 模型
@@ -42,6 +41,7 @@ public class PlanCase extends BaseModel{
 
     @ApiProperty(name="caseType",desc="用例类型，例：api-unit,api-scene")
     private String caseType;
+
     @ApiProperty(name="user",desc="创建人")
     @Mappings({
             @Mapping(source = "createUser.id",target = "createUser")
@@ -50,13 +50,24 @@ public class PlanCase extends BaseModel{
     private User createUser;
 
     @ApiProperty(name="createTime",desc="创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Timestamp createTime;
-
 
     @ApiProperty(name="planCaseId",desc="用于plan 绑定的case，返回的id做映射")
     private String planCaseId;
 
+    @ApiProperty(name="director",desc="负责人")
+    @Mappings({
+            @Mapping(source = "director.id",target = "director")
+    })
+    @JoinQuery(key = "id")
+    private User director;
+
+    @ApiProperty(name="status",desc="状态")
+    private Integer status;
+
+    @ApiProperty(name="priorityLevel",desc="优先级")
+    private Integer priorityLevel;
 
     public String getId() {
         return id;
@@ -120,5 +131,29 @@ public class PlanCase extends BaseModel{
 
     public void setPlanCaseId(String planCaseId) {
         this.planCaseId = planCaseId;
+    }
+
+    public User getDirector() {
+        return director;
+    }
+
+    public void setDirector(User director) {
+        this.director = director;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public void setPriorityLevel(Integer priorityLevel) {
+        this.priorityLevel = priorityLevel;
     }
 }

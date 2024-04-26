@@ -65,38 +65,50 @@ public class TestPlanExecuteAppDispatch {
 
         AppSceneTestRequest appSceneTestRequest = new AppSceneTestRequest();
         appSceneTestRequest.setAppSceneId(caseId);
-        AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.getResult(appSceneTestRequest);
 
-        if(appSceneTestResponse.getAppSceneInstance()!=null){
-            String status = appSceneTestResponse.getAppSceneInstance().getStatus();
+        try {
+            AppSceneTestResponse appSceneTestResponse = appSceneTestDispatchService.getResult(appSceneTestRequest);
 
-            if(Objects.equals(status, MagicValue.TEST_STATUS_START)){
-                testPlanCaseInstanceBind.setStatus(1);
+            if(appSceneTestResponse.getAppSceneInstance()!=null){
+                String status = appSceneTestResponse.getAppSceneInstance().getStatus();
+
+                if(Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                    testPlanCaseInstanceBind.setStatus(1);
+                }else {
+                    testPlanCaseInstanceBind.setStatus(0);
+                }
+
+                if(Objects.equals(status, MagicValue.TEST_STATUS_SUCCESS)){
+                    testPlanCaseInstanceBind.setResult(1);
+                }
+                if(Objects.equals(status, MagicValue.TEST_STATUS_FAIL)){
+                    testPlanCaseInstanceBind.setResult(0);
+                }
+
+                if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                    String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneTestResponse.getAppSceneInstance());
+                    testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
+                    testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
+                    appSceneInstanceService.createAppSceneStepInstance(appSceneTestResponse.getStepCommonInstanceList(),appSceneInstanceId);
+                }
             }else {
-                testPlanCaseInstanceBind.setStatus(0);
-            }
-
-            if(Objects.equals(status, MagicValue.TEST_STATUS_SUCCESS)){
-                testPlanCaseInstanceBind.setResult(1);
-            }
-            if(Objects.equals(status, MagicValue.TEST_STATUS_FAIL)){
                 testPlanCaseInstanceBind.setResult(0);
             }
 
-            if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
-                String appSceneInstanceId = appSceneInstanceService.createAppSceneInstance(appSceneTestResponse.getAppSceneInstance());
-                testPlanCaseInstanceBind.setCaseInstanceId(appSceneInstanceId);
-                testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-                appSceneInstanceService.createAppSceneStepInstance(appSceneTestResponse.getStepCommonInstanceList(),appSceneInstanceId);
-            }
-
-        }else {
-            testPlanCaseInstanceBind.setResult(0);
+        }catch (Exception e){
+            testPlanCaseInstanceBind.setStatus(0);
         }
 
         return testPlanCaseInstanceBind;
     }
 
+    /**
+     * 清楚数据
+     * @param appSceneId
+     */
+    public void cleanUpData(String appSceneId){
+        appSceneTestDispatchService.cleanUpData(appSceneId);
+    }
 
 
 }

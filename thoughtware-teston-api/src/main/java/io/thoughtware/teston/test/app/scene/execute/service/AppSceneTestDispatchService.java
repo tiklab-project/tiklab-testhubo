@@ -38,4 +38,10 @@ public interface AppSceneTestDispatchService {
      * @return
      */
     AppSceneTestResponse getResult(AppSceneTestRequest appSceneTestRequest);
+
+    /**
+     * 清理数据
+     * @param appSceneId
+     */
+    void cleanUpData(String appSceneId);
 }

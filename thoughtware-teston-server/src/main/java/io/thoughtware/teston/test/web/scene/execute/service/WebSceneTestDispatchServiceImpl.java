@@ -256,6 +256,7 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
         }
     }
 
+
     private void createStepInstanceList(WebSceneTestResponse webSceneTestResponse,String instanceId){
         //保存单个步骤
         if(CollectionUtils.isNotEmpty(webSceneTestResponse.getStepCommonInstanceList())){
@@ -264,7 +265,6 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
             webSceneInstanceService.createStepInstance(stepCommonInstanceList,instanceId);
         }
     }
-
 
     /**
      * 状态更改
@@ -277,6 +277,16 @@ public class WebSceneTestDispatchServiceImpl implements WebSceneTestDispatchServ
     }
 
 
+
+    @Override
+    public void cleanUpData(String webSceneId) {
+        if(enable){
+            webSceneTestService.cleanUpData(webSceneId);
+        }else {
+            String agentUrl = agentConfigService.getAgent();
+            webSceneTestServiceRPC(agentUrl).cleanUpData(webSceneId);
+        }
+    }
 
 
 

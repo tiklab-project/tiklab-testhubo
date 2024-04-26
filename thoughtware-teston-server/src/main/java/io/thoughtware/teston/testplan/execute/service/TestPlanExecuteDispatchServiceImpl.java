@@ -321,6 +321,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
             updatePlanInstance(testPlanInstance,testPlanId);
         }catch (Exception e){
             logger.info("process ---------- {}",e);
+            throw new ApplicationException(e.getMessage());
         }
 
         return testPlanTestResponse;
@@ -441,9 +442,34 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      */
     @Override
     public void cleanUpExecutionData(String testPlanId) {
+        String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
+
+        ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList = planInstanceIdOrPlanCaseInstanceList.get(testPlanInstanceId);
+        for(TestPlanCaseInstanceBind testPlanCaseInstanceBind : planCaseInstanceList){
+            String caseType = testPlanCaseInstanceBind.getCaseType();
+
+            switch (caseType) {
+                case MagicValue.CASE_TYPE_API_PERFORM -> {
+                    testPlanExecuteApiDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
+                    break;
+                }
+                case MagicValue.CASE_TYPE_WEB -> {
+                    testPlanExecuteWebDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
+                    break;
+                }
+                case MagicValue.CASE_TYPE_APP -> {
+                    testPlanExecuteAppDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
+                    break;
+                }
+                default -> {
+                }
+            }
+        }
+
+
+        planInstanceIdOrPlanCaseInstanceList.remove(testPlanInstanceId);
         testPlanIdOrPlanCaseList.remove(testPlanId);
         testPlanIdOrPlanInstanceId.remove(testPlanId);
-        planInstanceIdOrPlanCaseInstanceList.remove(testPlanId);
     }
 
 
