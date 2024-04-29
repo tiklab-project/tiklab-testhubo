@@ -37,9 +37,9 @@
         <thoughtware-message.version>1.0.1-SNAPSHOT</thoughtware-message.version>
         <thoughtware-security.version>1.0.1-SNAPSHOT</thoughtware-security.version>
         <thoughtware-licence.version>1.0.1-SNAPSHOT</thoughtware-licence.version>
-        <thoughtware-postgresql.version>1.0.1-SNAPSHOT</thoughtware-postgresql.version>
+        <thoughtware-postgresql.version>1.0.2-SNAPSHOT</thoughtware-postgresql.version>
         <thoughtware-install.version>1.0.0</thoughtware-install.version>
-        <thoughtware-jdk.version>1.0.0</thoughtware-jdk.version>
+        <thoughtware-jdk.version>1.0.1-SNAPSHOT</thoughtware-jdk.version>
         <thoughtware-plugin.version>1.0.1-SNAPSHOT</thoughtware-plugin.version>
         <thoughtware-openapi.version>1.0.0-SNAPSHOT</thoughtware-openapi.version>
         <thoughtware-dsm.version>1.0.0</thoughtware-dsm.version>
@@ -47,8 +47,8 @@
         <!--业务-->
         <thoughtware-teston-agent.version>1.0.1-SNAPSHOT</thoughtware-teston-agent.version>
         <thoughtware-postin.version>1.0.1-SNAPSHOT</thoughtware-postin.version>
-        <thoughtware-teston-chrome.version>1.0.0</thoughtware-teston-chrome.version>
-        <thoughtware-teston-node.version>1.0.0</thoughtware-teston-node.version>
+<!--        <thoughtware-teston-chrome.version>1.0.0</thoughtware-teston-chrome.version>-->
+<!--        <thoughtware-teston-node.version>1.0.0</thoughtware-teston-node.version>-->
 
         <!--第三方-->
         <nashorn-core.version>15.4</nashorn-core.version>
