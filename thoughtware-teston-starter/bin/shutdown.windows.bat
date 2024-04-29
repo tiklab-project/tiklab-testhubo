@@ -1,7 +1,7 @@
 
 @echo off
 REM 启动类文件
-set APP_MAIN=io.thoughtware.eas.starter.EasApplication
+set APP_MAIN=io.thoughtware.teston.TestOnApplication
 
 set PID=0
 
