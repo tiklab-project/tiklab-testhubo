@@ -13,7 +13,7 @@ public interface TestPlanExecuteDispatchService {
      * @param testPlanTestData
      * @return
      */
-    void execute(TestPlanTestData testPlanTestData);
+    String execute(TestPlanTestData testPlanTestData);
 
 
     /**

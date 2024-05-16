@@ -78,7 +78,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
 
     @Override
-    public void execute(TestPlanTestData testPlanTestData) {
+    public String execute(TestPlanTestData testPlanTestData) {
         String testPlanId = testPlanTestData.getTestPlanId();
         String repositoryId = testPlanTestData.getRepositoryId();
 
@@ -115,7 +115,11 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                     }
                 });
             }
+
+            return testPlanInstanceId;
         }
+
+        return null;
     }
 
 
