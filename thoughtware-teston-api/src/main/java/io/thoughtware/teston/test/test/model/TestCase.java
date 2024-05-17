@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.test.model;
 
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
+import io.thoughtware.teston.repository.model.Repository;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.toolkit.beans.annotation.Mapping;
 import io.thoughtware.toolkit.beans.annotation.Mappings;
@@ -38,8 +39,15 @@ public class TestCase extends BaseModel{
     @JoinQuery(key = "id")
     private Category category;
 
-    @ApiProperty(name="仓库Id",desc="所属仓库")
+    @ApiProperty(name="仓库Id",desc="仓库id")
     private String repositoryId;
+
+    @ApiProperty(name="仓库",desc="仓库模型")
+    @Mappings({
+            @Mapping(source = "repository.id",target = "repositoryId")
+    })
+    @JoinQuery(key = "id")
+    private Repository repository;
 
     @NotNull
     @ApiProperty(name="testType",desc="测试类型:auto,perform,function",required = true)
@@ -229,5 +237,13 @@ public class TestCase extends BaseModel{
 
     public void setPriorityLevel(Integer priorityLevel) {
         this.priorityLevel = priorityLevel;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 }

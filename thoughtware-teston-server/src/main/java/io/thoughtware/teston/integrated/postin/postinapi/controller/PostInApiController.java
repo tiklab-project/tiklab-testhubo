@@ -45,7 +45,7 @@ public class PostInApiController {
     @RequestMapping(path = "/findPostInApiList",method = RequestMethod.POST)
     @ApiMethod(name = "findPostInApiList",desc = "根据查询仓库关联的空间查询接口")
     @ApiParam(name = "repositoryId",desc = "repositoryId")
-    public Result<List<Apix>> findPostInApiList(@NotNull  String repositoryId ){
+    public Result<List<Apix>> findPostInApiList(@NotNull String repositoryId ){
         List<Apix> postInApiList = postInApiService.findPostInApiList(repositoryId);
 
         return Result.ok(postInApiList);

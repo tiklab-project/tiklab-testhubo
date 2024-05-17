@@ -132,29 +132,31 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
                 paramMap.add("id",workItemBind.getWorkItem().getId());
                 WorkItem workItem = restTemplateUtils.requestPost(findWorkItemUrl, paramMap, WorkItem.class);
 
-                //放入本工程模型中
-                WorkItemTestOn workItemTestOn = new WorkItemTestOn();
-                workItemTestOn.setId(workItem.getId());
-                workItemTestOn.setName(workItem.getTitle());
-                workItemTestOn.setProjectId(workItem.getProject().getId());
-                workItemTestOn.setProjectName(workItem.getProject().getProjectName());
-                if(workItem.getWorkStatusNode()!=null&&workItem.getWorkStatusNode().getName()!=null){
-                    workItemTestOn.setStatus(workItem.getWorkStatusNode().getName());
-                }
-                if(workItem.getAssigner()!=null&&workItem.getAssigner().getNickname()!=null){
-                    workItemTestOn.setDirector(workItem.getAssigner().getNickname());
-                }
-                if(workItem.getWorkPriority()!=null&&workItem.getWorkPriority().getName()!=null){
-                    workItemTestOn.setPriority(workItem.getWorkPriority().getName());
-                }
+                if(workItem!=null){
+                    //放入本工程模型中
+                    WorkItemTestOn workItemTestOn = new WorkItemTestOn();
+                    workItemTestOn.setId(workItem.getId());
+                    workItemTestOn.setName(workItem.getTitle());
+                    workItemTestOn.setProjectId(workItem.getProject().getId());
+                    workItemTestOn.setProjectName(workItem.getProject().getProjectName());
+                    if(workItem.getWorkStatusNode()!=null&&workItem.getWorkStatusNode().getName()!=null){
+                        workItemTestOn.setStatus(workItem.getWorkStatusNode().getName());
+                    }
+                    if(workItem.getAssigner()!=null&&workItem.getAssigner().getNickname()!=null){
+                        workItemTestOn.setDirector(workItem.getAssigner().getNickname());
+                    }
+                    if(workItem.getWorkPriority()!=null&&workItem.getWorkPriority().getName()!=null){
+                        workItemTestOn.setPriority(workItem.getWorkPriority().getName());
+                    }
 
-                workItemBind.setWorkItem(workItemTestOn);
+                    workItemBind.setWorkItem(workItemTestOn);
 
-                //获取服务端地址
-                IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
-                integratedUrlQuery.setProjectName("teamwire");
-                List<IntegratedUrl> postinUrlList = integratedUrlService.findIntegratedUrlList(integratedUrlQuery);
-                workItemBind.setProjectUrl(postinUrlList.get(0).getUrl());
+                    //获取服务端地址
+                    IntegratedUrlQuery integratedUrlQuery = new IntegratedUrlQuery();
+                    integratedUrlQuery.setProjectName("teamwire");
+                    List<IntegratedUrl> postinUrlList = integratedUrlService.findIntegratedUrlList(integratedUrlQuery);
+                    workItemBind.setProjectUrl(postinUrlList.get(0).getUrl());
+                }
 
             }
         }

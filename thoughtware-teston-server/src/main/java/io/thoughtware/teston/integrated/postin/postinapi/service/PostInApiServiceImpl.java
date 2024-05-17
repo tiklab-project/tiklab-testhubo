@@ -1,6 +1,5 @@
 package io.thoughtware.teston.integrated.postin.postinapi.service;
 
-import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.common.RestTemplateUtils;
 import io.thoughtware.teston.integrated.integratedurl.model.IntegratedUrlQuery;
 import io.thoughtware.teston.integrated.integratedurl.service.IntegratedUrlService;
@@ -14,9 +13,6 @@ import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.core.exception.ApplicationException;
 
-import io.thoughtware.teston.integrated.postin.postinapi.model.*;
-import io.thoughtware.teston.test.apix.http.unit.cases.model.*;
-import io.thoughtware.teston.test.apix.http.unit.cases.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -124,7 +120,7 @@ public class PostInApiServiceImpl implements PostInApiService {
                     //apix -> testcase  中间公共表
                     Apix apix = httpApi.getApix();
                     TestCase testCase = new TestCase();
-                    testCase.setName(apix.getName());
+                    testCase.setName(apix.getNode().getName());
                     testCase.setCaseType("api-unit");
                     testCase.setTestType("api");
                     testCase.setDesc(apix.getDesc());
