@@ -675,7 +675,7 @@ CREATE TABLE teston_action_type(
     id VARCHAR(32) PRIMARY KEY,
     name VARCHAR(32),
     type VARCHAR(8),
-    description VARCHAR (64)
+    description VARCHAR(256)
 );
 
 -- ---------------------------
