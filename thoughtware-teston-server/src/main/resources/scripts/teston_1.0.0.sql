@@ -417,7 +417,7 @@ CREATE TABLE teston_api_perf_instance(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 场景用例
+-- web 场景用例
 -- ----------------------------
 CREATE TABLE teston_web_scene(
         id VARCHAR(32) PRIMARY KEY,
@@ -425,7 +425,7 @@ CREATE TABLE teston_web_scene(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 场景用例
+-- web 场景用例
 -- 场景用例下的步骤
 -- ----------------------------
 CREATE TABLE teston_web_scene_step(
@@ -443,7 +443,7 @@ CREATE TABLE teston_web_scene_step(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 场景用例
+-- web 场景用例
 -- 场景实例
 -- ----------------------------
 CREATE TABLE teston_web_scene_instance(
@@ -460,7 +460,7 @@ CREATE TABLE teston_web_scene_instance(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 场景用例
+-- web 场景用例
 -- 场景用例下的步骤实例
 -- ----------------------------
 CREATE TABLE teston_web_scene_instance_step(
@@ -476,7 +476,7 @@ CREATE TABLE teston_web_scene_instance_step(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 性能测试用例
+-- web 性能测试用例
 -- ----------------------------
 CREATE TABLE teston_web_perfcase(
         id VARCHAR(32) PRIMARY KEY,
@@ -487,7 +487,7 @@ CREATE TABLE teston_web_perfcase(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 性能测试用例
+-- web 性能测试用例
 -- 性能测试用例下关联的场景用例
 -- ----------------------------
 CREATE TABLE teston_web_perf_step(
@@ -498,7 +498,7 @@ CREATE TABLE teston_web_perf_step(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 性能测试用例
+-- web 性能测试用例
 -- 实例历史
 -- ----------------------------
 CREATE TABLE teston_web_perf_instance(
@@ -644,7 +644,7 @@ CREATE TABLE teston_env_api(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web 环境
+-- web 环境
 -- ----------------------------
 CREATE TABLE teston_env_web(
         id VARCHAR(32) PRIMARY KEY,
@@ -669,7 +669,7 @@ CREATE TABLE teston_env_app(
 );
 
 -- ---------------------------
--- io.thoughtware.teston.web app 中的操作方法
+-- web app 中的操作方法
 -- ----------------------------
 CREATE TABLE teston_action_type(
     id VARCHAR(32) PRIMARY KEY,
