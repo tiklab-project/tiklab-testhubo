@@ -1,11 +1,11 @@
 package io.thoughtware.teston.test.web.scene.execute.model;
 
 import com.alibaba.fastjson.JSONObject;
-import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
-import io.thoughtware.teston.test.web.scene.cases.model.WebSceneStep;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
+import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
+import io.thoughtware.teston.test.web.scene.cases.model.WebSceneStep;
 
 import java.util.List;
 

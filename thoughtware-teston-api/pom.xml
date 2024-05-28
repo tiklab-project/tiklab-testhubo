@@ -30,6 +30,10 @@
             <artifactId>thoughtware-postin-api</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.thoughtware</groupId>
+            <artifactId>thoughtware-privilege-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

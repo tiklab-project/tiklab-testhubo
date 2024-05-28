@@ -2,13 +2,13 @@ package io.thoughtware.teston.repository.model;
 
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
+import io.thoughtware.privilege.role.model.PatchUser;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.toolkit.beans.annotation.Mapping;
 import io.thoughtware.toolkit.beans.annotation.Mappings;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.toolkit.join.annotation.Join;
 import io.thoughtware.toolkit.join.annotation.JoinQuery;
-import io.thoughtware.privilege.role.model.PatchUser;
 import io.thoughtware.user.user.model.User;
 
 import java.util.List;

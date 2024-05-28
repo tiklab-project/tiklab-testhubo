@@ -1,11 +1,11 @@
 package io.thoughtware.teston.test.web.scene.cases.model;
 
-import io.thoughtware.teston.test.common.stepassert.model.StepAssertCommon;
-import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
-import io.thoughtware.toolkit.join.annotation.Join;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
+import io.thoughtware.teston.test.common.stepassert.model.StepAssertCommon;
+import io.thoughtware.toolkit.beans.annotation.Mapper;
+import io.thoughtware.toolkit.join.annotation.Join;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 @ApiModel
 @Join
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.web.scene.cases.entity.WebSceneStepEntity")
 public class WebSceneStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

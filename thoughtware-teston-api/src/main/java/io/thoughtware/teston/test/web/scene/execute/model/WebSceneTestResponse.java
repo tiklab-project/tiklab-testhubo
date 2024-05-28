@@ -1,10 +1,10 @@
 package io.thoughtware.teston.test.web.scene.execute.model;
 
-import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
-import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstance;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
+import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
+import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstance;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@ import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceStep;
 import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceStepService;
 import io.thoughtware.teston.test.common.ifjudgment.model.IfJudgmentInstance;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
+import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceStepService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.common.MagicValue;
@@ -15,7 +16,6 @@ import io.thoughtware.teston.test.common.stepcommon.dao.StepCommonInstanceDao;
 import io.thoughtware.teston.test.common.stepcommon.entity.StepCommonInstanceEntity;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
 import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstanceStep;
-import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceStepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

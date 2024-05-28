@@ -14,7 +14,7 @@ import io.thoughtware.postin.annotation.ApiProperty;
  * app场景用例 模型
  */
 @ApiModel
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.app.scene.cases.entity.AppSceneCaseEntity")
 @Join
 public class AppSceneCase extends BaseModel {
 

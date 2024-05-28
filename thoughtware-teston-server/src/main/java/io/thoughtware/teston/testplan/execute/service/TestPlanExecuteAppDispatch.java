@@ -1,24 +1,14 @@
 package io.thoughtware.teston.testplan.execute.service;
 
 import io.thoughtware.teston.common.MagicValue;
-import io.thoughtware.teston.test.app.perf.cases.model.AppPerfCase;
-import io.thoughtware.teston.test.app.perf.execute.mode.AppPerfTestRequest;
-import io.thoughtware.teston.test.app.perf.execute.mode.AppPerfTestResponse;
-import io.thoughtware.teston.test.app.perf.execute.service.AppPerfTestDispatchService;
-import io.thoughtware.teston.test.app.perf.instance.mode.AppPerfInstance;
-import io.thoughtware.teston.test.app.perf.instance.service.AppPerfInstanceService;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestRequest;
 import io.thoughtware.teston.test.app.scene.execute.model.AppSceneTestResponse;
-import io.thoughtware.teston.test.app.scene.execute.model.AppTestConfig;
 import io.thoughtware.teston.test.app.scene.execute.service.AppSceneTestDispatchService;
 import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceService;
-import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
 import io.thoughtware.teston.testplan.instance.service.TestPlanCaseInstanceBindService;
-import io.thoughtware.teston.support.environment.model.AppEnv;
 import io.thoughtware.teston.support.environment.service.AppEnvService;
-import io.thoughtware.teston.testplan.cases.model.TestPlanCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

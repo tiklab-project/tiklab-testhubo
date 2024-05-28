@@ -13,7 +13,7 @@ import java.util.List;
  * app场景下步骤 模型
  */
 @ApiModel
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.app.scene.cases.entity.AppSceneStepEntity")
 @Join
 public class AppSceneStep extends BaseModel {
 

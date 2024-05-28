@@ -1,20 +1,20 @@
 package io.thoughtware.teston.test.web.scene.cases.model;
 
+import io.thoughtware.core.BaseModel;
+import io.thoughtware.postin.annotation.ApiModel;
+import io.thoughtware.postin.annotation.ApiProperty;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.toolkit.beans.annotation.Mapping;
 import io.thoughtware.toolkit.beans.annotation.Mappings;
-import io.thoughtware.core.BaseModel;
 import io.thoughtware.toolkit.join.annotation.Join;
 import io.thoughtware.toolkit.join.annotation.JoinQuery;
-import io.thoughtware.postin.annotation.ApiModel;
-import io.thoughtware.postin.annotation.ApiProperty;
 
 /**
  * web场景用例 模型
  */
 @ApiModel
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.web.scene.cases.entity.WebSceneCaseEntity")
 @Join
 public class WebSceneCase extends BaseModel{
 
