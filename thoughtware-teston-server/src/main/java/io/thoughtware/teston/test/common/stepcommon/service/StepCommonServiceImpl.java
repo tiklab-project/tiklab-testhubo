@@ -13,12 +13,8 @@ import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStep;
 import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
 import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
-import io.thoughtware.teston.test.app.scene.cases.model.AppSceneStep;
-import io.thoughtware.teston.test.app.scene.cases.service.AppSceneStepService;
 import io.thoughtware.teston.test.func.model.FuncUnitStep;
 import io.thoughtware.teston.test.func.service.FuncUnitStepService;
-import io.thoughtware.teston.test.web.scene.cases.model.WebSceneStep;
-import io.thoughtware.teston.test.web.scene.cases.service.WebSceneStepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +35,6 @@ public class StepCommonServiceImpl implements StepCommonService {
     @Autowired
     JoinTemplate joinTemplate;
 
-    @Autowired
-    WebSceneStepService webSceneStepService;
-    @Autowired
-    AppSceneStepService appSceneStepService;
     @Autowired
     ApiUnitCaseService apiUnitCaseService;
     @Autowired
@@ -130,12 +122,6 @@ public class StepCommonServiceImpl implements StepCommonService {
                     case MagicValue.CASE_TYPE_API_SCENE:
                         apiSceneStepService.deleteApiSceneStep(id);
                         break;
-                    case MagicValue.CASE_TYPE_APP:
-                        appSceneStepService.deleteAppSceneStep(id);
-                        break;
-                    case MagicValue.CASE_TYPE_WEB:
-                        webSceneStepService.deleteWebSceneStep(id);
-                        break;
                     case MagicValue.CASE_TYPE_FUNCTION:
                         funcUnitStepService.deleteFuncUnitStep(id);
                         break;
@@ -200,14 +186,6 @@ public class StepCommonServiceImpl implements StepCommonService {
                         ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiSceneStep.getApiUnit());
                         apiSceneStep.setApiUnitCaseDataConstruction(apiUnitCaseDataConstruction);
                         stepCommon.setApiSceneStep(apiSceneStep);
-                        break;
-                    case MagicValue.CASE_TYPE_APP:
-                        AppSceneStep appSceneStep = appSceneStepService.findAppSceneStep(stepCommon.getId());
-                        stepCommon.setAppSceneStep(appSceneStep);
-                        break;
-                    case MagicValue.CASE_TYPE_WEB:
-                        WebSceneStep webSceneStep = webSceneStepService.findWebSceneStep(stepCommon.getId());
-                        stepCommon.setWebSceneStep(webSceneStep);
                         break;
                     case MagicValue.CASE_TYPE_FUNCTION:
                         FuncUnitStep funcUnitStep = funcUnitStepService.findFuncUnitStep(stepCommon.getId());

@@ -1,13 +1,9 @@
 package io.thoughtware.teston.test.common.stepcommon.service;
 
-import io.thoughtware.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
 import io.thoughtware.teston.test.apix.http.unit.instance.model.ApiUnitInstance;
 import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
-import io.thoughtware.teston.test.app.scene.instance.model.AppSceneInstanceStep;
-import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceStepService;
 import io.thoughtware.teston.test.common.ifjudgment.model.IfJudgmentInstance;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstance;
-import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceStepService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.common.MagicValue;
@@ -15,7 +11,6 @@ import io.thoughtware.teston.test.common.ifjudgment.service.IfJudgmentInstanceSe
 import io.thoughtware.teston.test.common.stepcommon.dao.StepCommonInstanceDao;
 import io.thoughtware.teston.test.common.stepcommon.entity.StepCommonInstanceEntity;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonInstanceQuery;
-import io.thoughtware.teston.test.web.scene.instance.model.WebSceneInstanceStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +32,7 @@ public class StepCommonInstanceServiceImpl implements StepCommonInstanceService 
 
     @Autowired
     ApiUnitInstanceService apiUnitInstanceService;
-    @Autowired
-    ApiSceneInstanceService apiSceneInstanceService;
-    @Autowired
-    AppSceneInstanceStepService appSceneInstanceStepService;
-    @Autowired
-    WebSceneInstanceStepService webSceneInstanceStepService;
+
     @Autowired
     IfJudgmentInstanceService ifJudgmentInstanceService;
 
@@ -72,12 +62,7 @@ public class StepCommonInstanceServiceImpl implements StepCommonInstanceService 
             case MagicValue.CASE_TYPE_API_SCENE :
                 apiUnitInstanceService.deleteApiUnitInstance(id);
                 break;
-            case MagicValue.CASE_TYPE_APP:
-                webSceneInstanceStepService.deleteWebSceneInstanceStep(id);
-                break;
-            case MagicValue.CASE_TYPE_WEB:
-                appSceneInstanceStepService.deleteAppSceneInstanceStep(id);
-                break;
+
             case MagicValue.CASE_TYPE_IF:
                 ifJudgmentInstanceService.deleteIfJudgmentInstance(id);
         }
@@ -125,14 +110,7 @@ public class StepCommonInstanceServiceImpl implements StepCommonInstanceService 
                         ApiUnitInstance apiUnitInstance = apiUnitInstanceService.findApiUnitInstance(stepCommonInstance.getId());
                         stepCommonInstance.setApiUnitInstance(apiUnitInstance);
                         break;
-                    case MagicValue.CASE_TYPE_APP:
-                        AppSceneInstanceStep appSceneInstanceStep = appSceneInstanceStepService.findAppSceneInstanceStep(stepCommonInstance.getId());
-                        stepCommonInstance.setAppSceneInstanceStep(appSceneInstanceStep);
-                        break;
-                    case MagicValue.CASE_TYPE_WEB:
-                        WebSceneInstanceStep webSceneInstanceStep = webSceneInstanceStepService.findWebSceneInstanceStep(stepCommonInstance.getId());
-                        stepCommonInstance.setWebSceneInstanceStep(webSceneInstanceStep);
-                        break;
+
                 }
 
                 IfJudgmentInstance ifJudgmentInstance = ifJudgmentInstanceService.findIfJudgmentInstance(stepCommonInstance.getId());

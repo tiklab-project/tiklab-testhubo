@@ -1,10 +1,10 @@
 package io.thoughtware.teston.test.app.scene.instance.model;
 
+import io.thoughtware.teston.test.common.stepassert.model.StepAssertCommon;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
-import io.thoughtware.teston.test.common.stepassert.model.StepAssertCommon;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * app场景步骤实例 模型
  */
 @ApiModel
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.app.scene.instance.entity.AppSceneInstanceStepEntity")
 public class AppSceneInstanceStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

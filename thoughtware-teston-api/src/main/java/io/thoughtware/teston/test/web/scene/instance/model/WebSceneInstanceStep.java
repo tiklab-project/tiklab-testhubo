@@ -12,7 +12,7 @@ import java.util.List;
  * web场景下步骤 模型
  */
 @ApiModel
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.web.scene.instance.entity.WebSceneInstanceStepEntity")
 public class WebSceneInstanceStep extends BaseModel {
 
     @ApiProperty(name="id",desc="id")

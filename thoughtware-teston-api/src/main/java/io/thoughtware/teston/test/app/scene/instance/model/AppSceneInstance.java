@@ -17,8 +17,7 @@ import java.util.List;
  * app场景实例 模型
  */
 @ApiModel
-@Mapper
-@Join
+@Mapper(targetName = "io.thoughtware.teston.app.scene.instance.entity.AppSceneInstanceEntity")
 public class AppSceneInstance extends BaseModel{
 
     @ApiProperty(name="id",desc="id")

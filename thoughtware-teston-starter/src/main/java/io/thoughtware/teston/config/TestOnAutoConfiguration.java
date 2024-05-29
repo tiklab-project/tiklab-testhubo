@@ -21,6 +21,7 @@ import io.thoughtware.teston.agent.EnableTestOnAgent;
 import io.thoughtware.toolkit.boot.starter.annotation.EnableToolkit;
 import io.thoughtware.user.boot.starter.annotation.EnableUserClient;
 import io.thoughtware.user.boot.starter.annotation.EnableUserServer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -53,6 +54,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableTestOnAgent
 
 @EnableTestOnServer
+@ComponentScan(value = "io.thoughtware.teston")
 public class TestOnAutoConfiguration {
 
 }

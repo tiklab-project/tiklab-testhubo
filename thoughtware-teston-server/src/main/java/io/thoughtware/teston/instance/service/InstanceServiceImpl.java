@@ -1,13 +1,9 @@
 package io.thoughtware.teston.instance.service;
 
-import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
-import io.thoughtware.dal.jpa.criterial.conditionbuilder.DeleteBuilders;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
 import io.thoughtware.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
 import io.thoughtware.teston.test.apix.http.unit.instance.service.ApiUnitInstanceService;
-import io.thoughtware.teston.test.app.scene.instance.service.AppSceneInstanceService;
-import io.thoughtware.teston.test.web.scene.instance.service.WebSceneInstanceService;
 import io.thoughtware.teston.testplan.instance.service.TestPlanInstanceService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
@@ -48,11 +44,6 @@ public class InstanceServiceImpl implements InstanceService {
     @Autowired
     ApiPerfInstanceService apiPerfInstanceService;
 
-    @Autowired
-    AppSceneInstanceService appSceneInstanceService;
-
-    @Autowired
-    WebSceneInstanceService webSceneInstanceService;
 
     @Autowired
     TestPlanInstanceService testPlanInstanceService;
@@ -94,14 +85,6 @@ public class InstanceServiceImpl implements InstanceService {
                 apiPerfInstanceService.deleteApiPerfInstance(id);
                 break;
             }
-            case MagicValue.CASE_TYPE_WEB -> {
-                webSceneInstanceService.deleteWebSceneInstance(id);
-                break;
-            }
-            case MagicValue.CASE_TYPE_APP -> {
-                appSceneInstanceService.deleteAppSceneInstance(id);
-                break;
-            }
             case MagicValue.TEST_PLAN -> {
                 testPlanInstanceService.deleteTestPlanInstance(id);
                 break;
@@ -111,6 +94,8 @@ public class InstanceServiceImpl implements InstanceService {
             }
         }
     }
+
+
 
 
     @Override

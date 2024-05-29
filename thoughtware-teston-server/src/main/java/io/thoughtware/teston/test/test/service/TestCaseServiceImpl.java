@@ -7,9 +7,7 @@ import io.thoughtware.teston.instance.model.InstanceQuery;
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfCaseService;
 import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneCaseService;
-import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
 import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
-import io.thoughtware.teston.test.app.scene.cases.service.AppSceneCaseService;
 import io.thoughtware.teston.test.func.service.FuncUnitCaseService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
@@ -17,7 +15,6 @@ import io.thoughtware.teston.test.test.model.TestCaseRecent;
 import io.thoughtware.teston.test.test.model.TestCaseRecentQuery;
 import io.thoughtware.rpc.annotation.Exporter;
 import io.thoughtware.teston.test.test.entity.TestCasesEntity;
-import io.thoughtware.teston.test.web.scene.cases.service.WebSceneCaseService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -61,12 +58,6 @@ public class TestCaseServiceImpl implements TestCaseService {
 
     @Autowired
     ApiPerfCaseService apiPerfCaseService;
-
-    @Autowired
-    WebSceneCaseService webSceneCaseService;
-
-    @Autowired
-    AppSceneCaseService appSceneCaseService;
 
     @Autowired
     FuncUnitCaseService funcUnitCaseService;
@@ -124,14 +115,6 @@ public class TestCaseServiceImpl implements TestCaseService {
             }
             case MagicValue.CASE_TYPE_API_PERFORM -> {
                 apiPerfCaseService.deleteApiPerfCase(id);
-                break;
-            }
-            case MagicValue.CASE_TYPE_WEB -> {
-                webSceneCaseService.deleteWebSceneCase(id);
-                break;
-            }
-            case MagicValue.CASE_TYPE_APP -> {
-                appSceneCaseService.deleteAppSceneCase(id);
                 break;
             }
             case MagicValue.CASE_TYPE_FUNCTION -> {

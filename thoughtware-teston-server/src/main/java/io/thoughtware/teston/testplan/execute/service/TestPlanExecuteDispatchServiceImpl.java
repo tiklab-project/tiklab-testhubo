@@ -44,11 +44,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Autowired
     TestPlanExecuteApiDispatch testPlanExecuteApiDispatch;
 
-    @Autowired
-    TestPlanExecuteWebDispatch testPlanExecuteWebDispatch;
-
-    @Autowired
-    TestPlanExecuteAppDispatch testPlanExecuteAppDispatch;
 
     @Autowired
     TestUtil testUtil;
@@ -153,7 +148,8 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
      * @param testPlanTestData
      * @param planCaseInstanceList
      */
-    private void executeTestPlanCases(TestPlanTestData testPlanTestData, ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList){
+    @Override
+    public void executeTestPlanCases(TestPlanTestData testPlanTestData, ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList){
         //循环 执行用例
         for(TestPlanCaseInstanceBind testPlanCaseInstanceBind : planCaseInstanceList){
             String caseType = testPlanCaseInstanceBind.getCaseType();
@@ -169,16 +165,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                 }
                 case MagicValue.CASE_TYPE_API_PERFORM -> {
                     testPlanExecuteApiDispatch.exeApiPerform(testPlanCaseInstanceBind, testPlanTestData);
-                    testPlanCaseInstanceBind.setStatus(1);
-                    break;
-                }
-                case MagicValue.CASE_TYPE_WEB -> {
-                    testPlanExecuteWebDispatch.exeWebScene(testPlanCaseInstanceBind, testPlanTestData);
-                    testPlanCaseInstanceBind.setStatus(1);
-                    break;
-                }
-                case MagicValue.CASE_TYPE_APP -> {
-                    testPlanExecuteAppDispatch.exeAppScene(testPlanCaseInstanceBind, testPlanTestData);
                     testPlanCaseInstanceBind.setStatus(1);
                     break;
                 }
@@ -272,22 +258,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         }
 
         if (CollectionUtils.isNotEmpty(testPlanCaseInstanceList)) {
-            for (TestPlanCaseInstanceBind testPlanCaseInstanceBind : testPlanCaseInstanceList) {
-                String caseType = testPlanCaseInstanceBind.getCaseType();
-                switch (caseType) {
-                    case MagicValue.CASE_TYPE_API_PERFORM:
-                        testPlanExecuteApiDispatch.apiPerfResult(testPlanCaseInstanceBind);
-                        break;
-                    case MagicValue.CASE_TYPE_WEB:
-                        testPlanExecuteWebDispatch.webSceneResult(testPlanCaseInstanceBind);
-                        break;
-                    case MagicValue.CASE_TYPE_APP:
-                        testPlanExecuteAppDispatch.appSceneResult(testPlanCaseInstanceBind);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            getPlanCaseInstance(testPlanCaseInstanceList);
         }
 
         TestPlanTestResponse testPlanTestResponse = processResultData(executableCaseList, testPlanCaseInstanceList,  testPlanId);
@@ -295,6 +266,19 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         return testPlanTestResponse;
     }
 
+    @Override
+    public void getPlanCaseInstance(ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList){
+        for (TestPlanCaseInstanceBind testPlanCaseInstanceBind : testPlanCaseInstanceList) {
+            String caseType = testPlanCaseInstanceBind.getCaseType();
+            switch (caseType) {
+                case MagicValue.CASE_TYPE_API_PERFORM:
+                    testPlanExecuteApiDispatch.apiPerfResult(testPlanCaseInstanceBind);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     /**
      * 处理测试结果
@@ -457,14 +441,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                     testPlanExecuteApiDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
                     break;
                 }
-                case MagicValue.CASE_TYPE_WEB -> {
-                    testPlanExecuteWebDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
-                    break;
-                }
-                case MagicValue.CASE_TYPE_APP -> {
-                    testPlanExecuteAppDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
-                    break;
-                }
+
                 default -> {
                 }
             }
