@@ -34,9 +34,7 @@ public class AgentConfigServiceImpl implements AgentConfigService {
     @Override
     public String createAgentConfig(@NotNull @Valid AgentConfig agentConfig) {
         AgentConfigEntity agentConfigEntity = BeanMapper.map(agentConfig, AgentConfigEntity.class);
-
-        agentConfigEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
-
+        agentConfigEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 
         return agentConfigDao.createAgentConfig(agentConfigEntity);
     }
@@ -44,7 +42,7 @@ public class AgentConfigServiceImpl implements AgentConfigService {
     @Override
     public void updateAgentConfig(@NotNull @Valid AgentConfig agentConfig) {
         AgentConfigEntity agentConfigEntity = BeanMapper.map(agentConfig, AgentConfigEntity.class);
-
+        agentConfigEntity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         agentConfigDao.updateAgentConfig(agentConfigEntity);
     }
 
@@ -117,11 +115,19 @@ public class AgentConfigServiceImpl implements AgentConfigService {
         if(CollectionUtils.isNotEmpty(agentConfigPage.getDataList())){
             List<AgentConfig> agentConfigList = agentConfigPage.getDataList();
             AgentConfig agentConfig = agentConfigList.get(0);
-            String url = agentConfig.getUrl();
+            String url = agentConfig.getAddress();
             return url;
         }
 
         return null;
+    }
+
+    @Override
+    public List<AgentConfig> getAgentList(){
+        AgentConfigQuery agentConfigQuery = new AgentConfigQuery();
+        agentConfigQuery.setStatus("online");
+        List<AgentConfig> agentConfigList = findAgentConfigList(agentConfigQuery);
+        return agentConfigList;
     }
 
 }

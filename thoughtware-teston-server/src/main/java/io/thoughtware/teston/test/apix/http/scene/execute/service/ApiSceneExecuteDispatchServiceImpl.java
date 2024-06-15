@@ -6,30 +6,26 @@ import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
-import io.thoughtware.teston.support.utils.RpcClientApixUtil;
 import io.thoughtware.teston.support.variable.service.VariableService;
-import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneStepService;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestResponse;
 import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
-import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstanceQuery;
 import io.thoughtware.teston.test.apix.http.scene.instance.service.ApiSceneInstanceService;
-import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
-import io.thoughtware.rpc.client.router.lookup.FixedLookup;
 
-import io.thoughtware.teston.agent.api.http.scene.ApiSceneTestService;
-
+import io.thoughtware.teston.test.common.wsTest.service.WebSocketServiceImpl;
+import io.thoughtware.teston.test.common.wstest.WsTestService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 接口场景测试调度 服务
@@ -39,11 +35,6 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
 
     static Logger logger = LoggerFactory.getLogger(ApiSceneExecuteDispatchServiceImpl.class);
 
-    @Autowired
-    ApiUnitCaseService apiUnitCaseService;
-
-    @Autowired
-    ApiSceneStepService apiSceneStepService;
 
     @Autowired
     ApiSceneInstanceService apiSceneInstanceService;
@@ -52,29 +43,14 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
     AgentConfigService agentConfigService;
 
     @Autowired
-    RpcClientApixUtil rpcClientApixUtil;
-
-    @Autowired
-    ApiSceneTestService apiSceneTestService;
-
-    @Autowired
     VariableService variableService;
 
     @Autowired
     StepCommonService stepCommonService;
 
-    /**
-     *  环境中获取是否是内嵌agent
-     */
-    @Value("${teston-agent.embbed.enable:false}")
-    Boolean enable;
+    @Autowired
+    WsTestService wsTestService;
 
-    /**
-     * rpc 调用
-     */
-    ApiSceneTestService apiSceneTestServiceRPC(String agentUrl){
-        return rpcClientApixUtil.rpcClient().getBean(ApiSceneTestService.class, new FixedLookup(agentUrl));
-    }
 
     /**
      * 测试用例执行
@@ -105,23 +81,31 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         JSONObject variable = variableService.getVariable(apiSceneTestRequest.getRepositoryId());
         apiSceneTestRequest.setVariableJson(variable);
 
-        ApiSceneTestResponse apiSceneTestResponse;
+        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+        if( CollectionUtils.isNotEmpty(agentConfigList)){
+            AgentConfig agentConfig = agentConfigList.get(0);
+            String agentId = agentConfig.getId();
 
-        if(enable){
-            //执行测试步骤返回数据
-            apiSceneTestResponse = apiSceneTestService.execute(apiSceneTestRequest);
-        }else {
-            List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
-            if(CollectionUtils.isNotEmpty(agentConfigList)){
-                AgentConfig agentConfig = agentConfigList.get(0);
+            JSONObject apiUnitObject = new JSONObject();
+            apiUnitObject.put("apiSceneTestRequest",apiSceneTestRequest);
+            apiUnitObject.put("type",MagicValue.CASE_TYPE_API_SCENE);
 
-                apiSceneTestResponse = apiSceneTestServiceRPC(agentConfig.getUrl()).execute(apiSceneTestRequest);
-            }else {
-                throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
+            String futureId = agentId + "_" + MagicValue.CASE_TYPE_API_SCENE;
+            wsTestService.sendMessageExe(agentId,apiUnitObject,futureId);
+
+            try {
+                // 从futureMap中获取CompletableFuture实例并获取结果
+                CompletableFuture<JSONObject> future =  WebSocketServiceImpl.futureMap.get(futureId);
+                JSONObject jsonObject = future.get();
+                JSONObject apiSceneTestResponseObj = jsonObject.getJSONObject("apiSceneTestResponse");
+                ApiSceneTestResponse apiSceneTestResponse = apiSceneTestResponseObj.toJavaObject(ApiSceneTestResponse.class);
+                return apiSceneTestResponse;
+            } catch (InterruptedException | ExecutionException e) {
+                throw new ApplicationException(("执行出错"));
             }
+        }else {
+            throw new ApplicationException("不是内嵌agent，请到设置中配置agent");
         }
-
-        return apiSceneTestResponse;
     }
 
     /**

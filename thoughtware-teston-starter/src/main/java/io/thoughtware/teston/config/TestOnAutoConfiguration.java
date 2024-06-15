@@ -17,7 +17,6 @@ import io.thoughtware.privilege.boot.starter.annotation.EnablePrivilegeServer;
 import io.thoughtware.rpc.boot.starter.annotation.EnableRpc;
 import io.thoughtware.security.boot.stater.annotation.EnableSecurityServer;
 import io.thoughtware.teston.EnableTestOnServer;
-import io.thoughtware.teston.agent.EnableTestOnAgent;
 import io.thoughtware.toolkit.boot.starter.annotation.EnableToolkit;
 import io.thoughtware.user.boot.starter.annotation.EnableUserClient;
 import io.thoughtware.user.boot.starter.annotation.EnableUserServer;
@@ -51,7 +50,6 @@ import org.springframework.context.annotation.Configuration;
 
 //other
 @EnablePostInClient
-@EnableTestOnAgent
 
 @EnableTestOnServer
 @ComponentScan(value = "io.thoughtware.teston")

@@ -222,7 +222,7 @@
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-teston-agent-starter</artifactId>
+                <artifactId>thoughtware-teston-agent-server</artifactId>
                 <version>${thoughtware-teston-agent.version}</version>
             </dependency>
             <dependency>
@@ -267,7 +267,6 @@
                 <artifactId>quartz</artifactId>
                 <version>${quartz.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 

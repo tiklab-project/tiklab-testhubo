@@ -104,7 +104,8 @@ public class GatewayFilterAutoConfiguration {
                         "/socket",
                         "/images",
                         "/sql",
-                        "/mockx"
+                        "/mockx",
+                        "/websocket"
                 })
                 .get();
     }

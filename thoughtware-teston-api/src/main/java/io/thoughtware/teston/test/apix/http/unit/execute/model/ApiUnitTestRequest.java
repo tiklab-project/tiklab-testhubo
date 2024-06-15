@@ -58,4 +58,8 @@ public class ApiUnitTestRequest extends BaseModel {
         this.variableJson = variableJson;
     }
 
+    // Convert this object to JSONObject
+    public JSONObject toJSONObject() {
+        return (JSONObject) JSONObject.toJSON(this);
+    }
 }

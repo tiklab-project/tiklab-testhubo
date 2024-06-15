@@ -11,14 +11,16 @@ import java.util.List;
 @ApiModel
 public class AgentConfigQuery {
 
+
+
     @ApiProperty(name ="orderParams",desc = "排序参数")
     private List<Order> orderParams = OrderBuilders.instance().asc("id").get();
 
     @ApiProperty(name ="pageParam",desc = "分页参数")
     private Page pageParam = new Page();
 
-    @ApiProperty(name ="repositoryId",desc = "repositoryId")
-    private String repositoryId;
+    @ApiProperty(name ="status",desc = "status")
+    private String status;
 
     public List<Order> getOrderParams() {
         return orderParams;
@@ -36,11 +38,11 @@ public class AgentConfigQuery {
             this.pageParam = pageParam;
         }
 
-    public String getRepositoryId() {
-        return repositoryId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setRepositoryId(String repositoryId) {
-        this.repositoryId = repositoryId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -14,33 +14,24 @@ import java.sql.Timestamp;
 public class AgentConfigEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
-    // 所属仓库
-    @Column(name = "repository_id",length = 32)
-    private String repositoryId;
-
     // 名称
-    @Column(name = "name",length = 64)
+    @Column(name = "name")
     private String name;
 
     // 地址
-    @Column(name = "url",length = 256)
-    private String url;
+    @Column(name = "address")
+    private String address;
 
     // 状态
-    @Column(name = "status",length = 8)
-    private Integer status;
-
-    // 数量
-    @Column(name = "number",length = 8)
-    private Integer number;
+    @Column(name = "status")
+    private String status;
 
     // 创建时间
-    @Column(name = "create_time")
-    private Timestamp createTime;
+    @Column(name = "update_time")
+    private Timestamp updateTime;
 
     public String getId() {
         return id;
@@ -48,22 +39,6 @@ public class AgentConfigEntity implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getRepositoryId() {
-        return repositoryId;
-    }
-
-    public void setRepositoryId(String repositoryId) {
-        this.repositoryId = repositoryId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getName() {
@@ -74,27 +49,27 @@ public class AgentConfigEntity implements Serializable {
         this.name = name;
     }
 
-    public Integer getStatus() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Timestamp getUpdateTime() {
+        return updateTime;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -69,4 +69,10 @@ public interface AgentConfigService {
      */
     String getAgent();
 
+    /**
+     * 获取在线agent
+     * @return
+     */
+    List<AgentConfig> getAgentList();
+
 }

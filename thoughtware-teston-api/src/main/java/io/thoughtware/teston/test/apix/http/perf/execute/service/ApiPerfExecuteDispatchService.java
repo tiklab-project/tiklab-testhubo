@@ -1,6 +1,7 @@
 package io.thoughtware.teston.test.apix.http.perf.execute.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestRequest;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
 
@@ -32,5 +33,11 @@ public interface ApiPerfExecuteDispatchService {
      * 清理数据
      */
     void cleanUpData(String apiPerfId);
+
+    /**
+     * agent定时上报的数据
+     * @param message
+     */
+    void getAgentTestData(JSONObject message);
 
 }

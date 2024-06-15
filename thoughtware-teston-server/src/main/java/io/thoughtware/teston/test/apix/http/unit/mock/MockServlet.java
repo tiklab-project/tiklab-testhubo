@@ -138,7 +138,7 @@ public class MockServlet extends HttpServlet {
     private String processApiBody(ResponseResultUnit responseResultUnit){
         String jsonMockData = null;
         JsonGenerator jsonGenerator = new JsonGenerator();
-        if("json".equals(responseResultUnit.getDataType())){
+        if(responseResultUnit.getDataType()!=null&&"json".equals(responseResultUnit.getDataType())){
             String jsonText = responseResultUnit.getJsonText();
             jsonMockData = jsonGenerator.generateJson(jsonText);
         }else {
