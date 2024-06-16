@@ -69,8 +69,8 @@ postgresql:
     address: ${DATA_HOME}/postgresql
 
 teston-agent:
-  embbed:
-    enable: true
+  name: agent-default
+  websocket-url: "ws://teston-ce.test.thoughtware.cn/websocket"
   chromedriver:
     path: /opt/chrome/chromedriver/chromedriver
   chrome:
