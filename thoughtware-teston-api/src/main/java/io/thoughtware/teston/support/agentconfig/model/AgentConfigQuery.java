@@ -22,6 +22,9 @@ public class AgentConfigQuery {
     @ApiProperty(name ="status",desc = "status")
     private String status;
 
+    @ApiProperty(name ="enable",desc = "enable")
+    private Integer enable;
+
     public List<Order> getOrderParams() {
         return orderParams;
     }
@@ -44,5 +47,13 @@ public class AgentConfigQuery {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
     }
 }

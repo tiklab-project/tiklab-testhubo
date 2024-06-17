@@ -1,7 +1,6 @@
 package io.thoughtware.teston.test.common.wsTest.service;
 
 import com.alibaba.fastjson.JSONObject;
-import io.thoughtware.teston.test.apix.http.perf.execute.service.ApiPerfExecuteDispatchService;
 
 import io.thoughtware.teston.test.common.wstest.WsTestService;
 import org.slf4j.Logger;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -52,10 +52,16 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String agentId = wsTestCommonFn.getAgentIdFromQuery(session);
+        JSONObject agentInfo = wsTestCommonFn.getAgentInfoFromQuery(session);
+        String agentId = agentInfo.getString("agentId");
         logger.info("agentId -- {} connect server success", agentId);
         agentSessionMap.put(agentId, session);
+
+        if(!"agent-default_localhost".equals(agentId)){
+            wsTestCommonFn.connectInitAgent(agentInfo,agentId);
+        }
     }
+
 
     /**
      * 接收到客户端发来的信息进行处理
@@ -68,11 +74,6 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
         String msg = message.getPayload().toString();
         JSONObject jsonMsg = JSONObject.parseObject(msg);
 
-        // 处理业务逻辑
-        if(jsonMsg.containsKey("agent")){
-            JSONObject agent = jsonMsg.getJSONObject("agent");
-            wsTestCommonFn.connectInitAgent(agent,agentId);
-        }
 
         if(jsonMsg.containsKey("type")){
             String type = jsonMsg.getString("type");
@@ -87,6 +88,7 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
                 future.complete(jsonMsg);
             }
         }
+
     }
 
 

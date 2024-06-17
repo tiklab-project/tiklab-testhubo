@@ -83,6 +83,7 @@ public class AgentConfigDao{
     public List<AgentConfigEntity> findAgentConfigList(AgentConfigQuery agentConfigQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AgentConfigEntity.class)
                 .eq("status", agentConfigQuery.getStatus())
+                .eq("enable",agentConfigQuery.getEnable())
                 .orders(agentConfigQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition,AgentConfigEntity.class);
@@ -96,6 +97,7 @@ public class AgentConfigDao{
     public Pagination<AgentConfigEntity> findAgentConfigPage(AgentConfigQuery agentConfigQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(AgentConfigEntity.class)
                 .eq("status", agentConfigQuery.getStatus())
+                .eq("enable",agentConfigQuery.getEnable())
                 .orders(agentConfigQuery.getOrderParams())
                 .pagination(agentConfigQuery.getPageParam())
                 .get();

@@ -45,6 +45,7 @@ public class TestOnDalAutoConfiguration {
                 "privilege_1.0.1",
 
                 "teston_1.0.1",
+                "teston-init_1.0.1",
                 "teston-platform_1.0.1",
         });
         dsmConfig.newVersion("1.0.2", new String[]{

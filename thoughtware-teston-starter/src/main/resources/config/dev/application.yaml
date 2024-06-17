@@ -60,7 +60,7 @@ base:
 
 teston-agent:
   name: agent-default
-  websocket-url: "ws://192.168.10.34:8080/websocket"
+  websocket-url: "ws://localhost:8080/websocket"
   chromedriver:
     path: D:\a-dk-sever\chrome\chromedriver.exe
   chrome:

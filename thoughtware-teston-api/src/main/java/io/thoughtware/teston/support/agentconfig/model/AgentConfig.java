@@ -27,6 +27,9 @@ public class AgentConfig extends BaseModel {
     @ApiProperty(name="status",desc="状态")
     private String status;
 
+    @ApiProperty(name="enable",desc="是否开启0：关闭，1：开启")
+    private Integer enable;
+
     @ApiProperty(name="updateTime",desc="更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private java.sql.Timestamp updateTime;
@@ -45,6 +48,14 @@ public class AgentConfig extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
     }
 
     public String getAddress() {

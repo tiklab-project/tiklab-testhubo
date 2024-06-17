@@ -9,6 +9,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class WsTestCommonFn {
      * @param session
      * @return
      */
-    public String getAgentIdFromQuery(WebSocketSession session) {
+    public JSONObject getAgentInfoFromQuery(WebSocketSession session) {
         URI uri = session.getUri();
         String query = uri.getQuery();
 
@@ -46,7 +47,13 @@ public class WsTestCommonFn {
         // 组合代理 ID
         String agentId = String.join("_", name.trim(), address.trim());
 
-        return agentId;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", name);
+        jsonObject.put("address",address);
+        jsonObject.put("status","online");
+        jsonObject.put("agentId",agentId);
+
+        return jsonObject;
     }
 
     /**
@@ -88,20 +95,23 @@ public class WsTestCommonFn {
         String status = agentObj.getString("status");
         String address = agentObj.getString("address");
 
-        AgentConfig agent = agentConfigService.findAgentConfig(agentId);
+        //不等于默认agent
+        if(!"agent-default".equals(name)){
+            AgentConfig agent = agentConfigService.findAgentConfig(agentId);
 
-        if(agent==null){
-            AgentConfig agentConfig = new AgentConfig();
-            agentConfig.setId(agentId);
-            agentConfig.setName(name);
-            agentConfig.setStatus(status);
-            agentConfig.setAddress(address);
-            agentConfigService.createAgentConfig(agentConfig);
-        }else {
-            AgentConfig agentConfig = new AgentConfig();
-            agentConfig.setId(agentId);
-            agentConfig.setStatus(status);
-            agentConfigService.updateAgentConfig(agentConfig);
+            if(agent==null){
+                AgentConfig agentConfig = new AgentConfig();
+                agentConfig.setId(agentId);
+                agentConfig.setName(name);
+                agentConfig.setStatus(status);
+                agentConfig.setAddress(address);
+                agentConfigService.createAgentConfig(agentConfig);
+            }else {
+                AgentConfig agentConfig = new AgentConfig();
+                agentConfig.setId(agentId);
+                agentConfig.setStatus(status);
+                agentConfigService.updateAgentConfig(agentConfig);
+            }
         }
     }
 

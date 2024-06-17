@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -41,7 +42,7 @@ public class WsTestServiceImpl implements WsTestService {
         }
 
         try {
-            session.sendMessage(new TextMessage(params.toJSONString()));
+            sendMessage(session, params);
         } catch (Exception e) {
             logger.error(String.valueOf(e));
             if (future != null) {
@@ -50,6 +51,11 @@ public class WsTestServiceImpl implements WsTestService {
             }
         }
     }
+
+    public void sendMessage(WebSocketSession session ,JSONObject params) throws IOException {
+        session.sendMessage(new TextMessage(params.toJSONString()));
+    }
+
 
     @Override
     public void processDiffCaseAgentMessage(String type,JSONObject jsonMsg){

@@ -126,6 +126,7 @@ public class AgentConfigServiceImpl implements AgentConfigService {
     public List<AgentConfig> getAgentList(){
         AgentConfigQuery agentConfigQuery = new AgentConfigQuery();
         agentConfigQuery.setStatus("online");
+        agentConfigQuery.setEnable(1);
         List<AgentConfig> agentConfigList = findAgentConfigList(agentConfigQuery);
         return agentConfigList;
     }

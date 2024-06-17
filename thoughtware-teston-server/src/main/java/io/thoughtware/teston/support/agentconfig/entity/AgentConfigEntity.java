@@ -29,6 +29,10 @@ public class AgentConfigEntity implements Serializable {
     @Column(name = "status")
     private String status;
 
+    // 状态
+    @Column(name = "enable")
+    private Integer enable;
+
     // 创建时间
     @Column(name = "update_time")
     private Timestamp updateTime;
@@ -71,5 +75,13 @@ public class AgentConfigEntity implements Serializable {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
     }
 }
