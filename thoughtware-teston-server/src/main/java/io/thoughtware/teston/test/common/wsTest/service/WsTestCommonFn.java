@@ -95,31 +95,26 @@ public class WsTestCommonFn {
         String status = agentObj.getString("status");
         String address = agentObj.getString("address");
 
-        //不等于默认agent
-        if(!"agent-default".equals(name)){
-            AgentConfig agent = agentConfigService.findAgentConfig(agentId);
+        AgentConfig agent = agentConfigService.findAgentConfig(agentId);
 
-            if(agent==null){
-                AgentConfig agentConfig = new AgentConfig();
-                agentConfig.setId(agentId);
-                agentConfig.setName(name);
-                agentConfig.setStatus(status);
-                agentConfig.setAddress(address);
-                agentConfigService.createAgentConfig(agentConfig);
-            }else {
-                AgentConfig agentConfig = new AgentConfig();
-                agentConfig.setId(agentId);
-                agentConfig.setStatus(status);
-                agentConfigService.updateAgentConfig(agentConfig);
-            }
+        AgentConfig agentConfig = new AgentConfig();
+        agentConfig.setId(agentId);
+        agentConfig.setStatus(status);
+        if(agent==null){
+            agentConfig.setName(name);
+            agentConfig.setAddress(address);
+            agentConfigService.createAgentConfig(agentConfig);
+        }else {
+            agentConfigService.updateAgentConfig(agentConfig);
         }
+
     }
 
     /**
      * 更新agent状态
      * @param agentId
      */
-    public void updateAgentStatus(String agentId){
+    public void updateAgentStatusClose(String agentId){
         AgentConfig agentConfig = new AgentConfig();
         agentConfig.setId(agentId);
         agentConfig.setStatus("offline");

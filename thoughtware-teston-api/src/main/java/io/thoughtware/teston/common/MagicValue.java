@@ -70,4 +70,6 @@ public class MagicValue {
     //执行失败
     public static final String TEST_STATUS_FAIL = "fail";
 
+
+    public static final String AGENT_DEFAULT = "agent-default_localhost";
 }

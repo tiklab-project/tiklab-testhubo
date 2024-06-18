@@ -1,5 +1,6 @@
 package io.thoughtware.teston.support.agentconfig.service;
 
+import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfigQuery;
 import io.thoughtware.teston.support.agentconfig.entity.AgentConfigEntity;
@@ -128,7 +129,12 @@ public class AgentConfigServiceImpl implements AgentConfigService {
         agentConfigQuery.setStatus("online");
         agentConfigQuery.setEnable(1);
         List<AgentConfig> agentConfigList = findAgentConfigList(agentConfigQuery);
-        return agentConfigList;
+
+        if( CollectionUtils.isNotEmpty(agentConfigList)) {
+            return agentConfigList;
+        }else {
+            throw new ApplicationException(10000,"Agent is not found. Unable to connect to the WebSocket server.");
+        }
     }
 
 }

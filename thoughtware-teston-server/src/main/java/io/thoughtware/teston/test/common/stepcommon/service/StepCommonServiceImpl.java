@@ -174,7 +174,6 @@ public class StepCommonServiceImpl implements StepCommonService {
         List<StepCommon> stepCommonList = BeanMapper.mapList(stepCommonEntityList, StepCommon.class);
         joinTemplate.joinQuery(stepCommonList);
 
-
         String caseType = stepCommonQuery.getCaseType();
         if(caseType!=null){
             for(StepCommon stepCommon:stepCommonList){
@@ -190,6 +189,8 @@ public class StepCommonServiceImpl implements StepCommonService {
                     case MagicValue.CASE_TYPE_FUNCTION:
                         FuncUnitStep funcUnitStep = funcUnitStepService.findFuncUnitStep(stepCommon.getId());
                         stepCommon.setFuncUnitStep(funcUnitStep);
+                        break;
+                    default:
                         break;
                 }
 

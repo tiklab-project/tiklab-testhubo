@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.common.wsTest.service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.common.wstest.WsTestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,10 +55,10 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         JSONObject agentInfo = wsTestCommonFn.getAgentInfoFromQuery(session);
         String agentId = agentInfo.getString("agentId");
-        logger.info("agentId -- {} connect server success", agentId);
+        logger.info("SERVER:  {} --- has successfully connected to the server.", agentId);
         agentSessionMap.put(agentId, session);
 
-        if(!"agent-default_localhost".equals(agentId)){
+        if(!agentId.equals(MagicValue.AGENT_DEFAULT)){
             wsTestCommonFn.connectInitAgent(agentInfo,agentId);
         }
     }
@@ -88,7 +89,6 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
                 future.complete(jsonMsg);
             }
         }
-
     }
 
 
@@ -100,7 +100,9 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
         String agentId = wsTestCommonFn.getAgentIdFromAgentSessionMap(session, agentSessionMap);
 
         if (agentId != null) {
-            wsTestCommonFn.updateAgentStatus(agentId);
+            if(!agentId.equals(MagicValue.AGENT_DEFAULT)){
+                wsTestCommonFn.updateAgentStatusClose(agentId);
+            }
             agentSessionMap.remove(agentId);
             logger.info("AgentId -- {}  closed!", agentId);
         } else {
