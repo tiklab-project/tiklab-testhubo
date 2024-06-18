@@ -117,8 +117,7 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
     public void handleTransportError(WebSocketSession session, Throwable e) throws Exception {
         String agentId = wsTestCommonFn.getAgentIdFromAgentSessionMap(session, agentSessionMap);
 
-        WebSocketMessage<String> message = new TextMessage("AgentId -- " + agentId + " 异常信息：" + e.getMessage());
-        session.sendMessage(message);
+        logger.info("AgentId -- " + agentId + " 异常信息：" + e.getMessage());
     }
 
     /**
