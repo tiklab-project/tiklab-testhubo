@@ -5,6 +5,8 @@ app:
 spring:
   profiles:
     active: prd
+  main:
+    allow-bean-definition-overriding: true
 
 DATA_HOME: /opt/thoughtware/teston
 

@@ -4,6 +4,8 @@ app:
 spring:
   profiles:
     active: demo
+  main:
+    allow-bean-definition-overriding: true
 
 DATA_HOME:  /opt/thoughtware/teston
 

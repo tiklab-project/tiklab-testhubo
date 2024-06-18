@@ -4,6 +4,8 @@ app:
 spring:
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
 
 DATA_HOME: ${user.home}/thoughtware/${app.name}
 
