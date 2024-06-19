@@ -81,7 +81,7 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
         JSONObject variable = variableService.getVariable(apiSceneTestRequest.getRepositoryId());
         apiSceneTestRequest.setVariableJson(variable);
 
-        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+        List<AgentConfig> agentConfigList = agentConfigService.getAgentList();
         if( CollectionUtils.isNotEmpty(agentConfigList)){
             AgentConfig agentConfig = agentConfigList.get(0);
             String agentId = agentConfig.getId();
@@ -89,8 +89,9 @@ public class ApiSceneExecuteDispatchServiceImpl implements ApiSceneExecuteDispat
             JSONObject apiUnitObject = new JSONObject();
             apiUnitObject.put("apiSceneTestRequest",apiSceneTestRequest);
             apiUnitObject.put("type",MagicValue.CASE_TYPE_API_SCENE);
+            apiUnitObject.put("caseId",apiSceneId);
 
-            String futureId = agentId + "_" + MagicValue.CASE_TYPE_API_SCENE;
+            String futureId = agentId + "_" + MagicValue.CASE_TYPE_API_SCENE+ "_" +apiSceneId;
             wsTestService.sendMessageExe(agentId,apiUnitObject,futureId);
 
             try {

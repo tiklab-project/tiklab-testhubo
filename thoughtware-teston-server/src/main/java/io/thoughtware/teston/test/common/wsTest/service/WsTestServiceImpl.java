@@ -44,7 +44,7 @@ public class WsTestServiceImpl implements WsTestService {
         try {
             sendMessage(session, params);
         } catch (Exception e) {
-            logger.error(String.valueOf(e));
+            logger.error("sendMessageExe----{}",e.getMessage());
             if (future != null) {
                 future.completeExceptionally(e);
                 WebSocketServiceImpl.futureMap.remove(futureId);

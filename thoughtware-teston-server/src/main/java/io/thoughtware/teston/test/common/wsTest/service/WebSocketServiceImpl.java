@@ -84,7 +84,7 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
             wsTestService.processDiffCaseAgentMessage(type,jsonMsg);
 
             // 从Map中取出CompletableFuture实例并设置结果
-            String futureId = agentId + "_" + type;
+            String futureId = agentId + "_" + type + "_" + jsonMsg.getString("caseId");
             CompletableFuture<JSONObject> future = futureMap.remove(futureId);
             if (future != null) {
                 future.complete(jsonMsg);

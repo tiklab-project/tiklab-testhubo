@@ -98,7 +98,7 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
 
         ApiUnitInstance apiUnitInstance=null;
 
-        List<AgentConfig> agentConfigList = agentConfigService.findAgentConfigList(new AgentConfigQuery());
+        List<AgentConfig> agentConfigList = agentConfigService.getAgentList();
         if( CollectionUtils.isNotEmpty(agentConfigList)){
             AgentConfig agentConfig = agentConfigList.get(0);
             String agentId = agentConfig.getId();
@@ -106,8 +106,9 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
             JSONObject apiUnitObject = new JSONObject();
             apiUnitObject.put("apiUnitTestRequest",processData);
             apiUnitObject.put("type",MagicValue.CASE_TYPE_API_UNIT);
+            apiUnitObject.put("caseId",apiUnitId);
 
-            String futureId = agentId + "_" + MagicValue.CASE_TYPE_API_UNIT;
+            String futureId = agentId + "_" + MagicValue.CASE_TYPE_API_UNIT + "_" + apiUnitId;
             wsTestService.sendMessageExe(agentId,apiUnitObject,futureId);
 
             try {
