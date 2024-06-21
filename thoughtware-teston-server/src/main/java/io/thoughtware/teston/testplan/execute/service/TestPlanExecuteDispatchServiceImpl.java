@@ -125,19 +125,11 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     }
 
     /**
-     *  查询出当前计划的关联的，可执行用例
+     *  查询出当前计划的关联的，可执行的自动化用例
      */
     private List<PlanCase> findExecutableCaseList(String testPlanId){
         TestPlanCaseQuery testPlanCaseQuery = new TestPlanCaseQuery();
         testPlanCaseQuery.setTestPlanId(testPlanId);
-        String[] caseTypeList = {
-                MagicValue.CASE_TYPE_API_UNIT,
-                MagicValue.CASE_TYPE_API_SCENE,
-                MagicValue.CASE_TYPE_API_PERFORM,
-                MagicValue.CASE_TYPE_WEB,
-                MagicValue.CASE_TYPE_APP
-        };
-        testPlanCaseQuery.setCaseTypeList(caseTypeList);
         List<PlanCase> planCaseList = testPlanCaseService.findPlanCaseList(testPlanCaseQuery);
         return planCaseList;
     }

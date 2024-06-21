@@ -225,6 +225,20 @@ public class TestPlanCaseDao {
             modelSqlBuilder.append(" AND teston_testcase.name LIKE '%").append(testPlanCaseQuery.getName()).append("%'");
         }
 
+        if(testPlanCaseQuery.getCaseTypeList()!=null&&testPlanCaseQuery.getCaseTypeList().length>0){
+            StringBuilder caseTypeList = new StringBuilder();
+            for (int i = 0; i < testPlanCaseQuery.getCaseTypeList().length; i++) {
+                String s = testPlanCaseQuery.getCaseTypeList()[i];
+                caseTypeList.append("'").append(s).append("'");
+
+                if (i < testPlanCaseQuery.getCaseTypeList().length - 1) {
+                    caseTypeList.append(",");
+                }
+            }
+
+            modelSqlBuilder.append(" AND teston_testcase.case_type in (").append(caseTypeList).append(")");
+        }
+
         String modelSql = modelSqlBuilder.toString();
 
         Pagination<PlanCaseEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, testPlanCaseQuery.getPageParam(), new BeanPropertyRowMapper<>(PlanCaseEntity.class));

@@ -160,4 +160,11 @@ public class InstanceDao {
         }
     }
 
+    public int findInstanceNum(String belongId) {
+        String numSql = "Select count(1) as total from teston_instance where belong_id = '" + belongId+ "'";
+        Integer num = jpaTemplate.getJdbcTemplate().queryForObject(numSql, new Object[]{}, Integer.class);
+
+        return num;
+    }
+
 }

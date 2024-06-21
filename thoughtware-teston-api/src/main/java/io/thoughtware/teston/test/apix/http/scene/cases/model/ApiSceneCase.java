@@ -35,6 +35,10 @@ public class ApiSceneCase extends BaseModel{
     @ApiProperty(name="variableNum",desc="变量数量")
     private int variableNum;
 
+    @ApiProperty(name="instanceNum",desc="历史数量")
+    private int instanceNum;
+
+
     public String getId() {
         return id;
     }
@@ -65,5 +69,13 @@ public class ApiSceneCase extends BaseModel{
 
     public void setVariableNum(int variableNum) {
         this.variableNum = variableNum;
+    }
+
+    public int getInstanceNum() {
+        return instanceNum;
+    }
+
+    public void setInstanceNum(int instanceNum) {
+        this.instanceNum = instanceNum;
     }
 }

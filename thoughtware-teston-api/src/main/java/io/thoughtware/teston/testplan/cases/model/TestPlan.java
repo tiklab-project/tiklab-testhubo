@@ -26,6 +26,9 @@ public class TestPlan extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private java.lang.String id;
 
+    @ApiProperty(name="type",desc="类型")
+    private java.lang.String type;
+
     @ApiProperty(name="name",desc="测试计划名称")
     private java.lang.String name;
 
@@ -48,11 +51,7 @@ public class TestPlan extends BaseModel{
     private User principal;
 
     @ApiProperty(name="repository",desc="所属仓库")
-    @Mappings({
-            @Mapping(source = "repository.id",target = "repositoryId")
-    })
-    @JoinQuery(key = "id")
-    private Repository repository;
+    private String repositoryId;
 
     @ApiProperty(name="desc",desc="描述")
     private java.lang.String desc;
@@ -83,6 +82,14 @@ public class TestPlan extends BaseModel{
     }
     public java.lang.String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setName(java.lang.String name) {
@@ -166,12 +173,12 @@ public class TestPlan extends BaseModel{
         this.testCaseNum = testCaseNum;
     }
 
-    public Repository getRepository() {
-        return repository;
+    public String getRepositoryId() {
+        return repositoryId;
     }
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 
     public String getApiEnvId() {

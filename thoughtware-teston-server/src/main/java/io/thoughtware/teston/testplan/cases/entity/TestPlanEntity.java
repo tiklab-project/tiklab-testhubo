@@ -25,6 +25,10 @@ public class TestPlanEntity implements Serializable {
     @Column(name = "name")
     private String name;
 
+    // 描述
+    @Column(name = "type")
+    private String type;
+
     // 开始时间
     @Column(name = "start_time")
     private Date startTime;
@@ -82,6 +86,14 @@ public class TestPlanEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Date getStartTime() {

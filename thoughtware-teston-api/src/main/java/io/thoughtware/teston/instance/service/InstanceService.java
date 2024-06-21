@@ -100,5 +100,11 @@ public interface InstanceService {
      */
     String getRecentExecuteInstanceId(String belongId);
 
+    /**
+     * 查询单个用例下的历史数量
+     * @param belongId
+     * @return
+     */
+    int findInstanceNum(String belongId);
 
 }

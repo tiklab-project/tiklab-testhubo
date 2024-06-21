@@ -64,7 +64,7 @@ public class RequestBodyServiceImpl implements RequestBodyService {
             RawParamUnit rawParamUnitIsExist = rawParamService.findRawParam(apiUnitId);
             if(rawParamUnitIsExist ==null){
                 RawParamUnit rawParamUnit = new RawParamUnit();
-                rawParamUnit.setApiUnit(new ApiUnitCase().setId(apiUnitId));
+                rawParamUnit.setApiUnitId(apiUnitId);
                 rawParamUnit.setId(apiUnitId);
                 rawParamUnit.setType("application/json");
                 rawParamUnit.setRaw("");

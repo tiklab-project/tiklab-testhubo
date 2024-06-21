@@ -41,6 +41,12 @@ public class MagicValue {
     public static final String CASE_TYPE_IF = "if";
     public static final String TEST_PLAN = "test-plan";
 
+    //测试计划类型
+    // 功能
+    public static final String TEST_PLAN_TYPE_FUNCTION = "function";
+    // 自动化
+    public static final String TEST_PLAN_TYPE_AUTO = "auto";
+
     //测试类型
     //接口 单元/场景
     public static final String TEST_TYPE_API = "api";

@@ -296,7 +296,7 @@ public class PostInApiServiceImpl implements PostInApiService {
             RawParamUnit testOnRaw = new RawParamUnit();
             testOnRaw.setRaw(postInRaw.getRaw());
             testOnRaw.setType(postInRaw.getType());
-            testOnRaw.setApiUnit(new ApiUnitCase().setId(apiUnitCaseId));
+            testOnRaw.setApiUnitId(apiUnitCaseId);
             testOnRaw.setId(apiUnitCaseId);
             testOnRawService.createRawParam(testOnRaw);
         }catch (Exception e){

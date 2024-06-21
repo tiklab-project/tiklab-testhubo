@@ -1,10 +1,11 @@
 package io.thoughtware.teston.testplan.cases.service;
 
-import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.teston.category.model.Category;
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.testplan.cases.dao.TestPlanCaseDao;
 import io.thoughtware.teston.testplan.cases.entity.PlanCaseEntity;
 import io.thoughtware.teston.testplan.cases.entity.TestPlanCaseEntity;
+import io.thoughtware.teston.testplan.cases.model.TestPlan;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import io.thoughtware.teston.category.service.CategoryService;
@@ -36,13 +37,13 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
     JoinTemplate joinTemplate;
 
     @Autowired
-    TestCaseService testCaseService;
-
-    @Autowired
     CategoryService categoryService;
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TestPlanService testPlanService;
 
 
     @Override
@@ -176,6 +177,22 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
 
     @Override
     public Pagination<PlanCase> findTestCasePage(TestPlanCaseQuery testPlanCaseQuery) {
+
+        String testPlanId = testPlanCaseQuery.getTestPlanId();
+        TestPlan testPlan = testPlanService.findTestPlan(testPlanId);
+        if(Objects.equals(testPlan.getType(), MagicValue.TEST_PLAN_TYPE_FUNCTION)){
+            testPlanCaseQuery.setTestType(MagicValue.TEST_PLAN_TYPE_FUNCTION);
+        }else {
+            String[] caseTypeList = {
+                    MagicValue.CASE_TYPE_API_UNIT,
+                    MagicValue.CASE_TYPE_API_SCENE,
+                    MagicValue.CASE_TYPE_API_PERFORM,
+                    MagicValue.CASE_TYPE_WEB,
+                    MagicValue.CASE_TYPE_APP
+            };
+            testPlanCaseQuery.setCaseTypeList(caseTypeList);
+        }
+
         Pagination<PlanCaseEntity> planCasePage = testPlanDetailDao.findTestCasePage(testPlanCaseQuery);
         List<PlanCase> testCaseList = BeanMapper.mapList(planCasePage.getDataList(), PlanCase.class);
         joinTemplate.joinQuery(testCaseList);

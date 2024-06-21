@@ -193,5 +193,10 @@ public class InstanceServiceImpl implements InstanceService {
         return recentExecuteInstanceId;
     }
 
+    @Override
+    public int findInstanceNum(String belongId){
+        return instanceDao.findInstanceNum(belongId);
+    }
+
 
 }

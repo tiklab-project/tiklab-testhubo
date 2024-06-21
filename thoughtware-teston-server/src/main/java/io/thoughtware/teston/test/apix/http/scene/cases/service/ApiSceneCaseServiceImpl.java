@@ -136,6 +136,9 @@ public class ApiSceneCaseServiceImpl implements ApiSceneCaseService {
         int variableNum = variableService.findVariableNum(id);
         apiSceneCase.setVariableNum(variableNum);
 
+        int instanceNum = instanceService.findInstanceNum(id);
+        apiSceneCase.setInstanceNum(instanceNum);
+
         //手动添加字段
         TestCase testCase = apiSceneCase.getTestCase();
         if(testCase.getCategory()!=null) {
