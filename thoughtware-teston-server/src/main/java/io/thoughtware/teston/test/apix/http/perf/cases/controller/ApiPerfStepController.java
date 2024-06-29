@@ -10,6 +10,7 @@ import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStep;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepQuery;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepWillBindCase;
 import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfStepService;
+import io.thoughtware.teston.test.test.model.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,8 +109,8 @@ public class ApiPerfStepController {
     }
 
     @RequestMapping(path = "/findApiPerfStepWillBindCasePage",method = RequestMethod.POST)
-    public Result<Pagination<ApiPerfStepWillBindCase>> findApiPerfStepWillBindCasePage(@RequestBody @Valid @NotNull ApiPerfStepQuery apiPerfStepQuery){
-        Pagination<ApiPerfStepWillBindCase> pagination = apiPerfStepService.findApiPerfStepWillBindCasePage(apiPerfStepQuery);
+    public Result<Pagination<TestCase>> findApiPerfStepWillBindCasePage(@RequestBody @Valid @NotNull ApiPerfStepQuery apiPerfStepQuery){
+        Pagination<TestCase> pagination = apiPerfStepService.findApiPerfStepWillBindCasePage(apiPerfStepQuery);
 
         return Result.ok(pagination);
     }

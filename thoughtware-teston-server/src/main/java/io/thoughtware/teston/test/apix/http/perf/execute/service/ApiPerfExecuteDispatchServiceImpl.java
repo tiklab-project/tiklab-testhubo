@@ -7,6 +7,16 @@ import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
+import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfStepTestData;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepInstance;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalc;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalcQuery;
+import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfStepInstanceService;
+import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfStepUnitCalcService;
+import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCase;
+import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCaseDataConstruction;
+import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
+import io.thoughtware.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommon;
 import io.thoughtware.teston.test.common.stepcommon.model.StepCommonQuery;
 import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
@@ -23,11 +33,9 @@ import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestRespon
 import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
-import io.thoughtware.teston.test.apix.http.scene.instance.model.ApiSceneInstance;
 import io.thoughtware.teston.support.utils.TestApixUtil;
 
 import io.thoughtware.teston.test.common.wstest.WsTestService;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +80,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     VariableService variableService;
 
     @Autowired
+    ApiUnitCaseService apiUnitCaseService;
+
+    @Autowired
     StepCommonService stepCommonService;
 
     @Autowired
@@ -83,6 +94,12 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     @Autowired
     WsTestService wsTestService;
 
+    @Autowired
+    ApiPerfStepInstanceService apiPerfStepInstanceService;
+
+    @Autowired
+    ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
+
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
     private final static Map<String, ApiPerfTestResponse> perfTestResponseMap = new ConcurrentHashMap<>();
 
@@ -90,7 +107,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Override
     public void execute(ApiPerfTestRequest apiPerfTestRequest) {
-        String apiPerfId = apiPerfTestRequest.getApiPerfCase().getId();
+        String apiPerfId = apiPerfTestRequest.getApiPerfId();
         String apiPerfInstanceId = createInitApiPerfInstance(apiPerfId);
 
         try {
@@ -111,53 +128,47 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Override
     public void executeStart(ApiPerfTestRequest apiPerfTestRequest) {
-        String apiPerfId = apiPerfTestRequest.getApiPerfCase().getId();
-        ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
+        String apiPerfId = apiPerfTestRequest.getApiPerfId();
 
         //执行的数据 处理
-        List<ApiSceneTestRequest> apiSceneTestRequestList = processApiPerfTestData(apiPerfTestRequest);
+        List<ApiPerfStepTestData> apiPerfStepTestData = processApiPerfTestData(apiPerfTestRequest);
+        apiPerfTestRequest.setApiPerfStepTestData(apiPerfStepTestData);
 
-        //构造数据
-        apiPerfTestRequest.setApiPerfCase(apiPerfCase);
-        apiPerfTestRequest.setApiSceneTestRequestList(apiSceneTestRequestList);
 
-        //执行次数
-        Integer executeCount = apiPerfCase.getExecuteCount();
-
-        agentConfigList = agentConfigService.getAgentList();
+//        agentConfigList = agentConfigService.getAgentList();
 
         //agent数量
-        int agentSize = agentConfigList.size();
+//        int agentSize = agentConfigList.size();
 
         //先分配好各个agent所需的次数
-        List<Integer> distributionList = new ArrayList<>();
+//        List<Integer> distributionList = new ArrayList<>();
         //执行方式,循环或随机
-        Integer executeType = apiPerfCase.getExecuteType();
+//        Integer executeType = apiPerfCase.getExecuteType();
 
         //循环
-        if (executeType == 1) {
-            distributionList = testApixUtil.loop(executeCount, agentSize);
-        }
-        //随机
-        if (executeType == 2) {
-            distributionList = testApixUtil.random(executeCount, agentSize);
-        }
+//        if (executeType == 1) {
+//            distributionList = testApixUtil.loop(executeCount, agentSize);
+//        }
+//        //随机
+//        if (executeType == 2) {
+//            distributionList = testApixUtil.random(executeCount, agentSize);
+//        }
 
-        for (int i = 0; i < agentSize; i++) {
+//        for (int i = 0; i < agentSize; i++) {
             //
-            apiPerfTestRequest.setExeNum(distributionList.get(i));
+//            apiPerfTestRequest.setExeNum(distributionList.get(i));
 
             //获取agentId，agentList index 从0开始
-            AgentConfig agentConfig = agentConfigList.get(i);
-            String agentId = agentConfig.getId();
+            String agentId = agentConfigService.getAgentList().get(0).getId();
 
             //执行测试
             JSONObject apiUnitObject = new JSONObject();
             apiUnitObject.put("apiPerfTestRequest",apiPerfTestRequest);
             apiUnitObject.put("type",MagicValue.CASE_TYPE_API_PERFORM);
+            apiUnitObject.put("caseId",apiPerfId);
 
             wsTestService.sendMessageExe(agentId,apiUnitObject,null);
-        }
+//        }
     }
 
     /**
@@ -167,7 +178,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
      */
     private String createInitApiPerfInstance(String apiPerfId){
         ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
-        ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId,apiPerfCase.getExecuteCount());
+
+        ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId);
         String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfInstance);
 
         Instance instance = new Instance();
@@ -200,10 +212,13 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     @Override
     public ApiPerfTestResponse result(ApiPerfTestRequest apiPerfTestRequest) {
 
+        //获取数据
         ApiPerfTestResponse apiPerfTestResponse = getResult(apiPerfTestRequest);
 
-        String apiPerfId = apiPerfTestRequest.getApiPerfCase().getId();
+        //更新性能用例详情
+        String apiPerfId = apiPerfTestRequest.getApiPerfId();
         updateApiPerfInstance(apiPerfTestResponse,apiPerfId);
+
 
         return apiPerfTestResponse;
     }
@@ -211,7 +226,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
     @Override
     public ApiPerfTestResponse getResult(ApiPerfTestRequest apiPerfTestRequest){
-        String apiPerfId = apiPerfTestRequest.getApiPerfCase().getId();
+        String apiPerfId = apiPerfTestRequest.getApiPerfId();
         ApiPerfTestResponse apiPerfTestResponse = new ApiPerfTestResponse();
         try {
             ArrayList<ApiPerfTestResponse> arrayList = new ArrayList<>();
@@ -225,8 +240,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         }catch (Exception e){
             logger.error("getResult error:{}",e.getMessage());
-            ApiPerfCase apiPerfCase = apiPerfCaseService.findApiPerfCase(apiPerfId);
-            ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId, apiPerfCase.getExecuteCount());
+            ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId);
             apiPerfInstance.setStatus(MagicValue.TEST_STATUS_FAIL);
             apiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
         }
@@ -237,9 +251,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     /**
      * 初始实例
      */
-    private ApiPerfInstance getInitApiPerfInstance (String caseId,Integer executeCount){
+    private ApiPerfInstance getInitApiPerfInstance (String caseId){
         ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
-        apiPerfInstance.setTotal(executeCount);
+        apiPerfInstance.setTotal(0);
         apiPerfInstance.setApiPerfId(caseId);
         apiPerfInstance.setPassNum(0);
         apiPerfInstance.setPassRate("0.00%");
@@ -255,6 +269,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
      * @param apiPerfTestResponseList
      */
     private ApiPerfTestResponse multiAgentProcess(ArrayList<ApiPerfTestResponse> apiPerfTestResponseList){
+
         if(apiPerfTestResponseList==null||apiPerfTestResponseList.isEmpty()){
             ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
             apiPerfInstance.setTotal(0);
@@ -266,7 +281,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
             ApiPerfTestResponse allApiPerfTestResponse = new ApiPerfTestResponse();
             allApiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
-            allApiPerfTestResponse.setApiSceneInstanceList(new ArrayList<>());
             apiPerfTestResponseList.add(allApiPerfTestResponse);
         }
 
@@ -276,7 +290,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         Integer passNum=0;
         List<String> statusList = new ArrayList<>();
 
-        ArrayList<ApiSceneInstance> apiSceneInstanceList = new ArrayList<>();
+        List<ApiPerfStepUnitCalc> unitCalcList = new ArrayList<>();
+        ArrayList<ApiPerfStepInstance> allCalcList = new ArrayList<>();
 
         for(ApiPerfTestResponse apiPerfTestResponse:apiPerfTestResponseList){
             ApiPerfInstance apiPerfInstanceItem = apiPerfTestResponse.getApiPerfInstance();
@@ -285,10 +300,41 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             passNum += apiPerfInstanceItem.getPassNum();
 
             statusList.add(apiPerfInstanceItem.getStatus());
-            if(apiPerfTestResponse.getApiSceneInstanceList()!=null){
-                apiSceneInstanceList.addAll(apiPerfTestResponse.getApiSceneInstanceList());
-            }
+
+            allCalcList.add(apiPerfTestResponse.getApiPerfStepInstance());
+            unitCalcList.addAll(apiPerfTestResponse.getApiPerfStepUnitCalcList());
         }
+
+
+        int totalRequests = 0;
+        int successfulRequests = 0;
+        int failedRequests = 0;
+        double totalElapsedTime = 0.0;
+        double maxElapsedTime = Double.MIN_VALUE;
+        double minElapsedTime = Double.MAX_VALUE;
+        double tps = 0.0;
+
+        for(ApiPerfStepInstance allCalc:allCalcList){
+            totalRequests += allCalc.getTotalRequests();
+            successfulRequests += allCalc.getSuccessfulRequests();
+            failedRequests += allCalc.getFailedRequests();
+            totalElapsedTime += allCalc.getTotalElapsedTime();
+            maxElapsedTime = Math.max(maxElapsedTime, allCalc.getMaxElapsedTime());
+            minElapsedTime = Math.min(minElapsedTime, allCalc.getMinElapsedTime());
+        }
+
+        ApiPerfStepInstance apiPerfStepInstance = new ApiPerfStepInstance();
+        apiPerfStepInstance.setTotalRequests(totalRequests);
+        apiPerfStepInstance.setSuccessfulRequests(successfulRequests);
+        apiPerfStepInstance.setFailedRequests(failedRequests);
+        apiPerfStepInstance.setTotalElapsedTime(totalElapsedTime);
+        apiPerfStepInstance.setMaxElapsedTime(maxElapsedTime);
+        apiPerfStepInstance.setMinElapsedTime(minElapsedTime);
+        apiPerfStepInstance.setTps(tps);
+        apiPerfStepInstance.calculateAvgElapsedTime();
+        apiPerfStepInstance.calculateErrorRate();
+        apiPerfStepInstance.calculatePercentiles();
+
 
         ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
         apiPerfInstance.setTotal(total);
@@ -296,6 +342,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiPerfInstance.setPassRate(testUtil.processRate(passNum,total));
         apiPerfInstance.setFailNum(failNum);
         apiPerfInstance.setErrorRate(testUtil.processRate(failNum,total));
+
         if(statusList.contains(MagicValue.TEST_STATUS_START)){
             apiPerfInstance.setStatus(MagicValue.TEST_STATUS_START);
         }else {
@@ -308,7 +355,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         ApiPerfTestResponse allApiPerfTestResponse = new ApiPerfTestResponse();
         allApiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
-        allApiPerfTestResponse.setApiSceneInstanceList(apiSceneInstanceList);
+        allApiPerfTestResponse.setApiPerfStepUnitCalcList(unitCalcList);
+        allApiPerfTestResponse.setApiPerfStepInstance(apiPerfStepInstance);
 
         return allApiPerfTestResponse;
     }
@@ -337,8 +385,38 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
             instance.setContent(instanceMap.toString());
             instance.setStatus(apiPerfInstance.getStatus());
-
             instanceService.updateInstance(instance);
+
+            //创建/更新 总和数据
+            ApiPerfStepInstance stepInstance = apiPerfStepInstanceService.findApiPerfStepInstance(apiPerfInstanceId);
+            ApiPerfStepInstance apiPerfStepInstance = apiPerfTestResponse.getApiPerfStepInstance();
+            apiPerfStepInstance.setApiPerfInstanceId(apiPerfInstanceId);
+            apiPerfStepInstance.setId(apiPerfInstanceId);
+            if(stepInstance == null){
+                apiPerfStepInstanceService.createApiPerfStepInstance(apiPerfStepInstance);
+            }else {
+                apiPerfStepInstanceService.updateApiPerfStepInstance(apiPerfStepInstance);
+            }
+
+            // 创建/更新 所有接口详细信息
+            if(apiPerfTestResponse.getApiPerfStepUnitCalcList() != null&& apiPerfTestResponse.getApiPerfStepUnitCalcList().size() > 0){
+                for (ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfTestResponse.getApiPerfStepUnitCalcList()) {
+                    apiPerfStepUnitCalc.setApiPerfInstanceId(apiPerfInstanceId);
+
+                    ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
+                    apiPerfStepUnitCalcQuery.setApiPerfInstanceId(apiPerfInstanceId);
+                    List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
+
+
+                    ApiPerfStepUnitCalc stepUnitCalcInstance = apiPerfStepUnitCalcService.findApiPerfStepUnitCalc(apiPerfStepUnitCalc.getId());
+                    if(stepUnitCalcInstance==null){
+                        apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
+                    }else {
+                        apiPerfStepUnitCalcService.updateApiPerfStepUnitCalc(apiPerfStepUnitCalc);
+                    }
+                }
+            }
+
         }else {
             updateApiPerfInstanceStatus(apiPerfId,MagicValue.TEST_STATUS_FAIL);
         }
@@ -363,9 +441,11 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
      * 数据构造
      * @param apiPerfTestRequest
      */
-    private List<ApiSceneTestRequest> processApiPerfTestData(ApiPerfTestRequest apiPerfTestRequest) {
-        String apiPerfId = apiPerfTestRequest.getApiPerfCase().getId();
-        //查询所有场景
+    private List<ApiPerfStepTestData> processApiPerfTestData(ApiPerfTestRequest apiPerfTestRequest) {
+        String apiPerfId = apiPerfTestRequest.getApiPerfId();
+        String apiEnv = apiPerfTestRequest.getApiEnv();
+
+        //查询所有关联的用例
         ApiPerfStepQuery apiPerfStepQuery = new ApiPerfStepQuery();
         apiPerfStepQuery.setApiPerfId(apiPerfId);
         List<ApiPerfStep> apiPerfStepList = apiPerfStepService.findApiPerfStepList(apiPerfStepQuery);
@@ -373,61 +453,95 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         //如果没有场景直接结束
         if(apiPerfStepList==null||apiPerfStepList.size()==0){return null;}
 
-        List<ApiSceneTestRequest> apiSceneTestRequestList = new ArrayList<>();
+        List<ApiPerfStepTestData> ApiPerfStepTestDataList = new ArrayList<>();
 
-        // 测试数据索引
-        int dataIndex = 0;
-        //获取测试数据
-        List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfId);
-
-        //循环所有场景构造数据
+        //循环所有用例构造数据
         for(ApiPerfStep apiPerfStep:apiPerfStepList){
-            ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
+            ApiPerfStepTestData apiPerfStepTestData = new ApiPerfStepTestData();
+            apiPerfStepTestData.setApiPerfStep(apiPerfStep);
 
-            StepCommonQuery stepCommonQuery = new StepCommonQuery();
-            stepCommonQuery.setCaseId(apiPerfStep.getApiScene().getId());
-            stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API_SCENE);
-            List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
-            apiSceneTestRequest.setStepCommonList(stepCommonList);
-
-            //环境变量设置
-            JSONObject variable = processVariable(apiSceneTestRequest, testDataList,dataIndex);
-            apiSceneTestRequest.setVariableJson(variable);
-
-            //设置pre url
-            apiSceneTestRequest.setApiEnv(apiPerfTestRequest.getApiEnv());
-
-            // 测试数据索引+1
-            dataIndex++;
-            if (dataIndex >= testDataList.size()) {
-                dataIndex = 0;
+            if(apiPerfStep.getCaseType().equals(MagicValue.CASE_TYPE_API_UNIT)){
+                ApiUnitTestRequest apiUnitTestRequest = processApiUnitData(apiPerfStep, apiEnv);
+                apiPerfStepTestData.setApiUnitTestRequest(apiUnitTestRequest);
             }
 
-            apiSceneTestRequestList.add(apiSceneTestRequest);
+            if(apiPerfStep.getCaseType().equals(MagicValue.CASE_TYPE_API_SCENE)){
+                ApiSceneTestRequest apiSceneTestRequest = processApiSceneData(apiPerfStep, apiEnv);
+                apiPerfStepTestData.setApiSceneTestRequest(apiSceneTestRequest);
+            }
+
+            ApiPerfStepTestDataList.add(apiPerfStepTestData);
         }
 
+        return ApiPerfStepTestDataList;
+    }
 
-        return apiSceneTestRequestList;
 
+    /**
+     * 构造 apiscene 测试数据
+     * @param apiPerfStep
+     * @param apiEnv
+     * @return
+     */
+    private ApiSceneTestRequest processApiSceneData(ApiPerfStep apiPerfStep,String apiEnv){
+        ApiSceneTestRequest apiSceneTestRequest = new ApiSceneTestRequest();
+
+        StepCommonQuery stepCommonQuery = new StepCommonQuery();
+        stepCommonQuery.setCaseId(apiPerfStep.getApiScene().getId());
+        stepCommonQuery.setCaseType(MagicValue.CASE_TYPE_API_SCENE);
+        List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
+        apiSceneTestRequest.setStepCommonList(stepCommonList);
+
+        //环境变量设置
+        JSONObject variable = processVariable(apiPerfStep.getId());
+        apiSceneTestRequest.setVariableJson(variable);
+
+        //设置pre url
+        apiSceneTestRequest.setApiEnv(apiEnv);
+
+        return apiSceneTestRequest;
     }
 
     /**
-     *
-     * @param apiSceneTestRequest
-     * @param dataIndex
+     * apiunit数据构造
+     * @param apiPerfStep
+     * @param apiEnv
      * @return
      */
-    private JSONObject processVariable(
-            ApiSceneTestRequest apiSceneTestRequest,
-            List<JSONObject> testDataList,
-            int dataIndex) {
-        //环境变量
-        JSONObject variable = variableService.getVariable(apiSceneTestRequest.getRepositoryId());
+    private ApiUnitTestRequest processApiUnitData(ApiPerfStep apiPerfStep,String apiEnv){
+        String caseId = apiPerfStep.getCaseId();
 
+        ApiUnitTestRequest apiUnitTestRequest = new ApiUnitTestRequest();
+        ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(caseId);
+        ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = apiUnitCaseService.findApiUnitCaseExt(apiUnitCase);
+
+        apiUnitTestRequest.setApiUnitCaseDataConstruction(apiUnitCaseDataConstruction);
+        apiUnitTestRequest.setApiUnitCase(apiUnitCase);
+        apiUnitTestRequest.setApiEnv(apiEnv);
+
+        //环境变量设置
+        JSONObject variable = processVariable(caseId);
+        apiUnitTestRequest.setVariableJson(variable);
+
+        return apiUnitTestRequest;
+    }
+
+
+    /**
+     *  获取测试数据
+     * @return
+     */
+    private JSONObject processVariable(String apiPerfStepId) {
+        //获取测试数据
+        List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfStepId);
+
+        //环境变量
+        JSONObject variable = variableService.getVariable(apiPerfStepId);
 
         if(testDataList!=null&&testDataList.size()>0){
-            // 获取当前测试数据
-            JSONObject testData = testDataList.get(dataIndex);
+            //  name,age    //属性
+            //  name1,18    //获取当前行的值
+            JSONObject testData = testDataList.get(0);
             variable.putAll(testData);
         }
 

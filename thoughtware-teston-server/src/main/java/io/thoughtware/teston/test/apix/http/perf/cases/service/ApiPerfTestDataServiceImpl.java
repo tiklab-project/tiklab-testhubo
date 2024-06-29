@@ -56,7 +56,7 @@ public class ApiPerfTestDataServiceImpl implements ApiPerfTestDataService {
     @Override
     public void deleteAllApiPerfTestData(String caseId) {
         ApiPerfTestDataQuery apiPerfTestDataQuery = new ApiPerfTestDataQuery();
-        apiPerfTestDataQuery.setCaseId(caseId);
+        apiPerfTestDataQuery.setStepId(caseId);
         List<ApiPerfTestData> apiPerfTestDataList = findApiPerfTestDataList(apiPerfTestDataQuery);
         for(ApiPerfTestData apiPerfTestData: apiPerfTestDataList){
             deleteApiPerfTestData(apiPerfTestData.getId());
@@ -121,10 +121,10 @@ public class ApiPerfTestDataServiceImpl implements ApiPerfTestDataService {
     }
 
     @Override
-    public List<JSONObject> getTestData(String caseId) {
+    public List<JSONObject> getTestData(String stepId) {
 
         ApiPerfTestDataQuery apiPerfTestDataQuery = new ApiPerfTestDataQuery();
-        apiPerfTestDataQuery.setCaseId(caseId);
+        apiPerfTestDataQuery.setStepId(stepId);
         List<ApiPerfTestData> apiPerfTestDataList = findApiPerfTestDataList(apiPerfTestDataQuery);
 
         List<JSONObject> testDataList = new ArrayList<>();
@@ -156,7 +156,7 @@ public class ApiPerfTestDataServiceImpl implements ApiPerfTestDataService {
                     testDataList.add(obj);
                 }
             } catch (Exception e) {
-                throw new ApplicationException(e);
+                throw new ApplicationException("get test data error");
             }
         }
         return testDataList;

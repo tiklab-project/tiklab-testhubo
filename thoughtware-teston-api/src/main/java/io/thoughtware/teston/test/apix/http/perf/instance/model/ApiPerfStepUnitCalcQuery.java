@@ -1,4 +1,4 @@
-package io.thoughtware.teston.test.apix.http.perf.cases.model;
+package io.thoughtware.teston.test.apix.http.perf.instance.model;
 
 import io.thoughtware.core.order.Order;
 import io.thoughtware.core.order.OrderBuilders;
@@ -9,17 +9,17 @@ import io.thoughtware.postin.annotation.ApiProperty;
 import java.util.List;
 
 @ApiModel
-public class ApiPerfTestDataQuery {
+public class ApiPerfStepUnitCalcQuery {
     @ApiProperty(name = "orderParams", desc = "排序参数")
-    private List<Order> orderParams = OrderBuilders.instance().asc("createTime").get();
+    private List<Order> orderParams = OrderBuilders.instance().desc("createTime").get();
 
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
 
-    @ApiProperty(name = "stepId", desc = "stepId")
-    private String stepId;
+    @ApiProperty(name = "apiPerfInstanceId", desc = "性能测试id")
+    private String apiPerfInstanceId;
 
-    @ApiProperty(name = "id", desc = "ID，精确匹配")
+    @ApiProperty(name = "id", desc = "性能测试id")
     private String id;
 
     public List<Order> getOrderParams() {
@@ -38,19 +38,19 @@ public class ApiPerfTestDataQuery {
         this.pageParam = pageParam;
     }
 
+    public String getApiPerfInstanceId() {
+        return apiPerfInstanceId;
+    }
+
+    public void setApiPerfInstanceId(String apiPerfInstanceId) {
+        this.apiPerfInstanceId = apiPerfInstanceId;
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getStepId() {
-        return stepId;
-    }
-
-    public void setStepId(String stepId) {
-        this.stepId = stepId;
     }
 }

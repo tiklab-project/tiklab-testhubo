@@ -75,8 +75,6 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
         String msg = message.getPayload().toString();
         JSONObject jsonMsg = JSONObject.parseObject(msg);
 
-        logger.info("SERVER:  {} --- received message: {}", agentId, jsonMsg.getString("apiPerfTestResponse"));
-
         if(jsonMsg.containsKey("type")){
             String type = jsonMsg.getString("type");
 

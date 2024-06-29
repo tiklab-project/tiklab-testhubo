@@ -28,14 +28,6 @@ public class ApiPerfCase extends BaseModel{
     @JoinQuery(key = "id")
     private TestCase testCase;
 
-    @ApiProperty(name="threadCount",desc="线程数")
-    private Integer threadCount;
-
-    @ApiProperty(name="executeCount",desc="执行数")
-    private Integer executeCount;
-
-    @ApiProperty(name="executeType",desc="1:循环 2:随机")
-    private Integer executeType;
 
     public String getId() {
         return id;
@@ -53,27 +45,5 @@ public class ApiPerfCase extends BaseModel{
         this.testCase = testCase;
     }
 
-    public Integer getThreadCount() {
-        return threadCount;
-    }
 
-    public void setThreadCount(Integer threadCount) {
-        this.threadCount = threadCount;
-    }
-
-    public Integer getExecuteType() {
-        return executeType;
-    }
-
-    public void setExecuteType(Integer executeType) {
-        this.executeType = executeType;
-    }
-
-    public Integer getExecuteCount() {
-        return executeCount;
-    }
-
-    public void setExecuteCount(Integer executeCount) {
-        this.executeCount = executeCount;
-    }
 }

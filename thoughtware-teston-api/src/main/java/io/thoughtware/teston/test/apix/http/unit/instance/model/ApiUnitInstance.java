@@ -74,6 +74,11 @@ public class ApiUnitInstance extends BaseModel{
     private JSONObject variableJson;
 
 
+    public ApiUnitInstance() {
+        this.elapsedTime=0.0;
+        this.result=0;
+    }
+
     public String getId() {
         return id;
     }

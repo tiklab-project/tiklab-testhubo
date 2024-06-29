@@ -14,17 +14,33 @@ import java.sql.Timestamp;
 public class ApiPerfStepEntity implements Serializable {
 
     @Id
-     @GeneratorValue(length = 12)
+    @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 
     // 所属接口性能
-    @Column(name = "api_perf_id",length = 32)
+    @Column(name = "api_perf_id")
     private String apiPerfId;
 
-    // 绑定的接口场景
-    @Column(name = "api_scene_id",length = 32)
-    private String apiSceneId;
+    // 绑定的
+    @Column(name = "case_id")
+    private String caseId;
+
+    //用例类型 api-unit、api-scene
+    @Column(name = "case_type")
+    private String caseType;
+
+    // 线程数
+    @Column(name = "thread_count")
+    private Integer threadCount;
+
+    // 执行类型
+    @Column(name = "execute_type")
+    private Integer executeType;
+
+    // 执行次数
+    @Column(name = "execute_count")
+    private Integer executeCount;
 
     // 创建时间
     @Column(name = "create_time")
@@ -38,12 +54,20 @@ public class ApiPerfStepEntity implements Serializable {
         this.id = id;
     }
 
-    public String getApiSceneId() {
-        return apiSceneId;
+    public String getCaseId() {
+        return caseId;
     }
 
-    public void setApiSceneId(String apiSceneId) {
-        this.apiSceneId = apiSceneId;
+    public void setCaseId(String caseId) {
+        this.caseId = caseId;
+    }
+
+    public String getCaseType() {
+        return caseType;
+    }
+
+    public void setCaseType(String caseType) {
+        this.caseType = caseType;
     }
 
     public String getApiPerfId() {
@@ -60,5 +84,29 @@ public class ApiPerfStepEntity implements Serializable {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getThreadCount() {
+        return threadCount;
+    }
+
+    public void setThreadCount(Integer threadCount) {
+        this.threadCount = threadCount;
+    }
+
+    public Integer getExecuteType() {
+        return executeType;
+    }
+
+    public void setExecuteType(Integer executeType) {
+        this.executeType = executeType;
+    }
+
+    public Integer getExecuteCount() {
+        return executeCount;
+    }
+
+    public void setExecuteCount(Integer executeCount) {
+        this.executeCount = executeCount;
     }
 }

@@ -8,6 +8,7 @@ import io.thoughtware.dal.jpa.JpaTemplate;
 import io.thoughtware.dal.jpa.criterial.condition.DeleteCondition;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepQuery;
 import io.thoughtware.teston.test.apix.http.perf.cases.entity.ApiPerfStepWillBindCaseEntity;
+import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfTestDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class ApiPerfStepDao {
     @Autowired
     JpaTemplate jpaTemplate;
 
+    @Autowired
+    ApiPerfTestDataService apiPerfTestDataService;
     /**
      * 创建接口性能场景步骤
      * @param apiPerfStepEntity
@@ -50,6 +53,8 @@ public class ApiPerfStepDao {
      */
     public void deleteApiPerfStep(String id){
         jpaTemplate.delete(ApiPerfStepEntity.class,id);
+
+        apiPerfTestDataService.deleteAllApiPerfTestData(id);
     }
 
     public void deleteApiPerfStep(DeleteCondition deleteCondition){
@@ -111,35 +116,6 @@ public class ApiPerfStepDao {
                 .orders(apiPerfStepQuery.getOrderParams())
                 .get();
         return jpaTemplate.findPage(queryCondition, ApiPerfStepEntity.class);
-    }
-
-
-    /**
-     * 查询未关联的用例
-     * @param apiPerfStepQuery
-     * @return
-     */
-    public Pagination<ApiPerfStepWillBindCaseEntity> findApiPerfStepWillBindCasePage(ApiPerfStepQuery apiPerfStepQuery) {
-        StringBuilder modelSqlBuilder = new StringBuilder();
-        modelSqlBuilder.append("SELECT  teston_api_scene.id,teston_testcase.name,teston_testcase.create_user,teston_testcase.case_type ,teston_testcase.create_time ")
-                .append(" FROM teston_api_scene  ")
-                .append(" JOIN teston_testcase on teston_api_scene.testcase_id = teston_testcase.id  ")
-                .append(" WHERE teston_testcase.repository_id = '").append(apiPerfStepQuery.getRepositoryId()).append("'");
-
-        if (apiPerfStepQuery.getName() != null) {
-            modelSqlBuilder.append(" And teston_testcase.name LIKE '%").append(apiPerfStepQuery.getName()).append("%'");
-        }
-
-        modelSqlBuilder .append(" AND NOT EXISTS (  ")
-                .append(" SELECT 1 FROM teston_api_perf_step   ")
-                .append(" JOIN teston_api_perfcase ON teston_api_perfcase.id = teston_api_perf_step.api_perf_id ")
-                .append(" WHERE teston_api_perf_step.api_scene_id = teston_api_scene.id  ")
-                .append(" AND teston_api_perfcase.id =  '").append(apiPerfStepQuery.getApiPerfId()).append("')");
-
-        String modelSql = modelSqlBuilder.toString();
-
-        Pagination<ApiPerfStepWillBindCaseEntity> page = jpaTemplate.getJdbcTemplate().findPage(modelSql, new Object[]{}, apiPerfStepQuery.getPageParam(), new BeanPropertyRowMapper<>(ApiPerfStepWillBindCaseEntity.class));
-        return page;
     }
 
 

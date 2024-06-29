@@ -21,8 +21,8 @@ public class ApiPerfTestDataEntity implements Serializable {
 
 
     // 所属用例
-    @Column(name = "case_id",length = 32)
-    private String caseId;
+    @Column(name = "step_id",length = 32)
+    private String stepId;
 
     // 测试数据
     @Column(name = "test_data")
@@ -52,12 +52,12 @@ public class ApiPerfTestDataEntity implements Serializable {
         this.name = name;
     }
 
-    public String getCaseId() {
-        return caseId;
+    public String getStepId() {
+        return stepId;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setStepId(String stepId) {
+        this.stepId = stepId;
     }
 
     public String getTestData() {

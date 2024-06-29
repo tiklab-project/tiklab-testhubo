@@ -285,23 +285,10 @@ public class TestCaseServiceImpl implements TestCaseService {
     }
 
     private HashMap<Object, Object> extractInstanceDetails(Instance instance) {
-        JSONObject jsonObject = JSONObject.parseObject(instance.getContent());
-        String resultStr = jsonObject.getString("result");
-
-        int result = 2; // 默认情况下，使用2作为结果
-        if (resultStr != null) {
-            if (resultStr.matches("\\d+")) {
-                result = Integer.parseInt(resultStr); // 如果结果是数字，使用该数字
-            } else {
-                result = 2;
-            }
-        }else {
-            // 如果结果字符串不是数字，使用3表示异常情况
-            result = 3;
-        }
+        String status = instance.getStatus();
 
         HashMap<Object, Object> details = new HashMap<>();
-        details.put("result", result);
+        details.put("result", status);
         details.put("executeNumber", instance.getExecuteNumber());
         details.put("instanceId", instance.getId());
 

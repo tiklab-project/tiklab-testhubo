@@ -1,11 +1,17 @@
 package io.thoughtware.teston.test.apix.http.perf.cases.service;
 
 
+import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.test.apix.http.perf.cases.entity.ApiPerfStepWillBindCaseEntity;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStepWillBindCase;
+import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneCase;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepQuery;
 import io.thoughtware.teston.test.apix.http.scene.cases.model.ApiSceneStepWillBindCase;
+import io.thoughtware.teston.test.apix.http.scene.cases.service.ApiSceneCaseService;
+import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCase;
+import io.thoughtware.teston.test.apix.http.unit.cases.service.ApiUnitCaseService;
 import io.thoughtware.teston.test.test.model.TestCase;
+import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.teston.test.apix.http.perf.cases.dao.ApiPerfStepDao;
 import io.thoughtware.teston.test.apix.http.perf.cases.entity.ApiPerfStepEntity;
@@ -23,6 +29,8 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
 * 接口性能下场景步骤 服务
@@ -33,6 +41,11 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     @Autowired
     ApiPerfStepDao apiPerfStepDao;
 
+    @Autowired
+    ApiUnitCaseService apiUnitCaseService;
+
+    @Autowired
+    ApiSceneCaseService apiSceneCaseService;
 
     @Autowired
     TestCaseService testCaseService;
@@ -44,7 +57,11 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     public String createApiPerfStep(@NotNull @Valid ApiPerfStep apiPerfStep) {
         ApiPerfStepEntity apiPerfStepEntity = BeanMapper.map(apiPerfStep, ApiPerfStepEntity.class);
 
+        //初始值
         apiPerfStepEntity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        apiPerfStepEntity.setExecuteCount(1);
+        apiPerfStepEntity.setThreadCount(1);
+        apiPerfStepEntity.setExecuteType(1);
 
         return apiPerfStepDao.createApiPerfStep(apiPerfStepEntity);
     }
@@ -123,24 +140,25 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     @Override
     public List<ApiPerfStep> findApiPerfStepList(ApiPerfStepQuery apiPerfStepQuery) {
         List<ApiPerfStepEntity> apiPerfStepEntityList = apiPerfStepDao.findApiPerfStepList(apiPerfStepQuery);
-
         List<ApiPerfStep> apiPerfStepList = BeanMapper.mapList(apiPerfStepEntityList, ApiPerfStep.class);
-
         joinTemplate.joinQuery(apiPerfStepList);
 
-        //第三层字段显示不出来，手动加入
-        ArrayList<ApiPerfStep> arrayList = new ArrayList<>();
-        if(apiPerfStepList.size()>0){
-            for(ApiPerfStep apiPerfStep:apiPerfStepList){
-                TestCase testCase = testCaseService.findTestCase(apiPerfStep.getApiScene().getId());
+        if (!apiPerfStepList.isEmpty()) {
+            for (ApiPerfStep apiPerfStep : apiPerfStepList) {
+                String caseType = apiPerfStep.getCaseType();
+                String caseId = apiPerfStep.getCaseId();
 
-                apiPerfStep.getApiScene().setTestCase(testCase);
-
-                arrayList.add(apiPerfStep);
+                if (MagicValue.CASE_TYPE_API_UNIT.equals(caseType)) {
+                    ApiUnitCase apiUnitCase = apiUnitCaseService.findApiUnitCase(caseId);
+                    apiPerfStep.setApiUnitCase(apiUnitCase);
+                }
+                if (MagicValue.CASE_TYPE_API_SCENE.equals(caseType)) {
+                    ApiSceneCase apiSceneCase = apiSceneCaseService.findApiSceneCase(caseId);
+                    apiPerfStep.setApiScene(apiSceneCase);
+                }
             }
         }
-
-        return arrayList;
+        return apiPerfStepList;
     }
 
     @Override
@@ -163,11 +181,30 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     }
 
     @Override
-    public Pagination<ApiPerfStepWillBindCase> findApiPerfStepWillBindCasePage(ApiPerfStepQuery apiPerfStepQuery){
-        Pagination<ApiPerfStepWillBindCaseEntity> pagination = apiPerfStepDao.findApiPerfStepWillBindCasePage(apiPerfStepQuery);
-        List<ApiPerfStepWillBindCase> apiPerfStepWillBindCaseList = BeanMapper.mapList(pagination.getDataList(), ApiPerfStepWillBindCase.class);
-        joinTemplate.joinQuery(apiPerfStepWillBindCaseList);
-        return PaginationBuilder.build(pagination, apiPerfStepWillBindCaseList);
+    public Pagination<TestCase> findApiPerfStepWillBindCasePage(ApiPerfStepQuery apiPerfStepQuery){
+        TestCaseQuery testCaseQuery = new TestCaseQuery();
+        testCaseQuery.setTestType(MagicValue.TEST_TYPE_API);
+        testCaseQuery.setRepositoryId(apiPerfStepQuery.getRepositoryId());
+        testCaseQuery.setPageParam(apiPerfStepQuery.getPageParam());
+        testCaseQuery.setName(apiPerfStepQuery.getName());
+        Pagination<TestCase> testCasePage = testCaseService.findTestCasePage(testCaseQuery);
+
+        List<ApiPerfStepEntity> apiPerfStepEntityList = apiPerfStepDao.findApiPerfStepList(apiPerfStepQuery);
+        List<ApiPerfStep> apiPerfStepList = BeanMapper.mapList(apiPerfStepEntityList, ApiPerfStep.class);
+
+        if (testCasePage.getDataList() != null && apiPerfStepList != null) {
+
+            Set<String> apiPerfStepCaseIds = apiPerfStepList.stream()
+                    .map(ApiPerfStep::getCaseId)
+                    .collect(Collectors.toSet());
+
+
+            testCasePage.setDataList(testCasePage.getDataList().stream()
+                    .filter(testCase -> !apiPerfStepCaseIds.contains(testCase.getId()))
+                    .collect(Collectors.toList()));
+        }
+
+        return testCasePage;
 
     }
 

@@ -55,6 +55,9 @@ public class PostInApiServiceImpl implements PostInApiService {
     FormUrlencodedService testOnFormUrlEncoded;
 
     @Autowired
+    JsonParamService testOnJsonParamService;
+
+    @Autowired
     RawParamService testOnRawService;
 
     @Autowired
@@ -103,15 +106,15 @@ public class PostInApiServiceImpl implements PostInApiService {
     public void createPostInApiToCase(PostInApiToCase postInApiToCase) {
         String postInUrl = getPostInUrl(postInApiToCase.getRepositoryId());
         //请求的apix接口
-        String apxUrl = postInUrl+"/api/httpApi/findHttpApi";
+        String apxUrl = postInUrl+"/api/http/findHttpApi";
 
         if(postInApiToCase.getApiList() != null){
             for(String apiId:postInApiToCase.getApiList()){
 
 
                 MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-                formData.add("apiId", apiId);
-                formData.add("protocolType", "http");
+                formData.add("id", apiId);
+//                formData.add("protocolType", "http");
                 HttpApi httpApi = restTemplateUtils.requestPost(apxUrl, formData, HttpApi.class);
 
                 ApiUnitCase apiUnitCase = new ApiUnitCase();
@@ -173,10 +176,17 @@ public class PostInApiServiceImpl implements PostInApiService {
                                     convertFormUrlEncoded(apiUnitCaseId,httpApi);
                                 }
                                 break;
+                            case "json":
+                                if(httpApi.getJsonParam()!=null){
+                                    convertJson(apiUnitCaseId,httpApi);
+                                }
+                                break;
                             case "raw":
                                 if(httpApi.getRawParam()!=null){
                                     convertRaw(apiUnitCaseId,httpApi);
                                 }
+                                break;
+                            default:
                                 break;
                         }
                     }
@@ -192,8 +202,6 @@ public class PostInApiServiceImpl implements PostInApiService {
                         convertAfterScript(apiUnitCaseId,request);
                     }
                 }
-
-
             }
         }
     }
@@ -282,7 +290,19 @@ public class PostInApiServiceImpl implements PostInApiService {
         }catch (Exception e){
             throw new ApplicationException("Error in converting FormUrlEncoded",e);
         }
+    }
 
+    private void convertJson(String apiUnitCaseId, HttpApi httpApi){
+        try {
+            JsonParam jsonParam = httpApi.getJsonParam();
+            JsonParamUnit jsonParamUnit = new JsonParamUnit();
+            jsonParamUnit.setApiUnitId(apiUnitCaseId);
+            jsonParamUnit.setId(apiUnitCaseId);
+            jsonParamUnit.setSchemaText(jsonParam.getJsonText());
+            testOnJsonParamService.updateJsonParam(jsonParamUnit);
+        }catch (Exception e){
+            throw new ApplicationException("Error in converting json",e);
+        }
     }
 
     /**

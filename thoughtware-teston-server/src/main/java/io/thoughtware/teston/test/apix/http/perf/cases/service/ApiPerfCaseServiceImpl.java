@@ -50,8 +50,7 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Autowired
     ApiPerfStepService apiPerfStepService;
 
-    @Autowired
-    ApiPerfTestDataService apiPerfTestDataService;
+
 
     @Autowired
     InstanceService instanceService;
@@ -61,11 +60,6 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Override
     public String createApiPerfCase(@NotNull @Valid ApiPerfCase apiPerfCase) {
         ApiPerfCaseEntity apiPerfCaseEntity = BeanMapper.map(apiPerfCase, ApiPerfCaseEntity.class);
-
-        //初始值
-        apiPerfCaseEntity.setExecuteCount(1);
-        apiPerfCaseEntity.setThreadCount(1);
-        apiPerfCaseEntity.setExecuteType(1);
         String id = apiPerfCaseDao.createApiPerfCase(apiPerfCaseEntity);
 
         apiPerfCaseEntity.setTestCaseId(id);
@@ -93,8 +87,6 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
         apiPerfCaseDao.deleteApiPerfCase(id);
 
         apiPerfStepService.deleteAllApiPerfStep(id);
-
-        apiPerfTestDataService.deleteAllApiPerfTestData(id);
 
         instanceService.deleteAllInstance(id);
     }

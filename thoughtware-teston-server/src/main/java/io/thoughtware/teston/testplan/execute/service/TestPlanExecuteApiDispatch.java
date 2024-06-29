@@ -140,9 +140,7 @@ public class TestPlanExecuteApiDispatch {
      */
     public void exeApiPerform(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
         ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
-        ApiPerfCase apiPerfCase = new ApiPerfCase();
-        apiPerfCase.setId(testPlanCaseInstanceBind.getCaseId());
-        apiPerfTestRequest.setApiPerfCase(apiPerfCase);
+        apiPerfTestRequest.setApiPerfId(testPlanCaseInstanceBind.getCaseId());
         apiPerfTestRequest.setApiEnv(testPlanTestData.getApiEnv());
 
         apiPerfExecuteDispatchService.executeStart(apiPerfTestRequest);
@@ -154,9 +152,7 @@ public class TestPlanExecuteApiDispatch {
         String apiPerfId = testPlanCaseInstanceBind.getCaseId();
 
         ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
-        ApiPerfCase apiPerfCase = new ApiPerfCase();
-        apiPerfCase.setId(apiPerfId);
-        apiPerfTestRequest.setApiPerfCase(apiPerfCase);
+        apiPerfTestRequest.setApiPerfId(apiPerfId);
         try {
             ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.getResult(apiPerfTestRequest);
 

@@ -82,7 +82,7 @@ public class ApiPerfTestDataDao {
      */
     public List<ApiPerfTestDataEntity> findApiPerfTestDataList(ApiPerfTestDataQuery apiPerfTestDataQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfTestDataEntity.class)
-                .eq("caseId",apiPerfTestDataQuery.getCaseId())
+                .eq("stepId",apiPerfTestDataQuery.getStepId())
                 .orders(apiPerfTestDataQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, ApiPerfTestDataEntity.class);
@@ -95,7 +95,7 @@ public class ApiPerfTestDataDao {
      */
     public Pagination<ApiPerfTestDataEntity> findApiPerfTestDataPage(ApiPerfTestDataQuery apiPerfTestDataQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfTestDataEntity.class)
-                .eq("caseId",apiPerfTestDataQuery.getCaseId())
+                .eq("stepId",apiPerfTestDataQuery.getStepId())
                 .orders(apiPerfTestDataQuery.getOrderParams())
                 .pagination(apiPerfTestDataQuery.getPageParam())
                 .get();

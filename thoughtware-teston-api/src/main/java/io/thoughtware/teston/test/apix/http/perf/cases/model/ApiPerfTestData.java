@@ -20,8 +20,8 @@ public class ApiPerfTestData extends BaseModel{
     @ApiProperty(name="id",desc="id")
     private String id;
 
-    @ApiProperty(name="caseId",desc="用例")
-    private String caseId;
+    @ApiProperty(name="stepId",desc="stepId")
+    private String stepId;
 
     @ApiProperty(name="name",desc="名称")
     private String name;
@@ -53,12 +53,12 @@ public class ApiPerfTestData extends BaseModel{
         this.name = name;
     }
 
-    public String getCaseId() {
-        return caseId;
+    public String getStepId() {
+        return stepId;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setStepId(String stepId) {
+        this.stepId = stepId;
     }
 
     public String getTestData() {

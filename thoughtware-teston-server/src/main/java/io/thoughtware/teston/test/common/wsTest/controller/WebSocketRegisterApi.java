@@ -15,8 +15,8 @@ public class WebSocketRegisterApi implements WebSocketConfigurer {
     @Bean
     public ServletServerContainerFactoryBean createWebSocketContainer() {
         ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-        container.setMaxTextMessageBufferSize(1024 * 128); // 设置文本消息缓冲区大小
-        container.setMaxBinaryMessageBufferSize(1024 * 128); // 设置二进制消息缓冲区大小
+        container.setMaxTextMessageBufferSize(1024 * 256); // 设置文本消息缓冲区大小
+        container.setMaxBinaryMessageBufferSize(1024 * 256); // 设置二进制消息缓冲区大小
         return container;
     }
 
