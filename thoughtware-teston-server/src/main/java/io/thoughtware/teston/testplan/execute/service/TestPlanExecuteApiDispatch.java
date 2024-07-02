@@ -3,6 +3,8 @@ package io.thoughtware.teston.testplan.execute.service;
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfCase;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalc;
+import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfStepUnitCalcService;
 import io.thoughtware.teston.testplan.cases.model.PlanCase;
 import io.thoughtware.teston.testplan.execute.model.TestPlanTestData;
 import io.thoughtware.teston.testplan.instance.model.TestPlanCaseInstanceBind;
@@ -28,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * 测试计划中接口的执行测试
@@ -56,6 +59,8 @@ public class TestPlanExecuteApiDispatch {
     @Autowired
     TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
 
+    @Autowired
+    ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
     /**
      * 执行接口单元用例
@@ -174,7 +179,16 @@ public class TestPlanExecuteApiDispatch {
 
 
                 if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
+                    System.out.println(status);
                     String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
+
+                    if(apiPerfTestResponse.getApiPerfStepUnitCalcList() != null&& apiPerfTestResponse.getApiPerfStepUnitCalcList().size() > 0){
+                        for (ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfTestResponse.getApiPerfStepUnitCalcList()) {
+                            apiPerfStepUnitCalc.setApiPerfInstanceId(apiPerfInstanceId);
+                            apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
+                        }
+                    }
+
                     testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
                     testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
                 }

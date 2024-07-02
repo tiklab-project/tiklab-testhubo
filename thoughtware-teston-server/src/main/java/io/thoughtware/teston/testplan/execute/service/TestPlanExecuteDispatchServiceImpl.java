@@ -92,7 +92,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                 //并发执行
                 executorService.submit(() -> {
                     try{
-
                         executeTestPlanCases(testPlanTestData,planCaseInstanceList);
                     }catch (Exception e) {
                         updatePlanStatus(0,testPlanId);
@@ -104,7 +103,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                         }catch (Exception e){
                             throw new ApplicationException(e);
                         }finally {
-                            cleanUpExecutionData(testPlanId);
+//                            cleanUpExecutionData(testPlanId);
                         }
                     }
                 });
@@ -238,21 +237,20 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
 
     @Override
     public TestPlanTestResponse exeResult(String testPlanId) {
+        TestPlanTestResponse testPlanTestResponse = new TestPlanTestResponse();
 
         List<PlanCase> executableCaseList = testPlanIdOrPlanCaseList.get(testPlanId);
         String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
-        ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList = planInstanceIdOrPlanCaseInstanceList.get(testPlanInstanceId);
 
-        // 如果testPlanCaseInstanceList为null，则初始化
-        if (testPlanCaseInstanceList == null) {
-            testPlanCaseInstanceList = new ArrayList<>();
+        ArrayList<TestPlanCaseInstanceBind> testPlanCaseInstanceList = new ArrayList<>();
+        if(testPlanInstanceId != null){
+             testPlanCaseInstanceList = planInstanceIdOrPlanCaseInstanceList.get(testPlanInstanceId);
         }
 
         if (CollectionUtils.isNotEmpty(testPlanCaseInstanceList)) {
             getPlanCaseInstance(testPlanCaseInstanceList);
+            testPlanTestResponse = processResultData(executableCaseList, testPlanCaseInstanceList,  testPlanId);
         }
-
-        TestPlanTestResponse testPlanTestResponse = processResultData(executableCaseList, testPlanCaseInstanceList,  testPlanId);
 
         return testPlanTestResponse;
     }
@@ -330,12 +328,24 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         String errorRate = testUtil.processRate(total - passNum, total);
         testPlanInstance.setErrorRate(errorRate);
 
-        if(Objects.equals(total,passNum)){
-            testPlanInstance.setResult(1);
-        }else {
-            testPlanInstance.setResult(0);
-        }
+        // 计算正在执行的任务数量
+        long executingCount = testPlanCaseInstanceList.stream()
+                .filter(testPlanCaseInstanceBind -> Objects.equals(testPlanCaseInstanceBind.getStatus(), 1))
+                .count();
 
+        if (executingCount == 0) {
+            // 如果没有任务正在执行
+            if (Objects.equals(total, passNum)) {
+                testPlanInstance.setResult(1); // 全部通过
+            } else {
+                testPlanInstance.setResult(0); // 有失败
+                testPlanInstance.setStatus(0);// 执行完毕
+            }
+        } else {
+            // 有任务正在执行
+            testPlanInstance.setResult(2); // 未执行
+            testPlanInstance.setStatus(1);//进行中
+        }
         return testPlanInstance;
     }
 

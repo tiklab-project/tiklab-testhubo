@@ -33,7 +33,7 @@ public class TestPlanCaseInstanceBind extends BaseModel {
     @ApiProperty(name="result",desc="结果")
     private java.lang.Integer result;
 
-    @ApiProperty(name="status",desc="执行状态")
+    @ApiProperty(name="status",desc="执行状态 状态为 1 说明正在执行")
     private java.lang.Integer status;
 
     private String caseId;

@@ -7,6 +7,7 @@ import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 接口性能历史实例 模型
@@ -45,6 +46,12 @@ public class ApiPerfInstance extends BaseModel{
 
     @ApiProperty(name="status",desc="状态结果")
     private String status;
+
+    @ApiProperty(name="apiPerfStepInstance",desc="所有接口的数据总和")
+    private ApiPerfStepInstance apiPerfStepInstance;
+    @ApiProperty(name="apiPerfStepInstance",desc="接口性能下的所有的接口详细数据")
+    private List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList;
+
 
     public String getId() {
         return id;
@@ -124,5 +131,21 @@ public class ApiPerfInstance extends BaseModel{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ApiPerfStepInstance getApiPerfStepInstance() {
+        return apiPerfStepInstance;
+    }
+
+    public void setApiPerfStepInstance(ApiPerfStepInstance apiPerfStepInstance) {
+        this.apiPerfStepInstance = apiPerfStepInstance;
+    }
+
+    public List<ApiPerfStepUnitCalc> getApiPerfStepUnitCalcList() {
+        return apiPerfStepUnitCalcList;
+    }
+
+    public void setApiPerfStepUnitCalcList(List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList) {
+        this.apiPerfStepUnitCalcList = apiPerfStepUnitCalcList;
     }
 }

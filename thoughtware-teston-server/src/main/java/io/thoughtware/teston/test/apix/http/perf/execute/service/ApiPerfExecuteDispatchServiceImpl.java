@@ -399,24 +399,22 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             }
 
             // 创建/更新 所有接口详细信息
+            //先删除
+            ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
+            apiPerfStepUnitCalcQuery.setApiPerfInstanceId(apiPerfInstanceId);
+            List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
+            if(apiPerfStepUnitCalcList != null && apiPerfStepUnitCalcList.size() > 0){
+                for(ApiPerfStepUnitCalc stepUnitCalc : apiPerfStepUnitCalcList){
+                    apiPerfStepUnitCalcService.deleteApiPerfStepUnitCalc(stepUnitCalc.getId());
+                }
+            }
+            //重新创建
             if(apiPerfTestResponse.getApiPerfStepUnitCalcList() != null&& apiPerfTestResponse.getApiPerfStepUnitCalcList().size() > 0){
                 for (ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfTestResponse.getApiPerfStepUnitCalcList()) {
                     apiPerfStepUnitCalc.setApiPerfInstanceId(apiPerfInstanceId);
-
-                    ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
-                    apiPerfStepUnitCalcQuery.setApiPerfInstanceId(apiPerfInstanceId);
-                    List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
-
-
-                    ApiPerfStepUnitCalc stepUnitCalcInstance = apiPerfStepUnitCalcService.findApiPerfStepUnitCalc(apiPerfStepUnitCalc.getId());
-                    if(stepUnitCalcInstance==null){
-                        apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
-                    }else {
-                        apiPerfStepUnitCalcService.updateApiPerfStepUnitCalc(apiPerfStepUnitCalc);
-                    }
+                    apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
                 }
             }
-
         }else {
             updateApiPerfInstanceStatus(apiPerfId,MagicValue.TEST_STATUS_FAIL);
         }

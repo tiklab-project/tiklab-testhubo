@@ -8,6 +8,7 @@ import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
 import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,10 +28,16 @@ public class ApiPerfTestResponse extends BaseModel {
     @ApiProperty(name="apiPerfStepInstance",desc="接口性能下的所有的接口详细数据")
     private List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList;
 
+    // 添加设置初始状态的方法
+    public void setInitialState() {
+        this.apiPerfStepUnitCalcList = new ArrayList<>();
+        this.apiPerfStepInstance = new ApiPerfStepInstance();
+        this.apiPerfInstance = new ApiPerfInstance();
+    }
+
     public ApiPerfStepInstance getApiPerfStepInstance() {
         return apiPerfStepInstance;
     }
-
     public void setApiPerfStepInstance(ApiPerfStepInstance apiPerfStepInstance) {
         this.apiPerfStepInstance = apiPerfStepInstance;
     }

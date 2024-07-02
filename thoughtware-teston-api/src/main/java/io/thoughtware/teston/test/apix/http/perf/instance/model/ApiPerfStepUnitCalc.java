@@ -4,6 +4,7 @@ import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -174,21 +175,6 @@ public class ApiPerfStepUnitCalc extends BaseModel {
         this.elapsedTimes = elapsedTimes;
     }
 
-    // 计算 平均耗时
-    public void calculateAvgElapsedTime() {
-        int totalRequests = successfulRequests + failedRequests;
-        if (totalRequests > 0) {
-            this.avgElapsedTime = this.totalElapsedTime / totalRequests;
-        }
-    }
-
-    // 计算 TPS
-    public void calculateTps(double durationInSeconds) {
-        if (durationInSeconds > 0) {
-            this.tps = this.successfulRequests / durationInSeconds;
-        }
-    }
-
     // 计算 错误率
     public void calculateErrorRate() {
         int totalRequests = successfulRequests + failedRequests;
@@ -201,10 +187,14 @@ public class ApiPerfStepUnitCalc extends BaseModel {
     public void calculatePercentiles() {
         Collections.sort(elapsedTimes);
         int size = elapsedTimes.size();
-        if (size > 0) {
-            this.percentile90 = elapsedTimes.get((int) (size * 0.9) - 1);
-            this.percentile95 = elapsedTimes.get((int) (size * 0.95) - 1);
-            this.percentile99 = elapsedTimes.get((int) (size * 0.99) - 1);
+        if (size == 1) {
+            this.percentile90 = elapsedTimes.get(0);
+            this.percentile95 = elapsedTimes.get(0);
+            this.percentile99 = elapsedTimes.get(0);
+        } else if (size > 1) {
+            this.percentile90 = elapsedTimes.get(Math.min((int) (size * 0.9) - 1, size - 1));
+            this.percentile95 = elapsedTimes.get(Math.min((int) (size * 0.95) - 1, size - 1));
+            this.percentile99 = elapsedTimes.get(Math.min((int) (size * 0.99) - 1, size - 1));
         }
     }
 

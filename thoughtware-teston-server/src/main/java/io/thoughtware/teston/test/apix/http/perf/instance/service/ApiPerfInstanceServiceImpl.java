@@ -3,12 +3,11 @@ package io.thoughtware.teston.test.apix.http.perf.instance.service;
 import io.thoughtware.core.page.PaginationBuilder;
 
 import io.thoughtware.core.page.Pagination;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.*;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 
 import io.thoughtware.teston.test.apix.http.perf.instance.entity.ApiPerfInstanceEntity;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstanceQuery;
 import io.thoughtware.teston.test.apix.http.perf.instance.dao.ApiPerfInstanceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,12 @@ public class ApiPerfInstanceServiceImpl implements ApiPerfInstanceService {
 
     @Autowired
     JoinTemplate joinTemplate;
+
+    @Autowired
+    ApiPerfStepInstanceService apiPerfStepInstanceService;
+
+    @Autowired
+    ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
     @Override
     public String createApiPerfInstance(@NotNull @Valid ApiPerfInstance perfInstance) {
@@ -70,10 +75,15 @@ public class ApiPerfInstanceServiceImpl implements ApiPerfInstanceService {
     @Override
     public ApiPerfInstance findApiPerfInstance(@NotNull String id) {
         ApiPerfInstance perfInstance = findOne(id);
-
         joinTemplate.joinQuery(perfInstance);
 
+        ApiPerfStepInstance apiPerfStepInstance = apiPerfStepInstanceService.findApiPerfStepInstance(id);
+        perfInstance.setApiPerfStepInstance(apiPerfStepInstance);
 
+        ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
+        apiPerfStepUnitCalcQuery.setApiPerfInstanceId(id);
+        List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
+        perfInstance.setApiPerfStepUnitCalcList(apiPerfStepUnitCalcList);
 
         return perfInstance;
     }
