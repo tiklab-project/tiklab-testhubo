@@ -153,11 +153,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                     testPlanExecuteApiDispatch.exeApiScene(testPlanCaseInstanceBind, testPlanTestData);
                     break;
                 }
-                case MagicValue.CASE_TYPE_API_PERFORM -> {
-                    testPlanExecuteApiDispatch.exeApiPerform(testPlanCaseInstanceBind, testPlanTestData);
-                    testPlanCaseInstanceBind.setStatus(1);
-                    break;
-                }
                 default -> {
                 }
             }
@@ -260,9 +255,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         for (TestPlanCaseInstanceBind testPlanCaseInstanceBind : testPlanCaseInstanceList) {
             String caseType = testPlanCaseInstanceBind.getCaseType();
             switch (caseType) {
-                case MagicValue.CASE_TYPE_API_PERFORM:
-                    testPlanExecuteApiDispatch.apiPerfResult(testPlanCaseInstanceBind);
-                    break;
                 default:
                     break;
             }
@@ -432,21 +424,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Override
     public void cleanUpExecutionData(String testPlanId) {
         String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
-
-        ArrayList<TestPlanCaseInstanceBind> planCaseInstanceList = planInstanceIdOrPlanCaseInstanceList.get(testPlanInstanceId);
-        for(TestPlanCaseInstanceBind testPlanCaseInstanceBind : planCaseInstanceList){
-            String caseType = testPlanCaseInstanceBind.getCaseType();
-
-            switch (caseType) {
-                case MagicValue.CASE_TYPE_API_PERFORM -> {
-                    testPlanExecuteApiDispatch.cleanUpData(testPlanCaseInstanceBind.getCaseId());
-                    break;
-                }
-
-                default -> {
-                }
-            }
-        }
 
 
         planInstanceIdOrPlanCaseInstanceList.remove(testPlanInstanceId);

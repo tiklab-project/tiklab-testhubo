@@ -186,7 +186,6 @@ public class TestPlanCaseServiceImpl implements TestPlanCaseService {
             String[] caseTypeList = {
                     MagicValue.CASE_TYPE_API_UNIT,
                     MagicValue.CASE_TYPE_API_SCENE,
-                    MagicValue.CASE_TYPE_API_PERFORM,
                     MagicValue.CASE_TYPE_WEB,
                     MagicValue.CASE_TYPE_APP
             };

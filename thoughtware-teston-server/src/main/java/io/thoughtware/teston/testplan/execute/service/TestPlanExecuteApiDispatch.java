@@ -51,16 +51,7 @@ public class TestPlanExecuteApiDispatch {
     ApiSceneExecuteDispatchService apiSceneExecuteDispatchService;
 
     @Autowired
-    ApiPerfExecuteDispatchService apiPerfExecuteDispatchService;
-
-    @Autowired
-    ApiPerfInstanceService apiPerfInstanceService;
-
-    @Autowired
     TestPlanCaseInstanceBindService testPlanCaseInstanceBindService;
-
-    @Autowired
-    ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
     /**
      * 执行接口单元用例
@@ -136,74 +127,5 @@ public class TestPlanExecuteApiDispatch {
         return testPlanCaseInstanceBind;
     }
 
-
-    /**
-     * 执行接口性能用例
-     * @param testPlanCaseInstanceBind
-     * @param testPlanTestData
-     * @return
-     */
-    public void exeApiPerform(TestPlanCaseInstanceBind testPlanCaseInstanceBind, TestPlanTestData testPlanTestData){
-        ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
-        apiPerfTestRequest.setApiPerfId(testPlanCaseInstanceBind.getCaseId());
-        apiPerfTestRequest.setApiEnv(testPlanTestData.getApiEnv());
-
-        apiPerfExecuteDispatchService.executeStart(apiPerfTestRequest);
-
-    }
-
-
-    public TestPlanCaseInstanceBind apiPerfResult(TestPlanCaseInstanceBind testPlanCaseInstanceBind){
-        String apiPerfId = testPlanCaseInstanceBind.getCaseId();
-
-        ApiPerfTestRequest apiPerfTestRequest = new ApiPerfTestRequest();
-        apiPerfTestRequest.setApiPerfId(apiPerfId);
-        try {
-            ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.getResult(apiPerfTestRequest);
-
-            if(apiPerfTestResponse.getApiPerfInstance()!=null){
-                String status = apiPerfTestResponse.getApiPerfInstance().getStatus();
-
-                if(Objects.equals(status, MagicValue.TEST_STATUS_START)){
-                    testPlanCaseInstanceBind.setStatus(1);
-                }else {
-                    testPlanCaseInstanceBind.setStatus(0);
-                }
-
-                if(Objects.equals(status, MagicValue.TEST_STATUS_SUCCESS)){
-                    testPlanCaseInstanceBind.setResult(1);
-                }
-                if(Objects.equals(status, MagicValue.TEST_STATUS_FAIL)){
-                    testPlanCaseInstanceBind.setResult(0);
-                }
-
-
-                if(!Objects.equals(status, MagicValue.TEST_STATUS_START)){
-                    System.out.println(status);
-                    String apiPerfInstanceId = apiPerfInstanceService.createApiPerfInstance(apiPerfTestResponse.getApiPerfInstance());
-
-                    if(apiPerfTestResponse.getApiPerfStepUnitCalcList() != null&& apiPerfTestResponse.getApiPerfStepUnitCalcList().size() > 0){
-                        for (ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfTestResponse.getApiPerfStepUnitCalcList()) {
-                            apiPerfStepUnitCalc.setApiPerfInstanceId(apiPerfInstanceId);
-                            apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
-                        }
-                    }
-
-                    testPlanCaseInstanceBind.setCaseInstanceId(apiPerfInstanceId);
-                    testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
-                }
-            }else {
-                testPlanCaseInstanceBind.setStatus(0);
-            }
-        }catch (Exception e){
-            testPlanCaseInstanceBind.setStatus(0);
-        }
-
-        return testPlanCaseInstanceBind;
-    }
-
-    public void cleanUpData(String apiPerfId){
-        apiPerfExecuteDispatchService.cleanUpData(apiPerfId);
-    }
 
 }
