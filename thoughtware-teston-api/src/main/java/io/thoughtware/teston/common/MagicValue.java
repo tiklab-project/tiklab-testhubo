@@ -41,6 +41,8 @@ public class MagicValue {
     public static final String CASE_TYPE_IF = "if";
     public static final String TEST_PLAN = "test-plan";
 
+    public static final String TEST_API_PERFORM_STOP = "api-perform-stop";
+
     //测试计划类型
     // 功能
     public static final String TEST_PLAN_TYPE_FUNCTION = "function";
@@ -71,10 +73,12 @@ public class MagicValue {
     //测试状态
     //开始执行
     public static final String TEST_STATUS_START = "start";
-    //执行完成
+    //执行成功
     public static final String TEST_STATUS_SUCCESS= "success";
     //执行失败
     public static final String TEST_STATUS_FAIL = "fail";
+    //执行完成
+    public static final String TEST_STATUS_COMPLETE = "complete";
 
 
     public static final String AGENT_DEFAULT = "agent-default_localhost";

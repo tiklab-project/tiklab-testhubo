@@ -140,41 +140,16 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         List<ApiPerfStepTestData> apiPerfStepTestData = processApiPerfTestData(apiPerfTestRequest);
         apiPerfTestRequest.setApiPerfStepTestData(apiPerfStepTestData);
 
+        //获取agentId，agentList index 从0开始
+        String agentId = agentConfigService.getAgentList().get(0).getId();
 
-//        agentConfigList = agentConfigService.getAgentList();
+        //执行测试
+        JSONObject apiUnitObject = new JSONObject();
+        apiUnitObject.put("apiPerfTestRequest",apiPerfTestRequest);
+        apiUnitObject.put("type",MagicValue.CASE_TYPE_API_PERFORM);
+        apiUnitObject.put("caseId",apiPerfId);
 
-        //agent数量
-//        int agentSize = agentConfigList.size();
-
-        //先分配好各个agent所需的次数
-//        List<Integer> distributionList = new ArrayList<>();
-        //执行方式,循环或随机
-//        Integer executeType = apiPerfCase.getExecuteType();
-
-        //循环
-//        if (executeType == 1) {
-//            distributionList = testApixUtil.loop(executeCount, agentSize);
-//        }
-//        //随机
-//        if (executeType == 2) {
-//            distributionList = testApixUtil.random(executeCount, agentSize);
-//        }
-
-//        for (int i = 0; i < agentSize; i++) {
-            //
-//            apiPerfTestRequest.setExeNum(distributionList.get(i));
-
-            //获取agentId，agentList index 从0开始
-            String agentId = agentConfigService.getAgentList().get(0).getId();
-
-            //执行测试
-            JSONObject apiUnitObject = new JSONObject();
-            apiUnitObject.put("apiPerfTestRequest",apiPerfTestRequest);
-            apiUnitObject.put("type",MagicValue.CASE_TYPE_API_PERFORM);
-            apiUnitObject.put("caseId",apiPerfId);
-
-            wsTestService.sendMessageExe(agentId,apiUnitObject,null);
-//        }
+        wsTestService.sendMessageExe(agentId,apiUnitObject,null);
     }
 
     /**
@@ -253,6 +228,17 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         }
 
         return apiPerfTestResponse;
+    }
+
+    @Override
+    public void stopTest(String apiPerfId) {
+        JSONObject apiUnitObject = new JSONObject();
+        apiUnitObject.put("type",MagicValue.TEST_API_PERFORM_STOP);
+        apiUnitObject.put("caseId",apiPerfId);
+
+        //获取agentId，agentList index 从0开始
+        String agentId = agentConfigService.getAgentList().get(0).getId();
+        wsTestService.sendMessageExe(agentId,apiUnitObject,null);
     }
 
     /**

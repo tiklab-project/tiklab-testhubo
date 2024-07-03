@@ -18,6 +18,8 @@ public interface ApiPerfExecuteDispatchService {
      */
     Boolean execute(ApiPerfTestRequest apiPerfTestRequest);
 
+    void executeStart(ApiPerfTestRequest apiPerfTestRequest);
+
     /**
      * 获取性能测试结果
      * @param
@@ -25,9 +27,14 @@ public interface ApiPerfExecuteDispatchService {
      */
     ApiPerfTestResponse result(ApiPerfTestRequest apiPerfAgentTestRequest);
 
-    void executeStart(ApiPerfTestRequest apiPerfTestRequest);
-
     ApiPerfTestResponse getResult(ApiPerfTestRequest apiPerfTestRequest);
+
+    /**
+     * 停止执行
+     * @param apiPerfId
+     */
+    void stopTest(String apiPerfId);
+
 
     /**
      * 清理数据

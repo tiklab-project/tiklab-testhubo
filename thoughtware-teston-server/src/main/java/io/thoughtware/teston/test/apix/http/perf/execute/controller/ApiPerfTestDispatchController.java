@@ -48,4 +48,13 @@ public class ApiPerfTestDispatchController {
         return Result.ok(apiPerfTestResponse);
     }
 
+    @RequestMapping(path = "/stop", method = RequestMethod.POST)
+    @ApiMethod(name = "stop", desc = "停止执行")
+    @ApiParam(name = "apiPerfId", desc = "停止执行", required = true)
+    public Result<Void> stopTest(@NotNull String apiPerfId) {
+        apiPerfExecuteDispatchService.stopTest(apiPerfId);
+        return Result.ok();
+    }
+
+
 }
