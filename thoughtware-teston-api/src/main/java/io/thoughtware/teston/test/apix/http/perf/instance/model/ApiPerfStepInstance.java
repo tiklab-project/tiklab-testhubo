@@ -30,7 +30,6 @@ public class ApiPerfStepInstance extends BaseModel {
     private double percentile90;
     private double percentile95;
     private double percentile99;
-    private List<Double> elapsedTimes;
 
     public ApiPerfStepInstance() {
         this.successfulRequests = 0;
@@ -44,7 +43,6 @@ public class ApiPerfStepInstance extends BaseModel {
         this.percentile90 = 0.0;
         this.percentile95 = 0.0;
         this.percentile99 = 0.0;
-        this.elapsedTimes = new ArrayList<>();
     }
 
     public String getId() {
@@ -159,49 +157,4 @@ public class ApiPerfStepInstance extends BaseModel {
         this.percentile99 = percentile99;
     }
 
-    public List<Double> getElapsedTimes() {
-        return elapsedTimes;
-    }
-
-    public void setElapsedTimes(List<Double> elapsedTimes) {
-        this.elapsedTimes = elapsedTimes;
-    }
-
-    // 计算 平均耗时
-    public void calculateAvgElapsedTime() {
-        int totalRequests = successfulRequests + failedRequests;
-        if (totalRequests > 0) {
-            this.avgElapsedTime = this.totalElapsedTime / totalRequests;
-        }
-    }
-
-    // 计算 TPS
-    public void calculateTps(double durationInSeconds) {
-        if (durationInSeconds > 0) {
-            this.tps = this.successfulRequests / durationInSeconds;
-        }
-    }
-
-    // 计算 错误率
-    public void calculateErrorRate() {
-        int totalRequests = successfulRequests + failedRequests;
-        if (totalRequests > 0) {
-            this.errorRate = (double) this.failedRequests / totalRequests;
-        }
-    }
-
-    // 计算 百分位响应时间
-    public void calculatePercentiles() {
-        Collections.sort(elapsedTimes);
-        int size = elapsedTimes.size();
-        if (size > 0) {
-            this.percentile90 = elapsedTimes.get((int) (size * 0.9) - 1);
-            this.percentile95 = elapsedTimes.get((int) (size * 0.95) - 1);
-            this.percentile99 = elapsedTimes.get((int) (size * 0.99) - 1);
-        }
-    }
-
-    public void addElapsedTime(double elapsedTime) {
-        this.elapsedTimes.add(elapsedTime);
-    }
 }

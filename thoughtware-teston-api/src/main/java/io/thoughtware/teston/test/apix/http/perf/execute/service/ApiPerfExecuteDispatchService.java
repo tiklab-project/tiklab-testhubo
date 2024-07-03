@@ -16,7 +16,7 @@ public interface ApiPerfExecuteDispatchService {
      * @param apiPerfTestRequest
      * @return
      */
-    void execute(ApiPerfTestRequest apiPerfTestRequest);
+    Boolean execute(ApiPerfTestRequest apiPerfTestRequest);
 
     /**
      * 获取性能测试结果

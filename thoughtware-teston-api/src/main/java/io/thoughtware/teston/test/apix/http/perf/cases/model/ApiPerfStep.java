@@ -43,6 +43,12 @@ public class ApiPerfStep extends BaseModel{
     @ApiProperty(name="executeType",desc="1:次数 2:时间")
     private Integer executeType;
 
+    @ApiProperty(name="timeType",desc="时间类型：hour、minute、second")
+    private String timeType;
+
+    @ApiProperty(name="timeCount",desc="时间类型：hour、minute、second")
+    private Integer timeCount;
+
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Timestamp createTime;
@@ -130,5 +136,21 @@ public class ApiPerfStep extends BaseModel{
 
     public void setApiUnitCase(ApiUnitCase apiUnitCase) {
         this.apiUnitCase = apiUnitCase;
+    }
+
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(String timeType) {
+        this.timeType = timeType;
+    }
+
+    public Integer getTimeCount() {
+        return timeCount;
+    }
+
+    public void setTimeCount(Integer timeCount) {
+        this.timeCount = timeCount;
     }
 }

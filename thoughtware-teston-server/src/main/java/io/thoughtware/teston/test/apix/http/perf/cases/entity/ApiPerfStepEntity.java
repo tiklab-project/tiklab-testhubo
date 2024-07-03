@@ -42,6 +42,14 @@ public class ApiPerfStepEntity implements Serializable {
     @Column(name = "execute_count")
     private Integer executeCount;
 
+    // 执行次数
+    @Column(name = "time_type")
+    private String timeType;
+
+    // 执行次数
+    @Column(name = "time_count")
+    private Integer timeCount;
+
     // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
@@ -108,5 +116,21 @@ public class ApiPerfStepEntity implements Serializable {
 
     public void setExecuteCount(Integer executeCount) {
         this.executeCount = executeCount;
+    }
+
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(String timeType) {
+        this.timeType = timeType;
+    }
+
+    public Integer getTimeCount() {
+        return timeCount;
+    }
+
+    public void setTimeCount(Integer timeCount) {
+        this.timeCount = timeCount;
     }
 }

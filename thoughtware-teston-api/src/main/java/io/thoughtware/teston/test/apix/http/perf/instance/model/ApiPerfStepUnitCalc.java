@@ -30,7 +30,6 @@ public class ApiPerfStepUnitCalc extends BaseModel {
     private double percentile90;
     private double percentile95;
     private double percentile99;
-    private List<Double> elapsedTimes;
 
     public ApiPerfStepUnitCalc() {
         this.successfulRequests = 0;
@@ -44,7 +43,6 @@ public class ApiPerfStepUnitCalc extends BaseModel {
         this.percentile90 = 0.0;
         this.percentile95 = 0.0;
         this.percentile99 = 0.0;
-        this.elapsedTimes = new ArrayList<>();
     }
 
     public String getName() {
@@ -167,38 +165,5 @@ public class ApiPerfStepUnitCalc extends BaseModel {
         this.percentile99 = percentile99;
     }
 
-    public List<Double> getElapsedTimes() {
-        return elapsedTimes;
-    }
 
-    public void setElapsedTimes(List<Double> elapsedTimes) {
-        this.elapsedTimes = elapsedTimes;
-    }
-
-    // 计算 错误率
-    public void calculateErrorRate() {
-        int totalRequests = successfulRequests + failedRequests;
-        if (totalRequests > 0) {
-            this.errorRate = (double) this.failedRequests / totalRequests;
-        }
-    }
-
-    // 计算 百分位响应时间
-    public void calculatePercentiles() {
-        Collections.sort(elapsedTimes);
-        int size = elapsedTimes.size();
-        if (size == 1) {
-            this.percentile90 = elapsedTimes.get(0);
-            this.percentile95 = elapsedTimes.get(0);
-            this.percentile99 = elapsedTimes.get(0);
-        } else if (size > 1) {
-            this.percentile90 = elapsedTimes.get(Math.min((int) (size * 0.9) - 1, size - 1));
-            this.percentile95 = elapsedTimes.get(Math.min((int) (size * 0.95) - 1, size - 1));
-            this.percentile99 = elapsedTimes.get(Math.min((int) (size * 0.99) - 1, size - 1));
-        }
-    }
-
-    public void addElapsedTime(double elapsedTime) {
-        this.elapsedTimes.add(elapsedTime);
-    }
 }

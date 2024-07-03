@@ -3,6 +3,8 @@ ALTER TABLE teston_api_perf_step ADD COLUMN thread_count int;
 ALTER TABLE teston_api_perf_step ADD COLUMN execute_type int;
 ALTER TABLE teston_api_perf_step ADD COLUMN execute_count int;
 ALTER TABLE teston_api_perf_step ADD COLUMN case_type VARCHAR(32);
+ALTER TABLE teston_api_perf_step ADD COLUMN time_type VARCHAR(12);
+ALTER TABLE teston_api_perf_step ADD COLUMN time_count int;
 ALTER TABLE teston_api_perf_step RENAME COLUMN api_scene_id TO case_id;
 
 -- 将新列的所有值设置为默认

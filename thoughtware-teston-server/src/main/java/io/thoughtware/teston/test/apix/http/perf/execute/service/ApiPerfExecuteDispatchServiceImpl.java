@@ -41,10 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -100,16 +97,23 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     @Autowired
     ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
+    private static Set<String> apiPerfIdSet = new HashSet<>();
+
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
     private final static Map<String, ApiPerfTestResponse> perfTestResponseMap = new ConcurrentHashMap<>();
 
     private List<AgentConfig> agentConfigList;
 
     @Override
-    public void execute(ApiPerfTestRequest apiPerfTestRequest) {
+    public Boolean execute(ApiPerfTestRequest apiPerfTestRequest) {
         String apiPerfId = apiPerfTestRequest.getApiPerfId();
-        String apiPerfInstanceId = createInitApiPerfInstance(apiPerfId);
 
+        // 检查 apiPerfId 是否已存在，如果存在则直接返回
+        if (!apiPerfIdSet.add(apiPerfId)) {
+            return true;
+        }
+
+        String apiPerfInstanceId = createInitApiPerfInstance(apiPerfId);
         try {
             executeStart(apiPerfTestRequest);
         }catch (Exception e){
@@ -123,6 +127,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
                 throw new ApplicationException(10001,e.getMessage());
             }
         }
+
+        return false;
     }
 
 
@@ -236,6 +242,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
             if(!Objects.equals(apiPerfTestResponse.getApiPerfInstance().getStatus(), MagicValue.TEST_STATUS_START)){
                 perfTestResponseMap.forEach((agentId, response) -> perfTestResponseMap.remove(agentId));
+                apiPerfIdSet.remove(apiPerfId);
             }
 
         }catch (Exception e){
@@ -331,9 +338,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiPerfStepInstance.setMaxElapsedTime(maxElapsedTime);
         apiPerfStepInstance.setMinElapsedTime(minElapsedTime);
         apiPerfStepInstance.setTps(tps);
-        apiPerfStepInstance.calculateAvgElapsedTime();
-        apiPerfStepInstance.calculateErrorRate();
-        apiPerfStepInstance.calculatePercentiles();
 
 
         ApiPerfInstance apiPerfInstance = new ApiPerfInstance();

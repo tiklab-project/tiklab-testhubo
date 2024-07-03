@@ -34,10 +34,10 @@ public class ApiPerfTestDispatchController {
     @RequestMapping(path = "/execute", method = RequestMethod.POST)
     @ApiMethod(name = "execute", desc = "执行性能测试")
     @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数", required = true)
-    public Result<Void> execute(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
-         apiPerfExecuteDispatchService.execute(apiPerfTestRequest);
+    public Result<Boolean> execute(@RequestBody @Valid @NotNull ApiPerfTestRequest apiPerfTestRequest) {
+        Boolean execute = apiPerfExecuteDispatchService.execute(apiPerfTestRequest);
 
-        return Result.ok();
+        return Result.ok(execute);
     }
 
     @RequestMapping(path = "/result", method = RequestMethod.POST)
