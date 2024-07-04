@@ -53,6 +53,10 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        // 设置会话属性，如果需要
+        session.setTextMessageSizeLimit(50 * 1024 * 1024); // 50 MB
+        session.setBinaryMessageSizeLimit(50 * 1024 * 1024); // 50 MB
+
         JSONObject agentInfo = wsTestCommonFn.getAgentInfoFromQuery(session);
         String agentId = agentInfo.getString("agentId");
         logger.info("SERVER:  {} --- has successfully connected to the server.", agentId);
@@ -107,6 +111,8 @@ public class WebSocketServiceImpl implements  WebSocketHandler {
         } else {
             logger.error("关闭时，获取AgentId为空");
         }
+
+        logger.info("AgentId closed because-- {}  closed!",status);
     }
 
     /**

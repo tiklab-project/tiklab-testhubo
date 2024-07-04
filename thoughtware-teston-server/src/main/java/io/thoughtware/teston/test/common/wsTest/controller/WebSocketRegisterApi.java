@@ -1,6 +1,8 @@
 package io.thoughtware.teston.test.common.wsTest.controller;
 
 import io.thoughtware.teston.test.common.wsTest.service.WebSocketServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -11,12 +13,14 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 @Configuration
 @EnableWebSocket
 public class WebSocketRegisterApi implements WebSocketConfigurer {
+    public static final Logger logger = LoggerFactory.getLogger(WebSocketRegisterApi.class);
 
     @Bean
     public ServletServerContainerFactoryBean createWebSocketContainer() {
         ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-        container.setMaxTextMessageBufferSize(1024 * 256); // 设置文本消息缓冲区大小
-        container.setMaxBinaryMessageBufferSize(1024 * 256); // 设置二进制消息缓冲区大小
+        int bufferSize = 50 * 1024 * 1024; // 设置缓冲区大小为 50 MB
+        container.setMaxTextMessageBufferSize(bufferSize);
+        container.setMaxBinaryMessageBufferSize(bufferSize);
         return container;
     }
 

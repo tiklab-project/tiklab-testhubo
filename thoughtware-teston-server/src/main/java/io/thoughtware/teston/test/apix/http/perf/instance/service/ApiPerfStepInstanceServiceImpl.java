@@ -6,6 +6,8 @@ import io.thoughtware.teston.test.apix.http.perf.instance.dao.ApiPerfStepInstanc
 import io.thoughtware.teston.test.apix.http.perf.instance.entity.ApiPerfStepInstanceEntity;
 import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepInstance;
 import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepInstanceQuery;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalc;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalcQuery;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.toolkit.join.JoinTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class ApiPerfStepInstanceServiceImpl implements ApiPerfStepInstanceServic
 
     @Autowired
     ApiPerfStepInstanceDao ApiPerfStepInstanceDao;
+
+    @Autowired
+    ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
     @Autowired
     JoinTemplate joinTemplate;
@@ -45,6 +50,8 @@ public class ApiPerfStepInstanceServiceImpl implements ApiPerfStepInstanceServic
     @Override
     public void deleteApiPerfStepInstance(@NotNull String id) {
         ApiPerfStepInstanceDao.deleteApiPerfStepInstance(id);
+
+        apiPerfStepUnitCalcService.deleteAllApiPerfStepUnitCalc(id);
     }
 
     @Override
@@ -68,6 +75,12 @@ public class ApiPerfStepInstanceServiceImpl implements ApiPerfStepInstanceServic
         ApiPerfStepInstance perfInstance = findOne(id);
 
         joinTemplate.joinQuery(perfInstance);
+
+        ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
+        apiPerfStepUnitCalcQuery.setApiPerfStepInstanceId(id);
+        List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
+        perfInstance.setApiPerfStepUnitCalcList(apiPerfStepUnitCalcList);
+
         return perfInstance;
     }
 
@@ -84,10 +97,17 @@ public class ApiPerfStepInstanceServiceImpl implements ApiPerfStepInstanceServic
     @Override
     public List<ApiPerfStepInstance> findApiPerfStepInstanceList(ApiPerfStepInstanceQuery performanceInstanceQuery) {
         List<ApiPerfStepInstanceEntity> perfInstanceEntities = ApiPerfStepInstanceDao.findApiPerfStepInstanceList(performanceInstanceQuery);
-
         List<ApiPerfStepInstance> perfInstanceList = BeanMapper.mapList(perfInstanceEntities, ApiPerfStepInstance.class);
-
         joinTemplate.joinQuery(perfInstanceList);
+
+        if(perfInstanceList.size() > 0){
+            for(ApiPerfStepInstance apiPerfStepInstance:perfInstanceList){
+                ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
+                apiPerfStepUnitCalcQuery.setApiPerfStepInstanceId(apiPerfStepInstance.getId());
+                List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
+                apiPerfStepInstance.setApiPerfStepUnitCalcList(apiPerfStepUnitCalcList);
+            }
+        }
 
         return perfInstanceList;
     }

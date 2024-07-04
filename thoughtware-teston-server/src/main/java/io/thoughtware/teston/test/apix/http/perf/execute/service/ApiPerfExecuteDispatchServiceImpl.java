@@ -8,9 +8,7 @@ import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
 import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfStepTestData;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepInstance;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalc;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfStepUnitCalcQuery;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.*;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfStepInstanceService;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfStepUnitCalcService;
 import io.thoughtware.teston.test.apix.http.unit.cases.model.ApiUnitCase;
@@ -30,7 +28,6 @@ import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfStepServic
 import io.thoughtware.teston.test.apix.http.perf.cases.service.ApiPerfTestDataService;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestRequest;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
-import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
 import io.thoughtware.teston.support.utils.TestApixUtil;
@@ -275,15 +272,14 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             ApiPerfTestResponse allApiPerfTestResponse = new ApiPerfTestResponse();
             allApiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
             apiPerfTestResponseList.add(allApiPerfTestResponse);
+            return allApiPerfTestResponse;
         }
-
 
         int total = 0;
         Integer failNum=0;
         Integer passNum=0;
         List<String> statusList = new ArrayList<>();
 
-        List<ApiPerfStepUnitCalc> unitCalcList = new ArrayList<>();
         ArrayList<ApiPerfStepInstance> allCalcList = new ArrayList<>();
 
         for(ApiPerfTestResponse apiPerfTestResponse:apiPerfTestResponseList){
@@ -294,37 +290,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
             statusList.add(apiPerfInstanceItem.getStatus());
 
-            allCalcList.add(apiPerfTestResponse.getApiPerfStepInstance());
-            unitCalcList.addAll(apiPerfTestResponse.getApiPerfStepUnitCalcList());
+            allCalcList.addAll(apiPerfTestResponse.getApiPerfStepInstanceList());
         }
-
-
-        int totalRequests = 0;
-        int successfulRequests = 0;
-        int failedRequests = 0;
-        double totalElapsedTime = 0.0;
-        double maxElapsedTime = Double.MIN_VALUE;
-        double minElapsedTime = Double.MAX_VALUE;
-        double tps = 0.0;
-
-        for(ApiPerfStepInstance allCalc:allCalcList){
-            totalRequests += allCalc.getTotalRequests();
-            successfulRequests += allCalc.getSuccessfulRequests();
-            failedRequests += allCalc.getFailedRequests();
-            totalElapsedTime += allCalc.getTotalElapsedTime();
-            maxElapsedTime = Math.max(maxElapsedTime, allCalc.getMaxElapsedTime());
-            minElapsedTime = Math.min(minElapsedTime, allCalc.getMinElapsedTime());
-        }
-
-        ApiPerfStepInstance apiPerfStepInstance = new ApiPerfStepInstance();
-        apiPerfStepInstance.setTotalRequests(totalRequests);
-        apiPerfStepInstance.setSuccessfulRequests(successfulRequests);
-        apiPerfStepInstance.setFailedRequests(failedRequests);
-        apiPerfStepInstance.setTotalElapsedTime(totalElapsedTime);
-        apiPerfStepInstance.setMaxElapsedTime(maxElapsedTime);
-        apiPerfStepInstance.setMinElapsedTime(minElapsedTime);
-        apiPerfStepInstance.setTps(tps);
-
 
         ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
         apiPerfInstance.setTotal(total);
@@ -345,8 +312,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         ApiPerfTestResponse allApiPerfTestResponse = new ApiPerfTestResponse();
         allApiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
-        allApiPerfTestResponse.setApiPerfStepUnitCalcList(unitCalcList);
-        allApiPerfTestResponse.setApiPerfStepInstance(apiPerfStepInstance);
+        allApiPerfTestResponse.setApiPerfStepInstanceList(allCalcList);
 
         return allApiPerfTestResponse;
     }
@@ -378,31 +344,26 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             instanceService.updateInstance(instance);
 
             //创建/更新 总和数据
-            ApiPerfStepInstance stepInstance = apiPerfStepInstanceService.findApiPerfStepInstance(apiPerfInstanceId);
-            ApiPerfStepInstance apiPerfStepInstance = apiPerfTestResponse.getApiPerfStepInstance();
-            apiPerfStepInstance.setApiPerfInstanceId(apiPerfInstanceId);
-            apiPerfStepInstance.setId(apiPerfInstanceId);
-            if(stepInstance == null){
-                apiPerfStepInstanceService.createApiPerfStepInstance(apiPerfStepInstance);
-            }else {
-                apiPerfStepInstanceService.updateApiPerfStepInstance(apiPerfStepInstance);
-            }
-
-            // 创建/更新 所有接口详细信息
-            //先删除
-            ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
-            apiPerfStepUnitCalcQuery.setApiPerfInstanceId(apiPerfInstanceId);
-            List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
-            if(apiPerfStepUnitCalcList != null && apiPerfStepUnitCalcList.size() > 0){
-                for(ApiPerfStepUnitCalc stepUnitCalc : apiPerfStepUnitCalcList){
-                    apiPerfStepUnitCalcService.deleteApiPerfStepUnitCalc(stepUnitCalc.getId());
+            ApiPerfStepInstanceQuery apiPerfStepInstanceQuery = new ApiPerfStepInstanceQuery();
+            apiPerfStepInstanceQuery.setApiPerfInstanceId(apiPerfInstanceId);
+            List<ApiPerfStepInstance> apiPerfStepInstanceList = apiPerfStepInstanceService.findApiPerfStepInstanceList(apiPerfStepInstanceQuery);
+            if(apiPerfStepInstanceList.size()>0){
+                for (ApiPerfStepInstance ApiPerfStepInstance:apiPerfStepInstanceList){
+                    apiPerfStepInstanceService.deleteApiPerfStepInstance(ApiPerfStepInstance.getId());
                 }
             }
-            //重新创建
-            if(apiPerfTestResponse.getApiPerfStepUnitCalcList() != null&& apiPerfTestResponse.getApiPerfStepUnitCalcList().size() > 0){
-                for (ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfTestResponse.getApiPerfStepUnitCalcList()) {
-                    apiPerfStepUnitCalc.setApiPerfInstanceId(apiPerfInstanceId);
-                    apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
+
+            if(apiPerfTestResponse.getApiPerfStepInstanceList()!=null && apiPerfTestResponse.getApiPerfStepInstanceList().size()>0){
+                for(ApiPerfStepInstance apiPerfStepInstance:apiPerfTestResponse.getApiPerfStepInstanceList()){
+                    apiPerfStepInstance.setApiPerfInstanceId(apiPerfInstanceId);
+                    String apiPerfStepInstanceId = apiPerfStepInstanceService.createApiPerfStepInstance(apiPerfStepInstance);
+
+                    if (apiPerfStepInstance.getApiPerfStepUnitCalcList() != null && apiPerfStepInstance.getApiPerfStepUnitCalcList().size() > 0) {
+                        for (ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfStepInstance.getApiPerfStepUnitCalcList()) {
+                            apiPerfStepUnitCalc.setApiPerfStepInstanceId(apiPerfStepInstanceId);
+                            apiPerfStepUnitCalcService.createApiPerfStepUnitCalc(apiPerfStepUnitCalc);
+                        }
+                    }
                 }
             }
         }else {

@@ -77,13 +77,10 @@ public class ApiPerfInstanceServiceImpl implements ApiPerfInstanceService {
         ApiPerfInstance perfInstance = findOne(id);
         joinTemplate.joinQuery(perfInstance);
 
-        ApiPerfStepInstance apiPerfStepInstance = apiPerfStepInstanceService.findApiPerfStepInstance(id);
-        perfInstance.setApiPerfStepInstance(apiPerfStepInstance);
-
-        ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
-        apiPerfStepUnitCalcQuery.setApiPerfInstanceId(id);
-        List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = apiPerfStepUnitCalcService.findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
-        perfInstance.setApiPerfStepUnitCalcList(apiPerfStepUnitCalcList);
+        ApiPerfStepInstanceQuery apiPerfStepInstanceQuery = new ApiPerfStepInstanceQuery();
+        apiPerfStepInstanceQuery.setApiPerfInstanceId(id);
+        List<ApiPerfStepInstance> apiPerfStepInstanceList = apiPerfStepInstanceService.findApiPerfStepInstanceList(apiPerfStepInstanceQuery);
+        perfInstance.setApiPerfStepInstanceList(apiPerfStepInstanceList);
 
         return perfInstance;
     }

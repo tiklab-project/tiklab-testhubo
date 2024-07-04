@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Table(name="teston_api_perf_step_instance")
 public class ApiPerfStepInstanceEntity implements Serializable {
     @Id
+    @GeneratorValue(length = 12)
     @Column(name = "id",length = 32)
     private String id;
 

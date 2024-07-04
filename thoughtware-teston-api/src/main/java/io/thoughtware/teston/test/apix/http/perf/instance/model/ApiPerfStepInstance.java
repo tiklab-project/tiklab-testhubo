@@ -17,6 +17,7 @@ import java.util.List;
 @Mapper
 public class ApiPerfStepInstance extends BaseModel {
     private String id;
+    private String apiPerfStepId;
     private String apiPerfInstanceId;
     private int totalRequests;
     private int successfulRequests;
@@ -30,6 +31,7 @@ public class ApiPerfStepInstance extends BaseModel {
     private double percentile90;
     private double percentile95;
     private double percentile99;
+    private List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList;
 
     public ApiPerfStepInstance() {
         this.successfulRequests = 0;
@@ -51,6 +53,14 @@ public class ApiPerfStepInstance extends BaseModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getApiPerfStepId() {
+        return apiPerfStepId;
+    }
+
+    public void setApiPerfStepId(String apiPerfStepId) {
+        this.apiPerfStepId = apiPerfStepId;
     }
 
     public String getApiPerfInstanceId() {
@@ -157,4 +167,11 @@ public class ApiPerfStepInstance extends BaseModel {
         this.percentile99 = percentile99;
     }
 
+    public List<ApiPerfStepUnitCalc> getApiPerfStepUnitCalcList() {
+        return apiPerfStepUnitCalcList;
+    }
+
+    public void setApiPerfStepUnitCalcList(List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList) {
+        this.apiPerfStepUnitCalcList = apiPerfStepUnitCalcList;
+    }
 }

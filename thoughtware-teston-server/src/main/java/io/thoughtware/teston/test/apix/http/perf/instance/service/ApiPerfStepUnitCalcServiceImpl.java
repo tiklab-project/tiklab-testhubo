@@ -47,6 +47,18 @@ public class ApiPerfStepUnitCalcServiceImpl implements ApiPerfStepUnitCalcServic
     }
 
     @Override
+    public void deleteAllApiPerfStepUnitCalc(String apiPerfStepInstanceId) {
+        ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery = new ApiPerfStepUnitCalcQuery();
+        apiPerfStepUnitCalcQuery.setApiPerfStepInstanceId(apiPerfStepInstanceId);
+        List<ApiPerfStepUnitCalc> apiPerfStepUnitCalcList = findApiPerfStepUnitCalcList(apiPerfStepUnitCalcQuery);
+        if(apiPerfStepUnitCalcList != null && !apiPerfStepUnitCalcList.isEmpty()){
+            for(ApiPerfStepUnitCalc apiPerfStepUnitCalc : apiPerfStepUnitCalcList){
+                deleteApiPerfStepUnitCalc(apiPerfStepUnitCalc.getId());
+            }
+        }
+    }
+
+    @Override
     public ApiPerfStepUnitCalc findOne(String id) {
         ApiPerfStepUnitCalcEntity perfInstanceEntity = ApiPerfStepUnitCalcDao.findApiPerfStepUnitCalc(id);
 

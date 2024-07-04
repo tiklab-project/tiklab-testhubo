@@ -17,7 +17,8 @@ import java.util.List;
 public class ApiPerfStepUnitCalc extends BaseModel {
     private String id;
     private String name;
-    private String apiPerfInstanceId;
+    private String apiPerfStepId;
+    private String apiPerfStepInstanceId;
     private int totalRequests;
     private int successfulRequests;
     private int failedRequests;
@@ -61,12 +62,20 @@ public class ApiPerfStepUnitCalc extends BaseModel {
         this.id = id;
     }
 
-    public String getApiPerfInstanceId() {
-        return apiPerfInstanceId;
+    public String getApiPerfStepId() {
+        return apiPerfStepId;
     }
 
-    public void setApiPerfInstanceId(String apiPerfInstanceId) {
-        this.apiPerfInstanceId = apiPerfInstanceId;
+    public void setApiPerfStepId(String apiPerfStepId) {
+        this.apiPerfStepId = apiPerfStepId;
+    }
+
+    public String getApiPerfStepInstanceId() {
+        return apiPerfStepInstanceId;
+    }
+
+    public void setApiPerfStepInstanceId(String apiPerfStepInstanceId) {
+        this.apiPerfStepInstanceId = apiPerfStepInstanceId;
     }
 
     public int getTotalRequests() {

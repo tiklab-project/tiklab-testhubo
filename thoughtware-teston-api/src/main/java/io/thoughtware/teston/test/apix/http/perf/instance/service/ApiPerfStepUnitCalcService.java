@@ -35,6 +35,9 @@ public interface ApiPerfStepUnitCalcService {
     * @param id
     */
     void deleteApiPerfStepUnitCalc(@NotNull String id);
+
+    void deleteAllApiPerfStepUnitCalc(@NotNull String apiPerfStepInstanceId);
+
     @FindOne
     ApiPerfStepUnitCalc findOne(@NotNull String id);
     @FindList

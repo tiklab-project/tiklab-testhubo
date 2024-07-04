@@ -16,8 +16,8 @@ public class ApiPerfStepUnitCalcQuery {
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
 
-    @ApiProperty(name = "apiPerfInstanceId", desc = "性能测试id")
-    private String apiPerfInstanceId;
+    @ApiProperty(name = "apiPerfStepInstanceId", desc = "性能测试id")
+    private String apiPerfStepInstanceId;
 
     @ApiProperty(name = "id", desc = "性能测试id")
     private String id;
@@ -38,12 +38,12 @@ public class ApiPerfStepUnitCalcQuery {
         this.pageParam = pageParam;
     }
 
-    public String getApiPerfInstanceId() {
-        return apiPerfInstanceId;
+    public String getApiPerfStepInstanceId() {
+        return apiPerfStepInstanceId;
     }
 
-    public void setApiPerfInstanceId(String apiPerfInstanceId) {
-        this.apiPerfInstanceId = apiPerfInstanceId;
+    public void setApiPerfStepInstanceId(String apiPerfStepInstanceId) {
+        this.apiPerfStepInstanceId = apiPerfStepInstanceId;
     }
 
     public String getId() {

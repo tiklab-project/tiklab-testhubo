@@ -82,7 +82,7 @@ public class ApiPerfStepUnitCalcDao {
      */
     public List<ApiPerfStepUnitCalcEntity> findApiPerfStepUnitCalcList(ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfStepUnitCalcEntity.class)
-                .eq("apiPerfInstanceId", apiPerfStepUnitCalcQuery.getApiPerfInstanceId())
+                .eq("apiPerfStepInstanceId", apiPerfStepUnitCalcQuery.getApiPerfStepInstanceId())
                 .orders(apiPerfStepUnitCalcQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, ApiPerfStepUnitCalcEntity.class);
@@ -95,7 +95,7 @@ public class ApiPerfStepUnitCalcDao {
      */
     public Pagination<ApiPerfStepUnitCalcEntity> findApiPerfStepUnitCalcPage(ApiPerfStepUnitCalcQuery apiPerfStepUnitCalcQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(ApiPerfStepUnitCalcEntity.class)
-                .eq("apiPerfInstanceId", apiPerfStepUnitCalcQuery.getApiPerfInstanceId())
+                .eq("apiPerfStepInstanceId", apiPerfStepUnitCalcQuery.getApiPerfStepInstanceId())
                 .pagination(apiPerfStepUnitCalcQuery.getPageParam())
                 .orders(apiPerfStepUnitCalcQuery.getOrderParams())
                 .get();

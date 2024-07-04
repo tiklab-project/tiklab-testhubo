@@ -15,8 +15,8 @@ public class ApiPerfStepUnitCalcEntity implements Serializable {
     @Column(name = "id",length = 32)
     private String id;
 
-    @Column(name = "api_perf_instance_id")
-    private String apiPerfInstanceId;
+    @Column(name = "api_perf_step_instance_id")
+    private String apiPerfStepInstanceId;
 
     @Column(name = "name")
     private String name;
@@ -73,12 +73,12 @@ public class ApiPerfStepUnitCalcEntity implements Serializable {
         this.name = name;
     }
 
-    public String getApiPerfInstanceId() {
-        return apiPerfInstanceId;
+    public String getApiPerfStepInstanceId() {
+        return apiPerfStepInstanceId;
     }
 
-    public void setApiPerfInstanceId(String apiPerfInstanceId) {
-        this.apiPerfInstanceId = apiPerfInstanceId;
+    public void setApiPerfStepInstanceId(String apiPerfStepInstanceId) {
+        this.apiPerfStepInstanceId = apiPerfStepInstanceId;
     }
 
     public Integer getTotalRequests() {

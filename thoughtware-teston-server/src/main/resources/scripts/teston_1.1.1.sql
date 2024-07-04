@@ -42,7 +42,7 @@ CREATE TABLE teston_api_perf_step_instance (
 -- 性能测试下的单个接口的信息
 CREATE TABLE teston_api_perf_step_unit_instance(
     id VARCHAR(32) PRIMARY KEY,
-    api_perf_instance_id VARCHAR(32),
+    api_perf_step_instance_id VARCHAR(32),
     name VARCHAR(256),
     total_requests INT,
     successful_requests INT,
