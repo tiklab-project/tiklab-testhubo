@@ -94,9 +94,12 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     @Autowired
     ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
-    private static Set<String> apiPerfIdSet = new HashSet<>();
 
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
+
+    //是否存在正在执行的性能测试
+    private static Set<String> apiPerfIdSet = new HashSet<>();
+    //apiPerfId：对应的响应结果
     private final static Map<String, ApiPerfTestResponse> perfTestResponseMap = new ConcurrentHashMap<>();
 
     private List<AgentConfig> agentConfigList;
@@ -207,17 +210,31 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         String apiPerfId = apiPerfTestRequest.getApiPerfId();
         ApiPerfTestResponse apiPerfTestResponse = new ApiPerfTestResponse();
         try {
-            ArrayList<ApiPerfTestResponse> arrayList = new ArrayList<>();
+            ArrayList<ApiPerfTestResponse> responseList = new ArrayList<>();
 
-            perfTestResponseMap.forEach((agentId, response) -> arrayList.add(response));
-            apiPerfTestResponse = multiAgentProcess(arrayList);
-
-            if(!Objects.equals(apiPerfTestResponse.getApiPerfInstance().getStatus(), MagicValue.TEST_STATUS_START)){
-                perfTestResponseMap.forEach((agentId, response) -> perfTestResponseMap.remove(agentId));
-                apiPerfIdSet.remove(apiPerfId);
+            synchronized (perfTestResponseMap) {
+                perfTestResponseMap.forEach((caseId, response) -> {
+                    if (caseId.equals(apiPerfId)) {
+                        responseList.add(response);
+                    }
+                });
             }
 
-        }catch (Exception e){
+            apiPerfTestResponse = multiAgentProcess(responseList);
+
+            // If test has finished, remove the corresponding entries
+            if (!Objects.equals(apiPerfTestResponse.getApiPerfInstance().getStatus(), MagicValue.TEST_STATUS_START)) {
+                synchronized (perfTestResponseMap) {
+                    perfTestResponseMap.remove(apiPerfId);
+                }
+                apiPerfIdSet.remove(apiPerfId);
+            }
+        } catch (Exception e) {
+            synchronized (perfTestResponseMap) {
+                perfTestResponseMap.remove(apiPerfId);
+            }
+            apiPerfIdSet.remove(apiPerfId);
+
             logger.error("getResult error:{}",e.getMessage());
             ApiPerfInstance apiPerfInstance = getInitApiPerfInstance(apiPerfId);
             apiPerfInstance.setStatus(MagicValue.TEST_STATUS_FAIL);
@@ -259,21 +276,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
      * @param apiPerfTestResponseList
      */
     private ApiPerfTestResponse multiAgentProcess(ArrayList<ApiPerfTestResponse> apiPerfTestResponseList){
-
-        if(apiPerfTestResponseList==null||apiPerfTestResponseList.isEmpty()){
-            ApiPerfInstance apiPerfInstance = new ApiPerfInstance();
-            apiPerfInstance.setTotal(0);
-            apiPerfInstance.setPassNum(0);
-            apiPerfInstance.setPassRate("0.00%");
-            apiPerfInstance.setFailNum(0);
-            apiPerfInstance.setErrorRate("0.00%");
-            apiPerfInstance.setStatus(MagicValue.TEST_STATUS_START);
-
-            ApiPerfTestResponse allApiPerfTestResponse = new ApiPerfTestResponse();
-            allApiPerfTestResponse.setApiPerfInstance(apiPerfInstance);
-            apiPerfTestResponseList.add(allApiPerfTestResponse);
-            return allApiPerfTestResponse;
-        }
 
         int total = 0;
         Integer failNum=0;
@@ -505,10 +507,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         future[0] = executorService.submit(() -> {
             try {
-                String agentId = message.getString("agentId");
                 ApiPerfTestResponse response = message.getJSONObject("apiPerfTestResponse").toJavaObject(ApiPerfTestResponse.class);
-                perfTestResponseMap.put(agentId,response);
-
+                String caseId = message.getString("caseId");
+                perfTestResponseMap.put(caseId,response);
                 if (!MagicValue.TEST_STATUS_START.equals(message.getString("status"))) {
                     // 取消任务
                     future[0].cancel(true);
