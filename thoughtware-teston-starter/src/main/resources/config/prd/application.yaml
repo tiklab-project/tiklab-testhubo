@@ -73,11 +73,14 @@ postgresql:
 
 teston-agent:
   name: agent-default
-  websocket-url: "ws://e.teston.thoughtware.cn/websocket"
+  websocket-url: "ws://localhost:8080/websocket"
   chromedriver:
     path: /opt/chrome/chromedriver/chromedriver
   chrome:
     path: /opt/chrome/chrome/chrome
+  appium:
+    server: 127.0.0.1
+    port: 4723
 
 
 file:

@@ -303,11 +303,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         if(statusList.contains(MagicValue.TEST_STATUS_START)){
             apiPerfInstance.setStatus(MagicValue.TEST_STATUS_START);
         }else {
-            if(statusList.contains(MagicValue.TEST_STATUS_FAIL)){
-                apiPerfInstance.setStatus(MagicValue.TEST_STATUS_FAIL);
-            }else {
-                apiPerfInstance.setStatus(MagicValue.TEST_STATUS_SUCCESS);
-            }
+            apiPerfInstance.setStatus(MagicValue.TEST_STATUS_COMPLETE);
         }
 
         ApiPerfTestResponse allApiPerfTestResponse = new ApiPerfTestResponse();
