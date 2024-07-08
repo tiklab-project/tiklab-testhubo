@@ -4,6 +4,7 @@ package io.thoughtware.teston.test.apix.http.perf.execute.service;
 import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestRequest;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
 
 /**
  * api性能测试调度服务
@@ -25,7 +26,7 @@ public interface ApiPerfExecuteDispatchService {
      * @param
      * @return
      */
-    ApiPerfTestResponse result(ApiPerfTestRequest apiPerfAgentTestRequest);
+    ApiPerfInstance result(String apiPerfId);
 
     ApiPerfTestResponse getResult(ApiPerfTestRequest apiPerfTestRequest);
 

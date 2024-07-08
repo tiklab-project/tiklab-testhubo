@@ -39,10 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.*;
 
 /**
  * api性能测试执行调度 服务
@@ -102,6 +99,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     //apiPerfId：对应的响应结果
     private final static Map<String, ApiPerfTestResponse> perfTestResponseMap = new ConcurrentHashMap<>();
 
+    private Map<String, ScheduledFuture<?>> scheduleFutureMap = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
+
     private List<AgentConfig> agentConfigList;
 
     @Override
@@ -115,20 +115,44 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         String apiPerfInstanceId = createInitApiPerfInstance(apiPerfId);
         try {
+            // 执行性能测试
             executeStart(apiPerfTestRequest);
+
+            //防止还没执行就开始获取结果保存
+            Thread.sleep(1500);
+
+            //不断获取性能测试结果存入更新数据库
+            ScheduledFuture<?> scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(() -> {
+                //获取数据
+                ApiPerfTestResponse apiPerfTestResponse = getResult(apiPerfTestRequest);
+                updateApiPerfInstance(apiPerfTestResponse,apiPerfId);
+
+                if(!Objects.equals(apiPerfTestResponse.getApiPerfInstance().getStatus(), MagicValue.TEST_STATUS_START)){
+                    closeThread(apiPerfId);
+                }
+            }, 0, 2, TimeUnit.SECONDS);
+            scheduleFutureMap.put(apiPerfId, scheduledFuture);
+
         }catch (Exception e){
             updateApiPerfInstanceStatus(apiPerfInstanceId,MagicValue.TEST_STATUS_FAIL);
-            //更新状态为失败
 
-            if(e instanceof ApplicationException){
+            //更新状态为失败
+            if (e instanceof ApplicationException) {
                 int errorCode = ((ApplicationException) e).getErrorCode();
-                throw new ApplicationException(errorCode,e.getMessage());
-            }else {
-                throw new ApplicationException(10001,e.getMessage());
+                throw new ApplicationException(errorCode, e.getMessage());
+            } else {
+                throw new ApplicationException(10001, e.getMessage());
             }
         }
 
         return false;
+    }
+
+    private void closeThread(String caseId) {
+        ScheduledFuture<?> scheduledFuture = scheduleFutureMap.remove(caseId);
+        if (scheduledFuture != null) {
+            scheduledFuture.cancel(true);
+        }
     }
 
 
@@ -191,17 +215,10 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     }
 
     @Override
-    public ApiPerfTestResponse result(ApiPerfTestRequest apiPerfTestRequest) {
-
-        //获取数据
-        ApiPerfTestResponse apiPerfTestResponse = getResult(apiPerfTestRequest);
-
-        //更新性能用例详情
-        String apiPerfId = apiPerfTestRequest.getApiPerfId();
-        updateApiPerfInstance(apiPerfTestResponse,apiPerfId);
-
-
-        return apiPerfTestResponse;
+    public ApiPerfInstance result(String apiPerfId) {
+        String apiPerfInstanceId = instanceService.getRecentExecuteInstanceId(apiPerfId);
+        ApiPerfInstance apiPerfInstance = apiPerfInstanceService.findApiPerfInstance(apiPerfInstanceId);
+        return apiPerfInstance;
     }
 
 

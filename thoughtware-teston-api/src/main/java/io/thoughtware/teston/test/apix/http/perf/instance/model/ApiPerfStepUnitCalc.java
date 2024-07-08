@@ -2,12 +2,14 @@ package io.thoughtware.teston.test.apix.http.perf.instance.model;
 
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
+import io.thoughtware.teston.common.PercentileEstimator;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 接口性能关联的场景用例下的单个接口单元 模型
@@ -18,6 +20,7 @@ public class ApiPerfStepUnitCalc extends BaseModel {
     private String id;
     private String name;
     private String apiPerfStepId;
+    private String apiPerfStepUnitId;
     private String apiPerfStepInstanceId;
     private int totalRequests;
     private int successfulRequests;
@@ -31,6 +34,7 @@ public class ApiPerfStepUnitCalc extends BaseModel {
     private double percentile90;
     private double percentile95;
     private double percentile99;
+    private Map<Integer, PercentileEstimator> percentileEstimators;
 
     public ApiPerfStepUnitCalc() {
         this.successfulRequests = 0;
@@ -68,6 +72,14 @@ public class ApiPerfStepUnitCalc extends BaseModel {
 
     public void setApiPerfStepId(String apiPerfStepId) {
         this.apiPerfStepId = apiPerfStepId;
+    }
+
+    public String getApiPerfStepUnitId() {
+        return apiPerfStepUnitId;
+    }
+
+    public void setApiPerfStepUnitId(String apiPerfStepUnitId) {
+        this.apiPerfStepUnitId = apiPerfStepUnitId;
     }
 
     public String getApiPerfStepInstanceId() {
@@ -174,5 +186,11 @@ public class ApiPerfStepUnitCalc extends BaseModel {
         this.percentile99 = percentile99;
     }
 
+    public Map<Integer, PercentileEstimator> getPercentileEstimators() {
+        return percentileEstimators;
+    }
 
+    public void setPercentileEstimators(Map<Integer, PercentileEstimator> percentileEstimators) {
+        this.percentileEstimators = percentileEstimators;
+    }
 }

@@ -7,6 +7,7 @@ import io.thoughtware.core.Result;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestRequest;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
 import io.thoughtware.teston.test.apix.http.perf.execute.service.ApiPerfExecuteDispatchService;
+import io.thoughtware.teston.test.apix.http.perf.instance.model.ApiPerfInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,9 @@ public class ApiPerfTestDispatchController {
     @RequestMapping(path = "/result", method = RequestMethod.POST)
     @ApiMethod(name = "result", desc = "获取性能测试结果")
     @ApiParam(name = "apiPerfTestRequest", desc = "执行需要传的参数", required = true)
-    public Result<ApiPerfTestResponse> exeResult(@RequestBody @Valid ApiPerfTestRequest apiPerfTestRequest) {
-        ApiPerfTestResponse apiPerfTestResponse = apiPerfExecuteDispatchService.result(apiPerfTestRequest);
-        return Result.ok(apiPerfTestResponse);
+    public Result<ApiPerfInstance> exeResult(String apiPerfId) {
+        ApiPerfInstance result = apiPerfExecuteDispatchService.result(apiPerfId);
+        return Result.ok(result);
     }
 
     @RequestMapping(path = "/stop", method = RequestMethod.POST)
