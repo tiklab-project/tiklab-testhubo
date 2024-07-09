@@ -102,7 +102,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     private Map<String, ScheduledFuture<?>> scheduleFutureMap = new ConcurrentHashMap<>();
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
 
-    private List<AgentConfig> agentConfigList;
+    //用例id : agentId
+    private  HashMap<String, String> apiPerfIdAndAgentIdMap = new HashMap<>();
 
     @Override
     public Boolean execute(ApiPerfTestRequest apiPerfTestRequest) {
@@ -119,7 +120,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             executeStart(apiPerfTestRequest);
 
             //防止还没执行就开始获取结果保存
-            Thread.sleep(1500);
+            Thread.sleep(1100);
 
             //不断获取性能测试结果存入更新数据库
             ScheduledFuture<?> scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(() -> {
@@ -130,13 +131,12 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
                 if(!Objects.equals(apiPerfTestResponse.getApiPerfInstance().getStatus(), MagicValue.TEST_STATUS_START)){
                     closeThread(apiPerfId);
                 }
-            }, 0, 2, TimeUnit.SECONDS);
+            }, 1, 2, TimeUnit.SECONDS);
             scheduleFutureMap.put(apiPerfId, scheduledFuture);
-
         }catch (Exception e){
+            //更新状态为失败
             updateApiPerfInstanceStatus(apiPerfInstanceId,MagicValue.TEST_STATUS_FAIL);
 
-            //更新状态为失败
             if (e instanceof ApplicationException) {
                 int errorCode = ((ApplicationException) e).getErrorCode();
                 throw new ApplicationException(errorCode, e.getMessage());
@@ -165,7 +165,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiPerfTestRequest.setApiPerfStepTestData(apiPerfStepTestData);
 
         //获取agentId，agentList index 从0开始
-        String agentId = agentConfigService.getAgentList().get(0).getId();
+        String agentId = apiPerfTestRequest.getAgentId();
+        apiPerfIdAndAgentIdMap.put(apiPerfId,agentId);
 
         //执行测试
         JSONObject apiUnitObject = new JSONObject();
@@ -268,7 +269,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiUnitObject.put("caseId",apiPerfId);
 
         //获取agentId，agentList index 从0开始
-        String agentId = agentConfigService.getAgentList().get(0).getId();
+        String agentId = apiPerfIdAndAgentIdMap.get(apiPerfId);
         wsTestService.sendMessageExe(agentId,apiUnitObject,null);
     }
 
