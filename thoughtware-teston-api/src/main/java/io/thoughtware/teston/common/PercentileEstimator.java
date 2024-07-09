@@ -13,15 +13,4 @@ public interface PercentileEstimator {
      */
     double estimate();
 
-    /**
-     * 获取此估算器正在计算的百分位数
-     * @return 百分位数（0到1之间的值）
-     */
-    double getPercentile();
-
-    /**
-     * 获取已处理的数据点数量
-     * @return 数据点数量
-     */
-    long getCount();
 }
