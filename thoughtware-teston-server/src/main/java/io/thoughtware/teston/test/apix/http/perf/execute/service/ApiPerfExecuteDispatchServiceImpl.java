@@ -5,8 +5,6 @@ import io.thoughtware.core.exception.ApplicationException;
 import io.thoughtware.teston.common.TestUtil;
 import io.thoughtware.teston.instance.model.Instance;
 import io.thoughtware.teston.instance.service.InstanceService;
-import io.thoughtware.teston.support.agentconfig.model.AgentConfig;
-import io.thoughtware.teston.support.agentconfig.service.AgentConfigService;
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfStepTestData;
 import io.thoughtware.teston.test.apix.http.perf.instance.model.*;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfStepInstanceService;
@@ -30,7 +28,6 @@ import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestReques
 import io.thoughtware.teston.test.apix.http.perf.execute.model.ApiPerfTestResponse;
 import io.thoughtware.teston.test.apix.http.perf.instance.service.ApiPerfInstanceService;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
-import io.thoughtware.teston.support.utils.TestApixUtil;
 
 import io.thoughtware.teston.test.common.wstest.WsTestService;
 import org.slf4j.Logger;
@@ -62,12 +59,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     ApiPerfInstanceService apiPerfInstanceService;
 
     @Autowired
-    AgentConfigService agentConfigService;
-
-    @Autowired
-    TestApixUtil testApixUtil;
-
-    @Autowired
     VariableService variableService;
 
     @Autowired
@@ -92,16 +83,16 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
     ApiPerfStepUnitCalcService apiPerfStepUnitCalcService;
 
 
+    private Map<String, ScheduledFuture<?>> scheduleFutureMap = new ConcurrentHashMap<>();
+    //定时器，不断更新数据库结果的
+    private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
+    //定时器，不断获取agent发回来的数据
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
 
     //是否存在正在执行的性能测试
     private static Set<String> apiPerfIdSet = new HashSet<>();
     //apiPerfId：对应的响应结果
     private final static Map<String, ApiPerfTestResponse> perfTestResponseMap = new ConcurrentHashMap<>();
-
-    private Map<String, ScheduledFuture<?>> scheduleFutureMap = new ConcurrentHashMap<>();
-    private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
-
     //用例id : agentId
     private  HashMap<String, String> apiPerfIdAndAgentIdMap = new HashMap<>();
 
@@ -164,7 +155,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         List<ApiPerfStepTestData> apiPerfStepTestData = processApiPerfTestData(apiPerfTestRequest);
         apiPerfTestRequest.setApiPerfStepTestData(apiPerfStepTestData);
 
-        //获取agentId，agentList index 从0开始
+        //获取agentId
         String agentId = apiPerfTestRequest.getAgentId();
         apiPerfIdAndAgentIdMap.put(apiPerfId,agentId);
 
