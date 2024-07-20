@@ -6,6 +6,7 @@ import io.thoughtware.toolkit.join.annotation.FindList;
 import io.thoughtware.toolkit.join.annotation.FindOne;
 import io.thoughtware.teston.integrated.teamwire.workItemBind.model.WorkItemBind;
 import io.thoughtware.teston.integrated.teamwire.workItemBind.model.WorkItemBindQuery;
+import io.thoughtware.toolkit.join.annotation.JoinProvider;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
 * 绑定的缺陷 服务接口
 */
+@JoinProvider(model = WorkItemBind.class)
 public interface WorkItemBindService {
 
     /**

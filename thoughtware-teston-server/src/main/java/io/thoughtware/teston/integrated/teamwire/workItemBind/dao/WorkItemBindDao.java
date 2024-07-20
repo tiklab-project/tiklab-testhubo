@@ -91,6 +91,7 @@ public class WorkItemBindDao {
     public List<WorkItemBindEntity> findWorkItemBindList(WorkItemBindQuery workItemBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WorkItemBindEntity.class)
                 .eq("caseId",workItemBindQuery.getCaseId())
+                .eq("repositoryId",workItemBindQuery.getRepositoryId())
                 .orders(workItemBindQuery.getOrderParams())
                 .get();
         return jpaTemplate.findList(queryCondition, WorkItemBindEntity.class);
@@ -104,6 +105,7 @@ public class WorkItemBindDao {
     public Pagination<WorkItemBindEntity> findWorkItemBindPage(WorkItemBindQuery workItemBindQuery) {
         QueryCondition queryCondition = QueryBuilders.createQuery(WorkItemBindEntity.class)
                 .eq("caseId",workItemBindQuery.getCaseId())
+                .eq("repositoryId",workItemBindQuery.getRepositoryId())
                 .orders(workItemBindQuery.getOrderParams())
                 .pagination(workItemBindQuery.getPageParam())
                 .get();

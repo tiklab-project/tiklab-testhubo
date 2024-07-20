@@ -2,6 +2,7 @@ package io.thoughtware.teston.integrated.teamwire.workItemBind.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.toolkit.beans.annotation.Mapper;
 import io.thoughtware.toolkit.beans.annotation.Mapping;
 import io.thoughtware.toolkit.beans.annotation.Mappings;
@@ -33,7 +34,14 @@ public class WorkItemBind extends BaseModel {
     private WorkItemTestOn workItem;
 
     @ApiProperty(name="caseId",desc="用例id")
-    private String caseId;
+    @Mappings({
+            @Mapping(source = "testCase.id",target = "caseId")
+    })
+    @JoinQuery(key = "id")
+    private TestCase testCase;
+
+    @ApiProperty(name="repositoryId",desc="仓库id")
+    private String repositoryId;
 
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -58,12 +66,20 @@ public class WorkItemBind extends BaseModel {
         this.workItem = workItem;
     }
 
-    public String getCaseId() {
-        return caseId;
+    public TestCase getTestCase() {
+        return testCase;
     }
 
-    public void setCaseId(String caseId) {
-        this.caseId = caseId;
+    public void setTestCase(TestCase testCase) {
+        this.testCase = testCase;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 
     public Timestamp getCreateTime() {

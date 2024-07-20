@@ -8,6 +8,8 @@ import io.thoughtware.teston.integrated.teamwire.workItem.model.WorkItem;
 import io.thoughtware.teston.integrated.teamwire.workItem.model.WorkItemTestOn;
 import io.thoughtware.teston.integrated.teamwire.workItemBind.model.WorkItemBind;
 import io.thoughtware.teston.integrated.teamwire.workItemBind.model.WorkItemBindQuery;
+import io.thoughtware.teston.test.test.model.TestCase;
+import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.toolkit.beans.BeanMapper;
 import io.thoughtware.core.page.Pagination;
 import io.thoughtware.core.page.PaginationBuilder;
@@ -32,6 +34,9 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
 
     @Autowired
     WorkItemBindDao workItemBindDao;
+
+    @Autowired
+    TestCaseService testCaseService;
 
     @Autowired
     JoinTemplate joinTemplate;
@@ -123,6 +128,9 @@ public class WorkItemBindServiceImpl implements WorkItemBindService {
         //
         if(workItemBindList!=null&&workItemBindList.size() > 0){
             for(WorkItemBind workItemBind:workItemBindList){
+                String caseId = workItemBind.getTestCase().getId();
+                TestCase testCase = testCaseService.findTestCase(caseId);
+                workItemBind.setTestCase(testCase);
 
                 String teamWireUrl = getTeamWireUrl(workItemBindQuery.getRepositoryId());
                 String findWorkItemUrl = teamWireUrl + "/api/workItem/findWorkItem";

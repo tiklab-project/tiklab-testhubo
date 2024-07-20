@@ -26,6 +26,9 @@ public class WorkItemBindEntity implements Serializable {
     @Column(name = "case_id")
     private String caseId;
 
+    @Column(name = "repository_id")
+    private String repositoryId;
+
     // 创建时间
     @Column(name = "create_time")
     private Timestamp createTime;
@@ -61,5 +64,13 @@ public class WorkItemBindEntity implements Serializable {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }

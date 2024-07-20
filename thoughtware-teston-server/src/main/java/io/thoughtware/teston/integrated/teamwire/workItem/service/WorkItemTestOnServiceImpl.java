@@ -151,7 +151,7 @@ public class WorkItemTestOnServiceImpl implements WorkItemTestOnService {
         WorkItemTestOn workItemTestOn1 = new WorkItemTestOn();
 //        workItemTestOn1.setId(defectId);
         workItemBind.setWorkItem(workItemTestOn1);
-        workItemBind.setCaseId(workItemTestOn.getCaseId());
+        workItemBind.getTestCase().setId(workItemTestOn.getCaseId());
 
         String workItemBindId = workItemBindService.createWorkItemBind(workItemBind);
 
