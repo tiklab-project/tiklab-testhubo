@@ -167,4 +167,10 @@ public class InstanceDao {
         return num;
     }
 
+    public int findInstanceNumByrepositoryId(String repositoryId) {
+        String numSql = "Select count(1) as total from teston_instance where repository_id = '" + repositoryId+ "'";
+        Integer num = jpaTemplate.getJdbcTemplate().queryForObject(numSql, new Object[]{}, Integer.class);
+
+        return num;
+    }
 }

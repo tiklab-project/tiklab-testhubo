@@ -1,6 +1,7 @@
 package io.thoughtware.teston.repository.service;
 
 import io.thoughtware.teston.category.service.CategoryService;
+import io.thoughtware.teston.instance.service.InstanceService;
 import io.thoughtware.teston.repository.model.RepositoryTotal;
 import io.thoughtware.teston.test.test.service.TestCaseService;
 import io.thoughtware.teston.testplan.cases.service.TestPlanService;
@@ -20,7 +21,7 @@ import java.util.*;
 public class RepositoryOverviewServiceImpl implements RepositoryOverviewService {
 
     @Autowired
-    DmUserService dmUserService;
+    InstanceService instanceService;
 
     @Autowired
     TestCaseService testCaseService;
@@ -43,14 +44,11 @@ public class RepositoryOverviewServiceImpl implements RepositoryOverviewService 
         int testPlanNum = testPlanService.findTestPlanNum(repositoryId);
         repositoryTotal.setPlanTotal(testPlanNum);
 
+        int instanceNumByRepositoryId = instanceService.findInstanceNumByRepositoryId(repositoryId);
+        repositoryTotal.setInstanceTotal(instanceNumByRepositoryId);
+
         int categoryNum = categoryService.findCategoryNum(repositoryId);
         repositoryTotal.setCategoryTotal(categoryNum);
-
-        //成员总和
-        DmUserQuery dmUserQuery = new DmUserQuery();
-        dmUserQuery.setDomainId(repositoryId);
-        List<DmUser> dmUserList = dmUserService.findDmUserList(dmUserQuery);
-        repositoryTotal.setMemberTotal(dmUserList.size());
 
         repositoryTotal.setReviewTotal(0);
 

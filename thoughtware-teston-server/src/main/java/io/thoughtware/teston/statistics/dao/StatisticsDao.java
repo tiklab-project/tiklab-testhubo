@@ -164,5 +164,65 @@ public class StatisticsDao {
     }
 
 
+    public List<Map<String, Object>> getAllCaseTestResult(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel){
+        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+
+        String sql = "WITH LastTestInstance AS (\n" +
+                "    SELECT \n" +
+                "        t1.id AS testcase_id,\n" +
+                "        t1.case_type,\n" +
+                "        t2.status,\n" +
+                "        ROW_NUMBER() OVER (PARTITION BY t1.id ORDER BY t2.create_time DESC) AS rn\n" +
+                "    FROM \n" +
+                "        teston_testcase t1\n" +
+                "    LEFT JOIN \n" +
+                "        teston_instance t2\n" +
+                "    ON \n" +
+                "        t1.id = t2.belong_id\n" +
+                "    WHERE\n" +
+                "        t1.repository_id = ?\n" +
+                "),\n" +
+                "TypeStatistics AS (\n" +
+                "    SELECT \n" +
+                "        case_type,\n" +
+                "        SUM(CASE \n" +
+                "                WHEN case_type = 'api-perform' AND status = 'complete' THEN 1 \n" +
+                "                WHEN case_type != 'api-perform' AND status = 'success' THEN 1 \n" +
+                "                ELSE 0 \n" +
+                "            END) AS pass,\n" +
+                "        SUM(CASE \n" +
+                "                WHEN case_type = 'api-perform' AND status != 'complete' AND status != 'start' THEN 1 \n" +
+                "                WHEN case_type != 'api-perform' AND status = 'fail' THEN 1 \n" +
+                "                ELSE 0 \n" +
+                "            END) AS fail,\n" +
+                "        SUM(CASE \n" +
+                "                WHEN status IS NULL THEN 1 \n" +
+                "                WHEN case_type = 'api-perform' AND status = 'start' THEN 1\n" +
+                "                ELSE 0 \n" +
+                "            END) AS notTested\n" +
+                "    FROM \n" +
+                "        LastTestInstance\n" +
+                "    WHERE \n" +
+                "        rn = 1 AND case_type != 'function'\n" +
+                "    GROUP BY \n" +
+                "        case_type\n" +
+                "),\n" +
+                "TotalStatistics AS (\n" +
+                "    SELECT\n" +
+                "        'total' AS case_type,\n" +
+                "        SUM(pass) AS pass,\n" +
+                "        SUM(fail) AS fail,\n" +
+                "        SUM(notTested) AS notTested\n" +
+                "    FROM\n" +
+                "        TypeStatistics\n" +
+                ")\n" +
+                "SELECT * FROM TypeStatistics\n" +
+                "UNION ALL\n" +
+                "SELECT * FROM TotalStatistics;\n";
+
+        List<Map<String, Object>> resultList = jpaTemplate.getJdbcTemplate().queryForList(sql, repositoryId);
+
+        return resultList;
+    }
 
 }

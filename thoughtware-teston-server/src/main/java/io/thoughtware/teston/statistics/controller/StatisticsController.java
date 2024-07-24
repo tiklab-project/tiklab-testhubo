@@ -50,5 +50,11 @@ public class StatisticsController {
         return Result.ok(caseTestStatistics);
     }
 
+    @RequestMapping(path="/getAllCaseTestStatistics",method = RequestMethod.POST)
+    public Result<Map<String, Map<String, Integer>>> getAllCaseTestStatistics(@RequestBody @NotNull @Valid NewCreateCaseStatisticsModel newCreateCaseStatisticsModel){
+        Map<String, Map<String, Integer>> allCaseTestStatistics = statisticsService.getAllCaseTestStatistics(newCreateCaseStatisticsModel);
+
+        return Result.ok(allCaseTestStatistics);
+    }
 
 }

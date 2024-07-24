@@ -93,6 +93,7 @@ public interface InstanceService {
     int getRecentExecuteNum(String belongId);
 
 
+
     /**
      * 获取最近一次执行历史id
      * @param belongId
@@ -106,5 +107,12 @@ public interface InstanceService {
      * @return
      */
     int findInstanceNum(String belongId);
+
+    /**
+     * 查询仓库下的历史数量
+     * @param repositoryId
+     * @return
+     */
+    int findInstanceNumByRepositoryId(String repositoryId);
 
 }

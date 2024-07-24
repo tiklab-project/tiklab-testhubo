@@ -85,26 +85,21 @@ public class StatisticsServicelmpl implements StatisticsService {
         List<Map<String, Object>> caseTestResult = statisticsDao.getCaseTestResult(newCreateCaseStatisticsModel);
 
         // 转换 caseTestResult 的格式
-        Map<String, Map<String, Integer>> formattedCaseTestResult = new HashMap<>();
-        for (Map<String, Object> result : caseTestResult) {
-            String caseType = (String) result.get("case_type");
-            int pass = ((Number) result.get("pass")).intValue();
-            int fail = ((Number) result.get("fail")).intValue();
-            int notTested = ((Number) result.get("nottested")).intValue();
-
-            Map<String, Integer> statusMap = new HashMap<>();
-            statusMap.put("pass", pass);
-            statusMap.put("fail", fail);
-            statusMap.put("notTested", notTested);
-
-            formattedCaseTestResult.put(caseType, statusMap);
-        }
+        Map<String, Map<String, Integer>> formattedCaseTestResult = formattedCaseTestResult(caseTestResult);
 
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("status", totalAndStatus);
         resultMap.put("case", formattedCaseTestResult);
 
         return  resultMap;
+    }
+
+    @Override
+    public Map<String, Map<String, Integer>> getAllCaseTestStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
+        List<Map<String, Object>> allCaseTestResult = statisticsDao.getAllCaseTestResult(newCreateCaseStatisticsModel);
+        Map<String, Map<String, Integer>> stringMapMap = formattedCaseTestResult(allCaseTestResult);
+
+        return stringMapMap;
     }
 
 
@@ -126,6 +121,28 @@ public class StatisticsServicelmpl implements StatisticsService {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return dates;
+    }
+
+    /**
+     * 转换格式
+     */
+    private Map<String, Map<String, Integer>> formattedCaseTestResult(List<Map<String, Object>> caseTestResult){
+        Map<String, Map<String, Integer>> formattedCaseTestResult = new HashMap<>();
+        for (Map<String, Object> result : caseTestResult) {
+            String caseType = (String) result.get("case_type");
+            int pass = ((Number) result.get("pass")).intValue();
+            int fail = ((Number) result.get("fail")).intValue();
+            int notTested = ((Number) result.get("nottested")).intValue();
+
+            Map<String, Integer> statusMap = new HashMap<>();
+            statusMap.put("pass", pass);
+            statusMap.put("fail", fail);
+            statusMap.put("notTested", notTested);
+
+            formattedCaseTestResult.put(caseType, statusMap);
+        }
+
+        return formattedCaseTestResult;
     }
 }
 

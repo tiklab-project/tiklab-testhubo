@@ -32,4 +32,9 @@ public interface StatisticsService {
      * @return
      */
     HashMap<String,  Object>  getCaseTestStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel);
+
+    /**
+     * 查询用例的执行情况
+     */
+    Map<String, Map<String, Integer>>  getAllCaseTestStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel);
 }

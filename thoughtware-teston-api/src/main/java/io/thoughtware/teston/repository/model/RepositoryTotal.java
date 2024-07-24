@@ -19,8 +19,7 @@ public class RepositoryTotal extends BaseModel {
     @ApiProperty(name="reviewTotal",desc="用例评审总和")
     private Integer reviewTotal;
 
-    @ApiProperty(name="memberTotal",desc="成员总和")
-    private Integer memberTotal;
+    private Integer instanceTotal;
 
     private Integer caseTotal;
 
@@ -33,13 +32,6 @@ public class RepositoryTotal extends BaseModel {
         this.planTotal = planTotal;
     }
 
-    public Integer getCategoryTotal() {
-        return categoryTotal;
-    }
-
-    public void setCategoryTotal(Integer categoryTotal) {
-        this.categoryTotal = categoryTotal;
-    }
 
     public Integer getReviewTotal() {
         return reviewTotal;
@@ -49,13 +41,6 @@ public class RepositoryTotal extends BaseModel {
         this.reviewTotal = reviewTotal;
     }
 
-    public Integer getMemberTotal() {
-        return memberTotal;
-    }
-
-    public void setMemberTotal(Integer memberTotal) {
-        this.memberTotal = memberTotal;
-    }
 
     public Integer getCaseTotal() {
         return caseTotal;
@@ -63,5 +48,21 @@ public class RepositoryTotal extends BaseModel {
 
     public void setCaseTotal(Integer caseTotal) {
         this.caseTotal = caseTotal;
+    }
+
+    public Integer getInstanceTotal() {
+        return instanceTotal;
+    }
+
+    public void setInstanceTotal(Integer instanceTotal) {
+        this.instanceTotal = instanceTotal;
+    }
+
+    public Integer getCategoryTotal() {
+        return categoryTotal;
+    }
+
+    public void setCategoryTotal(Integer categoryTotal) {
+        this.categoryTotal = categoryTotal;
     }
 }
