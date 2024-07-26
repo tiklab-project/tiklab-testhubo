@@ -55,8 +55,8 @@ public class TestOnUnit {
         opLogType.setBgroup("teston");
         log.setActionType(opLogType);
 
-        User user = new User();
-        user.setId(LoginContext.getLoginId());
+        String userId = LoginContext.getLoginId();
+        User user = userService.findOne(userId);
         log.setUser(user);
 
         log.setModule(module);
