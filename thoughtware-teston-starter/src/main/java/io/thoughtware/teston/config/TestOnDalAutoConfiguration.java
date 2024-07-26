@@ -141,6 +141,9 @@ public class TestOnDalAutoConfiguration {
         dsmConfig.newVersion("1.1.2", new String[]{
                 "teston_1.1.2",
         });
+        dsmConfig.newVersion("1.1.3", new String[]{
+                "teston_1.1.3",
+        });
         return dsmConfig;
     }
 }

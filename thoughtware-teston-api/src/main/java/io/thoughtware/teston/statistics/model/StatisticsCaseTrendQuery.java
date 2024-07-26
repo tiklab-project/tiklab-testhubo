@@ -1,26 +1,25 @@
 package io.thoughtware.teston.statistics.model;
 
-import io.thoughtware.core.BaseModel;
+import io.thoughtware.core.order.Order;
+import io.thoughtware.core.order.OrderBuilders;
+import io.thoughtware.core.page.Page;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
-import io.thoughtware.toolkit.join.annotation.Join;
 
 import java.util.Date;
+import java.util.List;
 
-/**
- * 获取系统统计信息 模型
- */
 @ApiModel
-@Join
-public class NewCreateCaseStatisticsModel extends BaseModel {
+public class StatisticsCaseTrendQuery {
+
 
     private String repositoryId;
 
     @ApiProperty(name="startTime",desc="开始时间")
-    private Date startTime;
+    private String startTime;
 
     @ApiProperty(name="endTime",desc="结束时间")
-    private Date endTime;
+    private String endTime;
 
     public String getRepositoryId() {
         return repositoryId;
@@ -30,19 +29,19 @@ public class NewCreateCaseStatisticsModel extends BaseModel {
         this.repositoryId = repositoryId;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }

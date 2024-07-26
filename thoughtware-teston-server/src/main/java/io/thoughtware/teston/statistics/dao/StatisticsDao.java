@@ -1,12 +1,11 @@
 package io.thoughtware.teston.statistics.dao;
 
 import io.thoughtware.dal.jpa.JpaTemplate;
-import io.thoughtware.teston.statistics.model.NewCreateCaseStatisticsModel;
+import io.thoughtware.teston.statistics.model.CaseStatisticsModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -41,13 +40,13 @@ public class StatisticsDao {
 
     /**
      * 获取新建的用例数量
-     * @param newCreateCaseStatisticsModel
+     * @param caseStatisticsModel
      * @return
      */
-    public List<Map<String, Object>> getNewCreateCaseStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
-        Date startTime = newCreateCaseStatisticsModel.getStartTime();
-        Date endTime = newCreateCaseStatisticsModel.getEndTime();
-        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+    public List<Map<String, Object>> getNewCreateCaseStatistics(CaseStatisticsModel caseStatisticsModel) {
+        Date startTime = caseStatisticsModel.getStartTime();
+        Date endTime = caseStatisticsModel.getEndTime();
+        String repositoryId = caseStatisticsModel.getRepositoryId();
 
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT DATE(create_time) AS date, case_type, COUNT(*) AS count ")
@@ -87,8 +86,8 @@ public class StatisticsDao {
     /**
      * 获取总数和状态数
      */
-    public Map<String,Object> getTotalAndStatus(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel){
-        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+    public Map<String,Object> getTotalAndStatus(CaseStatisticsModel caseStatisticsModel){
+        String repositoryId = caseStatisticsModel.getRepositoryId();
 
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT ")
@@ -117,8 +116,8 @@ public class StatisticsDao {
     }
 
 
-    public List<Map<String, Object>> getCaseTestResult(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel){
-        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+    public List<Map<String, Object>> getCaseTestResult(CaseStatisticsModel caseStatisticsModel){
+        String repositoryId = caseStatisticsModel.getRepositoryId();
 
         String sql = "WITH LastTestInstance AS (\n" +
                 "    SELECT \n" +
@@ -166,8 +165,8 @@ public class StatisticsDao {
     }
 
 
-    public List<Map<String, Object>> getAllCaseTestResult(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel){
-        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+    public List<Map<String, Object>> getAllCaseTestResult(CaseStatisticsModel caseStatisticsModel){
+        String repositoryId = caseStatisticsModel.getRepositoryId();
 
         String sql = "WITH LastTestInstance AS (\n" +
                 "    SELECT \n" +
@@ -227,11 +226,11 @@ public class StatisticsDao {
         return resultList;
     }
 
-    public List<Map<String, Object>> getCaseTestResultNumberStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
-        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+    public List<Map<String, Object>> getCaseTestResultNumberStatistics(CaseStatisticsModel caseStatisticsModel) {
+        String repositoryId = caseStatisticsModel.getRepositoryId();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String startTime = sdf.format(newCreateCaseStatisticsModel.getStartTime());
-        String endTime = sdf.format(newCreateCaseStatisticsModel.getEndTime());
+        String startTime = sdf.format(caseStatisticsModel.getStartTime());
+        String endTime = sdf.format(caseStatisticsModel.getEndTime());
 
         String sql = "WITH FilteredInstances AS (\n" +
                 "    SELECT\n" +

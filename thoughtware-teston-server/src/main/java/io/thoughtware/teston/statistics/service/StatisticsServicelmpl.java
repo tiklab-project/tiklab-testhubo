@@ -3,7 +3,7 @@ package io.thoughtware.teston.statistics.service;
 
 import io.thoughtware.teston.common.MagicValue;
 import io.thoughtware.teston.statistics.dao.StatisticsDao;
-import io.thoughtware.teston.statistics.model.NewCreateCaseStatisticsModel;
+import io.thoughtware.teston.statistics.model.CaseStatisticsModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +17,15 @@ public class StatisticsServicelmpl implements StatisticsService {
 
 
     @Override
-    public Map<String, Object> getTotalAndStatusStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
-        Map<String, Object> statusList = statisticsDao.getTotalAndStatus( newCreateCaseStatisticsModel);
+    public Map<String, Object> getTotalAndStatusStatistics(CaseStatisticsModel caseStatisticsModel) {
+        Map<String, Object> statusList = statisticsDao.getTotalAndStatus(caseStatisticsModel);
         return statusList;
     }
 
     @Override
-    public HashMap<String,  List<Map<String, Object>>>  getNewCreateCaseStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
+    public HashMap<String,  List<Map<String, Object>>>  getNewCreateCaseStatistics(CaseStatisticsModel caseStatisticsModel) {
 
-        List<Map<String, Object>> resultList = statisticsDao.getNewCreateCaseStatistics(newCreateCaseStatisticsModel);
+        List<Map<String, Object>> resultList = statisticsDao.getNewCreateCaseStatistics(caseStatisticsModel);
 
         // 将查询结果转为日期到类型和数量的映射
         Map<Date, Map<String, Integer>> resultMap = new HashMap<>();
@@ -36,8 +36,8 @@ public class StatisticsServicelmpl implements StatisticsService {
             resultMap.computeIfAbsent(date, k -> new HashMap<>()).put(type, count);
         }
 
-        Date startTime = newCreateCaseStatisticsModel.getStartTime();
-        Date endTime = newCreateCaseStatisticsModel.getEndTime();
+        Date startTime = caseStatisticsModel.getStartTime();
+        Date endTime = caseStatisticsModel.getEndTime();
         // 生成日期范围
         List<java.sql.Date> dates = generateDateRange(startTime, endTime);
 
@@ -80,9 +80,9 @@ public class StatisticsServicelmpl implements StatisticsService {
 
 
     @Override
-    public HashMap<String,  Object>  getCaseTestStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
-        Map<String, Object> totalAndStatus = statisticsDao.getTotalAndStatus(newCreateCaseStatisticsModel);
-        List<Map<String, Object>> caseTestResult = statisticsDao.getCaseTestResult(newCreateCaseStatisticsModel);
+    public HashMap<String,  Object>  getCaseTestStatistics(CaseStatisticsModel caseStatisticsModel) {
+        Map<String, Object> totalAndStatus = statisticsDao.getTotalAndStatus(caseStatisticsModel);
+        List<Map<String, Object>> caseTestResult = statisticsDao.getCaseTestResult(caseStatisticsModel);
 
         // 转换 caseTestResult 的格式
         Map<String, Map<String, Integer>> formattedCaseTestResult = formattedCaseTestResult(caseTestResult);
@@ -95,16 +95,16 @@ public class StatisticsServicelmpl implements StatisticsService {
     }
 
     @Override
-    public Map<String, Map<String, Integer>> getAllCaseTestStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
-        List<Map<String, Object>> allCaseTestResult = statisticsDao.getAllCaseTestResult(newCreateCaseStatisticsModel);
+    public Map<String, Map<String, Integer>> getAllCaseTestStatistics(CaseStatisticsModel caseStatisticsModel) {
+        List<Map<String, Object>> allCaseTestResult = statisticsDao.getAllCaseTestResult(caseStatisticsModel);
         Map<String, Map<String, Integer>> stringMapMap = formattedCaseTestResult(allCaseTestResult);
 
         return stringMapMap;
     }
 
     @Override
-    public Map<String, Map<String, Integer>> getCaseTestResultNumberStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
-        List<Map<String, Object>> caseTestResultNumberStatistics = statisticsDao.getCaseTestResultNumberStatistics(newCreateCaseStatisticsModel);
+    public Map<String, Map<String, Integer>> getCaseTestResultNumberStatistics(CaseStatisticsModel caseStatisticsModel) {
+        List<Map<String, Object>> caseTestResultNumberStatistics = statisticsDao.getCaseTestResultNumberStatistics(caseStatisticsModel);
         Map<String, Map<String, Integer>> stringMapMap = formattedCaseTestResult(caseTestResultNumberStatistics);
         return stringMapMap;
     }
