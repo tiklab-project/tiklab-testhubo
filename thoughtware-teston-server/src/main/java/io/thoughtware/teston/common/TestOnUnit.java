@@ -10,6 +10,8 @@ import io.thoughtware.security.logging.logging.service.LoggingByTempService;
 import io.thoughtware.user.user.model.User;
 import io.thoughtware.user.user.service.UserService;
 import io.thoughtware.eam.common.context.LoginContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ import java.util.Map;
 @Service
 public class TestOnUnit {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     UserService userService;
 
@@ -43,50 +47,54 @@ public class TestOnUnit {
 
     /**
      * 日志
-     * @param type
-     * @param module
-     * @param map
      */
     public void log(String type, String module, Map<String,String> map){
+        try {
+            Logging log = new Logging();
+            LoggingType opLogType = new LoggingType();
+            opLogType.setId(type);
+            opLogType.setBgroup("teston");
+            log.setActionType(opLogType);
 
-        Logging log = new Logging();
-        LoggingType opLogType = new LoggingType();
-        opLogType.setId(type);
-        opLogType.setBgroup("teston");
-        log.setActionType(opLogType);
+            String userId = LoginContext.getLoginId();
+            User user = userService.findOne(userId);
+            log.setUser(user);
 
-        String userId = LoginContext.getLoginId();
-        User user = userService.findOne(userId);
-        log.setUser(user);
+            log.setModule(module);
+            log.setAction(map.get("name"));
 
-        log.setModule(module);
-        log.setAction(map.get("name"));
+            log.setLink(map.get("link"));
+            log.setBgroup("teston");
+            log.setData(JSONObject.toJSONString(map));
+            log.setBaseUrl(baseUrl);
 
-        log.setLink(map.get("link"));
-        log.setBgroup("teston");
-        log.setData(JSONObject.toJSONString(map));
-        log.setBaseUrl(baseUrl);
-
-        opLogByTemplService.createLog(log);
+            opLogByTemplService.createLog(log);
+        }catch (Exception e){
+            logger.error("日志创建失败:{}",e.getMessage());
+        }
     }
 
     public void message(Map<String, String> map){
-        SendMessageNotice sendMessageNotice = new SendMessageNotice();
-        String jsonString = JSONObject.toJSONString(map);
+        try {
+            SendMessageNotice sendMessageNotice = new SendMessageNotice();
+            String jsonString = JSONObject.toJSONString(map);
 
-        sendMessageNotice.setSendId(LoginContext.getLoginId());
-        sendMessageNotice.setSiteData(jsonString);
-        sendMessageNotice.setEmailData(jsonString);
-        sendMessageNotice.setDingdingData(jsonString);
-        sendMessageNotice.setQywechatData(jsonString);
+            sendMessageNotice.setSendId(LoginContext.getLoginId());
+            sendMessageNotice.setSiteData(jsonString);
+            sendMessageNotice.setEmailData(jsonString);
+            sendMessageNotice.setDingdingData(jsonString);
+            sendMessageNotice.setQywechatData(jsonString);
 
-        sendMessageNotice.setId("MESSAGE_NOTICE_ID");
-        sendMessageNotice.setBaseUrl(baseUrl);
+            sendMessageNotice.setId("MESSAGE_NOTICE_ID");
+            sendMessageNotice.setBaseUrl(baseUrl);
 
-        sendMessageNotice.setLink(map.get("link"));
-        sendMessageNotice.setAction(map.get("name"));
+            sendMessageNotice.setLink(map.get("link"));
+            sendMessageNotice.setAction(map.get("name"));
 
-        sendMessageNoticeService.sendMessageNotice(sendMessageNotice);
+            sendMessageNoticeService.sendMessageNotice(sendMessageNotice);
+        }catch (Exception e){
+            logger.error("消息发送失败:{}",e.getMessage());
+        }
     }
 
     /**
