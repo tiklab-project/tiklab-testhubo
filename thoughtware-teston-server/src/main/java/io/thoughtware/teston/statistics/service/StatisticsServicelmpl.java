@@ -102,6 +102,13 @@ public class StatisticsServicelmpl implements StatisticsService {
         return stringMapMap;
     }
 
+    @Override
+    public Map<String, Map<String, Integer>> getCaseTestResultNumberStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
+        List<Map<String, Object>> caseTestResultNumberStatistics = statisticsDao.getCaseTestResultNumberStatistics(newCreateCaseStatisticsModel);
+        Map<String, Map<String, Integer>> stringMapMap = formattedCaseTestResult(caseTestResultNumberStatistics);
+        return stringMapMap;
+    }
+
 
     /**
      * 生成日期范围
@@ -132,18 +139,21 @@ public class StatisticsServicelmpl implements StatisticsService {
             String caseType = (String) result.get("case_type");
             int pass = ((Number) result.get("pass")).intValue();
             int fail = ((Number) result.get("fail")).intValue();
-            int notTested = ((Number) result.get("nottested")).intValue();
+            int error = ((Number) result.get("error")).intValue();
 
             Map<String, Integer> statusMap = new HashMap<>();
+            statusMap.put("total", pass+fail+error);
             statusMap.put("pass", pass);
             statusMap.put("fail", fail);
-            statusMap.put("notTested", notTested);
+            statusMap.put("error", error);
 
             formattedCaseTestResult.put(caseType, statusMap);
         }
 
         return formattedCaseTestResult;
     }
+
+
 }
 
 

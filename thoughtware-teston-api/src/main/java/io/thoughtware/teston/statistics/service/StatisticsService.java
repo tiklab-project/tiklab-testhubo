@@ -37,4 +37,12 @@ public interface StatisticsService {
      * 查询用例的执行情况
      */
     Map<String, Map<String, Integer>>  getAllCaseTestStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel);
+
+    /**
+     * 获取测试结果数据
+     * 可以通过repositoryId，时间范围 筛选
+     * @param newCreateCaseStatisticsModel
+     * @return
+     */
+    Map<String, Map<String, Integer>> getCaseTestResultNumberStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel);
 }

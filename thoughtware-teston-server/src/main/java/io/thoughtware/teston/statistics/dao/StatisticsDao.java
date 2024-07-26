@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -224,5 +226,72 @@ public class StatisticsDao {
 
         return resultList;
     }
+
+    public List<Map<String, Object>> getCaseTestResultNumberStatistics(NewCreateCaseStatisticsModel newCreateCaseStatisticsModel) {
+        String repositoryId = newCreateCaseStatisticsModel.getRepositoryId();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startTime = sdf.format(newCreateCaseStatisticsModel.getStartTime());
+        String endTime = sdf.format(newCreateCaseStatisticsModel.getEndTime());
+
+        String sql = "WITH FilteredInstances AS (\n" +
+                "    SELECT\n" +
+                "        type as case_type,\n" +
+                "        status\n" +
+                "    FROM\n" +
+                "        teston_instance\n" +
+                "    WHERE\n" +
+                "        type != 'test-plan'  " ;
+
+            String sql2 =  "  ),\n" +
+                "TypeStatistics AS (\n" +
+                "    SELECT\n" +
+                "        case_type,\n" +
+                "        SUM(CASE\n" +
+                "            WHEN case_type = 'api-perform' AND status = 'complete' THEN 1\n" +
+                "            WHEN case_type != 'api-perform' AND status = 'success' THEN 1\n" +
+                "            ELSE 0\n" +
+                "        END) AS pass,\n" +
+                "        SUM(CASE\n" +
+                "            WHEN case_type = 'api-perform' AND status NOT IN ('complete', 'start') THEN 1\n" +
+                "            WHEN case_type != 'api-perform' AND status = 'fail' THEN 1\n" +
+                "            ELSE 0\n" +
+                "        END) AS fail,\n" +
+                "        SUM(CASE\n" +
+                "            WHEN status = 'error' THEN 1\n" +
+                "            ELSE 0\n" +
+                "        END) AS error\n" +
+                "    FROM\n" +
+                "        FilteredInstances\n" +
+                "    GROUP BY\n" +
+                "        case_type\n" +
+                "),\n" +
+                "TotalStatistics AS (\n" +
+                "    SELECT\n" +
+                "        'total' AS case_type,\n" +
+                "        COALESCE(SUM(pass), 0) AS pass,\n" +
+                "        COALESCE(SUM(fail), 0) AS fail,\n" +
+                "        COALESCE(SUM(error), 0) AS error\n" +
+                "    FROM\n" +
+                "        TypeStatistics\n" +
+                ")\n" +
+                "SELECT * FROM TypeStatistics\n" +
+                "UNION ALL\n" +
+                "SELECT * FROM TotalStatistics;";
+
+
+        if(repositoryId != null){
+            String repositorySql= "  AND repository_id = '" +repositoryId+ "' " ;
+            sql = sql+repositorySql;
+        }
+
+        String sesql = "  AND create_time BETWEEN '"+startTime+"'"+" AND " +"'"+endTime+"'";
+        sql = sql+sesql;
+
+        String allsql = sql+sql2;
+
+        List<Map<String, Object>> maps = jpaTemplate.getJdbcTemplate().queryForList(allsql);
+        return maps;
+    }
+
 
 }
