@@ -135,18 +135,18 @@ public class WorkItem extends BaseModel {
     private String actualBeginTime;
 
     @ApiProperty(name="actualEndTime",desc="实际结束时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @JSONField(format = "yyyy-MM-dd  hh:mm:ss")
     private String actualEndTime;
 
     @ApiProperty(name="buildTime",desc="事项创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private String buildTime;
 
     @ApiProperty(name="updateTime",desc="事项更新时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd")
     private String updateTime;
 
 

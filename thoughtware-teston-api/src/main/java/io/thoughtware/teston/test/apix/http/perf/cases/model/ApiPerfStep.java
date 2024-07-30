@@ -50,7 +50,7 @@ public class ApiPerfStep extends BaseModel{
     private Integer timeCount;
 
     @ApiProperty(name="createTime",desc="创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Timestamp createTime;
 
     @ApiProperty(name="apiScene",desc="所属apiScene")

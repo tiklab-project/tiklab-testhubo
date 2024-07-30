@@ -48,7 +48,7 @@ public class ApiSceneInstance extends BaseModel{
     private String passRate;
 
     @ApiProperty(name="createTime",desc="创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Timestamp createTime;
 
     @ApiProperty(name="stepCommonInstanceList",desc="步骤实例列表")

@@ -38,7 +38,7 @@ public class QuartzPlan extends BaseModel{
     private Integer state;
 
     @ApiProperty(name="createTime",desc="创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Timestamp createTime;
 
     private String repositoryId;

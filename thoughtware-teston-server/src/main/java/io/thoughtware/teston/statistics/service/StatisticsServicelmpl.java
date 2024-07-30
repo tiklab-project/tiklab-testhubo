@@ -137,9 +137,15 @@ public class StatisticsServicelmpl implements StatisticsService {
         Map<String, Map<String, Integer>> formattedCaseTestResult = new HashMap<>();
         for (Map<String, Object> result : caseTestResult) {
             String caseType = (String) result.get("case_type");
-            int pass = ((Number) result.get("pass")).intValue();
-            int fail = ((Number) result.get("fail")).intValue();
-            int error = ((Number) result.get("error")).intValue();
+
+            Object passObj = result.getOrDefault("pass", 0);
+            Object failObj = result.getOrDefault("fail", 0);
+            Object errorObj = result.getOrDefault("error", 0);
+
+            // 将 Number 转换为 Integer，处理可能的 null 值
+            int pass = (passObj != null) ? ((Number) passObj).intValue() : 0;
+            int fail = (failObj != null) ? ((Number) failObj).intValue() : 0;
+            int error = (errorObj != null) ? ((Number) errorObj).intValue() : 0;
 
             Map<String, Integer> statusMap = new HashMap<>();
             statusMap.put("total", pass+fail+error);
