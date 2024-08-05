@@ -28,6 +28,11 @@ public class ApiPerfCase extends BaseModel{
     @JoinQuery(key = "id")
     private TestCase testCase;
 
+    @ApiProperty(name="stepNum",desc="步骤数量")
+    private int stepNum;
+
+    @ApiProperty(name="instanceNum",desc="历史数量")
+    private int instanceNum;
 
     public String getId() {
         return id;
@@ -45,5 +50,19 @@ public class ApiPerfCase extends BaseModel{
         this.testCase = testCase;
     }
 
+    public int getStepNum() {
+        return stepNum;
+    }
 
+    public void setStepNum(int stepNum) {
+        this.stepNum = stepNum;
+    }
+
+    public int getInstanceNum() {
+        return instanceNum;
+    }
+
+    public void setInstanceNum(int instanceNum) {
+        this.instanceNum = instanceNum;
+    }
 }

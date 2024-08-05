@@ -2,6 +2,7 @@ package io.thoughtware.teston.test.apix.http.perf.cases.service;
 
 import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.teston.instance.service.InstanceService;
+import io.thoughtware.teston.test.common.stepcommon.service.StepCommonService;
 import io.thoughtware.teston.test.test.model.TestCase;
 import io.thoughtware.teston.test.test.model.TestCaseQuery;
 import io.thoughtware.teston.test.test.service.TestCaseService;
@@ -50,6 +51,8 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Autowired
     ApiPerfStepService apiPerfStepService;
 
+    @Autowired
+    StepCommonService stepCommonService;
 
 
     @Autowired
@@ -110,8 +113,14 @@ public class ApiPerfCaseServiceImpl implements ApiPerfCaseService {
     @Override
     public ApiPerfCase findApiPerfCase(@NotNull String id) {
         ApiPerfCase apiPerfCase = findOne(id);
-
         joinTemplate.joinQuery(apiPerfCase);
+
+        //步骤数量
+        int apiSceneStepNum = apiPerfStepService.findApiPerfStepNum(id);
+        apiPerfCase.setStepNum(apiSceneStepNum);
+
+        int instanceNum = instanceService.findInstanceNum(id);
+        apiPerfCase.setInstanceNum(instanceNum);
 
         //手动添加字段
         TestCase testCase = apiPerfCase.getTestCase();

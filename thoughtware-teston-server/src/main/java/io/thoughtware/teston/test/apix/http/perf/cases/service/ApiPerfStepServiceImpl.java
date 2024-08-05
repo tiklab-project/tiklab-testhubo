@@ -116,6 +116,12 @@ public class ApiPerfStepServiceImpl implements ApiPerfStepService {
     }
 
     @Override
+    public int findApiPerfStepNum(String caseId) {
+        int stepNum = apiPerfStepDao.findStepNum(caseId);
+        return stepNum;
+    }
+
+    @Override
     public Boolean isApiSceneExist(String caseId) {
         Integer apiSceneExist = apiPerfStepDao.isApiSceneExist(caseId);
 

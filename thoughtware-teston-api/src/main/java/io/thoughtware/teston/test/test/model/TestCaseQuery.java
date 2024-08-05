@@ -21,6 +21,9 @@ public class TestCaseQuery implements Serializable {
     @ApiProperty(name = "id", desc = "接口步骤ID，精确匹配")
     private String id;
 
+    @ApiProperty(name="status",desc="状态")
+    private Integer status;
+
     @ApiProperty(name="仓库Id",desc="repositoryId")
     private String repositoryId;
 
@@ -44,6 +47,7 @@ public class TestCaseQuery implements Serializable {
 
     @ApiProperty(name = "orderParams", desc = "排序参数")
     private List<Order> orderParams = OrderBuilders.instance().desc("createTime").get();
+
 
     @ApiProperty(name = "pageParam", desc = "分页参数")
     private Page pageParam = new Page();
@@ -87,6 +91,14 @@ public class TestCaseQuery implements Serializable {
 
     public void setTestType(String testType) {
         this.testType = testType;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getCaseType() {

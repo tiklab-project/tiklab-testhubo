@@ -71,6 +71,13 @@ public class ApiPerfStepDao {
     }
 
 
+    public int findStepNum(String caseId) {
+        String stepSql = "Select count(1) as total from teston_api_perf_step where api_perf_id ='" + caseId+ "'";
+        Integer stepNum = jpaTemplate.getJdbcTemplate().queryForObject(stepSql, new Object[]{}, Integer.class);
+
+        return stepNum;
+    }
+
     public Integer isApiSceneExist(String caseId) {
         String sql = " Select count(1) as total from teston_api_perf_step where api_scene_id = '" + caseId + "'";
         Integer modelTotal = jpaTemplate.getJdbcTemplate().queryForObject(sql, new Object[]{}, Integer.class);

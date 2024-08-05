@@ -48,6 +48,14 @@ public interface ApiPerfStepService {
     ApiPerfStep findApiPerfStep(@NotNull String id);
 
     /**
+     * 查询步骤数量
+     * @param caseId
+     * @return
+     */
+    int findApiPerfStepNum(String caseId);
+
+
+    /**
      * 判断是否被接口性能绑定
      * @param caseId
      * @return
