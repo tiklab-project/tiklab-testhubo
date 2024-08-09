@@ -325,6 +325,12 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
                 .filter(testPlanCaseInstanceBind -> Objects.equals(testPlanCaseInstanceBind.getStatus(), 1))
                 .count();
 
+        // 计算总时间
+        int totalElapsedTime = testPlanCaseInstanceList.stream()
+                .mapToInt(TestPlanCaseInstanceBind::getElapsedTime)
+                .sum();
+        testPlanInstance.setElapsedTime(totalElapsedTime);
+
         if (executingCount == 0) {
             // 如果没有任务正在执行
             if (Objects.equals(total, passNum)) {
@@ -391,6 +397,7 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
         instanceMap.put("passRate",testPlanInstance.getPassRate());
         instanceMap.put("failNum",testPlanInstance.getFailNum().toString());
         instanceMap.put("errorRate",testPlanInstance.getErrorRate());
+        instanceMap.put("elapsedTime",testPlanInstance.getElapsedTime());
         instance.setContent(instanceMap.toString());
 
         instanceService.updateInstance(instance);
@@ -424,7 +431,6 @@ public class TestPlanExecuteDispatchServiceImpl implements TestPlanExecuteDispat
     @Override
     public void cleanUpExecutionData(String testPlanId) {
         String testPlanInstanceId = testPlanIdOrPlanInstanceId.get(testPlanId);
-
 
         planInstanceIdOrPlanCaseInstanceList.remove(testPlanInstanceId);
         testPlanIdOrPlanCaseList.remove(testPlanId);

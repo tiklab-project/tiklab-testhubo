@@ -107,6 +107,8 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
 
         String apiPerfInstanceId = createInitApiPerfInstance(apiPerfId);
         try {
+            long startTime =  System.currentTimeMillis();
+
             // 执行性能测试
             executeStart(apiPerfTestRequest);
 
@@ -117,6 +119,10 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             ScheduledFuture<?> scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(() -> {
                 //获取数据
                 ApiPerfTestResponse apiPerfTestResponse = getResult(apiPerfTestRequest);
+
+                long endTime = System.currentTimeMillis();
+                long elapsedTime = endTime - startTime - 1100;
+                apiPerfTestResponse.getApiPerfInstance().setElapsedTime((int)elapsedTime);
                 updateApiPerfInstance(apiPerfTestResponse,apiPerfId);
 
                 if(!Objects.equals(apiPerfTestResponse.getApiPerfInstance().getStatus(), MagicValue.TEST_STATUS_START)){
@@ -346,6 +352,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
             instanceMap.put("passRate",apiPerfInstance.getPassRate());
             instanceMap.put("failNum",apiPerfInstance.getFailNum().toString());
             instanceMap.put("errorRate",apiPerfInstance.getErrorRate());
+            instanceMap.put("elapsedTime",apiPerfInstance.getElapsedTime());
             instance.setContent(instanceMap.toString());
             instance.setStatus(apiPerfInstance.getStatus());
             instanceService.updateInstance(instance);

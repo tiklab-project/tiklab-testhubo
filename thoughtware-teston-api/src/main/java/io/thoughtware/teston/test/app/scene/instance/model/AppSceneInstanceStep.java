@@ -39,6 +39,9 @@ public class AppSceneInstanceStep extends BaseModel {
     @ApiProperty(name="parameter",desc="parameter")
     private String parameter;
 
+    @ApiProperty(name = "elapsedTime")
+    private Integer elapsedTime;
+
     private String preScript;
     private String afterScript;
     private List<StepAssertCommon> stepAssertCommonList;
@@ -100,6 +103,14 @@ public class AppSceneInstanceStep extends BaseModel {
 
     public void setParameter(String parameter) {
         this.parameter = parameter;
+    }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 
     public String getPreScript() {

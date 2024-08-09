@@ -3,7 +3,8 @@ package io.thoughtware.teston.test.apix.http.perf.instance.entity;
 import io.thoughtware.dal.jpa.annotation.Column;
 import io.thoughtware.dal.jpa.annotation.GeneratorValue;
 import io.thoughtware.dal.jpa.annotation.Id;
-import io.thoughtware.dal.jpa.annotation.Table;import io.thoughtware.dal.jpa.annotation.Entity;
+import io.thoughtware.dal.jpa.annotation.Table;
+import io.thoughtware.dal.jpa.annotation.Entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -50,6 +51,9 @@ public class ApiPerfInstanceEntity implements Serializable {
     // 状态
     @Column(name = "status")
     private String status;
+
+    @Column(name = "elapsed_time")
+    private Integer elapsedTime;
 
 
     public Integer getPassNum() {
@@ -122,5 +126,13 @@ public class ApiPerfInstanceEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 }

@@ -150,7 +150,8 @@ public class ApiUnitExecuteDispatchServiceImpl implements ApiUnitExecuteDispatch
             }
 
             if(apiUnitInstance.getElapsedTime()!=null){
-                instanceMap.put("elapsedTime",apiUnitInstance.getElapsedTime().toString());
+                int time = apiUnitInstance.getElapsedTime().intValue();
+                instanceMap.put("elapsedTime", Integer.toString(time));
             }
 
         }else {

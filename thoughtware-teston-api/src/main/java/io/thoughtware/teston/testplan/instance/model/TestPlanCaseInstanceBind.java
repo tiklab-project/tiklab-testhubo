@@ -36,6 +36,9 @@ public class TestPlanCaseInstanceBind extends BaseModel {
     @ApiProperty(name="status",desc="执行状态 状态为 1 说明正在执行")
     private java.lang.Integer status;
 
+    @ApiProperty(name = "elapsedTime")
+    private Integer elapsedTime;
+
     private String caseId;
 
     public java.lang.String getId() {
@@ -104,5 +107,13 @@ public class TestPlanCaseInstanceBind extends BaseModel {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 }

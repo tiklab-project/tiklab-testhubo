@@ -81,6 +81,7 @@ public class TestPlanExecuteApiDispatch {
             testPlanCaseInstanceBind.setCaseInstanceId(apiUnitInstanceId);
             testPlanCaseInstanceBind.setResult(apiUnitInstance.getResult());
             testPlanCaseInstanceBind.setStatus(0);
+            testPlanCaseInstanceBind.setElapsedTime(apiUnitInstance.getElapsedTime().intValue());
             testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
         }catch (Exception e){
             testPlanCaseInstanceBind.setStatus(0);
@@ -119,6 +120,7 @@ public class TestPlanExecuteApiDispatch {
             testPlanCaseInstanceBind.setCaseInstanceId(apiSceneInstanceId);
             testPlanCaseInstanceBind.setResult(apiSceneTestResponse.getApiSceneInstance().getResult());
             testPlanCaseInstanceBind.setStatus(0);
+            testPlanCaseInstanceBind.setElapsedTime(apiSceneTestResponse.getApiSceneInstance().getElapsedTime());
             testPlanCaseInstanceBindService.updateTestPlanCaseInstanceBind(testPlanCaseInstanceBind);
         }catch (Exception e){
             testPlanCaseInstanceBind.setStatus(0);

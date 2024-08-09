@@ -44,6 +44,9 @@ public class AppSceneInstance extends BaseModel{
     @ApiProperty(name="passRate",desc="通过率")
     private String passRate;
 
+    @ApiProperty(name = "elapsedTime")
+    private Integer elapsedTime;
+
     @ApiProperty(name="stepList",desc="存放app测试步骤结果")
     private List<StepCommonInstance> stepList;
 
@@ -116,6 +119,14 @@ public class AppSceneInstance extends BaseModel{
 
     public void setPassRate(String passRate) {
         this.passRate = passRate;
+    }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 
     public List<StepCommonInstance> getStepList() {

@@ -56,6 +56,9 @@ public class TestPlanInstance extends BaseModel {
     @ApiProperty(name="errorRate",desc="错误率")
     private java.lang.String errorRate;
 
+    @ApiProperty(name = "elapsedTime")
+    private Integer elapsedTime;
+
     @ApiProperty(name="createTime",desc="创建时间")
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private java.sql.Timestamp createTime;
@@ -139,6 +142,15 @@ public class TestPlanInstance extends BaseModel {
     public void setErrorRate(java.lang.String errorRate) {
         this.errorRate = errorRate;
     }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
     public java.sql.Timestamp getCreateTime() {
         return createTime;
     }

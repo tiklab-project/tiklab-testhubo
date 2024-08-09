@@ -47,6 +47,9 @@ public class ApiPerfInstance extends BaseModel{
     @ApiProperty(name="status",desc="状态结果")
     private String status;
 
+    @ApiProperty(name = "elapsedTime")
+    private Integer elapsedTime;
+
     @ApiProperty(name="apiPerfStepInstance",desc="接口性能下的所有的接口详细数据")
     private List<ApiPerfStepInstance> apiPerfStepInstanceList;
 
@@ -129,6 +132,14 @@ public class ApiPerfInstance extends BaseModel{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 
     public List<ApiPerfStepInstance> getApiPerfStepInstanceList() {

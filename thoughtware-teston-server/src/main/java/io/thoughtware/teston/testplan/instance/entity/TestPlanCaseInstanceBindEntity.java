@@ -42,6 +42,9 @@ public class TestPlanCaseInstanceBindEntity implements Serializable {
     private Integer result;
 
 
+    @Column(name="elapsed_time")
+    private Integer elapsedTime;
+
     public String getId() {
         return id;
     }
@@ -96,5 +99,13 @@ public class TestPlanCaseInstanceBindEntity implements Serializable {
 
     public void setResult(Integer result) {
         this.result = result;
+    }
+
+    public Integer getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(Integer elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 }
