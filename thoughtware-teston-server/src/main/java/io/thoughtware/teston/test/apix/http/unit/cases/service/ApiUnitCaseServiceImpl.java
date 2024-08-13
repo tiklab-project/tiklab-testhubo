@@ -429,24 +429,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         if(!ObjectUtils.isEmpty(rawParamUnit)){
             String raw = rawParamUnit.getRaw();
             bodyStr = raw;
-
-//            if(rawParam.getType().equals("application/json")){
-//                bodyStr = raw;
-//            }
-//
-//            if(rawParam.getType().equals("xml")){
-//                //解析xml
-//            }
-//
-//            if(rawParam.getType().equals("text")){
-//                //解析text
-//            }
-
-
         }
 
         return bodyStr;
-
     }
 
 

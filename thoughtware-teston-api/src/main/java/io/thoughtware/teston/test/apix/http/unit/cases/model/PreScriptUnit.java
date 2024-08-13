@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @ApiModel
-@Mapper
+@Mapper(targetName = "io.thoughtware.teston.test.apix.http.unit.cases.entity.PreScriptEntity")
 @Join
 public class PreScriptUnit extends BaseModel{
 

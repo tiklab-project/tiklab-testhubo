@@ -414,7 +414,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         List<ApiPerfStep> apiPerfStepList = apiPerfStepService.findApiPerfStepList(apiPerfStepQuery);
 
         //如果没有场景直接结束
-        if(apiPerfStepList==null||apiPerfStepList.size()==0){return null;}
+        if(apiPerfStepList==null||apiPerfStepList.size()==0){return new ArrayList<>();}
 
         List<ApiPerfStepTestData> ApiPerfStepTestDataList = new ArrayList<>();
 
