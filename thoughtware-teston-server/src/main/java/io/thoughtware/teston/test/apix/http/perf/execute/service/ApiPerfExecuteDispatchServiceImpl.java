@@ -422,6 +422,9 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         for(ApiPerfStep apiPerfStep:apiPerfStepList){
             ApiPerfStepTestData apiPerfStepTestData = new ApiPerfStepTestData();
             apiPerfStepTestData.setApiPerfStep(apiPerfStep);
+            //获取测试数据
+            List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfStep.getId());
+            apiPerfStepTestData.setTestDataList(testDataList);
 
             if(apiPerfStep.getCaseType().equals(MagicValue.CASE_TYPE_API_UNIT)){
                 ApiUnitTestRequest apiUnitTestRequest = processApiUnitData(apiPerfStep, apiEnv);
@@ -455,10 +458,6 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         List<StepCommon> stepCommonList = stepCommonService.findStepCommonList(stepCommonQuery);
         apiSceneTestRequest.setStepCommonList(stepCommonList);
 
-        //环境变量设置
-        JSONObject variable = processVariable(apiPerfStep.getId());
-        apiSceneTestRequest.setVariableJson(variable);
-
         //设置pre url
         apiSceneTestRequest.setApiEnv(apiEnv);
 
@@ -482,33 +481,7 @@ public class ApiPerfExecuteDispatchServiceImpl implements ApiPerfExecuteDispatch
         apiUnitTestRequest.setApiUnitCase(apiUnitCase);
         apiUnitTestRequest.setApiEnv(apiEnv);
 
-        //环境变量设置
-        JSONObject variable = processVariable(caseId);
-        apiUnitTestRequest.setVariableJson(variable);
-
         return apiUnitTestRequest;
-    }
-
-
-    /**
-     *  获取测试数据
-     * @return
-     */
-    private JSONObject processVariable(String apiPerfStepId) {
-        //获取测试数据
-        List<JSONObject> testDataList = apiPerfTestDataService.getTestData(apiPerfStepId);
-
-        //环境变量
-        JSONObject variable = variableService.getVariable(apiPerfStepId);
-
-        if(testDataList!=null&&testDataList.size()>0){
-            //  name,age    //属性
-            //  name1,18    //获取当前行的值
-            JSONObject testData = testDataList.get(0);
-            variable.putAll(testData);
-        }
-
-        return variable;
     }
 
 

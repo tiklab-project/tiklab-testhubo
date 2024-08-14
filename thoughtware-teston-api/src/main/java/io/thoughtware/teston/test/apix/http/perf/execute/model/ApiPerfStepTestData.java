@@ -1,11 +1,14 @@
 package io.thoughtware.teston.test.apix.http.perf.execute.model;
 
+import com.alibaba.fastjson.JSONObject;
 import io.thoughtware.core.BaseModel;
 import io.thoughtware.postin.annotation.ApiModel;
 import io.thoughtware.postin.annotation.ApiProperty;
 import io.thoughtware.teston.test.apix.http.perf.cases.model.ApiPerfStep;
 import io.thoughtware.teston.test.apix.http.scene.execute.model.ApiSceneTestRequest;
 import io.thoughtware.teston.test.apix.http.unit.execute.model.ApiUnitTestRequest;
+
+import java.util.List;
 
 /**
  *接口性能测试请求参数 模型
@@ -20,6 +23,9 @@ public class ApiPerfStepTestData extends BaseModel {
 
     @ApiProperty(name="apiUnitTestRequest",desc="api单元测试")
     private ApiUnitTestRequest apiUnitTestRequest;
+
+    @ApiProperty(name="当前步骤的测试数据",desc="api单元测试")
+    private List<JSONObject> testDataList;
 
     public ApiPerfStep getApiPerfStep() {
         return apiPerfStep;
@@ -43,5 +49,13 @@ public class ApiPerfStepTestData extends BaseModel {
 
     public void setApiUnitTestRequest(ApiUnitTestRequest apiUnitTestRequest) {
         this.apiUnitTestRequest = apiUnitTestRequest;
+    }
+
+    public List<JSONObject> getTestDataList() {
+        return testDataList;
+    }
+
+    public void setTestDataList(List<JSONObject> testDataList) {
+        this.testDataList = testDataList;
     }
 }
