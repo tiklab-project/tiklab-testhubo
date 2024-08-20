@@ -124,6 +124,7 @@ public class InstanceDao {
                 .eq("belongId",instanceQuery.getBelongId())
                 .eq("type",instanceQuery.getType())
                 .eq("createUser",instanceQuery.getCreateUser())
+                .eq("status",instanceQuery.getStatus())
                 .like("name",instanceQuery.getName())
                 .in("type",instanceQuery.getTypeList())
                 .pagination(instanceQuery.getPageParam())

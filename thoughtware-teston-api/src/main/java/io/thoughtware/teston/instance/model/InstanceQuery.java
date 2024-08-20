@@ -30,6 +30,9 @@ public class InstanceQuery {
     @ApiProperty(name ="createUser",desc = "创建人")
     private String createUser;
 
+    @ApiProperty(name ="status",desc = "status")
+    private String status;
+
     @ApiProperty(name ="repositoryId",desc = "repositoryId")
     private String repositoryId;
 
@@ -98,5 +101,13 @@ public class InstanceQuery {
 
     public void setTypeList(String[] typeList) {
         this.typeList = typeList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
