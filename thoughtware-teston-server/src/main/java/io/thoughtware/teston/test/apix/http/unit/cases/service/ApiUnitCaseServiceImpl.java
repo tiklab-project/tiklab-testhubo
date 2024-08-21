@@ -263,7 +263,9 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
         //封装请求头数据
         Map headerMap = requestHeaderService.jointHeader(apiUnitCase);
         //封装param参数
-        String query = queryParamService.jointParam(apiUnitCase);
+        QueryParamUnitQuery queryParamUnitQuery = new QueryParamUnitQuery();
+        queryParamUnitQuery.setApiUnitId(apiUnitCase.getId());
+        List<QueryParamUnit> queryParamList = queryParamService.findQueryParamList(queryParamUnitQuery);
         //封装mediaType
         Map mediaType = jointMediaType(apiUnitCase);
         //封装请求体数据
@@ -277,7 +279,7 @@ public class ApiUnitCaseServiceImpl implements ApiUnitCaseService {
 
         ApiUnitCaseDataConstruction apiUnitCaseDataConstruction = new ApiUnitCaseDataConstruction();
         apiUnitCaseDataConstruction.setHeaderMap(headerMap);
-        apiUnitCaseDataConstruction.setQuery(query);
+        apiUnitCaseDataConstruction.setQueryParamList(queryParamList);
         apiUnitCaseDataConstruction.setMediaTypeMap(mediaType);
         apiUnitCaseDataConstruction.setBody(body);
         apiUnitCaseDataConstruction.setPreScript(preScript);

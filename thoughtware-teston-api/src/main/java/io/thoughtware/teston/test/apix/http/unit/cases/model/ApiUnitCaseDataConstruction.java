@@ -18,7 +18,7 @@ public class ApiUnitCaseDataConstruction extends BaseModel{
     private Map headerMap;
 
     //查询参数
-    private String query;
+    private List<QueryParamUnit> queryParamList;
 
     //mediaType
     private Map mediaTypeMap;
@@ -42,12 +42,12 @@ public class ApiUnitCaseDataConstruction extends BaseModel{
         this.headerMap = headerMap;
     }
 
-    public String getQuery() {
-        return query;
+    public List<QueryParamUnit> getQueryParamList() {
+        return queryParamList;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    public void setQueryParamList(List<QueryParamUnit> queryParamList) {
+        this.queryParamList = queryParamList;
     }
 
     public Map getMediaTypeMap() {
