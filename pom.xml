@@ -10,15 +10,15 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>thoughtware-teston</artifactId>
+    <artifactId>thoughtware-testrubo</artifactId>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <version>1.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>thoughtware-teston-api</module>
-        <module>thoughtware-teston-server</module>
-        <module>thoughtware-teston-starter</module>
+        <module>thoughtware-testrubo-api</module>
+        <module>thoughtware-testrubo-server</module>
+        <module>thoughtware-testrubo-starter</module>
     </modules>
 
     <properties>
@@ -45,10 +45,8 @@
         <thoughtware-dsm.version>1.0.0</thoughtware-dsm.version>
 
         <!--业务-->
-        <thoughtware-teston-agent.version>1.0.1-SNAPSHOT</thoughtware-teston-agent.version>
+        <thoughtware-testrubo-agent.version>1.0.1-SNAPSHOT</thoughtware-testrubo-agent.version>
         <thoughtware-postin.version>1.0.1-SNAPSHOT</thoughtware-postin.version>
-<!--        <thoughtware-teston-chrome.version>1.0.0</thoughtware-teston-chrome.version>-->
-<!--        <thoughtware-teston-node.version>1.0.0</thoughtware-teston-node.version>-->
 
         <!--第三方-->
         <nashorn-core.version>15.4</nashorn-core.version>
@@ -217,13 +215,13 @@
             <!--业务-->
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-teston-agent-api</artifactId>
-                <version>${thoughtware-teston-agent.version}</version>
+                <artifactId>thoughtware-testrubo-agent-api</artifactId>
+                <version>${thoughtware-testrubo-agent.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-teston-agent-server</artifactId>
-                <version>${thoughtware-teston-agent.version}</version>
+                <artifactId>thoughtware-testrubo-agent-server</artifactId>
+                <version>${thoughtware-testrubo-agent.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
@@ -248,12 +246,12 @@
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-teston-server</artifactId>
+                <artifactId>thoughtware-testrubo-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-teston-api</artifactId>
+                <artifactId>thoughtware-testrubo-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--第三方-->
