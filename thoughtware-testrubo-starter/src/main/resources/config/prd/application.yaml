@@ -54,7 +54,7 @@ licences:
   path: ${DATA_HOME}/licences
 
 base:
-  url:  http://e.testrubo.thoughtware.cn
+  url:  http://e.testrubo.tiklab.net
 
 soular:
   embbed:

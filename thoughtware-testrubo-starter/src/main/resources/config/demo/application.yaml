@@ -53,12 +53,12 @@ licences:
   path: ${DATA_HOME}/licences
 
 base:
-  url: http://testrubo-ce.demo.thoughtware.cn
+  url: http://testrubo-ce.demo.tiklab.net
 
 soular:
   embbed:
     enable: false
-  address: http://eas-ce.demo.thoughtware.cn
+  address: http://eas-ce.demo.tiklab.net
 
 postgresql:
   database: teston
@@ -72,7 +72,7 @@ postgresql:
 
 testrubo-agent:
   name: agent-default
-  websocket-url: "ws://testrubo-ce.demo.thoughtware.cn/websocket"
+  websocket-url: "ws://testrubo-ce.demo.tiklab.net/websocket"
   chromedriver:
     path: /opt/chrome/chromedriver/chromedriver
   chrome:
