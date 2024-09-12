@@ -1,0 +1,85 @@
+#application
+app:
+  name: testhubo
+spring:
+  config:
+    import: optional:classpath:/config/${env:dev}/application.yaml
+
+DATA_HOME:
+
+#io.thoughtware.testhubo.web
+server:
+  port: 8080
+
+#dal
+jdbc:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/tiklab_teston?stringtype=unspecified
+  username: postgres
+  password: darth2020
+
+#dcs
+dcs:
+  server:
+    enabled: true
+    port: 5001
+    datapath: ${DATA_HOME}/caches
+  client:
+    url: 127.0.0.1:5001
+    group: g1
+    database: dcs1
+    expire: 7200
+
+#dfs config
+dfs:
+  server:
+    #    enabled: true
+    #    mode:server
+    port: 4000
+    datapath: ${DATA_HOME}/files
+  client:
+    url: 172.10.1.11:4000
+    bucket: ${app.name}
+
+#plugin
+plugin:
+  path: ${DATA_HOME}/plugin
+
+#licences
+licences:
+  path: ${DATA_HOME}/licences
+
+base:
+  url: http://
+
+soular:
+  embbed:
+    enable: true
+#  address:
+
+postgresql:
+  database: tiklab_teston
+  embbed:
+    enable: true
+  db:
+    port: 5432
+    username: postgres
+    password: darth2020
+    address: ${DATA_HOME}/postgresql
+
+testhubo-agent:
+  embbed:
+    enable: true
+  chromedriver:
+    path: /opt/chrome/chromedriver/chromedriver
+  chrome:
+    path: /opt/chrome/chrome/chrome
+
+file:
+  path:
+homes:
+  address:
+
+backups:
+  dir:  /data/testhubo
+  time: 0 0 2 * * ?

@@ -10,15 +10,15 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>thoughtware-testrubo</artifactId>
+    <artifactId>tiklab-testhubo</artifactId>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
     <version>1.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>thoughtware-testrubo-api</module>
-        <module>thoughtware-testrubo-server</module>
-        <module>thoughtware-testrubo-starter</module>
+        <module>tiklab-testhubo-api</module>
+        <module>tiklab-testhubo-server</module>
+        <module>tiklab-testhubo-starter</module>
     </modules>
 
     <properties>
@@ -45,7 +45,7 @@
         <thoughtware-dsm.version>1.0.0</thoughtware-dsm.version>
 
         <!--业务-->
-        <thoughtware-testrubo-agent.version>1.0.1-SNAPSHOT</thoughtware-testrubo-agent.version>
+        <tiklab-testhubo-agent.version>1.0.1-SNAPSHOT</tiklab-testhubo-agent.version>
         <thoughtware-postin.version>1.0.1-SNAPSHOT</thoughtware-postin.version>
 
         <!--第三方-->
@@ -215,13 +215,13 @@
             <!--业务-->
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-testrubo-agent-api</artifactId>
-                <version>${thoughtware-testrubo-agent.version}</version>
+                <artifactId>tiklab-testhubo-agent-api</artifactId>
+                <version>${tiklab-testhubo-agent.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-testrubo-agent-server</artifactId>
-                <version>${thoughtware-testrubo-agent.version}</version>
+                <artifactId>tiklab-testhubo-agent-server</artifactId>
+                <version>${tiklab-testhubo-agent.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
@@ -246,12 +246,12 @@
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-testrubo-server</artifactId>
+                <artifactId>tiklab-testhubo-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.thoughtware</groupId>
-                <artifactId>thoughtware-testrubo-api</artifactId>
+                <artifactId>tiklab-testhubo-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--第三方-->
