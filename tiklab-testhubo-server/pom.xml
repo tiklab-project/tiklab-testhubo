@@ -62,11 +62,11 @@
         </dependency>
 
         <!--业务-->
-        <dependency>
-            <groupId>io.tiklab</groupId>
-            <artifactId>tiklab-postin-doclet</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.tiklab</groupId>-->
+<!--            <artifactId>tiklab-postin-doclet</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>io.tiklab</groupId>
             <artifactId>tiklab-testhubo-agent-api</artifactId>
