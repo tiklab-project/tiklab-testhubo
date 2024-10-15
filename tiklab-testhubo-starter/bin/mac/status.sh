@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APP_MAIN="io.thoughtware.testhubo.TestHuboApplication"
+APP_MAIN="io.tiklab.testhubo.TestHuboApplication"
 
 DIRS=$(dirname "$PWD")
 

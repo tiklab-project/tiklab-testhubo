@@ -7,9 +7,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-DATA_HOME:  /opt/thoughtware/testhubo
+DATA_HOME:  /opt/tiklab/testhubo
 
-#io.thoughtware.testhubo.web
+#io.tiklab.testhubo.web
 server:
   port: 8080
 

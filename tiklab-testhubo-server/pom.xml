@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tiklab-testhubo</artifactId>
-        <groupId>io.thoughtware</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <groupId>io.tiklab</groupId>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,18 +14,18 @@
     <dependencies>
         <!--平台-->
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-rpc-client</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-rpc-client</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-dal-jpa</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-dal-jpa</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-eam-api</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-eam-api</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.guava</groupId>
@@ -34,8 +34,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-message-api</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-message-api</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -47,28 +47,28 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-toolkit-core</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-toolkit-core</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-security-api</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-security-api</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
+            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-testhubo-api</artifactId>
         </dependency>
 
         <!--业务-->
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-postin-doclet</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postin-doclet</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
+            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-testhubo-agent-api</artifactId>
             <scope>compile</scope>
         </dependency>
@@ -79,11 +79,11 @@
             <artifactId>nashorn-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-install-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-install-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
+            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-testhubo-api</artifactId>
         </dependency>
         <dependency>
@@ -129,14 +129,14 @@
 <!--                    </execution>-->
 <!--                </executions>-->
 <!--                <configuration>-->
-<!--                    <mainClass>io.thoughtware.postin.doclet.starter.DocletApplication</mainClass>-->
+<!--                    <mainClass>io.tiklab.postin.doclet.starter.DocletApplication</mainClass>-->
 <!--                    <arguments>-->
 <!--                        &lt;!&ndash; modules&ndash;&gt;-->
 <!--                        <argument>D:\a-dk-sever\tiklab-testhubo\tiklab-testhubo-api;D:\a-dk-sever\tiklab-testhubo\tiklab-testhubo-server</argument>-->
 <!--                        &lt;!&ndash; workspaceId&ndash;&gt;-->
 <!--                        <argument>dde26370a923</argument>-->
 <!--                        &lt;!&ndash; server&ndash;&gt;-->
-<!--                        <argument>http://e.postin.thoughtware.cn</argument>-->
+<!--                        <argument>http://e.postin.tiklab.cn</argument>-->
 <!--                    </arguments>-->
 <!--                </configuration>-->
 <!--            </plugin>-->

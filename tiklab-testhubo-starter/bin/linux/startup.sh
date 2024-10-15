@@ -2,7 +2,7 @@
 
 DIRS=$(dirname "$PWD")
 
-APP_MAIN="io.thoughtware.testhubo.TestHuboApplication"
+APP_MAIN="io.tiklab.testhubo.TestHuboApplication"
 
 YAML=${DIRS}/conf/application.yaml
 create_home(){

@@ -2,7 +2,7 @@
 
 DIRS=$(dirname "$PWD")
 
-APP_MAIN="io.thoughtware.testhubo.TestHuboApplication"
+APP_MAIN="io.tiklab.testhubo.TestHuboApplication"
 
 #jdk
 JDK_VERSION=jdk-16.0.2

@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.thoughtware</groupId>
+        <groupId>io.tiklab</groupId>
         <artifactId>tiklab-testhubo</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <artifactId>tiklab-testhubo-starter</artifactId>
     <name>${project.artifactId}</name>
@@ -14,36 +14,36 @@
     <dependencies>
         <!--平台-->
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-dal-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-dal-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-dfs-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-dfs-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-dcs-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-dcs-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-dss-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-dss-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-rpc-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-rpc-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-user-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-user-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-toolkit-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-toolkit-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-message-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-message-spring-boot-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.aliyun</groupId>
@@ -52,54 +52,54 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-licence-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-licence-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-gateway-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-gateway-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-openapi-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-openapi-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-eam-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-eam-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-security-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-security-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-privilege-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-privilege-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-postgresql-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postgresql-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-install-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-install-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-dsm-spring-boot-starter</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-dsm-spring-boot-starter</artifactId>
         </dependency>
 
         <!--业务-->
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-postin-client</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postin-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
+            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-testhubo-agent-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
+            <groupId>io.tiklab</groupId>
             <artifactId>tiklab-testhubo-server</artifactId>
         </dependency>
 
@@ -119,16 +119,16 @@
             </properties>
             <dependencies>
                 <dependency>
-                    <groupId>io.thoughtware</groupId>
-                    <artifactId>thoughtware-jdk-linux</artifactId>
-                    <version>${thoughtware-jdk.version}</version>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-jdk-linux</artifactId>
+                    <version>${tiklab-jdk.version}</version>
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
-                    <groupId>io.thoughtware</groupId>
-                    <artifactId>thoughtware-postgresql-linux</artifactId>
-                    <version>${thoughtware-postgresql.version}</version>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-postgresql-linux</artifactId>
+                    <version>${tiklab-postgresql.version}</version>
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
@@ -149,16 +149,16 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>io.thoughtware</groupId>
-                                            <artifactId>thoughtware-jdk-linux</artifactId>
-                                            <version>${thoughtware-jdk.version}</version>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-jdk-linux</artifactId>
+                                            <version>${tiklab-jdk.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
                                         <artifactItem>
-                                            <groupId>io.thoughtware</groupId>
-                                            <artifactId>thoughtware-postgresql-linux</artifactId>
-                                            <version>${thoughtware-postgresql.version}</version>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-postgresql-linux</artifactId>
+                                            <version>${tiklab-postgresql.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
@@ -176,16 +176,16 @@
             <id>system-windows</id>
             <dependencies>
                 <dependency>
-                    <groupId>io.thoughtware</groupId>
-                    <artifactId>thoughtware-jdk-windows</artifactId>
-                    <version>${thoughtware-jdk.version}</version>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-jdk-windows</artifactId>
+                    <version>${tiklab-jdk.version}</version>
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
-                    <groupId>io.thoughtware</groupId>
-                    <artifactId>thoughtware-postgresql-windows</artifactId>
-                    <version>${thoughtware-postgresql.version}</version>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-postgresql-windows</artifactId>
+                    <version>${tiklab-postgresql.version}</version>
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
@@ -210,16 +210,16 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>io.thoughtware</groupId>
-                                            <artifactId>thoughtware-postgresql-windows</artifactId>
-                                            <version>${thoughtware-postgresql.version}</version>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-postgresql-windows</artifactId>
+                                            <version>${tiklab-postgresql.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
                                         <artifactItem>
-                                            <groupId>io.thoughtware</groupId>
-                                            <artifactId>thoughtware-jdk-windows</artifactId>
-                                            <version>${thoughtware-jdk.version}</version>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-jdk-windows</artifactId>
+                                            <version>${tiklab-jdk.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
@@ -241,16 +241,16 @@
             </properties>
             <dependencies>
                 <dependency>
-                    <groupId>io.thoughtware</groupId>
-                    <artifactId>thoughtware-jdk-mac</artifactId>
-                    <version>${thoughtware-jdk.version}</version>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-jdk-mac</artifactId>
+                    <version>${tiklab-jdk.version}</version>
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
-                    <groupId>io.thoughtware</groupId>
-                    <artifactId>thoughtware-postgresql-mac</artifactId>
-                    <version>${thoughtware-postgresql.version}</version>
+                    <groupId>io.tiklab</groupId>
+                    <artifactId>tiklab-postgresql-mac</artifactId>
+                    <version>${tiklab-postgresql.version}</version>
                     <type>zip</type>
                     <scope>provided</scope>
                 </dependency>
@@ -271,16 +271,16 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>io.thoughtware</groupId>
-                                            <artifactId>thoughtware-postgresql-mac</artifactId>
-                                            <version>${thoughtware-postgresql.version}</version>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-postgresql-mac</artifactId>
+                                            <version>${tiklab-postgresql.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
                                         <artifactItem>
-                                            <groupId>io.thoughtware</groupId>
-                                            <artifactId>thoughtware-jdk-mac</artifactId>
-                                            <version>${thoughtware-jdk.version}</version>
+                                            <groupId>io.tiklab</groupId>
+                                            <artifactId>tiklab-jdk-mac</artifactId>
+                                            <version>${tiklab-jdk.version}</version>
                                             <type>zip</type>
                                             <outputDirectory>embbed</outputDirectory>
                                         </artifactItem>
@@ -436,8 +436,8 @@
 <!--                <configuration>-->
 <!--                    <artifactItems>-->
 <!--                        <artifactItem>-->
-<!--                            <groupId>io.thoughtware</groupId>-->
-<!--                            <artifactId>thoughtware-user-plugin-all</artifactId>-->
+<!--                            <groupId>io.tiklab</groupId>-->
+<!--                            <artifactId>tiklab-user-plugin-all</artifactId>-->
 <!--                            <version>${project.version}</version>-->
 <!--                        </artifactItem>-->
 <!--                    </artifactItems>-->

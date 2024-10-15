@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DIRS=$(dirname "$PWD")
-APP_MAIN="io.thoughtware.testhubo.TestHuboApplication"
+APP_MAIN="io.tiklab.testhubo.TestHuboApplication"
 
 JDK_VERSION=jdk-16.0.2
 valid_jdk(){

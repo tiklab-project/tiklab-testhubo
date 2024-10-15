@@ -1,4 +1,4 @@
-#application io.thoughtware.testhubo.config
+#application io.tiklab.testhubo.config
 app:
   name: testhubo
 spring:
@@ -7,7 +7,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-DATA_HOME: ${user.home}/thoughtware/${app.name}
+DATA_HOME: ${user.home}/tiklab/${app.name}
 
 server:
   port: 8080
@@ -75,7 +75,7 @@ testhubo-agent:
 postin:
   enable: false
   scan:
-    package: io.thoughtware.teston
+    package: io.tiklab.teston
   report:
     workspaceId: fae36fc39946
     server: http://192.168.10.21:8090

@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tiklab-testhubo</artifactId>
-        <groupId>io.thoughtware</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <groupId>io.tiklab</groupId>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,26 +13,26 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-postin-annotation</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postin-annotation</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-core</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-user-api</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-user-api</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-postin-api</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-postin-api</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.thoughtware</groupId>
-            <artifactId>thoughtware-privilege-api</artifactId>
+            <groupId>io.tiklab</groupId>
+            <artifactId>tiklab-privilege-api</artifactId>
         </dependency>
     </dependencies>
 

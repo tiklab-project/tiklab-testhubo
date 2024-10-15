@@ -5,7 +5,7 @@ setlocal enabledelayedexpansion
 
 
 REM 启动类文件
-set APP_MAIN=io.thoughtware.testhubo.TestHuboApplication
+set APP_MAIN=io.tiklab.testhubo.TestHuboApplication
 
 REM 获取系统文件地址
 set CurrentPath=%~dp0
